@@ -1,0 +1,137 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/michele/.nvm/versions/node/v6.9.1/bin/node',
+1 verbose cli   '/Users/michele/.nvm/versions/node/v6.9.1/bin/npm',
+1 verbose cli   'publish',
+1 verbose cli   '--force' ]
+2 info using npm@3.10.8
+3 info using node@v6.9.1
+4 warn using --force I sure hope you know what you are doing.
+5 verbose publish [ '.' ]
+6 silly cache add args [ '.', null ]
+7 verbose cache add spec .
+8 silly cache add parsed spec Result {
+8 silly cache add   raw: '.',
+8 silly cache add   scope: null,
+8 silly cache add   escapedName: null,
+8 silly cache add   name: null,
+8 silly cache add   rawSpec: '.',
+8 silly cache add   spec: '/Users/michele/code/jest-styled-components',
+8 silly cache add   type: 'directory' }
+9 verbose addLocalDirectory /Users/michele/.npm/jest-styled-components/0.1.0/package.tgz not in flight; packing
+10 verbose correctMkdir /Users/michele/.npm correctMkdir not in flight; initializing
+11 info lifecycle jest-styled-components@0.1.0~prepublish: jest-styled-components@0.1.0
+12 silly lifecycle jest-styled-components@0.1.0~prepublish: no script for prepublish, continuing
+13 verbose tar pack [ '/Users/michele/.npm/jest-styled-components/0.1.0/package.tgz',
+13 verbose tar pack   '/Users/michele/code/jest-styled-components' ]
+14 verbose tarball /Users/michele/.npm/jest-styled-components/0.1.0/package.tgz
+15 verbose folder /Users/michele/code/jest-styled-components
+16 verbose addLocalTarball adding from inside cache /Users/michele/.npm/jest-styled-components/0.1.0/package.tgz
+17 verbose correctMkdir /Users/michele/.npm correctMkdir not in flight; initializing
+18 silly cache afterAdd jest-styled-components@0.1.0
+19 verbose afterAdd /Users/michele/.npm/jest-styled-components/0.1.0/package/package.json not in flight; writing
+20 verbose correctMkdir /Users/michele/.npm correctMkdir not in flight; initializing
+21 verbose afterAdd /Users/michele/.npm/jest-styled-components/0.1.0/package/package.json written
+22 silly publish { name: 'jest-styled-components',
+22 silly publish   version: '0.1.0',
+22 silly publish   description: 'Jest utilities for Styled Components',
+22 silly publish   main: './src/index.js',
+22 silly publish   repository:
+22 silly publish    { type: 'git',
+22 silly publish      url: 'git+ssh://git@github.com/MicheleBertoli/jest-styled-components.git' },
+22 silly publish   author: { name: 'Michele Bertoli' },
+22 silly publish   license: 'MIT',
+22 silly publish   scripts: { lint: 'eslint ./', test: 'jest' },
+22 silly publish   devDependencies:
+22 silly publish    { 'babel-jest': '^19.0.0',
+22 silly publish      'babel-preset-es2015': '^6.24.0',
+22 silly publish      'babel-preset-react': '^6.23.0',
+22 silly publish      chalk: '^1.1.3',
+22 silly publish      eslint: '^3.17.1',
+22 silly publish      'eslint-config-airbnb': '^14.1.0',
+22 silly publish      'eslint-plugin-import': '^2.2.0',
+22 silly publish      'eslint-plugin-jsx-a11y': '^4.0.0',
+22 silly publish      'eslint-plugin-react': '^6.10.0',
+22 silly publish      jest: '^19.0.2',
+22 silly publish      'jest-diff': '^19.0.0',
+22 silly publish      'jest-snapshot': '^19.0.2',
+22 silly publish      'pretty-format': '^19.0.0',
+22 silly publish      react: '^15.4.2',
+22 silly publish      'react-dom': '^15.4.2',
+22 silly publish      'react-test-renderer': '^15.4.2',
+22 silly publish      'strip-ansi': '^3.0.1',
+22 silly publish      'styled-components': '^1.4.4' },
+22 silly publish   peerDependencies:
+22 silly publish    { chalk: '^1.1.3',
+22 silly publish      'jest-diff': '^19.0.0',
+22 silly publish      'jest-snapshot': '^19.0.2',
+22 silly publish      'pretty-format': '^19.0.0',
+22 silly publish      'strip-ansi': '^3.0.1',
+22 silly publish      'styled-components': '^1.4.4' },
+22 silly publish   jest: { testEnvironment: 'node' },
+22 silly publish   readme: '[![Build Status](https://travis-ci.org/MicheleBertoli/jest-styled-components.svg?branch=master)](https://travis-ci.org/MicheleBertoli/jest-styled-components)\n\n# Jest Styled Components\n[Jest](https://github.com/facebook/jest) utilities for [Styled Components](https://github.com/styled-components/styled-components).\n\n## Preview\n\n<img alt="Preview" src="screenshot.png" width="500px" height="485px" />\n\n## Installation\n\n```\nyarn add --dev jest-styled-components\n```\n\n## Usage\n\n```js\n// package.json\n\n"jest": {\n  "testEnvironment": "node"\n}\n```\n\n```js\n// *.spec.js\n\nimport { matcher, serializer } from \'jest-styled-components\'\n\nexpect.extend(matcher)\nexpect.addSnapshotSerializer(serializer)\n\n// ...\n\nexpect(tree).toMatchStyledComponentsSnapshot()\n```\n',
+22 silly publish   readmeFilename: 'README.md',
+22 silly publish   gitHead: '449a3420ff8c60581f10218b0ad0088f046dd959',
+22 silly publish   bugs: { url: 'https://github.com/MicheleBertoli/jest-styled-components/issues' },
+22 silly publish   homepage: 'https://github.com/MicheleBertoli/jest-styled-components#readme',
+22 silly publish   _id: 'jest-styled-components@0.1.0',
+22 silly publish   _shasum: '4e1857c14e0236bbcc30156b7510a822928e7a2b',
+22 silly publish   _from: '.' }
+23 verbose getPublishConfig undefined
+24 silly mapToRegistry name jest-styled-components
+25 silly mapToRegistry using default registry
+26 silly mapToRegistry registry https://registry.npmjs.org/
+27 silly mapToRegistry data Result {
+27 silly mapToRegistry   raw: 'jest-styled-components',
+27 silly mapToRegistry   scope: null,
+27 silly mapToRegistry   escapedName: 'jest-styled-components',
+27 silly mapToRegistry   name: 'jest-styled-components',
+27 silly mapToRegistry   rawSpec: '',
+27 silly mapToRegistry   spec: 'latest',
+27 silly mapToRegistry   type: 'tag' }
+28 silly mapToRegistry uri https://registry.npmjs.org/jest-styled-components
+29 verbose publish registryBase https://registry.npmjs.org/
+30 silly publish uploading /Users/michele/.npm/jest-styled-components/0.1.0/package.tgz
+31 verbose request uri https://registry.npmjs.org/jest-styled-components
+32 verbose request sending authorization for write operation
+33 info attempt registry request try #1 at 1:10:50 PM
+34 verbose request using bearer token for auth
+35 verbose request id a20a9cfcf0d00a0c
+36 http request PUT https://registry.npmjs.org/jest-styled-components
+37 http 403 https://registry.npmjs.org/jest-styled-components
+38 verbose headers { 'content-type': 'application/json',
+38 verbose headers   'cache-control': 'max-age=300',
+38 verbose headers   'content-length': '95',
+38 verbose headers   'accept-ranges': 'bytes',
+38 verbose headers   date: 'Sat, 18 Mar 2017 13:10:52 GMT',
+38 verbose headers   via: '1.1 varnish',
+38 verbose headers   connection: 'keep-alive',
+38 verbose headers   'x-served-by': 'cache-lcy1147-LCY',
+38 verbose headers   'x-cache': 'MISS',
+38 verbose headers   'x-cache-hits': '0',
+38 verbose headers   'x-timer': 'S1489842651.344642,VS0,VE1267',
+38 verbose headers   vary: 'Accept-Encoding' }
+39 verbose request invalidating /Users/michele/.npm/registry.npmjs.org/jest-styled-components on PUT
+40 error publish Failed PUT 403
+41 verbose stack Error: "You cannot publish over the previously published version 0.1.0." : jest-styled-components
+41 verbose stack     at makeError (/Users/michele/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:302:12)
+41 verbose stack     at CachingRegistryClient.<anonymous> (/Users/michele/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:290:14)
+41 verbose stack     at Request._callback (/Users/michele/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:210:14)
+41 verbose stack     at Request.self.callback (/Users/michele/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/request/request.js:187:22)
+41 verbose stack     at emitTwo (events.js:106:13)
+41 verbose stack     at Request.emit (events.js:191:7)
+41 verbose stack     at Request.<anonymous> (/Users/michele/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/request/request.js:1044:10)
+41 verbose stack     at emitOne (events.js:96:13)
+41 verbose stack     at Request.emit (events.js:188:7)
+41 verbose stack     at IncomingMessage.<anonymous> (/Users/michele/.nvm/versions/node/v6.9.1/lib/node_modules/npm/node_modules/request/request.js:965:12)
+42 verbose statusCode 403
+43 verbose pkgid jest-styled-components
+44 verbose cwd /Users/michele/code/jest-styled-components
+45 error Darwin 15.6.0
+46 error argv "/Users/michele/.nvm/versions/node/v6.9.1/bin/node" "/Users/michele/.nvm/versions/node/v6.9.1/bin/npm" "publish" "--force"
+47 error node v6.9.1
+48 error npm  v3.10.8
+49 error code E403
+50 error "You cannot publish over the previously published version 0.1.0." : jest-styled-components
+51 error If you need help, you may report this error at:
+51 error     <https://github.com/npm/npm/issues>
+52 verbose exit [ 1, true ]
