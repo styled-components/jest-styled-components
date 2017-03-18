@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it works 1`] = `
+.kZQsGZ { 
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+ }
+.cfRhKF { 
+  padding: 4em;
+  background: papayawhip;
+ }
+
+<section
+  className="cfRhKF"
+>
+  <h1
+    className="kZQsGZ"
+  >
+    Hello World, this is my first styled component!
+  </h1>
+</section>
+`;
