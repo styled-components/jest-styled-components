@@ -1,15 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`it works 1`] = `
-.kZQsGZ { 
+.cfRhKF {
+  padding: 4em;
+  background: papayawhip;
+}
+
+.kZQsGZ {
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
- }
-.cfRhKF { 
-  padding: 4em;
-  background: papayawhip;
- }
+}
 
 <section
   className="cfRhKF"
