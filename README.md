@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/MicheleBertoli/jest-styled-components.svg?branch=master)](https://travis-ci.org/MicheleBertoli/jest-styled-components)
+[![Build Status](https://travis-ci.org/styled-components/jest-styled-components.svg?branch=master)](https://travis-ci.org/styled-components/jest-styled-components)
 
 # Jest Styled Components
 [Jest](https://github.com/facebook/jest) utilities for [Styled Components](https://github.com/styled-components/styled-components).
