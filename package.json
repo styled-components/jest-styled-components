@@ -1,6 +1,6 @@
 {
   "name": "jest-styled-components",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Jest utilities for Styled Components",
   "main": "./src/index.js",
   "files": [
@@ -48,6 +48,8 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   }
 }
