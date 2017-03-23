@@ -15,7 +15,7 @@ const isClassName = line => (
 const colorize = message => (
   message.split('\n').map((line) => {
     if (isClassName(line)) {
-      return chalk.magenta(line)
+      return chalk.white(line)
     }
     if (isAddition(line)) {
       return chalk.green(line)
@@ -23,7 +23,7 @@ const colorize = message => (
     if (isDeletion(line)) {
       return chalk.red(line)
     }
-    return line
+    return chalk.gray(line)
   }).join('\n')
 )
 
