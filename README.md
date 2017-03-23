@@ -5,7 +5,7 @@
 
 ## Preview
 
-<img alt="Preview" src="screenshot.png" width="500px" height="450px" />
+<img alt="Preview" src="screenshot.png" width="500px" height="505px" />
 
 ## Installation
 
