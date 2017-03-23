@@ -7,6 +7,7 @@
 
   "rules": {
     "semi": ["error", "never"],
+    "no-param-reassign": ["off"],
     "react/jsx-filename-extension": ["error", { "extensions": [".js"] }],
   }
 }

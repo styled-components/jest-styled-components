@@ -1,6 +1,21 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`it works 1`] = `
+exports[`enzyme 1`] = `
+.cfRhKF {
+  padding: 4em;
+  background: papayawhip;
+}
+
+<section
+  className="cfRhKF"
+>
+  <styled.h1>
+    Hello World, this is my first styled component!
+  </styled.h1>
+</section>
+`;
+
+exports[`react-test-renderer 1`] = `
 .cfRhKF {
   padding: 4em;
   background: papayawhip;

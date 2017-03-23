@@ -1,6 +1,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import styled from 'styled-components'
+import { shallow } from 'enzyme'
 import { matcher, serializer } from '../src'
 
 expect.addSnapshotSerializer(serializer)
@@ -17,12 +18,22 @@ const Title = styled.h1`
   color: palevioletred;
 `
 
-test('it works', () => {
+test('react-test-renderer', () => {
   const tree = renderer.create(
     <Wrapper>
       <Title>Hello World, this is my first styled component!</Title>
     </Wrapper>,
   ).toJSON()
+
+  expect(tree).toMatchStyledComponentsSnapshot()
+})
+
+test('enzyme', () => {
+  const tree = shallow(
+    <Wrapper>
+      <Title>Hello World, this is my first styled component!</Title>
+    </Wrapper>,
+  )
 
   expect(tree).toMatchStyledComponentsSnapshot()
 })
