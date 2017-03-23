@@ -4,8 +4,8 @@ const styleSheet = require('styled-components/lib/models/StyleSheet')
 const getClassNames = (node, classNames) => {
   if (node.children && node.children.reduce) {
     classNames = node.children.reduce((acc, child) => (
-      acc.concat(getClassNames(child, acc),
-    )), classNames)
+      acc.concat(getClassNames(child, acc))
+    ), classNames)
   }
   if (node.props && node.props.className) {
     return classNames.concat(node.props.className.split(' '))
@@ -17,7 +17,7 @@ const getStyles = (classNames) => {
   const styles = styleSheet.rules().map(rule => rule.cssText).join('\n')
   const ast = css.parse(styles)
   ast.stylesheet.rules = ast.stylesheet.rules.filter(rule => (
-    classNames.includes(rule.selectors[0].substring(1))
+    rule.type === 'rule' && classNames.includes(rule.selectors[0].substring(1))
   ))
 
   return css.stringify(ast)
