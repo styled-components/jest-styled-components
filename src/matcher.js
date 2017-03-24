@@ -17,12 +17,15 @@ const colorize = message => (
     if (isClassName(line)) {
       return chalk.white(line)
     }
+
     if (isAddition(line)) {
       return chalk.green(line)
     }
+
     if (isDeletion(line)) {
       return chalk.red(line)
     }
+
     return chalk.gray(line)
   }).join('\n')
 )

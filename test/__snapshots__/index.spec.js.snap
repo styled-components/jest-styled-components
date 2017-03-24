@@ -21,17 +21,23 @@ exports[`react-test-renderer 1`] = `
   background: papayawhip;
 }
 
-.kZQsGZ {
+.dQvEWw {
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
+}
+
+@media (min-width: 600px) {
+  .dQvEWw {
+    color: blue;
+  }
 }
 
 <section
   className="cfRhKF"
 >
   <h1
-    className="kZQsGZ"
+    className="dQvEWw"
   >
     Hello World, this is my first styled component!
   </h1>

@@ -16,6 +16,9 @@ const Title = styled.h1`
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
+  @media (min-width: 600px) {
+    color: blue;
+  }
 `
 
 test('react-test-renderer', () => {
