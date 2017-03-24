@@ -21,14 +21,18 @@ exports[`react-test-renderer 1`] = `
   background: papayawhip;
 }
 
-.dQvEWw {
+.bqeGyV {
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
 }
 
+.bqeGyV:hover {
+  text-decoration: underline;
+}
+
 @media (min-width: 600px) {
-  .dQvEWw {
+  .bqeGyV {
     color: blue;
   }
 }
@@ -37,7 +41,7 @@ exports[`react-test-renderer 1`] = `
   className="cfRhKF"
 >
   <h1
-    className="dQvEWw"
+    className="bqeGyV"
   >
     Hello World, this is my first styled component!
   </h1>

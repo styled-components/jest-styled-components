@@ -15,9 +15,16 @@ const getClassNames = (node, classNames) => {
   return []
 }
 
-const filterNodes = classNames => rule => (
-  rule.type === 'rule' && classNames.includes(rule.selectors[0].substring(1))
-)
+const filterNodes = classNames => (rule) => {
+  if (rule.type === 'rule') {
+    const position = rule.selectors[0].indexOf(':')
+    const indexEnd = position > -1 ? position : rule.selectors[0].length
+
+    return classNames.includes(rule.selectors[0].substring(1, indexEnd))
+  }
+
+  return false
+}
 
 const getMediaQueries = (ast, filter) => (
   ast.stylesheet.rules

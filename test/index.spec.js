@@ -16,6 +16,11 @@ const Title = styled.h1`
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
   @media (min-width: 600px) {
     color: blue;
   }
