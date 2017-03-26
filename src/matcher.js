@@ -37,7 +37,10 @@ const matcher = {
     let message
 
     if (!result.pass) {
-      message = diff(result.expected, result.actual)
+      message = diff(result.expected, result.actual, {
+        aAnnotation: 'Snapshot',
+        bAnnotation: 'Received',
+      })
       message = stripAnsi(message)
       message = colorize(message)
     }
