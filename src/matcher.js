@@ -19,14 +19,14 @@ const colorize = message => (
     }
 
     if (isAddition(line)) {
-      return chalk.green(line)
-    }
-
-    if (isDeletion(line)) {
       return chalk.red(line)
     }
 
-    return chalk.gray(line)
+    if (isDeletion(line)) {
+      return chalk.green(line)
+    }
+
+    return chalk.dim(line)
   }).join('\n')
 )
 
