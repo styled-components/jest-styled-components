@@ -24,6 +24,10 @@ const Title = styled.h1`
   @media (min-width: 600px) {
     color: blue;
   }
+
+  em {
+    color: green;
+  }
 `
 
 test('react-test-renderer', () => {

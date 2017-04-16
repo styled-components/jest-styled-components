@@ -17,10 +17,8 @@ const getClassNames = (node, classNames) => {
 
 const filterNodes = classNames => (rule) => {
   if (rule.type === 'rule') {
-    const position = rule.selectors[0].indexOf(':')
-    const indexEnd = position > -1 ? position : rule.selectors[0].length
-
-    return classNames.includes(rule.selectors[0].substring(1, indexEnd))
+    const className = rule.selectors[0].split(/:| /)[0]
+    return classNames.includes(className.substring(1))
   }
 
   return false

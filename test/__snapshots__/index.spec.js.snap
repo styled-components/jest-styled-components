@@ -21,18 +21,22 @@ exports[`react-test-renderer 1`] = `
   background: papayawhip;
 }
 
-.bqeGyV {
+.tWUEr {
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
 }
 
-.bqeGyV:hover {
+.tWUEr:hover {
   text-decoration: underline;
 }
 
+.tWUEr em {
+  color: green;
+}
+
 @media (min-width: 600px) {
-  .bqeGyV {
+  .tWUEr {
     color: blue;
   }
 }
@@ -41,7 +45,7 @@ exports[`react-test-renderer 1`] = `
   className="cfRhKF"
 >
   <h1
-    className="bqeGyV"
+    className="tWUEr"
   >
     Hello World, this is my first styled component!
   </h1>

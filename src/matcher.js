@@ -9,7 +9,7 @@ const isDeletion = line => /^-/.test(line)
 
 const isClassName = line => (
   (isAddition(line) || isDeletion(line)) &&
-  (/\.[a-zA-Z:]+ {/.test(line) || /className="[a-zA-Z]+"/.test(line))
+  (/\.[a-zA-Z]+/.test(line) || /className="[a-zA-Z]+"/.test(line))
 )
 
 const colorize = message => (
