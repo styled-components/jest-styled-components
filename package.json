@@ -37,7 +37,8 @@
     "styled-components": "^1.4.4"
   },
   "dependencies": {
-    "css": "^2.2.1"
+    "css": "^2.2.1",
+    "jest-matcher-utils": "^19.0.0"
   },
   "peerDependencies": {
     "chalk": "^1.1.3",
