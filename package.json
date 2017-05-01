@@ -42,6 +42,7 @@
   "peerDependencies": {
     "chalk": "^1.1.3",
     "jest-diff": "^19.0.0",
+    "jest-matcher-utils": "^19.0.0",
     "jest-snapshot": "^19.0.2",
     "strip-ansi": "^3.0.1",
     "styled-components": "^1.4.4"
