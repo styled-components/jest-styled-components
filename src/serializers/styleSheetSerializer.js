@@ -50,7 +50,7 @@ const getStyles = (classNames) => {
   return css.stringify(ast)
 }
 
-const serializer = {
+const styleSheetSerializer = {
 
   test(val) {
     return !val.withStyles && val.$$typeof === Symbol.for('react.test.json')
@@ -67,4 +67,4 @@ const serializer = {
 
 }
 
-module.exports = serializer
+module.exports = styleSheetSerializer

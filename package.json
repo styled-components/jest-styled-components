@@ -4,6 +4,7 @@
   "description": "Jest utilities for Styled Components",
   "main": "./src/index.js",
   "files": [
+    "native",
     "src"
   ],
   "repository": "git@github.com:styled-components/jest-styled-components.git",

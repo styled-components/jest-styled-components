@@ -30,24 +30,20 @@ const colorize = message => (
   }).join('\n')
 )
 
-const matcher = {
+function toMatchStyledComponentsSnapshot(received) {
+  const result = toMatchSnapshot.call(this, received)
+  let message
 
-  toMatchStyledComponentsSnapshot(received) {
-    const result = toMatchSnapshot.call(this, received)
-    let message
+  if (!result.pass) {
+    message = diff(result.expected, result.actual, {
+      aAnnotation: 'Snapshot',
+      bAnnotation: 'Received',
+    })
+    message = stripAnsi(message)
+    message = colorize(message)
+  }
 
-    if (!result.pass) {
-      message = diff(result.expected, result.actual, {
-        aAnnotation: 'Snapshot',
-        bAnnotation: 'Received',
-      })
-      message = stripAnsi(message)
-      message = colorize(message)
-    }
-
-    return { pass: result.pass, message }
-  },
-
+  return { pass: result.pass, message }
 }
 
-module.exports = matcher
+module.exports = toMatchStyledComponentsSnapshot
