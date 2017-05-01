@@ -45,7 +45,7 @@ function toHaveStyleRule(component, name, expected) {
     const error = `${name} isn't in the style rules`
     return {
       message: () =>
-        `${matcherHint('.toHaveStyleRule')}'\n\n` +
+        `${matcherHint('.toHaveStyleRule')}\n\n` +
         `Expected ${component.name()} to have a style rule:\n` +
         `  ${printExpected(`${name}: ${expected}`)}\n` +
         'Received:\n' +
@@ -85,9 +85,9 @@ function toHaveStyleRule(component, name, expected) {
     `  ${printReceived(`${name}: ${received}`)}`
 
   const message = pass
-    ? () => `${matcherHint('.not.toHaveStyleRule')}'\n\n` +
+    ? () => `${matcherHint('.not.toHaveStyleRule')}\n\n` +
       `Expected ${component.name()} not to contain:\n${diff}`
-    : () => `${matcherHint('.toHaveStyleRule')}'\n\n` +
+    : () => `${matcherHint('.toHaveStyleRule')}\n\n` +
       `Expected ${component.name()} to have a style rule:\n${diff}`
 
   return { message, pass }
