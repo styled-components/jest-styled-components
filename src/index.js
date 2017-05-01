@@ -1,7 +1,5 @@
-const matcher = require('./matcher')
-const serializer = require('./serializer')
+const toMatchStyledComponentsSnapshot = require('./matchers/toMatchStyledComponentsSnapshot')
+const styleSheetSerializer = require('./serializers/styleSheetSerializer')
 
-module.exports = {
-  matcher,
-  serializer,
-}
+expect.addSnapshotSerializer(styleSheetSerializer)
+expect.extend({ toMatchStyledComponentsSnapshot })

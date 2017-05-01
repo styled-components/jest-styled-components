@@ -2,10 +2,7 @@ import React from 'react'
 import renderer from 'react-test-renderer'
 import styled from 'styled-components'
 import { shallow } from 'enzyme'
-import { matcher, serializer } from '../src'
-
-expect.addSnapshotSerializer(serializer)
-expect.extend(matcher)
+import '../src'
 
 const Wrapper = styled.section`
   padding: 4em;
