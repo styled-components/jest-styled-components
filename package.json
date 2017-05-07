@@ -49,7 +49,6 @@
     "styled-components": "^1.4.6"
   },
   "jest": {
-    "testEnvironment": "node",
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]
