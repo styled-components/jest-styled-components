@@ -1,3 +1,7 @@
+/**
+ * @jest-environment node
+ */
+
 import React from 'react'
 import renderer from 'react-test-renderer'
 import styled from 'styled-components'
