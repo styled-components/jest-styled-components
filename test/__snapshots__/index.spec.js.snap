@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`enzyme 1`] = `
-.cfRhKF {
+.iATjrR {
   padding: 4em;
   background: papayawhip;
 }
 
 <section
-  className="cfRhKF"
+  className="sc-bdVaJa iATjrR"
 >
   <styled.h1>
     Hello World, this is my first styled component!
@@ -16,36 +16,38 @@ exports[`enzyme 1`] = `
 `;
 
 exports[`react-test-renderer 1`] = `
-.cfRhKF {
+.iATjrR {
   padding: 4em;
   background: papayawhip;
 }
 
-.tWUEr {
+.dMjUoH {
   font-size: 1.5em;
+  -webkit-text-align: center;
   text-align: center;
   color: palevioletred;
 }
 
-.tWUEr:hover {
+.dMjUoH:hover {
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.tWUEr em {
+.dMjUoH em {
   color: green;
 }
 
 @media (min-width: 600px) {
-  .tWUEr {
+  .dMjUoH {
     color: blue;
   }
 }
 
 <section
-  className="cfRhKF"
+  className="sc-bdVaJa iATjrR"
 >
   <h1
-    className="tWUEr"
+    className="sc-bwzfXH dMjUoH"
   >
     Hello World, this is my first styled component!
   </h1>
