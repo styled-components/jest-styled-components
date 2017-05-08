@@ -1,5 +1,8 @@
 /* eslint-disable one-var, no-useless-escape, no-underscore-dangle, no-nested-ternary */
-
+const {
+  printReceived,
+  printExpected,
+} = require('jest-matcher-utils')
 const { styleSheet } = require('styled-components')
 
 /**
@@ -40,7 +43,7 @@ const findClassName = (received) => {
  * @param  {String|RegExp} value  The CSS value.
  * @return {Object}               Object for expect to pass or not pass.
  */
-const toHaveStyle = (received, selector, value) => {
+const toHaveStyleRule = (received, selector, value) => {
   try {
     const className = findClassName(received)
     const css = styleSheet.styleSheet.tags[0].innerHTML
@@ -60,29 +63,31 @@ const toHaveStyle = (received, selector, value) => {
             return v === value
           })
         ) {
-        return {
-          message: () => (
-              `Expected component to have ${selector} matching ${value}`
-            ),
+        return { // Passed
+          message: () => (`
+            ${printExpected(`Expected component to have ${selector} matching ${value}`)}
+          `),
           pass: true,
         }
       }
     }
 
-    return {
-      message: () => (
-          `Expected ${className} to have ${selector} matching ${value} received: ${styles || css}`
-        ),
+    return { // Failed -- wrong value
+      message: () => (`
+        ${printExpected(`Expected ${className} to have ${selector} matching ${value}`)}\n
+        ${printReceived(`But received, ${styles || css}`)}
+      `),
       pass: false,
     }
   } catch (e) {
-    return {
-      message: () => (
-          `Expected ${received} to be a component from react-test-renderer, or a mounted enzyme component. ${e}`
-        ),
+    return { // Failed -- not rendered correctly
+      message: () => (`
+        ${printExpected(`Expected ${received} to be a component from react-test-renderer, or a mounted enzyme component.`)}\n
+        ${printReceived(`But had an error, ${e}`)}
+      `),
       pass: false,
     }
   }
 }
 
-module.exports = toHaveStyle
+module.exports = toHaveStyleRule
