@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`enzyme 1`] = `
+.jUiOOZ {
+  border-radius: 3px;
+  border: none;
+  color: white;
+  background: tomato;
+}
+
+<button
+  className="jUiOOZ"
+>
+  Hello World!
+</button>
+`;
+
+exports[`react-test-renderer 1`] = `
+.jUiOOZ {
+  border-radius: 3px;
+  border: none;
+  color: white;
+  background: tomato;
+}
+
+<button
+  className="jUiOOZ"
+>
+  Hello World!
+</button>
+`;
