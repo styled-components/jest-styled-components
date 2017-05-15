@@ -61,11 +61,11 @@ const styleSheetSerializer = {
 
   print(val, print) {
     const classNames = getClassNames(val, [])
-    const styles = getStyles(classNames)
+    const styles = classNames.length ? `${getStyles(classNames)}\n\n` : ''
 
     val.withStyles = true
 
-    return `${styles}\n\n${print(val)}`
+    return `${styles}${print(val)}`
   },
 
 }
