@@ -75,7 +75,7 @@ const toHaveStyleRule = (received, selector, value) => {
     return { // Failed -- wrong value
       message: () => (`
         ${printExpected(`Expected ${className} to have ${selector} matching ${value}`)}\n
-        ${printReceived(`But received, ${styles || css}`)}
+        ${printReceived(`But received, ${styles[1] || css}`)}
       `),
       pass: false,
     }
