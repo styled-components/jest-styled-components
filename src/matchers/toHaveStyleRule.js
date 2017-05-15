@@ -1,96 +1,93 @@
+/* eslint-disable one-var, no-useless-escape, no-underscore-dangle, no-nested-ternary */
 const {
-  matcherHint,
   printReceived,
   printExpected,
 } = require('jest-matcher-utils')
-const parse = require('styled-components/lib/vendor/postcss-safe-parser/parse')
+const { styleSheet } = require('styled-components')
 
-function toHaveStyleRule(component, name, expected) {
-  const { rules } = component.type()
-  const props = component.props()
-  const ast = parse(rules.join())
+/**
+ * Finds the generated class name from a rendered StyledComponent.
+ * @param  {Object} received A rendered StyledComponent.
+ * @return {String}          The generated class name.
+ */
+const findClassName = (received) => {
+  let className = ''
 
-  /**
-   * Fail by default
-   */
-  let pass = false
+  const component = received.component || received
 
-  /**
-   * There can be two cases:
-   * - rule (dynamic property, value is a function of props)
-   * - decl (static property, value is a string)
-   *
-   * We also take the last matched node because
-   * developer may override initial assignment
-   */
-  const node = ast.nodes.filter((n) => {
-    switch (n.type) {
-      case 'rule':
-        return n.selector.indexOf(name) === 0
-      case 'decl':
-        return n.prop === name
-      default:
-        return false
+  // constructor.name doesnt work in older versions of node
+  if (component.constructor && typeof component.toJSON === 'function') {
+    // react test renderer
+    className = component.toJSON().props.className
+  } else if (received.node) {
+    // enzyme
+    const renderedComponent = received.node._reactInternalInstance._renderedComponent
+
+    className = (renderedComponent._instance != null)
+          ? renderedComponent._instance.state.generatedClassName
+          : renderedComponent._currentElement.props.className
+  }
+  // styled components adds the className on the end.
+  className = className.split(' ').pop()
+
+  if (received.modifier) {
+    className += received.modifier
+  }
+  return className
+}
+
+/**
+ * Tests component to see if it has the correct value for a specific CSS rule.
+ * @param  {Object} received      Rendered component in unit test.
+ * @param  {String} selector      The CSS rule.
+ * @param  {String|RegExp} value  The CSS value.
+ * @return {Object}               Object for expect to pass or not pass.
+ */
+const toHaveStyleRule = (received, selector, value) => {
+  try {
+    const className = findClassName(received)
+    const css = styleSheet.styleSheet.tags[0].innerHTML
+    const styles = new RegExp(`${className} {([^}]*)`, 'g').exec(css)
+    const capture = new RegExp(`${selector}:[\s]*([^;]+)`, 'g')
+
+    if (styles && styles[1].match(capture)) {
+      const values = styles[1].match(capture).map(r => r.replace(capture, '$1').trim())
+
+      if (
+          values &&
+          values.some((v) => {
+            if (value instanceof RegExp) {
+              return v.match(value)
+            }
+
+            return v === value
+          })
+        ) {
+        return { // Passed
+          message: () => (`
+            ${printExpected(`Expected component to have ${selector} matching ${value}`)}
+          `),
+          pass: true,
+        }
+      }
     }
-  }).pop()
 
-  let received
-
-  /**
-   * If node is not found (typo in the rule name /
-   * rule isn't specified for component), we return
-   * a special message
-   */
-  if (!node) {
-    const error = `${name} isn't in the style rules`
-    return {
-      message: () =>
-        `${matcherHint('.toHaveStyleRule')}\n\n` +
-        `Expected ${component.name()} to have a style rule:\n` +
-        `  ${printExpected(`${name}: ${expected}`)}\n` +
-        'Received:\n' +
-        `  ${printReceived(error)}`,
+    return { // Failed -- wrong value
+      message: () => (`
+        ${printExpected(`Expected ${className} to have ${selector} matching ${value}`)}\n
+        ${printReceived(`But received, ${styles || css}`)}
+      `),
+      pass: false,
+    }
+  } catch (e) {
+    return { // Failed -- not rendered correctly
+      message: () => (`
+        ${printExpected(`Expected ${received} to be a component from react-test-renderer, or a mounted enzyme component.`)}\n
+        ${printReceived(`But had an error, ${e}`)}
+      `),
       pass: false,
     }
   }
-
-  /**
-   * In a case of declaration, it's fairly easy to check if expected === given
-   */
-  if (node.type === 'decl') {
-    pass = node.value === expected
-    received = node.value
-  /**
-   * But in case of rule we have quite some complexity here:
-   * We can't get a ref to the function using `postcss-safe-parser`, so
-   * we have to construct it by ourselves. We also don't know how user called `props`
-   * in his value function, so we parse the entire CSS block to match its params and body
-   *
-   * Once params are matched, we construct a new function and
-   * invoke it with props, taken from the enzyme
-   */
-  } else {
-    const match = node.source.input.css.match(new RegExp(`${name}:.*,function (.*){(.*)},`))
-    const param = match[1].slice(1, -1)
-    /* eslint-disable */
-    const fn = Function(param, match[2])
-    /* eslint-enable */
-    received = fn(props)
-    pass = received === expected
-  }
-
-  const diff = '' +
-    `  ${printExpected(`${name}: ${expected}`)}\n` +
-    'Received:\n' +
-    `  ${printReceived(`${name}: ${received}`)}`
-
-  const message = pass
-    ? () => `${matcherHint('.not.toHaveStyleRule')}\n\n` +
-      `Expected ${component.name()} not to contain:\n${diff}`
-    : () => `${matcherHint('.toHaveStyleRule')}\n\n` +
-      `Expected ${component.name()} to have a style rule:\n${diff}`
-
-  return { message, pass }
 }
 
 module.exports = toHaveStyleRule
