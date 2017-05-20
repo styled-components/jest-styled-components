@@ -9,7 +9,7 @@
 yarn add --dev jest-styled-components
 ```
 
-## React
+## toMatchStyledComponentsSnapshot [React]
 
 ### Preview
 
@@ -34,7 +34,26 @@ import 'jest-styled-components'
 
 expect(tree).toMatchStyledComponentsSnapshot()
 ```
-## React Native
+
+## toHaveStyleRule [React]
+
+### Preview
+
+<img alt="Preview" src="assets/toHaveStyleRule.png" width="470px" height="85px" />
+
+### Usage
+
+```js
+// *.spec.js
+
+import 'jest-styled-components'
+
+// ...
+
+expect(tree).toHaveStyleRule('property', value)
+```
+
+## toHaveStyleRule [React Native]
 
 ### Preview
 
