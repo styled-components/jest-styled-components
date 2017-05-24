@@ -30,6 +30,9 @@ const Title = styled.h1`
     color: green;
   }
 `
+test('snapshot on null', () => {
+  expect(null).toMatchSnapshot();
+});
 
 test('react-test-renderer', () => {
   const tree = renderer.create(

@@ -53,7 +53,7 @@ const getStyles = (classNames) => {
 const styleSheetSerializer = {
 
   test(val) {
-    return !val.withStyles && val.$$typeof === Symbol.for('react.test.json')
+    return val && !val.withStyles && val.$$typeof === Symbol.for('react.test.json')
   },
 
   print(val, print) {
