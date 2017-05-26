@@ -18,15 +18,11 @@ yarn add --dev jest-styled-components
 ### Usage
 
 ```js
-// package.json
-
-"jest": {
-  "testEnvironment": "node"
-}
-```
-
-```js
 // *.spec.js
+
+/**
+ * @jest-environment node
+ */
 
 import 'jest-styled-components'
 
