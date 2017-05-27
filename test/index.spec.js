@@ -31,8 +31,8 @@ const Title = styled.h1`
   }
 `
 test('snapshot on null', () => {
-  expect(null).toMatchSnapshot();
-});
+  expect(null).toMatchSnapshot()
+})
 
 test('react-test-renderer', () => {
   const tree = renderer.create(
