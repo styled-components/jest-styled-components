@@ -38,8 +38,39 @@ const getMediaQueries = (ast, filter) => (
     }, [])
 )
 
-const getStyles = (classNames) => {
-  const styles = styleSheet.rules().map(rule => rule.cssText).join('\n')
+const resolveDeclarations = declarations => {
+  const declarationsMap = {}
+  return declarations
+    .reverse()
+    .filter(declaration => {
+      if (declarationsMap[declaration.property]) {
+        return false
+      }
+
+      declarationsMap[declaration.property] = true
+      return true
+    })
+    .reverse()
+}
+
+const getStyles = classNames => {
+  const styles = styleSheet
+    .rules()
+    .map(rule => {
+      if (!rule.cssText) {
+        return rule.cssText
+      }
+
+      const ast = css.parse(rule.cssText)
+      const astRule = ast.stylesheet.rules[0]
+      const resolvedDeclarations = resolveDeclarations(astRule.declarations)
+
+      ast.stylesheet.rules[0].declarations = resolvedDeclarations
+
+      return css.stringify(ast)
+    })
+    .join('\n')
+
   const ast = css.parse(styles)
   const filter = filterNodes(classNames)
   const rules = ast.stylesheet.rules.filter(filter)
