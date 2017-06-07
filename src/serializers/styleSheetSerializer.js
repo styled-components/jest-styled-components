@@ -1,7 +1,6 @@
 const css = require('css')
 const styleSheet = require('styled-components/lib/models/StyleSheet')
 const { ServerStyleSheet } = require('styled-components')
-const StyleSheet = require('styled-components/lib/models/StyleSheet')
 
 // styled-components >=2.0.0
 const isOverV2 = Boolean(ServerStyleSheet)
@@ -9,7 +8,7 @@ const isOverV2 = Boolean(ServerStyleSheet)
 const isServer = typeof document === 'undefined'
 
 if (isOverV2) {
-  StyleSheet.default.reset(isServer)
+  styleSheet.default.reset(isServer)
 }
 
 const getClassNames = (node, classNames) => {
@@ -56,7 +55,7 @@ const getStyles = (classNames) => {
   if (isOverV2 && isServer) {
     styles = new ServerStyleSheet().getStyleTags().match(styleTags)[1]
   } else if (isOverV2) {
-    styles = StyleSheet.default.instance.toHTML().match(styleTags)[1]
+    styles = styleSheet.default.instance.toHTML().match(styleTags)[1]
   } else {
     styles = styleSheet.rules().map(rule => rule.cssText).join('\n')
   }
