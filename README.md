@@ -20,10 +20,6 @@ yarn add --dev jest-styled-components
 ```js
 // *.spec.js
 
-/**
- * @jest-environment node
- */
-
 import 'jest-styled-components'
 
 // ...
