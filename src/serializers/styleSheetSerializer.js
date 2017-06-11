@@ -1,6 +1,6 @@
 const css = require('css')
 const styleSheet = require('styled-components/lib/models/StyleSheet')
-const { ServerStyleSheet } = require('styled-components')
+const { getCSS } = require('../utils')
 
 const getClassNames = (node, classNames) => {
   if (node.children && node.children.reduce) {
@@ -40,9 +40,7 @@ const getMediaQueries = (ast, filter) => (
 )
 
 const getStyles = (classNames) => {
-  const styles = ServerStyleSheet
-    ? new ServerStyleSheet().getStyleTags().match(/<style[^>]*>([\s\S]*)<\/style>/)[1]
-    : styleSheet.rules().map(rule => rule.cssText).join('\n')
+  const styles = getCSS(styleSheet)
   const ast = css.parse(styles)
   const filter = filterNodes(classNames)
   const rules = ast.stylesheet.rules.filter(filter)

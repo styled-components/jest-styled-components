@@ -1,11 +1,7 @@
-/**
- * @jest-environment node
- */
-
 import React from 'react'
 import renderer from 'react-test-renderer'
 import styled from 'styled-components'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import '../src'
 
 const Wrapper = styled.section`
@@ -52,4 +48,14 @@ test('enzyme', () => {
   )
 
   expect(tree).toMatchStyledComponentsSnapshot()
+})
+
+test('toHaveStyleRule', () => {
+  const tree = mount(
+    <Wrapper>
+      <Title>Hello World, this is my first styled component!</Title>
+    </Wrapper>,
+  )
+
+  expect(tree).toHaveStyleRule('background', 'papayawhip')
 })
