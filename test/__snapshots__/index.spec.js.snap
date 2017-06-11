@@ -1,6 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`enzyme 1`] = `
+exports[`toMatchSnapshot null 1`] = `null`;
+
+exports[`toMatchSnapshot shallow 1`] = `
 .iATjrR {
   padding: 4em;
   background: papayawhip;
@@ -15,7 +17,7 @@ exports[`enzyme 1`] = `
 </section>
 `;
 
-exports[`react-test-renderer 1`] = `
+exports[`toMatchSnapshot test-renderer 1`] = `
 .iATjrR {
   padding: 4em;
   background: papayawhip;
@@ -53,5 +55,3 @@ exports[`react-test-renderer 1`] = `
   </h1>
 </section>
 `;
-
-exports[`snapshot on null 1`] = `null`;

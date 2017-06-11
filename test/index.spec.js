@@ -26,36 +26,43 @@ const Title = styled.h1`
     color: green;
   }
 `
-test('snapshot on null', () => {
-  expect(null).toMatchSnapshot()
+
+describe('toMatchSnapshot', () => {
+  test('null', () => {
+    expect(null).toMatchSnapshot()
+  })
+
+  test('test-renderer', () => {
+    const tree = renderer.create(
+      <Wrapper>
+        <Title>Hello World, this is my first styled component!</Title>
+      </Wrapper>,
+    ).toJSON()
+
+    expect(tree).toMatchStyledComponentsSnapshot()
+  })
+
+  test('shallow', () => {
+    const tree = shallow(
+      <Wrapper>
+        <Title>Hello World, this is my first styled component!</Title>
+      </Wrapper>,
+    )
+
+    expect(tree).toMatchStyledComponentsSnapshot()
+  })
 })
 
-test('react-test-renderer', () => {
-  const tree = renderer.create(
-    <Wrapper>
-      <Title>Hello World, this is my first styled component!</Title>
-    </Wrapper>,
-  ).toJSON()
+describe('toHaveStyleRule', () => {
+  test('test-renderer', () => {
+    const tree = renderer.create(<Wrapper />).toJSON()
 
-  expect(tree).toMatchStyledComponentsSnapshot()
-})
+    expect(tree).toHaveStyleRule('background', 'papayawhip')
+  })
 
-test('enzyme', () => {
-  const tree = shallow(
-    <Wrapper>
-      <Title>Hello World, this is my first styled component!</Title>
-    </Wrapper>,
-  )
+  test('mount', () => {
+    const tree = mount(<Wrapper />)
 
-  expect(tree).toMatchStyledComponentsSnapshot()
-})
-
-test('toHaveStyleRule', () => {
-  const tree = mount(
-    <Wrapper>
-      <Title>Hello World, this is my first styled component!</Title>
-    </Wrapper>,
-  )
-
-  expect(tree).toHaveStyleRule('background', 'papayawhip')
+    expect(tree).toHaveStyleRule('background', 'papayawhip')
+  })
 })
