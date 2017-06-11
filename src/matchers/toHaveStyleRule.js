@@ -17,9 +17,9 @@ const findClassName = (received) => {
   const component = received.component || received
 
   // constructor.name doesnt work in older versions of node
-  if (component.constructor && typeof component.toJSON === 'function') {
+  if (component.$$typeof === Symbol.for('react.test.json')) {
     // react test renderer
-    className = component.toJSON().props.className
+    className = component.props.className
   } else if (received.node) {
     // enzyme
     const renderedComponent = received.node._reactInternalInstance._renderedComponent
