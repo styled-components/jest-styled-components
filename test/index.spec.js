@@ -3,6 +3,7 @@ import renderer from 'react-test-renderer'
 import styled from 'styled-components'
 import { shallow, mount } from 'enzyme'
 import '../src'
+import { StyledLabel } from './components'
 
 const Wrapper = styled.section`
   padding: 4em;
@@ -13,7 +14,6 @@ const Title = styled.h1`
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
-
   &:hover {
     text-decoration: underline;
   }
@@ -51,6 +51,15 @@ describe('toMatchSnapshot', () => {
 
     expect(tree).toMatchStyledComponentsSnapshot()
   })
+
+  test('when horizontal must be display:inline', () => {
+    // given
+    const text = 'text'
+    // when
+    const component = mount(<StyledLabel horizontal>{text}</StyledLabel>)
+    // then
+    expect(component).toMatchStyledComponentsSnapshot()
+  })
 })
 
 describe('toHaveStyleRule', () => {
@@ -64,5 +73,14 @@ describe('toHaveStyleRule', () => {
     const tree = mount(<Wrapper />)
 
     expect(tree).toHaveStyleRule('background', 'papayawhip')
+  })
+
+  test('when horizontal must be display:inline', () => {
+    // given
+    const text = 'text'
+    // when
+    const component = mount(<StyledLabel horizontal>{text}</StyledLabel>)
+    // then
+    expect(component).toHaveStyleRule('display', 'inline')
   })
 })

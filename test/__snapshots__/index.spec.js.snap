@@ -3,13 +3,13 @@
 exports[`toMatchSnapshot null 1`] = `null`;
 
 exports[`toMatchSnapshot shallow 1`] = `
-.iATjrR {
+.gzMTbA {
   padding: 4em;
   background: papayawhip;
 }
 
 <section
-  className="sc-bdVaJa iATjrR"
+  className="sc-bwzfXH gzMTbA"
 >
   <styled.h1>
     Hello World, this is my first styled component!
@@ -18,40 +18,52 @@ exports[`toMatchSnapshot shallow 1`] = `
 `;
 
 exports[`toMatchSnapshot test-renderer 1`] = `
-.iATjrR {
+.gzMTbA {
   padding: 4em;
   background: papayawhip;
 }
 
-.dMjUoH {
+.jASgrB {
   font-size: 1.5em;
   -webkit-text-align: center;
   text-align: center;
   color: palevioletred;
 }
 
-.dMjUoH:hover {
+.jASgrB:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.dMjUoH em {
+.jASgrB em {
   color: green;
 }
 
 @media (min-width: 600px) {
-  .dMjUoH {
+  .jASgrB {
     color: blue;
   }
 }
 
 <section
-  className="sc-bdVaJa iATjrR"
+  className="sc-bwzfXH gzMTbA"
 >
   <h1
-    className="sc-bwzfXH dMjUoH"
+    className="sc-htpNat jASgrB"
   >
     Hello World, this is my first styled component!
   </h1>
 </section>
+`;
+
+exports[`toMatchSnapshot when horizontal must be display:inline 1`] = `
+<styled.div
+  horizontal={true}
+>
+  <div
+    className="sc-bdVaJa huqire"
+  >
+    text
+  </div>
+</styled.div>
 `;
