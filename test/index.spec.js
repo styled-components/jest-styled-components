@@ -27,9 +27,9 @@ const Title = styled.h1`
   }
 `
 
-describe('toMatchSnapshot', () => {
+describe('toMatchStyledComponentsSnapshot', () => {
   test('null', () => {
-    expect(null).toMatchSnapshot()
+    expect(null).toMatchStyledComponentsSnapshot()
   })
 
   test('test-renderer', () => {
