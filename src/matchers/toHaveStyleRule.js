@@ -24,7 +24,7 @@ const findClassName = (received) => {
     // enzyme
     const renderedComponent = received.node._reactInternalInstance._renderedComponent
 
-    className = (renderedComponent._instance != null)
+    className = (renderedComponent._instance && renderedComponent._instance.state)
           ? renderedComponent._instance.state.generatedClassName
           : renderedComponent._currentElement.props.className
   }
