@@ -48,8 +48,8 @@ const toHaveStyleRule = (received, selector, value) => {
   try {
     const className = findClassName(received)
     const css = getCSS(styleSheet)
-    const styles = new RegExp(`${className} {([^}]*)`, 'g').exec(css)
-    const capture = new RegExp(`${selector}:[\s]*([^;]+)`, 'g')
+    const styles = new RegExp(`${className}[\\s]?{([^}]*)`, 'g').exec(css)
+    const capture = new RegExp(`${selector}:[\\s]*([^;]+)`, 'g')
 
     if (styles && styles[1].match(capture)) {
       const values = styles[1].match(capture).map(r => r.replace(capture, '$1').trim())
