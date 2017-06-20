@@ -16,17 +16,21 @@ const findClassName = (received) => {
 
   const component = received.component || received
 
-  // constructor.name doesnt work in older versions of node
   if (component.$$typeof === Symbol.for('react.test.json')) {
     // react test renderer
     className = component.props.className
   } else if (received.node) {
-    // enzyme
-    const renderedComponent = received.node._reactInternalInstance._renderedComponent
+    if (received.node.$$typeof === Symbol.for('react.element')) {
+      // enzyme's shallow
+      className = received.node.props.className
+    } else {
+      // enzyme's mount
+      const renderedComponent = received.node._reactInternalInstance._renderedComponent
 
-    className = (renderedComponent._instance && renderedComponent._instance.state)
-          ? renderedComponent._instance.state.generatedClassName
-          : renderedComponent._currentElement.props.className
+      className = (renderedComponent._instance && renderedComponent._instance.state)
+            ? renderedComponent._instance.state.generatedClassName
+            : renderedComponent._currentElement.props.className
+    }
   }
   // styled components adds the className on the end.
   className = className.split(' ').pop()

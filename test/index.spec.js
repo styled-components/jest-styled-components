@@ -60,6 +60,12 @@ describe('toHaveStyleRule', () => {
     expect(tree).toHaveStyleRule('background', 'papayawhip')
   })
 
+  test('shallow', () => {
+    const tree = shallow(<Wrapper />)
+
+    expect(tree).toHaveStyleRule('background', 'papayawhip')
+  })
+
   test('mount', () => {
     const tree = mount(<Wrapper />)
 
