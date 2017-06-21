@@ -1,46 +1,46 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`toMatchStyledComponentsSnapshot mount 1`] = `
-.iATjrR {
+.c0 {
   padding: 4em;
   background: papayawhip;
 }
 
-.bIftVI {
+.c1 {
   font-size: 1.5em;
   -webkit-text-align: center;
   text-align: center;
   color: palevioletred;
 }
 
-.bIftVI:hover {
+.c1:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.bIftVI em {
+.c1 em {
   color: green;
 }
 
 @media (min-width: 600px) {
-  .bIftVI {
+  .c1 {
     color: blue;
   }
 }
 
 @supports (display: grid) {
-  .bIftVI {
+  .c1 {
     display: grid;
   }
 }
 
 <styled.section>
   <section
-    className="sc-bdVaJa iATjrR"
+    className="c0"
   >
     <styled.h1>
       <h1
-        className="sc-bwzfXH bIftVI"
+        className="c1"
       >
         Hello World, this is my first styled component!
       </h1>
@@ -52,13 +52,13 @@ exports[`toMatchStyledComponentsSnapshot mount 1`] = `
 exports[`toMatchStyledComponentsSnapshot null 1`] = `null`;
 
 exports[`toMatchStyledComponentsSnapshot shallow 1`] = `
-.iATjrR {
+.c0 {
   padding: 4em;
   background: papayawhip;
 }
 
 <section
-  className="sc-bdVaJa iATjrR"
+  className="c0"
 >
   <styled.h1>
     Hello World, this is my first styled component!
@@ -67,44 +67,44 @@ exports[`toMatchStyledComponentsSnapshot shallow 1`] = `
 `;
 
 exports[`toMatchStyledComponentsSnapshot test-renderer 1`] = `
-.iATjrR {
+.c0 {
   padding: 4em;
   background: papayawhip;
 }
 
-.bIftVI {
+.c1 {
   font-size: 1.5em;
   -webkit-text-align: center;
   text-align: center;
   color: palevioletred;
 }
 
-.bIftVI:hover {
+.c1:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.bIftVI em {
+.c1 em {
   color: green;
 }
 
 @media (min-width: 600px) {
-  .bIftVI {
+  .c1 {
     color: blue;
   }
 }
 
 @supports (display: grid) {
-  .bIftVI {
+  .c1 {
     display: grid;
   }
 }
 
 <section
-  className="sc-bdVaJa iATjrR"
+  className="c0"
 >
   <h1
-    className="sc-bwzfXH bIftVI"
+    className="c1"
   >
     Hello World, this is my first styled component!
   </h1>

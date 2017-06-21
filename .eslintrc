@@ -9,6 +9,7 @@
     "semi": ["error", "never"],
     "no-param-reassign": ["off"],
     "no-cond-assign": ["error", "except-parens"],
+    "no-plusplus": ["off"],
     "comma-dangle": ["error", {
       "arrays": "only-multiline",
       "objects": "only-multiline",

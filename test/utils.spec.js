@@ -27,10 +27,10 @@ describe('getClassNames', () => {
       props: { className: 'A' },
       children: [
         { props: { className: 'B' } },
-        { props: { className: 'C' } },
+        { props: { className: 'C D' } },
       ],
     }
 
-    expect(getClassNames(tree).sort()).toEqual(['A', 'B', 'C'])
+    expect(getClassNames(tree)).toEqual(['A', 'B', 'C', 'D'])
   })
 })
