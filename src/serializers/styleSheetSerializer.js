@@ -13,7 +13,7 @@ const getClassNames = (node, classNames) => {
     return classNames.concat(node.props.className.split(' '))
   }
 
-  return []
+  return classNames
 }
 
 const filterNodes = classNames => (rule) => {

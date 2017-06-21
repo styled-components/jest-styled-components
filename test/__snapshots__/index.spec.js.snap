@@ -1,5 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`toMatchStyledComponentsSnapshot mount 1`] = `
+.iATjrR {
+  padding: 4em;
+  background: papayawhip;
+}
+
+.dMjUoH {
+  font-size: 1.5em;
+  -webkit-text-align: center;
+  text-align: center;
+  color: palevioletred;
+}
+
+.dMjUoH:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.dMjUoH em {
+  color: green;
+}
+
+@media (min-width: 600px) {
+  .dMjUoH {
+    color: blue;
+  }
+}
+
+<styled.section>
+  <section
+    className="sc-bdVaJa iATjrR"
+  >
+    <styled.h1>
+      <h1
+        className="sc-bwzfXH dMjUoH"
+      >
+        Hello World, this is my first styled component!
+      </h1>
+    </styled.h1>
+  </section>
+</styled.section>
+`;
+
 exports[`toMatchStyledComponentsSnapshot null 1`] = `null`;
 
 exports[`toMatchStyledComponentsSnapshot shallow 1`] = `

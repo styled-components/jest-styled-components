@@ -51,6 +51,16 @@ describe('toMatchStyledComponentsSnapshot', () => {
 
     expect(tree).toMatchStyledComponentsSnapshot()
   })
+
+  test('mount', () => {
+    const tree = mount(
+      <Wrapper>
+        <Title>Hello World, this is my first styled component!</Title>
+      </Wrapper>,
+    )
+
+    expect(tree).toMatchStyledComponentsSnapshot()
+  })
 })
 
 describe('toHaveStyleRule', () => {
