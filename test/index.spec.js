@@ -22,6 +22,10 @@ const Title = styled.h1`
     color: blue;
   }
 
+  @supports (display: grid) {
+    display: grid;
+  }
+
   em {
     color: green;
   }

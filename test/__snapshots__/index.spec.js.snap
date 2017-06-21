@@ -6,25 +6,31 @@ exports[`toMatchStyledComponentsSnapshot mount 1`] = `
   background: papayawhip;
 }
 
-.dMjUoH {
+.bIftVI {
   font-size: 1.5em;
   -webkit-text-align: center;
   text-align: center;
   color: palevioletred;
 }
 
-.dMjUoH:hover {
+.bIftVI:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.dMjUoH em {
+.bIftVI em {
   color: green;
 }
 
 @media (min-width: 600px) {
-  .dMjUoH {
+  .bIftVI {
     color: blue;
+  }
+}
+
+@supports (display: grid) {
+  .bIftVI {
+    display: grid;
   }
 }
 
@@ -34,7 +40,7 @@ exports[`toMatchStyledComponentsSnapshot mount 1`] = `
   >
     <styled.h1>
       <h1
-        className="sc-bwzfXH dMjUoH"
+        className="sc-bwzfXH bIftVI"
       >
         Hello World, this is my first styled component!
       </h1>
@@ -66,25 +72,31 @@ exports[`toMatchStyledComponentsSnapshot test-renderer 1`] = `
   background: papayawhip;
 }
 
-.dMjUoH {
+.bIftVI {
   font-size: 1.5em;
   -webkit-text-align: center;
   text-align: center;
   color: palevioletred;
 }
 
-.dMjUoH:hover {
+.bIftVI:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.dMjUoH em {
+.bIftVI em {
   color: green;
 }
 
 @media (min-width: 600px) {
-  .dMjUoH {
+  .bIftVI {
     color: blue;
+  }
+}
+
+@supports (display: grid) {
+  .bIftVI {
+    display: grid;
   }
 }
 
@@ -92,7 +104,7 @@ exports[`toMatchStyledComponentsSnapshot test-renderer 1`] = `
   className="sc-bdVaJa iATjrR"
 >
   <h1
-    className="sc-bwzfXH dMjUoH"
+    className="sc-bwzfXH bIftVI"
   >
     Hello World, this is my first styled component!
   </h1>

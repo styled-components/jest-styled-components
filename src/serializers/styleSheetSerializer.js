@@ -25,9 +25,9 @@ const filterNodes = classNames => (rule) => {
   return false
 }
 
-const getMediaQueries = (ast, filter) => (
+const getAtRules = (ast, filter) => (
   ast.stylesheet.rules
-    .filter(rule => rule.type === 'media')
+    .filter(rule => rule.type === 'media' || rule.type === 'supports')
     .reduce((acc, mediaQuery) => {
       mediaQuery.rules = mediaQuery.rules.filter(filter)
 
@@ -44,7 +44,7 @@ const getStyles = (classNames) => {
   const ast = css.parse(styles)
   const filter = filterNodes(classNames)
   const rules = ast.stylesheet.rules.filter(filter)
-  const mediaQueries = getMediaQueries(ast, filter)
+  const mediaQueries = getAtRules(ast, filter)
 
   ast.stylesheet.rules = rules.concat(mediaQueries)
 
