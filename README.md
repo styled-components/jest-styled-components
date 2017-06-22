@@ -10,7 +10,7 @@
 yarn add --dev jest-styled-components
 ```
 
-This package must be used with either `react-test-renderer` or `enzyme` and `enzyme-to-json` to generate a serialized `tree` from your component.
+To render React components for testing you can use either `react-test-renderer` or `enzyme`.
 
 **Using react-test-renderer**
 
@@ -27,17 +27,16 @@ Usage:
 import renderer from 'react-test-renderer'
 
 // somewhere in your tests
-it('matches the styled components snapshot', () => {
+test('matches the styled components snapshot', () => {
   const tree = renderer.create(<MyComponent />).toJSON()
   expect(tree).toMatchStyledComponentsSnapshot()
   expect(tree).toHaveStyleRule('display', 'block')
 })
 ```
 
-For more info on using react-test-renderer with jest for snapshots see [this](https://facebook.github.io/jest/docs/snapshot-testing.html)
 
 
-**Using enzyme's mount and enzyme-to-json**
+**Using enzyme and enzyme-to-json**
 
 Installation:
 
@@ -47,23 +46,31 @@ yarn add --dev enzyme enzyme-to-json
 
 Usage:
 
-This module is not compatible with shallow rendering, components must use the full DOM rendering with `mount`
 
 ```js
 import {mount} from 'enzyme'
 import toJSON from 'enzyme-to-json'
 
 // inside your test
-it('can use enzyme instead of react-test-renderer', () => {
+test('can use enzyme instead of react-test-renderer', () => {
   const wrapper = mount(<MyComponent />)
   const tree = toJSON(wrapper)
 
+  const selector = '.btn-primary'
+  const subject = wrapper.find(selector)
+  expect(subject).toHaveStyleRule('color', 'whitesmoke')
   expect(tree).toMatchStyledComponentsSnapshot()
-  expect(tree).toHaveStyleRule('display', 'block')
 })
 ```
 
+`enzyme-to-json` is only needed for snapshot testing, to learn more about snapshot testing with enzyme, go [here](https://www.npmjs.com/package/enzyme-to-json)
+
+
 ## toMatchStyledComponentsSnapshot [React]
+
+Learn more about Snapshot Testing with Jest [here](https://facebook.github.io/jest/docs/snapshot-testing.html), this matcher
+is used to assert complex selectors or to test your entire component in one go.
+
 
 ### Preview
 
@@ -83,8 +90,9 @@ expect(tree).toMatchStyledComponentsSnapshot()
 
 ## toHaveStyleRule [React]
 
-Only checks for the styles directly applied to the component it receives, to assert that a style has been applied to a child
-component, use `toMatchStyledComponentsSnapshot`
+Only checks for the styles directly applied to the component it receives, to assert that a complex selector has been applied to
+a component, use `toMatchStyledComponentsSnapshot` instead.
+
 
 ### Preview
 
@@ -122,3 +130,4 @@ import 'jest-styled-components/native'
 
 expect(tree).toHaveStyleRule('property', value)
 ```
+
