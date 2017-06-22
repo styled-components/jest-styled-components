@@ -31,7 +31,7 @@ module.exports.getCSS = getCSS
 function getClassNames (node, classNames) {
   if (node.children && node.children.reduce) {
     classNames = node.children.reduce((acc, child) => (
-      acc.concat(getClassNames(child, acc))
+      acc.concat(getClassNames(child, []))
     ), classNames)
   }
 
