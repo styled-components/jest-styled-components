@@ -1,20 +1,6 @@
 const css = require('css')
 const styleSheet = require('styled-components/lib/models/StyleSheet')
-const { getCSS } = require('../utils')
-
-const getClassNames = (node, classNames) => {
-  if (node.children && node.children.reduce) {
-    classNames = node.children.reduce((acc, child) => (
-      acc.concat(getClassNames(child, acc))
-    ), classNames)
-  }
-
-  if (node.props && node.props.className) {
-    return classNames.concat(node.props.className.split(' '))
-  }
-
-  return classNames
-}
+const { getCSS, getClassNames } = require('../utils')
 
 const filterNodes = classNames => (rule) => {
   if (rule.type === 'rule') {
