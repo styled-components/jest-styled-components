@@ -28,17 +28,16 @@ function getCSS(styleSheet) {
 
 module.exports.getCSS = getCSS
 
-function getClassNames (node, classNames) {
-  if (node.children && node.children.reduce) {
-    classNames = node.children.reduce((acc, child) => (
-      acc.concat(getClassNames(child, []))
-    ), classNames)
+function getClassNames(node) {
+  const classNames = []
+  if (node.children) {
+    node.children.forEach(child => (
+      Array.prototype.push.apply(classNames, getClassNames(child))
+    ))
   }
-
   if (node.props && node.props.className) {
-    return classNames.concat(node.props.className.split(' '))
+    Array.prototype.push.apply(classNames, node.props.className.split(' '))
   }
-
   return classNames
 }
 

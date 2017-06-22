@@ -1,23 +1,15 @@
 const { getClassNames } = require('../src/utils')
 
 describe('getClassNames', () => {
-  test('gets list of unique classes from a tree', () => {
+  test('produces a list of unique class names from a tree', () => {
     const tree = {
-      props: {
-        className: 'one'
-      },
+      props: { className: 'A' },
       children: [
-        {
-          props: { className: 'two' },
-        },
-        {
-          props: { className: 'three' },
-        }
+        { props: { className: 'B' } },
+        { props: { className: 'C' } }
       ]
     }
 
-    const got = getClassNames(tree, []).sort()
-    const expected = ['one', 'two', 'three'].sort()
-    expect(got).toEqual(expected)
+    expect(getClassNames(tree).sort()).toEqual(['A', 'B', 'C'])
   })
 })
