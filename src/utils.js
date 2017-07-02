@@ -15,7 +15,7 @@ function isServer() {
 
 module.exports.isServer = isServer
 
-function parseCSSfromHTML (html) {
+function parseCSSfromHTML(html) {
   let css = ''
   let matches
   while ((matches = STYLE_TAGS_REGEXP.exec(html)) !== null) {
@@ -33,7 +33,6 @@ function getCSS(styleSheet) {
   } else if (overV2) {
     return parseCSSfromHTML(styleSheet.default.instance.toHTML())
   }
-
   return styleSheet.rules().map(rule => rule.cssText).join('\n')
 }
 

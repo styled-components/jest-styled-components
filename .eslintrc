@@ -8,6 +8,7 @@
   "rules": {
     "semi": ["error", "never"],
     "no-param-reassign": ["off"],
+    "no-cond-assign": ["error", "except-parens"],
     "react/jsx-filename-extension": ["error", { "extensions": [".js"] }],
   }
 }
