@@ -26,7 +26,7 @@ import renderer from 'react-test-renderer'
 
 test('with react-test-renderer', () => {
   const tree = renderer.create(<MyComponent />).toJSON()
-  
+
   expect(tree).toMatchStyledComponentsSnapshot()
   expect(tree).toHaveStyleRule('display', 'block')
 })
@@ -51,7 +51,7 @@ test('with enzyme', () => {
   const wrapper = shallow(<MyComponent />) // or mount(<MyComponent />)
   const subject = wrapper.find('.btn-primary')
   expect(subject).toHaveStyleRule('color', 'whitesmoke')
-  
+
   const tree = toJSON(wrapper)
   expect(tree).toMatchStyledComponentsSnapshot()
 })
@@ -87,7 +87,9 @@ Only checks for the styles directly applied to the component it receives, to ass
 
 ### Preview
 
-<img alt="Preview" src="assets/toHaveStyleRule.png" width="470px" height="85px" />
+<img alt="Preview" src="assets/toHaveStyleRule1.png" width="340px" height="100px" />
+
+<img alt="Preview" src="assets/toHaveStyleRule2.png" width="340px" height="50px" />
 
 ### Usage
 
@@ -106,9 +108,9 @@ expect(tree).toHaveStyleRule('property', value)
 
 ### Preview
 
-<img alt="Preview" src="assets/toHaveStyleRule1.png" width="440px" height="140px" />
+<img alt="Preview" src="assets/toHaveStyleRule1.native.png" width="440px" height="140px" />
 
-<img alt="Preview" src="assets/toHaveStyleRule2.png" width="440px" height="140px" />
+<img alt="Preview" src="assets/toHaveStyleRule2.native.png" width="440px" height="140px" />
 
 ### Usage
 
