@@ -9,6 +9,13 @@
     "semi": ["error", "never"],
     "no-param-reassign": ["off"],
     "no-cond-assign": ["error", "except-parens"],
+    "comma-dangle": ["error", {
+      "arrays": "only-multiline",
+      "objects": "only-multiline",
+      "imports": "never",
+      "exports": "never",
+      "functions": "never",
+    }],
     "react/jsx-filename-extension": ["error", { "extensions": [".js"] }],
   }
 }

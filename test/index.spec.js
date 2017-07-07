@@ -40,7 +40,7 @@ describe('toMatchStyledComponentsSnapshot', () => {
     const tree = renderer.create(
       <Wrapper>
         <Title>Hello World, this is my first styled component!</Title>
-      </Wrapper>,
+      </Wrapper>
     ).toJSON()
 
     expect(tree).toMatchStyledComponentsSnapshot()
@@ -50,7 +50,7 @@ describe('toMatchStyledComponentsSnapshot', () => {
     const tree = shallow(
       <Wrapper>
         <Title>Hello World, this is my first styled component!</Title>
-      </Wrapper>,
+      </Wrapper>
     )
 
     expect(tree).toMatchStyledComponentsSnapshot()
@@ -60,7 +60,7 @@ describe('toMatchStyledComponentsSnapshot', () => {
     const tree = mount(
       <Wrapper>
         <Title>Hello World, this is my first styled component!</Title>
-      </Wrapper>,
+      </Wrapper>
     )
 
     expect(tree).toMatchStyledComponentsSnapshot()
