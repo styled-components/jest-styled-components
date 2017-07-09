@@ -1,5 +1,4 @@
 const css = require('css')
-const { ShallowWrapper, ReactWrapper } = require('enzyme')
 const { printReceived, printExpected } = require('jest-matcher-utils')
 const styleSheet = require('styled-components/lib/models/StyleSheet')
 const { getCSS } = require('../utils')
@@ -9,8 +8,7 @@ const getClassName = (received) => {
 
   if (received.$$typeof === Symbol.for('react.test.json')) {
     className = received.props.className
-  } else if (received instanceof ShallowWrapper ||
-    received instanceof ReactWrapper) {
+  } else if (typeof received.find === 'function') {
     className = received.find('[className]').first().prop('className')
   }
 
