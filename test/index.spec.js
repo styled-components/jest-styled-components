@@ -31,6 +31,10 @@ const Title = styled.h1`
   }
 `
 
+const SuperWrapper = styled(Wrapper)`
+  background: red;
+`
+
 describe('toMatchStyledComponentsSnapshot', () => {
   test('null', () => {
     expect(null).toMatchStyledComponentsSnapshot()
@@ -72,6 +76,12 @@ describe('toHaveStyleRule', () => {
     const tree = renderer.create(<Wrapper />).toJSON()
 
     expect(tree).toHaveStyleRule('background', 'papayawhip')
+  })
+
+  test('test-renderer (override)', () => {
+    const tree = renderer.create(<SuperWrapper />).toJSON()
+
+    expect(tree).toHaveStyleRule('background', 'red')
   })
 
   test('shallow', () => {

@@ -3,7 +3,7 @@ const { printReceived, printExpected } = require('jest-matcher-utils')
 const styleSheet = require('styled-components/lib/models/StyleSheet')
 const { getCSS } = require('../utils')
 
-const getClassName = (received) => {
+const getClassNames = (received) => {
   let className = ''
 
   if (received.$$typeof === Symbol.for('react.test.json')) {
@@ -12,16 +12,24 @@ const getClassName = (received) => {
     className = received.find('[className]').first().prop('className')
   }
 
-  return `.${className.split(/\s/).pop()}`
+  return className.split(/\s/)
 }
 
-const getRules = (ast, className) => ast.stylesheet.rules.filter(
-  rule => rule.type === 'rule' && rule.selectors.includes(className)
+const hasRule = (classNames, selectors) => classNames.some(
+  className => selectors.includes(`.${className}`)
 )
 
-const getDeclarations = (rule, property) => rule.declarations.filter(
+const getRules = (ast, classNames) => ast.stylesheet.rules.filter(
+  rule => rule.type === 'rule' && hasRule(classNames, rule.selectors)
+)
+
+const getDeclaration = (rule, property) => rule.declarations.filter(
   declaration => declaration.type === 'declaration' &&
     declaration.property === property
+)[0]
+
+const getDeclarations = (rules, property) => rules.map(
+  rule => getDeclaration(rule, property)
 )
 
 const die = property => ({
@@ -29,23 +37,23 @@ const die = property => ({
   message: `Property not found: ${printReceived(property)}`,
 })
 
-function toHaveStyleRule(received, property, value) {
-  const className = getClassName(received)
+const toHaveStyleRule = (received, property, value) => {
+  const classNames = getClassNames(received)
   const styles = getCSS(styleSheet)
   const ast = css.parse(styles)
-  const rules = getRules(ast, className)
+  const rules = getRules(ast, classNames)
 
   if (!rules.length) {
     return die(property)
   }
 
-  const declarations = getDeclarations(rules[0], property)
+  const declarations = getDeclarations(rules, property)
 
   if (!declarations.length) {
     return die(property)
   }
 
-  const declaration = declarations[0]
+  const declaration = declarations.pop()
 
   const message =
     'Expected:\n' +
