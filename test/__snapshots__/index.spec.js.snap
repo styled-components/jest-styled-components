@@ -8,13 +8,11 @@ exports[`toMatchSnapshot mount 1`] = `
 
 .c1 {
   font-size: 1.5em;
-  -webkit-text-align: center;
   text-align: center;
   color: palevioletred;
 }
 
 .c1:hover {
-  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
@@ -74,13 +72,11 @@ exports[`toMatchSnapshot test-renderer 1`] = `
 
 .c1 {
   font-size: 1.5em;
-  -webkit-text-align: center;
   text-align: center;
   color: palevioletred;
 }
 
 .c1:hover {
-  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
