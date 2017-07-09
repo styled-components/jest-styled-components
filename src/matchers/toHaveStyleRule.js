@@ -30,7 +30,7 @@ const getDeclaration = (rule, property) => rule.declarations.filter(
 
 const getDeclarations = (rules, property) => rules.map(
   rule => getDeclaration(rule, property)
-)
+).filter(Boolean)
 
 const die = property => ({
   pass: false,
