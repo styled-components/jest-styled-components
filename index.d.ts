@@ -1,6 +1,6 @@
 declare namespace jest {
-  interface Matchers {
-    toMatchStyledComponentsSnapshot(): void;
-    toHaveStyleRule(property: string, value: any): void;
+  interface Matchers<R> {
+    toMatchStyledComponentsSnapshot(): R;
+    toHaveStyleRule(property: string, value: any): R;
   }
 }
