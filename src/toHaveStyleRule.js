@@ -22,10 +22,12 @@ const getRules = (ast, classNames) =>
   )
 
 const getDeclaration = (rule, property) =>
-  rule.declarations.filter(
-    declaration =>
-      declaration.type === 'declaration' && declaration.property === property
-  )[0]
+  rule.declarations
+    .filter(
+      declaration =>
+        declaration.type === 'declaration' && declaration.property === property
+    )
+    .pop()
 
 const getDeclarations = (rules, property) =>
   rules.map(rule => getDeclaration(rule, property)).filter(Boolean)
