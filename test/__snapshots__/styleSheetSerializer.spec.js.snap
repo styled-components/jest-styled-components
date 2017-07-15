@@ -1,6 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mount 1`] = `
+exports[`any component - mount 1`] = `
+.c0 {
+  color: palevioletred;
+  font-weight: bold;
+}
+
+<div>
+  <Link>
+    <a>
+      Unstyled, boring Link
+    </a>
+  </Link>
+  <br />
+  <Styled(Link)>
+    <Link
+      className="c0"
+    >
+      <a
+        className="c0"
+      >
+        Styled, exciting Link
+      </a>
+    </Link>
+  </Styled(Link)>
+</div>
+`;
+
+exports[`any component - react-test-renderer 1`] = `
+.c0 {
+  color: palevioletred;
+  font-weight: bold;
+}
+
+<div>
+  <a
+    className={undefined}
+  >
+    Unstyled, boring Link
+  </a>
+  <br />
+  <a
+    className="c0"
+  >
+    Styled, exciting Link
+  </a>
+</div>
+`;
+
+exports[`any component - shallow 1`] = `
+<div>
+  <Link>
+    Unstyled, boring Link
+  </Link>
+  <br />
+  <Styled(Link)>
+    Styled, exciting Link
+  </Styled(Link)>
+</div>
+`;
+
+exports[`basic - mount 1`] = `
 .c0 {
   padding: 4em;
   background: papayawhip;
@@ -10,26 +70,6 @@ exports[`mount 1`] = `
   font-size: 1.5em;
   text-align: center;
   color: palevioletred;
-}
-
-.c1:hover {
-  text-decoration: underline;
-}
-
-.c1 em {
-  color: green;
-}
-
-@media (min-width: 600px) {
-  .c1 {
-    color: blue;
-  }
-}
-
-@supports (display: grid) {
-  .c1 {
-    display: grid;
-  }
 }
 
 <styled.section>
@@ -47,9 +87,30 @@ exports[`mount 1`] = `
 </styled.section>
 `;
 
-exports[`null 1`] = `null`;
+exports[`basic - react-test-renderer 1`] = `
+.c0 {
+  padding: 4em;
+  background: papayawhip;
+}
 
-exports[`shallow 1`] = `
+.c1 {
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+}
+
+<section
+  className="c0"
+>
+  <h1
+    className="c1"
+  >
+    Hello World, this is my first styled component!
+  </h1>
+</section>
+`;
+
+exports[`basic - shallow 1`] = `
 .c0 {
   padding: 4em;
   background: papayawhip;
@@ -64,45 +125,477 @@ exports[`shallow 1`] = `
 </section>
 `;
 
-exports[`test-renderer 1`] = `
+exports[`extending styles - mount 1`] = `
 .c0 {
-  padding: 4em;
-  background: papayawhip;
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
 }
 
 .c1 {
-  font-size: 1.5em;
-  text-align: center;
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+  color: tomato;
+  border-color: tomato;
+}
+
+<div>
+  <styled.button>
+    <button
+      className="c0"
+    >
+      Normal Button
+    </button>
+  </styled.button>
+  <styled.button>
+    <button
+      className="c1"
+    >
+      Tomato Button
+    </button>
+  </styled.button>
+</div>
+`;
+
+exports[`extending styles - react-test-renderer 1`] = `
+.c0 {
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+}
+
+.c1 {
+  color: palevioletred;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid palevioletred;
+  border-radius: 3px;
+  color: tomato;
+  border-color: tomato;
+}
+
+<div>
+  <button
+    className="c0"
+  >
+    Normal Button
+  </button>
+  <button
+    className="c1"
+  >
+    Tomato Button
+  </button>
+</div>
+`;
+
+exports[`extending styles - shallow 1`] = `
+<div>
+  <styled.button>
+    Normal Button
+  </styled.button>
+  <styled.button>
+    Tomato Button
+  </styled.button>
+</div>
+`;
+
+exports[`null 1`] = `null`;
+
+exports[`referring to other components - mount 1`] = `
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 5px 10px;
+  background: papayawhip;
   color: palevioletred;
 }
 
-.c1:hover {
+.c2 {
+  -webkit-transition: fill 0.25s;
+  transition: fill 0.25s;
+  width: 48px;
+  height: 48px;
+}
+
+.c0:hover .c2 {
+  fill: rebeccapurple;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.c3::before {
+  content: '◀';
+  margin: 0 10px;
+}
+
+<styled.a
+  href="#"
+>
+  <a
+    className="c0 c1"
+    href="#"
+  >
+    <styled.svg>
+      <svg
+        className="c2"
+      />
+    </styled.svg>
+    <styled.span>
+      <span
+        className="c3"
+      >
+        Hovering my parent changes my style!
+      </span>
+    </styled.span>
+  </a>
+</styled.a>
+`;
+
+exports[`referring to other components - react-test-renderer 1`] = `
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 5px 10px;
+  background: papayawhip;
+  color: palevioletred;
+}
+
+.c2 {
+  -webkit-transition: fill 0.25s;
+  transition: fill 0.25s;
+  width: 48px;
+  height: 48px;
+}
+
+.c0:hover .c2 {
+  fill: rebeccapurple;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.c3::before {
+  content: '◀';
+  margin: 0 10px;
+}
+
+<a
+  className="c0 c1"
+  href="#"
+>
+  <svg
+    className="c2"
+  />
+  <span
+    className="c3"
+  >
+    Hovering my parent changes my style!
+  </span>
+</a>
+`;
+
+exports[`referring to other components - shallow 1`] = `
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 5px 10px;
+  background: papayawhip;
+  color: palevioletred;
+}
+
+.c0:hover .hhBdtb {
+  fill: rebeccapurple;
+}
+
+<a
+  className="c0 c1"
+  href="#"
+>
+  <styled.svg />
+  <styled.span>
+    Hovering my parent changes my style!
+  </styled.span>
+</a>
+`;
+
+exports[`supported css - mount 1`] = `
+.c0 {
+  padding: 2em 1em;
+  background: papayawhip;
+}
+
+.c0:hover {
+  background: palevioletred;
+}
+
+.c0 > p {
   text-decoration: underline;
 }
 
-.c1 em {
-  color: green;
+html.test .c0 {
+  display: none;
 }
 
-@media (min-width: 600px) {
-  .c1 {
-    color: blue;
+@media (max-width: 600px) {
+  .c0 {
+    background: tomato;
+  }
+
+  .c0:hover {
+    background: yellow;
   }
 }
 
-@supports (display: grid) {
-  .c1 {
-    display: grid;
+<styled.div>
+  <div
+    className="c0"
+  >
+    <p>
+      Hello World!
+    </p>
+  </div>
+</styled.div>
+`;
+
+exports[`supported css - react-test-renderer 1`] = `
+.c0 {
+  padding: 2em 1em;
+  background: papayawhip;
+}
+
+.c0:hover {
+  background: palevioletred;
+}
+
+.c0 > p {
+  text-decoration: underline;
+}
+
+html.test .c0 {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .c0 {
+    background: tomato;
+  }
+
+  .c0:hover {
+    background: yellow;
   }
 }
 
-<section
+<div
   className="c0"
 >
-  <h1
+  <p>
+    Hello World!
+  </p>
+</div>
+`;
+
+exports[`supported css - shallow 1`] = `
+.c0 {
+  padding: 2em 1em;
+  background: papayawhip;
+}
+
+.c0:hover {
+  background: palevioletred;
+}
+
+.c0 > p {
+  text-decoration: underline;
+}
+
+html.test .c0 {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .c0 {
+    background: tomato;
+  }
+
+  .c0:hover {
+    background: yellow;
+  }
+}
+
+<div
+  className="c0"
+>
+  <p>
+    Hello World!
+  </p>
+</div>
+`;
+
+exports[`theming - mount 1`] = `
+.c0 {
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
+  color: palevioletred;
+  border: 2px solid palevioletred;
+}
+
+.c1 {
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
+  color: mediumseagreen;
+  border: 2px solid mediumseagreen;
+}
+
+<div>
+  <styled.button
+    theme={
+      Object {
+        "main": "palevioletred",
+      }
+    }
+  >
+    <button
+      className="c0"
+    >
+      Normal
+    </button>
+  </styled.button>
+  <ThemeProvider
+    theme={
+      Object {
+        "main": "mediumseagreen",
+      }
+    }
+  >
+    <styled.button
+      theme={
+        Object {
+          "main": "palevioletred",
+        }
+      }
+    >
+      <button
+        className="c1"
+      >
+        Themed
+      </button>
+    </styled.button>
+  </ThemeProvider>
+</div>
+`;
+
+exports[`theming - react-test-renderer 1`] = `
+.c0 {
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
+  color: palevioletred;
+  border: 2px solid palevioletred;
+}
+
+.c1 {
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
+  color: mediumseagreen;
+  border: 2px solid mediumseagreen;
+}
+
+<div>
+  <button
+    className="c0"
+  >
+    Normal
+  </button>
+  <button
     className="c1"
   >
-    Hello World, this is my first styled component!
-  </h1>
-</section>
+    Themed
+  </button>
+</div>
+`;
+
+exports[`theming - shallow 1`] = `
+<div>
+  <styled.button
+    theme={
+      Object {
+        "main": "palevioletred",
+      }
+    }
+  >
+    Normal
+  </styled.button>
+  <ThemeProvider
+    theme={
+      Object {
+        "main": "mediumseagreen",
+      }
+    }
+  >
+    <styled.button
+      theme={
+        Object {
+          "main": "palevioletred",
+        }
+      }
+    >
+      Themed
+    </styled.button>
+  </ThemeProvider>
+</div>
 `;

@@ -27,6 +27,7 @@
       "trailingComma": "es5"
     }],
     "react/jsx-filename-extension": ["error", { "extensions": [".js"] }],
+    "react/prop-types": ["error", { "skipUndeclared": true }],
     "semi": ["error", "never"],
   }
 }
