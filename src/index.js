@@ -1,4 +1,3 @@
-const toMatchStyledComponentsSnapshot = require('./matchers/toMatchStyledComponentsSnapshot')
 const toHaveStyleRule = require('./matchers/toHaveStyleRule')
 const styleSheetSerializer = require('./serializers/styleSheetSerializer')
 const styleSheet = require('styled-components/lib/models/StyleSheet')
@@ -9,4 +8,4 @@ if (isOverV2()) {
 }
 
 expect.addSnapshotSerializer(styleSheetSerializer)
-expect.extend({ toMatchStyledComponentsSnapshot, toHaveStyleRule })
+expect.extend({ toHaveStyleRule })

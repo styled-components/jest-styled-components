@@ -1,6 +1,4 @@
-const css = require('css')
 const { printReceived, printExpected } = require('jest-matcher-utils')
-const styleSheet = require('styled-components/lib/models/StyleSheet')
 const { getCSS } = require('../utils')
 
 const getClassNames = (received) => {
@@ -15,12 +13,12 @@ const getClassNames = (received) => {
   return className.split(/\s/)
 }
 
-const hasRule = (classNames, selectors) => classNames.some(
+const hasClassNames = (classNames, selectors) => classNames.some(
   className => selectors.includes(`.${className}`)
 )
 
 const getRules = (ast, classNames) => ast.stylesheet.rules.filter(
-  rule => rule.type === 'rule' && hasRule(classNames, rule.selectors)
+  rule => rule.type === 'rule' && hasClassNames(classNames, rule.selectors)
 )
 
 const getDeclaration = (rule, property) => rule.declarations.filter(
@@ -39,8 +37,7 @@ const die = property => ({
 
 const toHaveStyleRule = (received, property, value) => {
   const classNames = getClassNames(received)
-  const styles = getCSS(styleSheet)
-  const ast = css.parse(styles)
+  const ast = getCSS()
   const rules = getRules(ast, classNames)
 
   if (!rules.length) {

@@ -1,54 +1,68 @@
+const css = require('css')
 const { ServerStyleSheet } = require('styled-components')
+const styleSheet = require('styled-components/lib/models/StyleSheet')
 
 const STYLE_TAGS_REGEXP = /<style[^>]*>([^<]*)</g
 
-// styled-components >=2.0.0
 function isOverV2() {
   return Boolean(ServerStyleSheet)
 }
-
-module.exports.isOverV2 = isOverV2
 
 function isServer() {
   return typeof document === 'undefined'
 }
 
-module.exports.isServer = isServer
-
 function parseCSSfromHTML(html) {
-  let css = ''
+  let styles = ''
   let matches
+
   while ((matches = STYLE_TAGS_REGEXP.exec(html)) !== null) {
-    css += matches[1].trim()
+    styles += matches[1].trim()
   }
-  return css
+
+  return styles
 }
 
-module.exports.parseCSSfromHTML = parseCSSfromHTML
+function getCSS() {
+  let styles
 
-function getCSS(styleSheet) {
-  const overV2 = isOverV2()
-  if (overV2 && isServer()) {
-    return parseCSSfromHTML(new ServerStyleSheet().getStyleTags())
-  } else if (overV2) {
-    return parseCSSfromHTML(styleSheet.default.instance.toHTML())
+  if (isOverV2()) {
+    if (isServer()) {
+      styles = parseCSSfromHTML(new ServerStyleSheet().getStyleTags())
+    } else {
+      styles = parseCSSfromHTML(styleSheet.default.instance.toHTML())
+    }
+  } else {
+    styles = styleSheet.rules().map(rule => rule.cssText).join('\n')
   }
-  return styleSheet.rules().map(rule => rule.cssText).join('\n')
-}
 
-module.exports.getCSS = getCSS
+  return css.parse(styles)
+}
 
 function getClassNames(node) {
   const classNames = []
+
   if (node.children) {
-    node.children.forEach(child => (
-      Array.prototype.push.apply(classNames, getClassNames(child))
+    node.children.slice().reverse().forEach(child => (
+      Array.prototype.unshift.apply(classNames, getClassNames(child))
     ))
   }
+
   if (node.props && node.props.className) {
-    Array.prototype.push.apply(classNames, node.props.className.split(' '))
+    Array.prototype.unshift.apply(
+      classNames,
+      node.props.className.split(/\s/)
+    )
   }
+
   return classNames
 }
 
-module.exports.getClassNames = getClassNames
+module.exports = {
+  isOverV2,
+  isServer,
+  parseCSSfromHTML,
+  getCSS,
+  getClassNames,
+}
+

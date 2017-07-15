@@ -35,9 +35,9 @@ const SuperWrapper = styled(Wrapper)`
   background: red;
 `
 
-describe('toMatchStyledComponentsSnapshot', () => {
+describe('toMatchSnapshot', () => {
   test('null', () => {
-    expect(null).toMatchStyledComponentsSnapshot()
+    expect(null).toMatchSnapshot()
   })
 
   test('test-renderer', () => {
@@ -47,7 +47,7 @@ describe('toMatchStyledComponentsSnapshot', () => {
       </Wrapper>
     ).toJSON()
 
-    expect(tree).toMatchStyledComponentsSnapshot()
+    expect(tree).toMatchSnapshot()
   })
 
   test('shallow', () => {
@@ -57,7 +57,7 @@ describe('toMatchStyledComponentsSnapshot', () => {
       </Wrapper>
     )
 
-    expect(tree).toMatchStyledComponentsSnapshot()
+    expect(tree).toMatchSnapshot()
   })
 
   test('mount', () => {
@@ -67,7 +67,7 @@ describe('toMatchStyledComponentsSnapshot', () => {
       </Wrapper>
     )
 
-    expect(tree).toMatchStyledComponentsSnapshot()
+    expect(tree).toMatchSnapshot()
   })
 })
 

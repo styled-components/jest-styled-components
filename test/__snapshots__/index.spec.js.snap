@@ -1,46 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`toMatchStyledComponentsSnapshot mount 1`] = `
-.iATjrR {
+exports[`toMatchSnapshot mount 1`] = `
+.c0 {
   padding: 4em;
   background: papayawhip;
 }
 
-.bIftVI {
+.c1 {
   font-size: 1.5em;
-  -webkit-text-align: center;
   text-align: center;
   color: palevioletred;
 }
 
-.bIftVI:hover {
-  -webkit-text-decoration: underline;
+.c1:hover {
   text-decoration: underline;
 }
 
-.bIftVI em {
+.c1 em {
   color: green;
 }
 
 @media (min-width: 600px) {
-  .bIftVI {
+  .c1 {
     color: blue;
   }
 }
 
 @supports (display: grid) {
-  .bIftVI {
+  .c1 {
     display: grid;
   }
 }
 
 <styled.section>
   <section
-    className="sc-bdVaJa iATjrR"
+    className="c0"
   >
     <styled.h1>
       <h1
-        className="sc-bwzfXH bIftVI"
+        className="c1"
       >
         Hello World, this is my first styled component!
       </h1>
@@ -49,16 +47,16 @@ exports[`toMatchStyledComponentsSnapshot mount 1`] = `
 </styled.section>
 `;
 
-exports[`toMatchStyledComponentsSnapshot null 1`] = `null`;
+exports[`toMatchSnapshot null 1`] = `null`;
 
-exports[`toMatchStyledComponentsSnapshot shallow 1`] = `
-.iATjrR {
+exports[`toMatchSnapshot shallow 1`] = `
+.c0 {
   padding: 4em;
   background: papayawhip;
 }
 
 <section
-  className="sc-bdVaJa iATjrR"
+  className="c0"
 >
   <styled.h1>
     Hello World, this is my first styled component!
@@ -66,45 +64,43 @@ exports[`toMatchStyledComponentsSnapshot shallow 1`] = `
 </section>
 `;
 
-exports[`toMatchStyledComponentsSnapshot test-renderer 1`] = `
-.iATjrR {
+exports[`toMatchSnapshot test-renderer 1`] = `
+.c0 {
   padding: 4em;
   background: papayawhip;
 }
 
-.bIftVI {
+.c1 {
   font-size: 1.5em;
-  -webkit-text-align: center;
   text-align: center;
   color: palevioletred;
 }
 
-.bIftVI:hover {
-  -webkit-text-decoration: underline;
+.c1:hover {
   text-decoration: underline;
 }
 
-.bIftVI em {
+.c1 em {
   color: green;
 }
 
 @media (min-width: 600px) {
-  .bIftVI {
+  .c1 {
     color: blue;
   }
 }
 
 @supports (display: grid) {
-  .bIftVI {
+  .c1 {
     display: grid;
   }
 }
 
 <section
-  className="sc-bdVaJa iATjrR"
+  className="c0"
 >
   <h1
-    className="sc-bwzfXH bIftVI"
+    className="c1"
   >
     Hello World, this is my first styled component!
   </h1>
