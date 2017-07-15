@@ -3,10 +3,10 @@
   "version": "3.3.2",
   "description": "Jest utilities for Styled Components",
   "main": "./src/index.js",
+  "typings": "./src/index.d.ts",
   "files": [
     "native",
-    "src",
-    "index.d.ts"
+    "src"
   ],
   "repository": "git@github.com:styled-components/jest-styled-components.git",
   "author": "Michele Bertoli",
@@ -15,7 +15,6 @@
     "precommit": "lint-staged",
     "test": "jest"
   },
-  "typings": "./index.d.ts",
   "devDependencies": {
     "babel-jest": "^20.0.3",
     "babel-preset-es2015": "^6.24.1",
