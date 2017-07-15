@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/styled-components/jest-styled-components.svg?branch=master)](https://travis-ci.org/styled-components/jest-styled-components)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 # Jest Styled Components
 A set of utilities for testing [Styled Components](https://github.com/styled-components/styled-components) with [Jest](https://github.com/facebook/jest).
@@ -91,7 +92,7 @@ Although we can assume that if the class names are changed the style rules are a
 
 Here's where Jest Styled Components comes to rescue.
 
-We just import the package at the top of our test file:
+We just import the package into our test file:
 
 ```js
 import 'jest-styled-components'
@@ -135,7 +136,7 @@ const Button = styled.button`
 `
 ```
 
-Thanks to Jest Styled Components, Jest is now able to provide the exact information and make our testing experience even more delightful:
+Thanks to Jest Styled Components, Jest is now able to provide the exact information and make our testing experience even more delightful 💖:
 
 ```diff
 - Snapshot
@@ -220,6 +221,17 @@ To use the `toHaveStyleRule` matcher with [React Native](https://facebook.github
 
 ```js
 import 'jest-styled-components/native'
+```
+
+# styled-components < v2
+
+To use this package with styled-components < v2 (e.g. v1.4.6) the following annotation must be added at the top of the test files.
+Consequently, it won't be possibile to use Enzyme's full DOM rendering.
+
+```js
+/**
+ * @jest-environment node
+ */
 ```
 
 # Contributing
