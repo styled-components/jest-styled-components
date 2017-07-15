@@ -1,5 +1,5 @@
 const { printReceived, printExpected } = require('jest-matcher-utils')
-const { getCSS } = require('../utils')
+const { getCSS } = require('./utils')
 
 const getClassNames = (received) => {
   let className = ''

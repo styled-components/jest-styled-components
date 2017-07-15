@@ -1,3 +1,3 @@
-const toHaveStyleRule = require('../src/matchers/toHaveStyleRule.native')
+const toHaveStyleRule = require('../src/native/toHaveStyleRule')
 
 expect.extend({ toHaveStyleRule })
