@@ -1,7 +1,7 @@
 const { printReceived, printExpected } = require('jest-matcher-utils')
 const { getCSS } = require('./utils')
 
-const getClassNames = (received) => {
+const getClassNames = received => {
   let className = ''
 
   if (received.$$typeof === Symbol.for('react.test.json')) {
@@ -13,22 +13,22 @@ const getClassNames = (received) => {
   return className.split(/\s/)
 }
 
-const hasClassNames = (classNames, selectors) => classNames.some(
-  className => selectors.includes(`.${className}`)
-)
+const hasClassNames = (classNames, selectors) =>
+  classNames.some(className => selectors.includes(`.${className}`))
 
-const getRules = (ast, classNames) => ast.stylesheet.rules.filter(
-  rule => rule.type === 'rule' && hasClassNames(classNames, rule.selectors)
-)
+const getRules = (ast, classNames) =>
+  ast.stylesheet.rules.filter(
+    rule => rule.type === 'rule' && hasClassNames(classNames, rule.selectors)
+  )
 
-const getDeclaration = (rule, property) => rule.declarations.filter(
-  declaration => declaration.type === 'declaration' &&
-    declaration.property === property
-)[0]
+const getDeclaration = (rule, property) =>
+  rule.declarations.filter(
+    declaration =>
+      declaration.type === 'declaration' && declaration.property === property
+  )[0]
 
-const getDeclarations = (rules, property) => rules.map(
-  rule => getDeclaration(rule, property)
-).filter(Boolean)
+const getDeclarations = (rules, property) =>
+  rules.map(rule => getDeclaration(rule, property)).filter(Boolean)
 
 const die = property => ({
   pass: false,

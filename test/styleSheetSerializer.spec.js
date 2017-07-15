@@ -36,11 +36,13 @@ test('null', () => {
 })
 
 test('test-renderer', () => {
-  const tree = renderer.create(
-    <Wrapper>
-      <Title>Hello World, this is my first styled component!</Title>
-    </Wrapper>
-  ).toJSON()
+  const tree = renderer
+    .create(
+      <Wrapper>
+        <Title>Hello World, this is my first styled component!</Title>
+      </Wrapper>
+    )
+    .toJSON()
 
   expect(tree).toMatchSnapshot()
 })
