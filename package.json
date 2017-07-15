@@ -1,6 +1,6 @@
 {
   "name": "jest-styled-components",
-  "version": "3.3.2",
+  "version": "4.0.0",
   "description": "Jest utilities for Styled Components",
   "main": "./src/index.js",
   "typings": "./src/index.d.ts",
