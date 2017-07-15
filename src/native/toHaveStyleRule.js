@@ -23,16 +23,18 @@ function toHaveStyleRule(component, name, expected) {
    * We also take the last matched node because
    * developer may override initial assignment
    */
-  const node = ast.nodes.filter((n) => {
-    switch (n.type) {
-      case 'rule':
-        return n.selector.indexOf(name) === 0
-      case 'decl':
-        return n.prop === name
-      default:
-        return false
-    }
-  }).pop()
+  const node = ast.nodes
+    .filter(n => {
+      switch (n.type) {
+        case 'rule':
+          return n.selector.indexOf(name) === 0
+        case 'decl':
+          return n.prop === name
+        default:
+          return false
+      }
+    })
+    .pop()
 
   let received
 
@@ -60,7 +62,7 @@ function toHaveStyleRule(component, name, expected) {
   if (node.type === 'decl') {
     pass = node.value === expected
     received = node.value
-  /**
+    /**
    * But in case of rule we have quite some complexity here:
    * We can't get a ref to the function using `postcss-safe-parser`, so
    * we have to construct it by ourselves. We also don't know how user called `props`
@@ -70,7 +72,9 @@ function toHaveStyleRule(component, name, expected) {
    * invoke it with props, taken from the enzyme
    */
   } else {
-    const match = node.source.input.css.match(new RegExp(`${name}:.*,function (.*){(.*)},`))
+    const match = node.source.input.css.match(
+      new RegExp(`${name}:.*,function (.*){(.*)},`)
+    )
     const param = match[1].slice(1, -1)
     /* eslint-disable */
     const fn = Function(param, match[2])
@@ -79,16 +83,19 @@ function toHaveStyleRule(component, name, expected) {
     pass = received === expected
   }
 
-  const diff = '' +
+  const diff =
+    '' +
     `  ${printExpected(`${name}: ${expected}`)}\n` +
     'Received:\n' +
     `  ${printReceived(`${name}: ${received}`)}`
 
   const message = pass
-    ? () => `${matcherHint('.not.toHaveStyleRule')}\n\n` +
-      `Expected ${component.name()} not to contain:\n${diff}`
-    : () => `${matcherHint('.toHaveStyleRule')}\n\n` +
-      `Expected ${component.name()} to have a style rule:\n${diff}`
+    ? () =>
+        `${matcherHint('.not.toHaveStyleRule')}\n\n` +
+        `Expected ${component.name()} not to contain:\n${diff}`
+    : () =>
+        `${matcherHint('.toHaveStyleRule')}\n\n` +
+        `Expected ${component.name()} to have a style rule:\n${diff}`
 
   return { message, pass }
 }

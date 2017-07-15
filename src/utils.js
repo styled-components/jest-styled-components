@@ -14,7 +14,7 @@ const resetStyleSheet = () => {
   }
 }
 
-const getStyle = (html) => {
+const getStyle = html => {
   let style = ''
   let matches
 
@@ -46,4 +46,3 @@ module.exports = {
   getStyle,
   getCSS,
 }
-

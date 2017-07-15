@@ -1,33 +1,36 @@
 const css = require('css')
 const { getCSS } = require('./utils')
 
-const getClassNames = (node) => {
+const getClassNames = node => {
   const classNames = []
 
   if (node.children) {
-    node.children.slice().reverse().forEach(child => (
-      Array.prototype.unshift.apply(classNames, getClassNames(child))
-    ))
+    node.children
+      .slice()
+      .reverse()
+      .forEach(child =>
+        Array.prototype.unshift.apply(classNames, getClassNames(child))
+      )
   }
 
   if (node.props && node.props.className) {
-    Array.prototype.unshift.apply(
-      classNames,
-      node.props.className.split(/\s/)
-    )
+    Array.prototype.unshift.apply(classNames, node.props.className.split(/\s/))
   }
 
   return classNames
 }
 
-const includesClassNames = (classNames, selectors) => classNames.some(
-  className => selectors.some(selector => selector.indexOf(className) > -1)
-)
+const includesClassNames = (classNames, selectors) =>
+  classNames.some(className =>
+    selectors.some(selector => selector.indexOf(className) > -1)
+  )
 
-const filterRules = classNames => rule => rule.type === 'rule' &&
-  includesClassNames(classNames, rule.selectors) && rule.declarations.length
+const filterRules = classNames => rule =>
+  rule.type === 'rule' &&
+  includesClassNames(classNames, rule.selectors) &&
+  rule.declarations.length
 
-const getAtRules = (ast, filter) => (
+const getAtRules = (ast, filter) =>
   ast.stylesheet.rules
     .filter(rule => rule.type === 'media' || rule.type === 'supports')
     .reduce((acc, atRule) => {
@@ -39,9 +42,8 @@ const getAtRules = (ast, filter) => (
 
       return acc
     }, [])
-)
 
-const getStyles = (classNames) => {
+const getStyles = classNames => {
   const ast = getCSS()
   const filter = filterRules(classNames)
   const rules = ast.stylesheet.rules.filter(filter)
@@ -54,23 +56,20 @@ const getStyles = (classNames) => {
 
 const replaceClassNames = (classNames, styles, code) => {
   let index = 0
-  return classNames.reduce(
-    (acc, className) => {
-      if (styles.indexOf(className) > -1) {
-        return acc.replace(new RegExp(className, 'g'), `c${index++}`)
-      }
+  return classNames.reduce((acc, className) => {
+    if (styles.indexOf(className) > -1) {
+      return acc.replace(new RegExp(className, 'g'), `c${index++}`)
+    }
 
-      return acc.replace(new RegExp(`${className}\\s`, 'g'), '')
-    },
-    `${styles}${code}`
-  )
+    return acc.replace(new RegExp(`${className}\\s`, 'g'), '')
+  }, `${styles}${code}`)
 }
 
 const styleSheetSerializer = {
-
   test(val) {
-    return val && !val.withStyles &&
-      val.$$typeof === Symbol.for('react.test.json')
+    return (
+      val && !val.withStyles && val.$$typeof === Symbol.for('react.test.json')
+    )
   },
 
   print(val, print) {
@@ -82,7 +81,6 @@ const styleSheetSerializer = {
 
     return styles ? replaceClassNames(classNames, styles, code) : code
   },
-
 }
 
 module.exports = styleSheetSerializer
