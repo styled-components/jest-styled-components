@@ -1,68 +1,49 @@
 const css = require('css')
 const { ServerStyleSheet } = require('styled-components')
-const styleSheet = require('styled-components/lib/models/StyleSheet')
+const StyleSheet = require('styled-components/lib/models/StyleSheet')
 
 const STYLE_TAGS_REGEXP = /<style[^>]*>([^<]*)</g
 
-function isOverV2() {
-  return Boolean(ServerStyleSheet)
+const isOverV2 = () => Boolean(ServerStyleSheet)
+
+const isServer = () => typeof document === 'undefined'
+
+const resetStyleSheet = () => {
+  if (isOverV2()) {
+    StyleSheet.default.reset(isServer())
+  }
 }
 
-function isServer() {
-  return typeof document === 'undefined'
-}
-
-function parseCSSfromHTML(html) {
-  let styles = ''
+const getStyle = (html) => {
+  let style = ''
   let matches
 
   while ((matches = STYLE_TAGS_REGEXP.exec(html)) !== null) {
-    styles += matches[1].trim()
+    style += matches[1].trim()
   }
 
-  return styles
+  return style
 }
 
-function getCSS() {
-  let styles
+const getCSS = () => {
+  let style
 
   if (isOverV2()) {
     if (isServer()) {
-      styles = parseCSSfromHTML(new ServerStyleSheet().getStyleTags())
+      style = getStyle(new ServerStyleSheet().getStyleTags())
     } else {
-      styles = parseCSSfromHTML(styleSheet.default.instance.toHTML())
+      style = getStyle(StyleSheet.default.instance.toHTML())
     }
   } else {
-    styles = styleSheet.rules().map(rule => rule.cssText).join('\n')
+    style = StyleSheet.rules().map(rule => rule.cssText).join('\n')
   }
 
-  return css.parse(styles)
-}
-
-function getClassNames(node) {
-  const classNames = []
-
-  if (node.children) {
-    node.children.slice().reverse().forEach(child => (
-      Array.prototype.unshift.apply(classNames, getClassNames(child))
-    ))
-  }
-
-  if (node.props && node.props.className) {
-    Array.prototype.unshift.apply(
-      classNames,
-      node.props.className.split(/\s/)
-    )
-  }
-
-  return classNames
+  return css.parse(style)
 }
 
 module.exports = {
-  isOverV2,
-  isServer,
-  parseCSSfromHTML,
+  resetStyleSheet,
+  getStyle,
   getCSS,
-  getClassNames,
 }
 

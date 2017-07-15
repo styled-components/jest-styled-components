@@ -1,5 +1,24 @@
 const css = require('css')
-const { getCSS, getClassNames } = require('./utils')
+const { getCSS } = require('./utils')
+
+const getClassNames = (node) => {
+  const classNames = []
+
+  if (node.children) {
+    node.children.slice().reverse().forEach(child => (
+      Array.prototype.unshift.apply(classNames, getClassNames(child))
+    ))
+  }
+
+  if (node.props && node.props.className) {
+    Array.prototype.unshift.apply(
+      classNames,
+      node.props.className.split(/\s/)
+    )
+  }
+
+  return classNames
+}
 
 const includesClassNames = (classNames, selectors) => classNames.some(
   className => selectors.some(selector => selector.indexOf(className) > -1)
