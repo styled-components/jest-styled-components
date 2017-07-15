@@ -1,5 +1,5 @@
 const css = require('css')
-const { getCSS, getClassNames } = require('../utils')
+const { getCSS, getClassNames } = require('./utils')
 
 const includesClassNames = (classNames, selectors) => classNames.some(
   className => selectors.some(selector => selector.indexOf(className) > -1)

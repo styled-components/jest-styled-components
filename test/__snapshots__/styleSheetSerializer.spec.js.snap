@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`toMatchSnapshot mount 1`] = `
+exports[`mount 1`] = `
 .c0 {
   padding: 4em;
   background: papayawhip;
@@ -47,9 +47,9 @@ exports[`toMatchSnapshot mount 1`] = `
 </styled.section>
 `;
 
-exports[`toMatchSnapshot null 1`] = `null`;
+exports[`null 1`] = `null`;
 
-exports[`toMatchSnapshot shallow 1`] = `
+exports[`shallow 1`] = `
 .c0 {
   padding: 4em;
   background: papayawhip;
@@ -64,7 +64,7 @@ exports[`toMatchSnapshot shallow 1`] = `
 </section>
 `;
 
-exports[`toMatchSnapshot test-renderer 1`] = `
+exports[`test-renderer 1`] = `
 .c0 {
   padding: 4em;
   background: papayawhip;

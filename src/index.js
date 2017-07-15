@@ -1,5 +1,5 @@
-const toHaveStyleRule = require('./matchers/toHaveStyleRule')
-const styleSheetSerializer = require('./serializers/styleSheetSerializer')
+const toHaveStyleRule = require('./toHaveStyleRule')
+const styleSheetSerializer = require('./styleSheetSerializer')
 const styleSheet = require('styled-components/lib/models/StyleSheet')
 const { isOverV2, isServer } = require('./utils')
 
