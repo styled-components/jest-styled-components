@@ -43,7 +43,7 @@ const getAtRules = (ast, filter) =>
       return acc
     }, [])
 
-const getStyles = classNames => {
+const getStyle = classNames => {
   const ast = getCSS()
   const filter = filterRules(classNames)
   const rules = ast.stylesheet.rules.filter(filter)
@@ -54,32 +54,35 @@ const getStyles = classNames => {
   return css.stringify(ast)
 }
 
-const replaceClassNames = (classNames, styles, code) => {
+const replaceClassNames = (classNames, style, code) => {
   let index = 0
   return classNames.reduce((acc, className) => {
-    if (styles.indexOf(className) > -1) {
+    if (style.indexOf(className) > -1) {
       return acc.replace(new RegExp(className, 'g'), `c${index++}`)
     }
 
-    return acc.replace(new RegExp(`${className}\\s`, 'g'), '')
-  }, `${styles}${code}`)
+    return acc.replace(
+      new RegExp(`(className="[^"]*)${className}\\s?([^"]*")`, 'g'),
+      '$1$2'
+    )
+  }, `${style}${style ? '\n\n' : ''}${code}`)
 }
 
 const styleSheetSerializer = {
   test(val) {
     return (
-      val && !val.withStyles && val.$$typeof === Symbol.for('react.test.json')
+      val && !val.withStyle && val.$$typeof === Symbol.for('react.test.json')
     )
   },
 
   print(val, print) {
-    val.withStyles = true
+    val.withStyle = true
 
     const classNames = getClassNames(val)
-    const styles = classNames.length ? `${getStyles(classNames)}\n\n` : null
+    const style = getStyle(classNames)
     const code = print(val)
 
-    return styles ? replaceClassNames(classNames, styles, code) : code
+    return classNames.length ? replaceClassNames(classNames, style, code) : code
   },
 }
 

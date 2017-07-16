@@ -16,6 +16,16 @@ test('null', () => {
   expect(null).toMatchSnapshot()
 })
 
+test('non-styled', () => {
+  toMatchSnapshot('non-styled', <div />)
+})
+
+test('empty style', () => {
+  const Component = styled.div``
+
+  toMatchSnapshot('empty style', <Component />)
+})
+
 test('basic', () => {
   const Wrapper = styled.section`
     padding: 4em;
@@ -79,6 +89,16 @@ test('extending styles', () => {
       <TomatoButton>Tomato Button</TomatoButton>
     </div>
   )
+})
+
+test('attaching additional props', () => {
+  const Div = styled.div.attrs({
+    className: 'div',
+  })`
+    color: red;
+  `
+
+  toMatchSnapshot('attaching additional props', <Div />)
 })
 
 test('theming', () => {
@@ -177,11 +197,17 @@ test('referring to other components', () => {
     }
   `
 
-  toMatchSnapshot(
-    'referring to other components',
+  const component = (
     <Link href="#">
       <Icon />
       <Label>Hovering my parent changes my style!</Label>
     </Link>
+  )
+
+  expect(renderer.create(component).toJSON()).toMatchSnapshot(
+    'referring to other components - react-test-renderer'
+  )
+  expect(mount(component)).toMatchSnapshot(
+    'referring to other components - mount'
   )
 })

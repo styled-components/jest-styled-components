@@ -60,6 +60,38 @@ exports[`any component - shallow 1`] = `
 </div>
 `;
 
+exports[`attaching additional props - mount 1`] = `
+.c0 {
+  color: red;
+}
+
+<styled.div>
+  <div
+    className="c0"
+  />
+</styled.div>
+`;
+
+exports[`attaching additional props - react-test-renderer 1`] = `
+.c0 {
+  color: red;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`attaching additional props - shallow 1`] = `
+.c0 {
+  color: red;
+}
+
+<div
+  className="c0"
+/>
+`;
+
 exports[`basic - mount 1`] = `
 .c0 {
   padding: 4em;
@@ -123,6 +155,26 @@ exports[`basic - shallow 1`] = `
     Hello World, this is my first styled component!
   </styled.h1>
 </section>
+`;
+
+exports[`empty style - mount 1`] = `
+<styled.div>
+  <div
+    className=""
+  />
+</styled.div>
+`;
+
+exports[`empty style - react-test-renderer 1`] = `
+<div
+  className=""
+/>
+`;
+
+exports[`empty style - shallow 1`] = `
+<div
+  className=""
+/>
 `;
 
 exports[`extending styles - mount 1`] = `
@@ -209,6 +261,12 @@ exports[`extending styles - shallow 1`] = `
   </styled.button>
 </div>
 `;
+
+exports[`non-styled - mount 1`] = `<div />`;
+
+exports[`non-styled - react-test-renderer 1`] = `<div />`;
+
+exports[`non-styled - shallow 1`] = `<div />`;
 
 exports[`null 1`] = `null`;
 
@@ -333,36 +391,6 @@ exports[`referring to other components - react-test-renderer 1`] = `
   >
     Hovering my parent changes my style!
   </span>
-</a>
-`;
-
-exports[`referring to other components - shallow 1`] = `
-.c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 5px 10px;
-  background: papayawhip;
-  color: palevioletred;
-}
-
-.c0:hover .hhBdtb {
-  fill: rebeccapurple;
-}
-
-<a
-  className="c0 c1"
-  href="#"
->
-  <styled.svg />
-  <styled.span>
-    Hovering my parent changes my style!
-  </styled.span>
 </a>
 `;
 
