@@ -62,7 +62,7 @@ const replaceClassNames = (classNames, style, code) => {
     }
 
     return acc.replace(
-      new RegExp(`(className="[^"]*)${className}\\s?([^"]*")`, 'g'),
+      new RegExp(`(className="[^"]*?)${className}\\s?([^"]*")`, 'g'),
       '$1$2'
     )
   }, `${style}${style ? '\n\n' : ''}${code}`)
