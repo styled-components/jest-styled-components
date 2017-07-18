@@ -2,15 +2,17 @@ const { printReceived, printExpected } = require('jest-matcher-utils')
 const { getCSS } = require('./utils')
 
 const getClassNames = received => {
-  let className = ''
+  let className
 
-  if (received.$$typeof === Symbol.for('react.test.json')) {
-    className = received.props.className
-  } else if (typeof received.find === 'function') {
-    className = received.find('[className]').first().prop('className')
+  if (received) {
+    if (received.$$typeof === Symbol.for('react.test.json')) {
+      className = received.props.className
+    } else if (typeof received.find === 'function') {
+      className = received.find('[className]').first().prop('className')
+    }
   }
 
-  return className.split(/\s/)
+  return className ? className.split(/\s/) : []
 }
 
 const hasClassNames = (classNames, selectors) =>

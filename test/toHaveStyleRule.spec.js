@@ -10,6 +10,10 @@ const toHaveStyleRule = (component, property, value) => {
   expect(mount(component)).toHaveStyleRule(property, value)
 }
 
+test('null', () => {
+  expect(null).not.toHaveStyleRule('a', 'b')
+})
+
 test('basic', () => {
   const Wrapper = styled.section`
     padding: 4em;
