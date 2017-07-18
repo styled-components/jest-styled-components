@@ -157,6 +157,70 @@ exports[`basic - shallow 1`] = `
 </section>
 `;
 
+exports[`duplicate components - mount 1`] = `
+.c0 {
+  color: red;
+}
+
+.c1 {
+  color: green;
+}
+
+<div>
+  <styled.div>
+    <div
+      className="c0"
+    />
+  </styled.div>
+   
+  <styled.div>
+    <div
+      className="c0"
+    />
+  </styled.div>
+   
+  <styled.div>
+    <div
+      className="c1"
+    />
+  </styled.div>
+</div>
+`;
+
+exports[`duplicate components - react-test-renderer 1`] = `
+.c0 {
+  color: red;
+}
+
+.c1 {
+  color: green;
+}
+
+<div>
+  <div
+    className="c0"
+  />
+   
+  <div
+    className="c0"
+  />
+   
+  <div
+    className="c1"
+  />
+</div>
+`;
+
+exports[`duplicate components - shallow 1`] = `
+<div>
+  <styled.div />
+   
+  <styled.div />
+   
+  <styled.div />
+</div>
+`;
+
 exports[`empty style - mount 1`] = `
 <styled.div>
   <div

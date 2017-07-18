@@ -2,19 +2,20 @@ const css = require('css')
 const { getCSS } = require('./utils')
 
 const getClassNames = node => {
-  const classNames = []
+  let classNames = new Set()
 
   if (node.children) {
     node.children
       .slice()
       .reverse()
-      .forEach(child =>
-        Array.prototype.unshift.apply(classNames, getClassNames(child))
+      .forEach(
+        child =>
+          (classNames = new Set([...getClassNames(child), ...classNames]))
       )
   }
 
   if (node.props && node.props.className) {
-    Array.prototype.unshift.apply(classNames, node.props.className.split(/\s/))
+    classNames = new Set([...node.props.className.split(/\s/), ...classNames])
   }
 
   return classNames
@@ -78,7 +79,7 @@ const styleSheetSerializer = {
   print(val, print) {
     val.withStyle = true
 
-    const classNames = getClassNames(val)
+    const classNames = [...getClassNames(val)]
     const style = getStyle(classNames)
     const code = print(val)
 

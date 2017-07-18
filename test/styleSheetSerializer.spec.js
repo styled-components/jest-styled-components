@@ -26,6 +26,18 @@ test('empty style', () => {
   toMatchSnapshot('empty style', <Component />)
 })
 
+test('duplicate components', () => {
+  const A = styled.div`color: red;`
+  const B = styled.div`color: green;`
+
+  toMatchSnapshot(
+    'duplicate components',
+    <div>
+      <A /> <A /> <B />
+    </div>
+  )
+})
+
 test('basic', () => {
   const Wrapper = styled.section`
     padding: 4em;
