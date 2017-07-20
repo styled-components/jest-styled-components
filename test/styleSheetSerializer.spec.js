@@ -26,12 +26,12 @@ test('empty style', () => {
   toMatchSnapshot('empty style', <Component />)
 })
 
-test('duplicate components', () => {
+test('duplicated components', () => {
   const A = styled.div`color: red;`
   const B = styled.div`color: green;`
 
   toMatchSnapshot(
-    'duplicate components',
+    'duplicated components',
     <div>
       <A /> <A /> <B />
     </div>

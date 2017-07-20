@@ -67,7 +67,7 @@ exports[`attaching additional props - mount 1`] = `
 
 <styled.div>
   <div
-    className="c0"
+    className="div c0"
   />
 </styled.div>
 `;
@@ -78,7 +78,7 @@ exports[`attaching additional props - react-test-renderer 1`] = `
 }
 
 <div
-  className="c0"
+  className="div c0"
 />
 `;
 
@@ -88,7 +88,7 @@ exports[`attaching additional props - shallow 1`] = `
 }
 
 <div
-  className="c0"
+  className="div c0"
 />
 `;
 
@@ -157,7 +157,7 @@ exports[`basic - shallow 1`] = `
 </section>
 `;
 
-exports[`duplicate components - mount 1`] = `
+exports[`duplicated components - mount 1`] = `
 .c0 {
   color: red;
 }
@@ -187,7 +187,7 @@ exports[`duplicate components - mount 1`] = `
 </div>
 `;
 
-exports[`duplicate components - react-test-renderer 1`] = `
+exports[`duplicated components - react-test-renderer 1`] = `
 .c0 {
   color: red;
 }
@@ -211,7 +211,7 @@ exports[`duplicate components - react-test-renderer 1`] = `
 </div>
 `;
 
-exports[`duplicate components - shallow 1`] = `
+exports[`duplicated components - shallow 1`] = `
 <div>
   <styled.div />
    

@@ -2,8 +2,6 @@ const css = require('css')
 const { ServerStyleSheet } = require('styled-components')
 const StyleSheet = require('styled-components/lib/models/StyleSheet')
 
-const STYLE_TAGS_REGEXP = /<style[^>]*>([^<]*)</g
-
 const isOverV2 = () => Boolean(ServerStyleSheet)
 
 const isServer = () => typeof document === 'undefined'
@@ -14,35 +12,43 @@ const resetStyleSheet = () => {
   }
 }
 
-const getStyle = html => {
+const getHTML = () =>
+  isServer()
+    ? new ServerStyleSheet().getStyleTags()
+    : StyleSheet.default.instance.toHTML()
+
+const extract = regex => {
   let style = ''
   let matches
 
-  while ((matches = STYLE_TAGS_REGEXP.exec(html)) !== null) {
-    style += matches[1].trim()
+  while ((matches = regex.exec(getHTML())) !== null) {
+    style += `${matches[1]} `
   }
 
-  return style
+  return style.trim()
 }
 
-const getCSS = () => {
-  let style
+const getStyle = () => extract(/<style[^>]*>([^<]*)</g)
 
-  if (isOverV2()) {
-    if (isServer()) {
-      style = getStyle(new ServerStyleSheet().getStyleTags())
-    } else {
-      style = getStyle(StyleSheet.default.instance.toHTML())
-    }
-  } else {
-    style = StyleSheet.rules().map(rule => rule.cssText).join('\n')
-  }
+const getCSS = () => {
+  const style = isOverV2()
+    ? getStyle()
+    : StyleSheet.rules().map(rule => rule.cssText).join('\n')
 
   return css.parse(style)
 }
 
+const getClassNames = () =>
+  extract(/data-styled-components="([^"]*)"/g).split(/\s/)
+
+const getComponentIDs = () =>
+  extract(/sc-component-id: ([^\\*\\/]*) \*\//g).split(/\s/)
+
+const getHashes = () =>
+  getClassNames().concat(getComponentIDs()).filter(Boolean)
+
 module.exports = {
   resetStyleSheet,
-  getStyle,
   getCSS,
+  getHashes,
 }

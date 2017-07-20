@@ -1,5 +1,5 @@
 const css = require('css')
-const { getCSS } = require('./utils')
+const { getCSS, getHashes } = require('./utils')
 
 const getClassNames = node => {
   let classNames = new Set()
@@ -55,19 +55,24 @@ const getStyle = classNames => {
   return css.stringify(ast)
 }
 
-const replaceClassNames = (classNames, style, code) => {
-  let index = 0
-  return classNames.reduce((acc, className) => {
-    if (style.indexOf(className) > -1) {
-      return acc.replace(new RegExp(className, 'g'), `c${index++}`)
-    }
-
-    return acc.replace(
-      new RegExp(`(className="[^"]*?)${className}\\s?([^"]*")`, 'g'),
-      '$1$2'
+const replaceClassNames = (classNames, style, result) =>
+  classNames
+    .filter(className => style.includes(className))
+    .reduce(
+      (acc, className, index) =>
+        acc.replace(new RegExp(className, 'g'), `c${index++}`),
+      result
     )
-  }, `${style}${style ? '\n\n' : ''}${code}`)
-}
+
+const replaceHashes = (hashes, result) =>
+  hashes.reduce(
+    (acc, className) =>
+      acc.replace(
+        new RegExp(`(className="[^"]*?)${className}\\s?([^"]*")`, 'g'),
+        '$1$2'
+      ),
+    result
+  )
 
 const styleSheetSerializer = {
   test(val) {
@@ -82,8 +87,13 @@ const styleSheetSerializer = {
     const classNames = [...getClassNames(val)]
     const style = getStyle(classNames)
     const code = print(val)
+    const hashes = getHashes()
 
-    return classNames.length ? replaceClassNames(classNames, style, code) : code
+    let result = `${style}${style ? '\n\n' : ''}${code}`
+    result = replaceClassNames(classNames, style, result)
+    result = replaceHashes(hashes, result)
+
+    return result
   },
 }
 
