@@ -223,3 +223,14 @@ test('referring to other components', () => {
     'referring to other components - mount'
   )
 })
+
+test('supporting external class references', () => {
+  const component = <a className="link-item">Lorem ipsum</a>
+
+  expect(renderer.create(component).toJSON()).toMatchSnapshot(
+    'support className references - react-test-renderer'
+  )
+  expect(mount(component)).toMatchSnapshot(
+    'support className references - mount'
+  )
+})
