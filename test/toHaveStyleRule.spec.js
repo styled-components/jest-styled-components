@@ -4,6 +4,15 @@ import styled, { ThemeProvider } from 'styled-components'
 import { shallow, mount } from 'enzyme'
 import '../src'
 
+const notToHaveStyleRule = (component, property, value) => {
+  expect(renderer.create(component).toJSON()).not.toHaveStyleRule(
+    property,
+    value
+  )
+  expect(shallow(component)).not.toHaveStyleRule(property, value)
+  expect(mount(component)).not.toHaveStyleRule(property, value)
+}
+
 const toHaveStyleRule = (component, property, value) => {
   expect(renderer.create(component).toJSON()).toHaveStyleRule(property, value)
   expect(shallow(component)).toHaveStyleRule(property, value)
@@ -12,6 +21,10 @@ const toHaveStyleRule = (component, property, value) => {
 
 test('null', () => {
   expect(null).not.toHaveStyleRule('a', 'b')
+})
+
+test('non-styled', () => {
+  notToHaveStyleRule(<div />, 'a', 'b')
 })
 
 test('basic', () => {

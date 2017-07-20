@@ -8,7 +8,10 @@ const getClassNames = received => {
     if (received.$$typeof === Symbol.for('react.test.json')) {
       className = received.props.className
     } else if (typeof received.find === 'function') {
-      className = received.find('[className]').first().prop('className')
+      const components = received.find('[className]')
+      if (components.length) {
+        className = components.first().prop('className')
+      }
     }
   }
 
