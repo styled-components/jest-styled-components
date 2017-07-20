@@ -19,6 +19,7 @@
       "objects": "only-multiline"
     }],
     "no-cond-assign": ["error", "except-parens"],
+    "no-confusing-arrow": "off",
     "no-param-reassign": "off",
     "no-plusplus": "off",
     "prettier/prettier": ["error", {
