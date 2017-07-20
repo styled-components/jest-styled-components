@@ -1,4 +1,3 @@
-const { printReceived, printExpected } = require('jest-matcher-utils')
 const { getCSS } = require('./utils')
 
 const getClassNames = received => {
@@ -37,36 +36,41 @@ const getDeclaration = (rule, property) =>
 const getDeclarations = (rules, property) =>
   rules.map(rule => getDeclaration(rule, property)).filter(Boolean)
 
-const die = property => ({
+const die = (utils, property) => ({
   pass: false,
-  message: `Property not found: ${printReceived(property)}`,
+  message: `Property not found: ${utils.printReceived(property)}`,
 })
 
-const toHaveStyleRule = (received, property, value) => {
+function toHaveStyleRule(received, property, value) {
   const classNames = getClassNames(received)
   const ast = getCSS()
   const rules = getRules(ast, classNames)
 
   if (!rules.length) {
-    return die(property)
+    return die(this.utils, property)
   }
 
   const declarations = getDeclarations(rules, property)
 
   if (!declarations.length) {
-    return die(property)
+    return die(this.utils, property)
   }
 
   const declaration = declarations.pop()
 
+  const pass =
+    value instanceof RegExp
+      ? value.test(declaration.value)
+      : value === declaration.value
+
   const message =
-    'Expected:\n' +
-    `  ${printExpected(`${property}: ${value}`)}\n` +
+    `Expected ${property}${pass ? ' not ' : ' '}to match:\n` +
+    `  ${this.utils.printExpected(value)}\n` +
     'Received:\n' +
-    `  ${printReceived(`${property}: ${declaration.value}`)}`
+    `  ${this.utils.printReceived(declaration.value)}`
 
   return {
-    pass: value === declaration.value,
+    pass,
     message,
   }
 }

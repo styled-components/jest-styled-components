@@ -40,7 +40,6 @@
     "css": "^2.2.1"
   },
   "peerDependencies": {
-    "jest-matcher-utils": "^20.0.0",
     "styled-components": "^2.0.0"
   },
   "lint-staged": {

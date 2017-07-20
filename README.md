@@ -207,7 +207,7 @@ test('it works', () => {
 # toHaveStyleRule
 
 The `toHaveStyleRule` matcher is useful to test if a given rule is applied to a component.
-The first argument is the expected property, the second is the expected value.
+The first argument is the expected property, the second is the expected value (string or RegExp).
 
 ```js
 test('it works', () => {

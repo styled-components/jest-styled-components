@@ -36,6 +36,15 @@ test('basic', () => {
   toHaveStyleRule(<Wrapper />, 'background', 'papayawhip')
 })
 
+test('regex', () => {
+  const Wrapper = styled.section`
+    padding: 4em;
+    background: papayawhip;
+  `
+
+  toHaveStyleRule(<Wrapper />, 'background', /^p/)
+})
+
 test('any component', () => {
   const Link = ({ className, children }) =>
     <a className={className}>
