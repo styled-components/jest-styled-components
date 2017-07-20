@@ -67,7 +67,7 @@ exports[`attaching additional props - mount 1`] = `
 
 <styled.div>
   <div
-    className="c0"
+    className="div c0"
   />
 </styled.div>
 `;
@@ -78,7 +78,7 @@ exports[`attaching additional props - react-test-renderer 1`] = `
 }
 
 <div
-  className="c0"
+  className="div c0"
 />
 `;
 
@@ -88,7 +88,7 @@ exports[`attaching additional props - shallow 1`] = `
 }
 
 <div
-  className="c0"
+  className="div c0"
 />
 `;
 
@@ -455,6 +455,22 @@ exports[`referring to other components - react-test-renderer 1`] = `
   >
     Hovering my parent changes my style!
   </span>
+</a>
+`;
+
+exports[`support className references - mount 1`] = `
+<a
+  className="link-item"
+>
+  Lorem ipsum
+</a>
+`;
+
+exports[`support className references - react-test-renderer 1`] = `
+<a
+  className="link-item"
+>
+  Lorem ipsum
 </a>
 `;
 

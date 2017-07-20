@@ -1,7 +1,12 @@
 const css = require('css')
-const { getCSS } = require('./utils')
+const { getCSS, getClassHashes } = require('./utils')
 
 const getClassNames = node => {
+  const rules = getCSS().stylesheet.rules
+    .filter(item => item.type === 'rule')
+    .map(item => item.selectors)
+    .reduce((a, item) => a.concat(item), [])
+    .concat(getClassHashes())
   let classNames = new Set()
 
   if (node.children) {
@@ -15,7 +20,10 @@ const getClassNames = node => {
   }
 
   if (node.props && node.props.className) {
-    classNames = new Set([...node.props.className.split(/\s/), ...classNames])
+    const itemClassNames = node.props.className
+      .split(/\s/)
+      .filter(item => rules.some(a => a.indexOf(item) > -1))
+    classNames = new Set(itemClassNames.concat([...classNames]))
   }
 
   return classNames
