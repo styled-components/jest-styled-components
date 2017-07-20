@@ -30,10 +30,13 @@ const extract = regex => {
 
 const getStyle = () => extract(/<style[^>]*>([^<]*)</g)
 
+const getRules = () =>
+  StyleSheet.globalStyleSheet.sheet && StyleSheet.componentStyleSheet.sheet
+    ? StyleSheet.rules().map(rule => rule.cssText).join('\n')
+    : ''
+
 const getCSS = () => {
-  const style = isOverV2()
-    ? getStyle()
-    : StyleSheet.rules().map(rule => rule.cssText).join('\n')
+  const style = isOverV2() ? getStyle() : getRules()
 
   return css.parse(style)
 }
@@ -45,7 +48,7 @@ const getComponentIDs = () =>
   extract(/sc-component-id: ([^\\*\\/]*) \*\//g).split(/\s/)
 
 const getHashes = () =>
-  getClassNames().concat(getComponentIDs()).filter(Boolean)
+  isOverV2() ? getClassNames().concat(getComponentIDs()).filter(Boolean) : []
 
 module.exports = {
   resetStyleSheet,
