@@ -691,3 +691,35 @@ exports[`theming - shallow 1`] = `
   </ThemeProvider>
 </div>
 `;
+
+exports[`trailing white spaces - mount 1`] = `
+.c0 {
+  color: red;
+}
+
+<styled.div>
+  <div
+    className="div   c0"
+  />
+</styled.div>
+`;
+
+exports[`trailing white spaces - react-test-renderer 1`] = `
+.c0 {
+  color: red;
+}
+
+<div
+  className="div   c0"
+/>
+`;
+
+exports[`trailing white spaces - shallow 1`] = `
+.c0 {
+  color: red;
+}
+
+<div
+  className="div   c0"
+/>
+`;
