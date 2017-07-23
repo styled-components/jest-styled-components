@@ -113,6 +113,16 @@ test('attaching additional props', () => {
   toMatchSnapshot('attaching additional props', <Div />)
 })
 
+test('trailing white spaces', () => {
+  const Div = styled.div.attrs({
+    className: 'div  ',
+  })`
+    color: red;
+  `
+
+  toMatchSnapshot('trailing white spaces', <Div />)
+})
+
 test('theming', () => {
   const Button = styled.button`
     font-size: 1em;
