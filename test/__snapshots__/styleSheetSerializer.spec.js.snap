@@ -326,6 +326,26 @@ exports[`extending styles - shallow 1`] = `
 </div>
 `;
 
+exports[`leading white spaces - mount 1`] = `
+<Div>
+  <div
+    className="  div"
+  />
+</Div>
+`;
+
+exports[`leading white spaces - react-test-renderer 1`] = `
+<div
+  className="  div"
+/>
+`;
+
+exports[`leading white spaces - shallow 1`] = `
+<div
+  className="  div"
+/>
+`;
+
 exports[`non-styled - mount 1`] = `<div />`;
 
 exports[`non-styled - react-test-renderer 1`] = `<div />`;

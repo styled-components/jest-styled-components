@@ -15,7 +15,10 @@ const getClassNames = node => {
   }
 
   if (node.props && node.props.className) {
-    classNames = new Set([...node.props.className.split(/\s+/), ...classNames])
+    classNames = new Set([
+      ...node.props.className.trim().split(/\s+/),
+      ...classNames,
+    ])
   }
 
   return classNames

@@ -113,6 +113,12 @@ test('attaching additional props', () => {
   toMatchSnapshot('attaching additional props', <Div />)
 })
 
+test('leading white spaces', () => {
+  const Div = () => <div className="  div" />
+
+  toMatchSnapshot('leading white spaces', <Div />)
+})
+
 test('trailing white spaces', () => {
   const Div = styled.div.attrs({
     className: 'div  ',
