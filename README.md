@@ -213,6 +213,8 @@ The first argument is the expected property, the second is the expected value (s
 test('it works', () => {
   const tree = renderer.create(<Button />).toJSON()
   expect(tree).toHaveStyleRule('color', 'red')
+  // with media queries support (web only)
+  expect(tree).toHaveStyleRule('color', 'red', {media: '(max-width: 768px)'})
 })
 ```
 
