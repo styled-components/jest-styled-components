@@ -121,30 +121,22 @@ test('theming', () => {
   expect(mount(component)).toHaveStyleRule('color', 'mediumseagreen')
 })
 
-test('media queries', () => {
-  const Text = styled.a`
-    font-size: 2em;
-    color: white;
+test('at rules', () => {
+  const Wrapper = styled.section`
+    color: red;
     @media (max-width: 640px) {
-      font-size: 1.5em;
+      color: green;
     }
-    @media (max-width: 1080px) {
-      font-size: 1em;
-    }
-    @media (min-width: 480px) and (max-width: 920px) {
-      color: black;
+    @supports (display: flexbox) {
+      color: blue;
     }
   `
 
-  toHaveStyleRule(<Text>Text with styles</Text>, 'font-size', '2em')
-  toHaveStyleRule(<Text>Text with styles</Text>, 'color', 'white')
-  toHaveStyleRule(<Text>Text with styles</Text>, 'font-size', '1.5em', {
+  toHaveStyleRule(<Wrapper />, 'color', 'red')
+  toHaveStyleRule(<Wrapper />, 'color', 'green', {
     media: '(max-width: 640px)',
   })
-  toHaveStyleRule(<Text>Text with styles</Text>, 'font-size', '1em', {
-    media: '(max-width: 1080px)',
-  })
-  toHaveStyleRule(<Text>Text with styles</Text>, 'color', 'black', {
-    media: '(min-width: 480px) and (max-width: 920px)',
+  toHaveStyleRule(<Wrapper />, 'color', 'blue', {
+    supports: '(display: flexbox)',
   })
 })

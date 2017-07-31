@@ -213,9 +213,13 @@ The first argument is the expected property, the second is the expected value (s
 test('it works', () => {
   const tree = renderer.create(<Button />).toJSON()
   expect(tree).toHaveStyleRule('color', 'red')
-  // with media queries support (web only)
-  expect(tree).toHaveStyleRule('color', 'red', {media: '(max-width: 768px)'})
 })
+```
+
+The matcher supports a third `options` parameter which enables the possibility to search for rules nested within an [At-rule](https://developer.mozilla.org/en/docs/Web/CSS/At-rule) ([media](https://developer.mozilla.org/en-US/docs/Web/CSS/@media) and [supports](https://developer.mozilla.org/en-US/docs/Web/CSS/@supports)). This feature is supported in React only, and more options are coming soon.
+
+```js
+expect(tree).toHaveStyleRule('color', 'red', { media: '(max-width: 640px)' })
 ```
 
 This matcher works with trees serialized with `react-test-renderer` and shallow renderered or mounted with Enzyme.
@@ -230,7 +234,7 @@ import 'jest-styled-components/native'
 # styled-components < v2
 
 To use this package with styled-components < v2 (e.g. v1.4.6) the following annotation must be added at the top of the test files.
-Consequently, it won't be possibile to use Enzyme's full DOM rendering.
+Consequently, it won't be possible to use Enzyme's full DOM rendering.
 
 ```js
 /**
