@@ -20,10 +20,24 @@ const getClassNames = received => {
 const hasClassNames = (classNames, selectors) =>
   classNames.some(className => selectors.includes(`.${className}`))
 
-const getRules = (ast, classNames) =>
-  ast.stylesheet.rules.filter(
+const getAtRules = (ast, options) =>
+  Object.keys(options)
+    .map(option =>
+      ast.stylesheet.rules
+        .filter(
+          rule => rule.type === option && rule[option] === options[option]
+        )
+        .map(rule => rule.rules)
+        .reduce((acc, rules) => acc.concat(rules), [])
+    )
+    .reduce((acc, rules) => acc.concat(rules), [])
+
+const getRules = (ast, classNames, options) => {
+  const rules = options ? getAtRules(ast, options) : ast.stylesheet.rules
+  return rules.filter(
     rule => rule.type === 'rule' && hasClassNames(classNames, rule.selectors)
   )
+}
 
 const getDeclaration = (rule, property) =>
   rule.declarations
@@ -41,10 +55,10 @@ const die = (utils, property) => ({
   message: `Property not found: ${utils.printReceived(property)}`,
 })
 
-function toHaveStyleRule(received, property, value) {
+function toHaveStyleRule(received, property, value, options) {
   const classNames = getClassNames(received)
   const ast = getCSS()
-  const rules = getRules(ast, classNames)
+  const rules = getRules(ast, classNames, options)
 
   if (!rules.length) {
     return die(this.utils, property)

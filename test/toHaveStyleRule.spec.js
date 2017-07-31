@@ -13,10 +13,14 @@ const notToHaveStyleRule = (component, property, value) => {
   expect(mount(component)).not.toHaveStyleRule(property, value)
 }
 
-const toHaveStyleRule = (component, property, value) => {
-  expect(renderer.create(component).toJSON()).toHaveStyleRule(property, value)
-  expect(shallow(component)).toHaveStyleRule(property, value)
-  expect(mount(component)).toHaveStyleRule(property, value)
+const toHaveStyleRule = (component, property, value, options) => {
+  expect(renderer.create(component).toJSON()).toHaveStyleRule(
+    property,
+    value,
+    options
+  )
+  expect(shallow(component)).toHaveStyleRule(property, value, options)
+  expect(mount(component)).toHaveStyleRule(property, value, options)
 }
 
 test('null', () => {
@@ -115,4 +119,32 @@ test('theming', () => {
     'mediumseagreen'
   )
   expect(mount(component)).toHaveStyleRule('color', 'mediumseagreen')
+})
+
+test('media queries', () => {
+  const Text = styled.a`
+    font-size: 2em;
+    color: white;
+    @media (max-width: 640px) {
+      font-size: 1.5em;
+    }
+    @media (max-width: 1080px) {
+      font-size: 1em;
+    }
+    @media (min-width: 480px) and (max-width: 920px) {
+      color: black;
+    }
+  `
+
+  toHaveStyleRule(<Text>Text with styles</Text>, 'font-size', '2em')
+  toHaveStyleRule(<Text>Text with styles</Text>, 'color', 'white')
+  toHaveStyleRule(<Text>Text with styles</Text>, 'font-size', '1.5em', {
+    media: '(max-width: 640px)',
+  })
+  toHaveStyleRule(<Text>Text with styles</Text>, 'font-size', '1em', {
+    media: '(max-width: 1080px)',
+  })
+  toHaveStyleRule(<Text>Text with styles</Text>, 'color', 'black', {
+    media: '(min-width: 480px) and (max-width: 920px)',
+  })
 })
