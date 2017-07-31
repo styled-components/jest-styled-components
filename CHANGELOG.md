@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.3.0](https://github.com/styled-components/jest-styled-components/compare/v4.2.2...v4.3.0) - 2017-07-31
+### Added
+- [toMatchSnapshot] Accept a third options parameter to search for rules nested within At-rules.
+
 ## [4.2.2](https://github.com/styled-components/jest-styled-components/compare/v4.2.1...v4.2.2) - 2017-07-24
 ### Fixed
 - [toMatchSnapshot] Handle non Styled Components class names with leading white spaces.
