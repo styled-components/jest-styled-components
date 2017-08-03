@@ -140,3 +140,55 @@ test('at rules', () => {
     supports: '(display: flexbox)',
   })
 })
+
+test('pseudo selectors', () => {
+  const Link = styled.a`
+    color: white;
+    &:hover {
+      color: blue;
+    }
+    &::after {
+      content: 'Hello';
+      color: red;
+    }
+  `
+
+  toHaveStyleRule(<Link />, 'color', 'white')
+  toHaveStyleRule(<Link />, 'color', 'blue', {
+    pseudo: ':hover',
+  })
+  toHaveStyleRule(<Link />, 'content', "'Hello'", {
+    pseudo: '::after',
+  })
+  toHaveStyleRule(<Link />, 'color', 'red', {
+    pseudo: '::after',
+  })
+})
+
+test('option combinations', () => {
+  const Link = styled.a`
+    &:hover {
+      color: black;
+    }
+    @media (max-width: 640px) {
+      &:hover {
+        color: blue;
+      }
+      &::before {
+        content: 'Hello';
+      }
+    }
+  `
+
+  toHaveStyleRule(<Link />, 'color', 'black', {
+    pseudo: ':hover',
+  })
+  toHaveStyleRule(<Link />, 'color', 'blue', {
+    media: '(max-width: 640px)',
+    pseudo: ':hover',
+  })
+  toHaveStyleRule(<Link />, 'content', "'Hello'", {
+    media: '(max-width: 640px)',
+    pseudo: '::before',
+  })
+})
