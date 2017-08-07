@@ -141,27 +141,29 @@ test('at rules', () => {
   })
 })
 
-test('pseudo selectors', () => {
+test('selector modifiers', () => {
   const Link = styled.a`
     color: white;
     &:hover {
       color: blue;
     }
     &::after {
-      content: 'Hello';
       color: red;
+    }
+    &[href*="somelink.com"] {
+      color: green;
     }
   `
 
   toHaveStyleRule(<Link />, 'color', 'white')
   toHaveStyleRule(<Link />, 'color', 'blue', {
-    pseudo: ':hover',
-  })
-  toHaveStyleRule(<Link />, 'content', "'Hello'", {
-    pseudo: '::after',
+    modifier: ':hover',
   })
   toHaveStyleRule(<Link />, 'color', 'red', {
-    pseudo: '::after',
+    modifier: '::after',
+  })
+  toHaveStyleRule(<Link />, 'color', 'green', {
+    modifier: '[href*="somelink.com"]',
   })
 })
 
@@ -174,21 +176,23 @@ test('option combinations', () => {
       &:hover {
         color: blue;
       }
-      &::before {
-        content: 'Hello';
+    }
+    @supports (display: flexbox) {
+      &[href*="somelink.com"] {
+        color: green;
       }
     }
   `
 
   toHaveStyleRule(<Link />, 'color', 'black', {
-    pseudo: ':hover',
+    modifier: ':hover',
   })
   toHaveStyleRule(<Link />, 'color', 'blue', {
     media: '(max-width: 640px)',
-    pseudo: ':hover',
+    modifier: ':hover',
   })
-  toHaveStyleRule(<Link />, 'content', "'Hello'", {
-    media: '(max-width: 640px)',
-    pseudo: '::before',
+  toHaveStyleRule(<Link />, 'color', 'green', {
+    supports: '(display: flexbox)',
+    modifier: '[href*="somelink.com"]',
   })
 })

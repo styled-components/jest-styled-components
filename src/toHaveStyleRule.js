@@ -23,7 +23,7 @@ const getClassNames = received => {
 const hasClassNames = (classNames, selectors, options) =>
   classNames.some(className =>
     selectors.includes(
-      `.${className}${options.pseudo ? `${options.pseudo}` : ''}`
+      `.${className}${options.modifier ? `${options.modifier}` : ''}`
     )
   )
 
