@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.4.0](https://github.com/styled-components/jest-styled-components/compare/v4.3.0...v4.4.0) - 2017-08-11
+### Added
+- [toMatchSnapshot] Add `modifier` option to search for pseudo classes and attributes.
+
 ## [4.3.0](https://github.com/styled-components/jest-styled-components/compare/v4.2.2...v4.3.0) - 2017-07-31
 ### Added
 - [toMatchSnapshot] Accept a third options parameter to search for rules nested within At-rules.
