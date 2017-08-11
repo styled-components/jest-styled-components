@@ -1,5 +1,8 @@
 const { getCSS } = require('./utils')
 
+const hasAtRule = options =>
+  Object.keys(options).some(option => ['media', 'supports'].includes(option))
+
 const getClassNames = received => {
   let className
 
@@ -17,8 +20,12 @@ const getClassNames = received => {
   return className ? className.split(/\s/) : []
 }
 
-const hasClassNames = (classNames, selectors) =>
-  classNames.some(className => selectors.includes(`.${className}`))
+const hasClassNames = (classNames, selectors, options) =>
+  classNames.some(className =>
+    selectors.includes(
+      `.${className}${options.modifier ? `${options.modifier}` : ''}`
+    )
+  )
 
 const getAtRules = (ast, options) =>
   Object.keys(options)
@@ -33,9 +40,12 @@ const getAtRules = (ast, options) =>
     .reduce((acc, rules) => acc.concat(rules), [])
 
 const getRules = (ast, classNames, options) => {
-  const rules = options ? getAtRules(ast, options) : ast.stylesheet.rules
+  const rules = hasAtRule(options)
+    ? getAtRules(ast, options)
+    : ast.stylesheet.rules
   return rules.filter(
-    rule => rule.type === 'rule' && hasClassNames(classNames, rule.selectors)
+    rule =>
+      rule.type === 'rule' && hasClassNames(classNames, rule.selectors, options)
   )
 }
 
@@ -55,7 +65,7 @@ const die = (utils, property) => ({
   message: `Property not found: ${utils.printReceived(property)}`,
 })
 
-function toHaveStyleRule(received, property, value, options) {
+function toHaveStyleRule(received, property, value, options = {}) {
   const classNames = getClassNames(received)
   const ast = getCSS()
   const rules = getRules(ast, classNames, options)

@@ -140,3 +140,59 @@ test('at rules', () => {
     supports: '(display: flexbox)',
   })
 })
+
+test('selector modifiers', () => {
+  const Link = styled.a`
+    color: white;
+    &:hover {
+      color: blue;
+    }
+    &::after {
+      color: red;
+    }
+    &[href*="somelink.com"] {
+      color: green;
+    }
+  `
+
+  toHaveStyleRule(<Link />, 'color', 'white')
+  toHaveStyleRule(<Link />, 'color', 'blue', {
+    modifier: ':hover',
+  })
+  toHaveStyleRule(<Link />, 'color', 'red', {
+    modifier: '::after',
+  })
+  toHaveStyleRule(<Link />, 'color', 'green', {
+    modifier: '[href*="somelink.com"]',
+  })
+})
+
+test('option combinations', () => {
+  const Link = styled.a`
+    &:hover {
+      color: black;
+    }
+    @media (max-width: 640px) {
+      &:hover {
+        color: blue;
+      }
+    }
+    @supports (display: flexbox) {
+      &[href*="somelink.com"] {
+        color: green;
+      }
+    }
+  `
+
+  toHaveStyleRule(<Link />, 'color', 'black', {
+    modifier: ':hover',
+  })
+  toHaveStyleRule(<Link />, 'color', 'blue', {
+    media: '(max-width: 640px)',
+    modifier: ':hover',
+  })
+  toHaveStyleRule(<Link />, 'color', 'green', {
+    supports: '(display: flexbox)',
+    modifier: '[href*="somelink.com"]',
+  })
+})
