@@ -24,9 +24,12 @@ const getClassNames = node => {
   return classNames
 }
 
+const filterClassNames = (classNames, hashes) =>
+  classNames.filter(className => hashes.includes(className))
+
 const includesClassNames = (classNames, selectors) =>
   classNames.some(className =>
-    selectors.some(selector => selector.indexOf(className) > -1)
+    selectors.some(selector => selector.includes(className))
   )
 
 const filterRules = classNames => rule =>
@@ -58,7 +61,7 @@ const getStyle = classNames => {
   return css.stringify(ast)
 }
 
-const replaceClassNames = (classNames, style, result) =>
+const replaceClassNames = (result, classNames, style) =>
   classNames
     .filter(className => style.includes(className))
     .reduce(
@@ -67,7 +70,7 @@ const replaceClassNames = (classNames, style, result) =>
       result
     )
 
-const replaceHashes = (hashes, result) =>
+const replaceHashes = (result, hashes) =>
   hashes.reduce(
     (acc, className) =>
       acc.replace(
@@ -87,14 +90,16 @@ const styleSheetSerializer = {
   print(val, print) {
     val.withStyle = true
 
-    const classNames = [...getClassNames(val)]
+    const hashes = getHashes()
+    let classNames = [...getClassNames(val)]
+    classNames = filterClassNames(classNames, hashes)
+
     const style = getStyle(classNames)
     const code = print(val)
-    const hashes = getHashes()
 
     let result = `${style}${style ? '\n\n' : ''}${code}`
-    result = replaceClassNames(classNames, style, result)
-    result = replaceHashes(hashes, result)
+    result = replaceClassNames(result, classNames, style)
+    result = replaceHashes(result, hashes)
 
     return result
   },

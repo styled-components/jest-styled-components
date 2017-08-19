@@ -129,6 +129,16 @@ test('trailing white spaces', () => {
   toMatchSnapshot('trailing white spaces', <Div />)
 })
 
+test('included class name', () => {
+  const Div = styled.div.attrs({
+    className: 'i',
+  })`
+    color: red;
+  `
+
+  toMatchSnapshot('included class name', <Div />)
+})
+
 test('theming', () => {
   const Button = styled.button`
     font-size: 1em;

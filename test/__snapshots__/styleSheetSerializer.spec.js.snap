@@ -326,6 +326,38 @@ exports[`extending styles - shallow 1`] = `
 </div>
 `;
 
+exports[`included class name - mount 1`] = `
+.c0 {
+  color: red;
+}
+
+<styled.div>
+  <div
+    className="i c0"
+  />
+</styled.div>
+`;
+
+exports[`included class name - react-test-renderer 1`] = `
+.c0 {
+  color: red;
+}
+
+<div
+  className="i c0"
+/>
+`;
+
+exports[`included class name - shallow 1`] = `
+.c0 {
+  color: red;
+}
+
+<div
+  className="i c0"
+/>
+`;
+
 exports[`leading white spaces - mount 1`] = `
 <Div>
   <div
