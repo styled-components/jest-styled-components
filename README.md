@@ -247,6 +247,22 @@ To use the `toHaveStyleRule` matcher with [React Native](https://facebook.github
 import 'jest-styled-components/native'
 ```
 
+# Global installation
+
+It is possibile to setup this package for all the tests using the [setupTestFrameworkScriptFile](https://facebook.github.io/jest/docs/en/configuration.html#setuptestframeworkscriptfile-string) option:
+
+```js
+"jest": {
+  "setupTestFrameworkScriptFile": "./setupTest.js"
+}
+```
+
+And import the library once in the `setupTest.js` as follows:
+
+```js
+import 'jest-styled-components'
+```
+
 # styled-components < v2
 
 To use this package with styled-components < v2 (e.g. v1.4.6) the following annotation must be added at the top of the test files.
