@@ -23,12 +23,27 @@ const toHaveStyleRule = (component, property, value, options) => {
   expect(mount(component)).toHaveStyleRule(property, value, options)
 }
 
+test('message when property not found', () => {
+  expect(() => expect(null).toHaveStyleRule('a')).toThrowErrorMatchingSnapshot()
+})
+
 test('null', () => {
   expect(null).not.toHaveStyleRule('a', 'b')
 })
 
 test('non-styled', () => {
   notToHaveStyleRule(<div />, 'a', 'b')
+})
+
+test('message when value does not match', () => {
+  const Wrapper = styled.section`background: orange;`
+
+  expect(() => {
+    expect(renderer.create(<Wrapper />).toJSON()).toHaveStyleRule(
+      'background',
+      'red'
+    )
+  }).toThrowErrorMatchingSnapshot()
 })
 
 test('basic', () => {

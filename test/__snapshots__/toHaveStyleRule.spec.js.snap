@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`message when property not found 1`] = `"Property not found: [31m\\"a\\"[39m"`;
+
+exports[`message when value does not match 1`] = `
+"Expected background to match:
+  [32m\\"red\\"[39m
+Received:
+  [31m\\"orange\\"[39m"
+`;
