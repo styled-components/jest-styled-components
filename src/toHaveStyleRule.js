@@ -62,7 +62,7 @@ const getDeclarations = (rules, property) =>
 
 const die = (utils, property) => ({
   pass: false,
-  message: `Property not found: ${utils.printReceived(property)}`,
+  message: () => `Property not found: ${utils.printReceived(property)}`,
 })
 
 function toHaveStyleRule(received, property, value, options = {}) {
@@ -87,7 +87,7 @@ function toHaveStyleRule(received, property, value, options = {}) {
       ? value.test(declaration.value)
       : value === declaration.value
 
-  const message =
+  const message = () =>
     `Expected ${property}${pass ? ' not ' : ' '}to match:\n` +
     `  ${this.utils.printExpected(value)}\n` +
     'Received:\n' +
