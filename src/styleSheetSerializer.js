@@ -1,28 +1,32 @@
 const css = require('css')
 const { getCSS, getHashes } = require('./utils')
 
-const getClassNames = node => {
-  let classNames = new Set()
+const KEY = '__jest-styled-components__'
+
+const getNodes = (node, nodes = []) => {
+  if (typeof node === 'object') {
+    nodes.push(node)
+  }
 
   if (node.children) {
-    node.children
-      .slice()
-      .reverse()
-      .forEach(
-        child =>
-          (classNames = new Set([...getClassNames(child), ...classNames]))
-      )
+    node.children.forEach(child => getNodes(child, nodes))
   }
 
-  if (node.props && node.props.className) {
-    classNames = new Set([
-      ...node.props.className.trim().split(/\s+/),
-      ...classNames,
-    ])
-  }
-
-  return classNames
+  return nodes
 }
+
+const markNodes = nodes => nodes.forEach(node => (node[KEY] = true))
+
+const getClassNames = nodes =>
+  nodes.reduce((classNames, node) => {
+    if (node.props && node.props.className) {
+      node.props.className
+        .trim()
+        .split(/\s+/)
+        .forEach(className => classNames.add(className))
+    }
+    return classNames
+  }, new Set())
 
 const filterClassNames = (classNames, hashes) =>
   classNames.filter(className => hashes.includes(className))
@@ -82,16 +86,15 @@ const replaceHashes = (result, hashes) =>
 
 const styleSheetSerializer = {
   test(val) {
-    return (
-      val && !val.withStyle && val.$$typeof === Symbol.for('react.test.json')
-    )
+    return val && !val[KEY] && val.$$typeof === Symbol.for('react.test.json')
   },
 
   print(val, print) {
-    val.withStyle = true
+    const nodes = getNodes(val)
+    markNodes(nodes)
 
     const hashes = getHashes()
-    let classNames = [...getClassNames(val)]
+    let classNames = [...getClassNames(nodes)]
     classNames = filterClassNames(classNames, hashes)
 
     const style = getStyle(classNames)
