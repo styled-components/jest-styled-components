@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.6.0](https://github.com/styled-components/jest-styled-components/compare/v4.5.0...v4.6.0) - 2017-09-09
+### Changed
+- [toMatchSnapshot] Make the matcher compatible with Jest v21.
+
 ## [4.5.0](https://github.com/styled-components/jest-styled-components/compare/v4.4.1...v4.5.0) - 2017-09-05
 ### Changed
 - [toHaveStyleRule (React)] Make the matcher compatible with Jest v21 (see https://github.com/facebook/jest/pull/3972).
