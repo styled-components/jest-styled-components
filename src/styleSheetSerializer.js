@@ -19,8 +19,10 @@ const markNodes = nodes => nodes.forEach(node => (node[KEY] = true))
 
 const getClassNames = nodes =>
   nodes.reduce((classNames, node) => {
-    if (node.props && node.props.className) {
-      node.props.className
+    const classNameProp =
+      node.props && (node.props.class || node.props.className)
+    if (classNameProp) {
+      classNameProp
         .trim()
         .split(/\s+/)
         .forEach(className => classNames.add(className))
