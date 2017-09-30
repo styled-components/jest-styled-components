@@ -32,7 +32,9 @@ const getStyle = () => extract(/<style[^>]*>([^<]*)</g)
 
 const getRules = () =>
   StyleSheet.globalStyleSheet.sheet && StyleSheet.componentStyleSheet.sheet
-    ? StyleSheet.rules().map(rule => rule.cssText).join('\n')
+    ? StyleSheet.rules()
+        .map(rule => rule.cssText)
+        .join('\n')
     : ''
 
 const getCSS = () => {
@@ -48,7 +50,11 @@ const getComponentIDs = () =>
   extract(/sc-component-id: ([^\\*\\/]*) \*\//g).split(/\s/)
 
 const getHashes = () =>
-  isOverV2() ? getClassNames().concat(getComponentIDs()).filter(Boolean) : []
+  isOverV2()
+    ? getClassNames()
+        .concat(getComponentIDs())
+        .filter(Boolean)
+    : []
 
 module.exports = {
   resetStyleSheet,

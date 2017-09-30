@@ -1,8 +1,3 @@
-const {
-  matcherHint,
-  printReceived,
-  printExpected,
-} = require('jest-matcher-utils')
 const parse = require('styled-components/lib/vendor/postcss-safe-parser/parse')
 
 function toHaveStyleRule(component, name, expected) {
@@ -47,11 +42,11 @@ function toHaveStyleRule(component, name, expected) {
     const error = `${name} isn't in the style rules`
     return {
       message: () =>
-        `${matcherHint('.toHaveStyleRule')}\n\n` +
+        `${this.utils.matcherHint('.toHaveStyleRule')}\n\n` +
         `Expected ${component.name()} to have a style rule:\n` +
-        `  ${printExpected(`${name}: ${expected}`)}\n` +
+        `  ${this.utils.printExpected(`${name}: ${expected}`)}\n` +
         'Received:\n' +
-        `  ${printReceived(error)}`,
+        `  ${this.utils.printReceived(error)}`,
       pass: false,
     }
   }
@@ -85,16 +80,16 @@ function toHaveStyleRule(component, name, expected) {
 
   const diff =
     '' +
-    `  ${printExpected(`${name}: ${expected}`)}\n` +
+    `  ${this.utils.printExpected(`${name}: ${expected}`)}\n` +
     'Received:\n' +
-    `  ${printReceived(`${name}: ${received}`)}`
+    `  ${this.utils.printReceived(`${name}: ${received}`)}`
 
   const message = pass
     ? () =>
-        `${matcherHint('.not.toHaveStyleRule')}\n\n` +
+        `${this.utils.matcherHint('.not.toHaveStyleRule')}\n\n` +
         `Expected ${component.name()} not to contain:\n${diff}`
     : () =>
-        `${matcherHint('.toHaveStyleRule')}\n\n` +
+        `${this.utils.matcherHint('.toHaveStyleRule')}\n\n` +
         `Expected ${component.name()} to have a style rule:\n${diff}`
 
   return { message, pass }
