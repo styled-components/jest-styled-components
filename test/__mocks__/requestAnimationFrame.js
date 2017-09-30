@@ -1,3 +1,1 @@
-global.requestAnimationFrame = () => {
-  throw new Error('requestAnimationFrame is not supported in Node')
-}
+global.requestAnimationFrame = callback => setTimeout(callback, 0)
