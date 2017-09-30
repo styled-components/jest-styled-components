@@ -53,7 +53,7 @@
     "setupFiles": [
       "<rootDir>/test/__mocks__/requestAnimationFrame.js"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/test/jest.setup.js",
+    "setupTestFrameworkScriptFile": "<rootDir>/test/setup.js",
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ]
