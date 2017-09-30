@@ -65,10 +65,9 @@ test('regex', () => {
 })
 
 test('any component', () => {
-  const Link = ({ className, children }) =>
-    <a className={className}>
-      {children}
-    </a>
+  const Link = ({ className, children }) => (
+    <a className={className}>{children}</a>
+  )
 
   const StyledLink = styled(Link)`
     color: palevioletred;
@@ -165,7 +164,7 @@ test('selector modifiers', () => {
     &::after {
       color: red;
     }
-    &[href*="somelink.com"] {
+    &[href*='somelink.com'] {
       color: green;
     }
   `
@@ -178,7 +177,7 @@ test('selector modifiers', () => {
     modifier: '::after',
   })
   toHaveStyleRule(<Link />, 'color', 'green', {
-    modifier: '[href*="somelink.com"]',
+    modifier: "[href*='somelink.com']",
   })
 })
 
@@ -193,7 +192,7 @@ test('option combinations', () => {
       }
     }
     @supports (display: flexbox) {
-      &[href*="somelink.com"] {
+      &[href*='somelink.com'] {
         color: green;
       }
     }
@@ -208,6 +207,6 @@ test('option combinations', () => {
   })
   toHaveStyleRule(<Link />, 'color', 'green', {
     supports: '(display: flexbox)',
-    modifier: '[href*="somelink.com"]',
+    modifier: "[href*='somelink.com']",
   })
 })

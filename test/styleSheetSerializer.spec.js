@@ -59,10 +59,9 @@ test('basic', () => {
 })
 
 test('any component', () => {
-  const Link = ({ className, children }) =>
-    <a className={className}>
-      {children}
-    </a>
+  const Link = ({ className, children }) => (
+    <a className={className}>{children}</a>
+  )
 
   const StyledLink = styled(Link)`
     color: palevioletred;
