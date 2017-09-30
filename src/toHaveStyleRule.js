@@ -43,6 +43,7 @@ const getRules = (ast, classNames, options) => {
   const rules = hasAtRule(options)
     ? getAtRules(ast, options)
     : ast.stylesheet.rules
+
   return rules.filter(
     rule =>
       rule.type === 'rule' && hasClassNames(classNames, rule.selectors, options)

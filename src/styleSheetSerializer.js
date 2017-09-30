@@ -21,12 +21,14 @@ const getClassNames = nodes =>
   nodes.reduce((classNames, node) => {
     const classNameProp =
       node.props && (node.props.class || node.props.className)
+
     if (classNameProp) {
       classNameProp
         .trim()
         .split(/\s+/)
         .forEach(className => classNames.add(className))
     }
+
     return classNames
   }, new Set())
 
