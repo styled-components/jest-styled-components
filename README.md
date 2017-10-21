@@ -206,14 +206,52 @@ test('it works', () => {
 })
 ```
 
-# Preact
+## Theming
 
-To generate snapshots of [Preact](https://preactjs.com/) components,
-add the following snippet to the Jest configuration:
+In some scenario, testing components that depend on a theme can be [tricky](https://github.com/styled-components/jest-styled-components/issues/61),
+especially when using Enzyme's shallow rendering.
+
+For example:
 
 ```js
-"moduleNameMapper": {
-  "^react$": "preact-compat"
+const Button = styled.button`
+  color: ${props => props.theme.main};
+`
+
+const theme = {
+  main: 'mediumseagreen',
+}
+```
+
+The recommended solution is to pass the theme as a prop:
+
+```js
+const wrapper = shallow(<Button theme={theme} />)
+```
+
+The following function might also help:
+
+```js
+const shallowWithTheme = (tree, theme) => {
+  const context = shallow(<ThemeProvider theme={theme} />)
+    .instance()
+    .getChildContext()
+  return shallow(tree, { context })
+}
+
+const wrapper = shallowWithTheme(<Button />, theme)
+```
+
+## Preact
+
+To generate snapshots of [Preact](https://preactjs.com/) components,
+add the following configuration:
+
+```js
+"jest": {
+  "moduleNameMapper": {
+    "^react$": "preact-compat"
+  }
 }
 ```
 

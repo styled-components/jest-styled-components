@@ -512,6 +512,18 @@ exports[`referring to other components - react-test-renderer 1`] = `
 </a>
 `;
 
+exports[`shallow with theme 1`] = `
+.c0 {
+  color: mediumseagreen;
+}
+
+<button
+  className="c0"
+>
+  Themed
+</button>
+`;
+
 exports[`supported css - mount 1`] = `
 .c0 {
   padding: 2em 1em;

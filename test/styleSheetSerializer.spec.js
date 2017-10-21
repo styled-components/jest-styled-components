@@ -12,6 +12,13 @@ const toMatchSnapshot = (name, component) => {
   expect(mount(component)).toMatchSnapshot(`${name} - mount`)
 }
 
+const shallowWithTheme = (tree, theme) => {
+  const context = shallow(<ThemeProvider theme={theme} />)
+    .instance()
+    .getChildContext()
+  return shallow(tree, { context })
+}
+
 test('null', () => {
   expect(null).toMatchSnapshot()
 })
@@ -168,6 +175,18 @@ test('theming', () => {
       </ThemeProvider>
     </div>
   )
+})
+
+test('shallow with theme', () => {
+  const Button = styled.button`color: ${props => props.theme.main};`
+
+  const theme = {
+    main: 'mediumseagreen',
+  }
+
+  const wrapper = shallowWithTheme(<Button>Themed</Button>, theme)
+
+  expect(wrapper).toMatchSnapshot()
 })
 
 test('supported css', () => {
