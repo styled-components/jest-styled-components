@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic 1`] = `
+.c0 {
+  padding: 4em;
+  background: papayawhip;
+}
+
+.c1 {
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+}
+
+<section
+  class="c0"
+  ref={undefined}
+>
+  <h1
+    class="c1"
+    ref={undefined}
+  >
+    Hello World, this is my first styled component!
+  </h1>
+</section>
+`;

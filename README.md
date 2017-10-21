@@ -206,6 +206,38 @@ test('it works', () => {
 })
 ```
 
+# Preact
+
+To generate snapshots of [Preact](https://preactjs.com/) components,
+add the following snippet to the Jest configuration:
+
+```js
+"moduleNameMapper": {
+  "^react$": "preact-compat",
+},
+```
+
+And render the components with [preact-render-to-json](https://github.com/nathancahill/preact-render-to-json):
+
+```js
+import React from 'react'
+import styled from 'styled-components'
+import render from 'preact-render-to-json'
+import 'jest-styled-components'
+
+const Button = styled.button`
+  color: red;
+`
+
+test('it works', () => {
+  const tree = render(<Button />)
+  expect(tree).toMatchSnapshot()
+})
+```
+
+> The snapshots will contain `class` instead of `className`.
+[Learn more](https://github.com/developit/preact/issues/103).
+
 # toHaveStyleRule
 
 The `toHaveStyleRule` matcher is useful to test if a given rule is applied to a component.
