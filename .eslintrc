@@ -18,6 +18,7 @@
       "imports": "never",
       "objects": "only-multiline"
     }],
+    "global-require": "off",
     "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     "no-cond-assign": ["error", "except-parens"],
     "no-confusing-arrow": "off",
