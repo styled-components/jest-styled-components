@@ -213,8 +213,8 @@ add the following snippet to the Jest configuration:
 
 ```js
 "moduleNameMapper": {
-  "^react$": "preact-compat",
-},
+  "^react$": "preact-compat"
+}
 ```
 
 And render the components with [preact-render-to-json](https://github.com/nathancahill/preact-render-to-json):
