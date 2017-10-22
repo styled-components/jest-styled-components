@@ -1,7 +1,10 @@
 const { getCSS } = require('./utils')
 
 const shouldDive = node =>
-  typeof node.type() !== 'string' && 'innerRef' in node.props()
+  typeof node.dive === 'function' && typeof node.type() !== 'string'
+
+const isTagWithClassName = node =>
+  node.prop('className') && typeof node.type() === 'string'
 
 const getClassNames = received => {
   let className
@@ -9,11 +12,11 @@ const getClassNames = received => {
   if (received) {
     if (received.$$typeof === Symbol.for('react.test.json')) {
       className = received.props.className
-    } else if (typeof received.find === 'function') {
+    } else if (typeof received.findWhere === 'function') {
       const tree = shouldDive(received) ? received.dive() : received
-      const components = tree.find('[className]')
+      const components = tree.findWhere(isTagWithClassName)
       if (components.length) {
-        className = components.last().prop('className')
+        className = components.first().prop('className')
       }
     }
   }
