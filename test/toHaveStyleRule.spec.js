@@ -36,7 +36,9 @@ test('non-styled', () => {
 })
 
 test('message when value does not match', () => {
-  const Wrapper = styled.section`background: orange;`
+  const Wrapper = styled.section`
+    background: orange;
+  `
 
   expect(() => {
     expect(renderer.create(<Wrapper />).toJSON()).toHaveStyleRule(

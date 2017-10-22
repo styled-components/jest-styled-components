@@ -34,8 +34,12 @@ test('empty style', () => {
 })
 
 test('duplicated components', () => {
-  const A = styled.div`color: red;`
-  const B = styled.div`color: green;`
+  const A = styled.div`
+    color: red;
+  `
+  const B = styled.div`
+    color: green;
+  `
 
   toMatchSnapshot(
     'duplicated components',
@@ -178,7 +182,9 @@ test('theming', () => {
 })
 
 test('shallow with theme', () => {
-  const Button = styled.button`color: ${props => props.theme.main};`
+  const Button = styled.button`
+    color: ${props => props.theme.main};
+  `
 
   const theme = {
     main: 'mediumseagreen',
