@@ -1,8 +1,5 @@
 const { getCSS } = require('./utils')
 
-const hasAtRule = options =>
-  Object.keys(options).some(option => ['media', 'supports'].includes(option))
-
 const shouldDive = node =>
   typeof node.type() !== 'string' && 'innerRef' in node.props()
 
@@ -24,12 +21,8 @@ const getClassNames = received => {
   return className ? className.split(/\s/) : []
 }
 
-const hasClassNames = (classNames, selectors, options) =>
-  classNames.some(className =>
-    selectors.includes(
-      `.${className}${options.modifier ? `${options.modifier}` : ''}`
-    )
-  )
+const hasAtRule = options =>
+  Object.keys(options).some(option => ['media', 'supports'].includes(option))
 
 const getAtRules = (ast, options) =>
   Object.keys(options)
@@ -43,6 +36,13 @@ const getAtRules = (ast, options) =>
     )
     .reduce((acc, rules) => acc.concat(rules), [])
 
+const hasClassNames = (classNames, selectors, options) =>
+  classNames.some(className =>
+    selectors.includes(
+      `.${className}${options.modifier ? `${options.modifier}` : ''}`
+    )
+  )
+
 const getRules = (ast, classNames, options) => {
   const rules = hasAtRule(options)
     ? getAtRules(ast, options)
@@ -54,6 +54,11 @@ const getRules = (ast, classNames, options) => {
   )
 }
 
+const die = (utils, property) => ({
+  pass: false,
+  message: () => `Property not found: ${utils.printReceived(property)}`,
+})
+
 const getDeclaration = (rule, property) =>
   rule.declarations
     .filter(
@@ -64,11 +69,6 @@ const getDeclaration = (rule, property) =>
 
 const getDeclarations = (rules, property) =>
   rules.map(rule => getDeclaration(rule, property)).filter(Boolean)
-
-const die = (utils, property) => ({
-  pass: false,
-  message: () => `Property not found: ${utils.printReceived(property)}`,
-})
 
 function toHaveStyleRule(received, property, value, options = {}) {
   const classNames = getClassNames(received)
