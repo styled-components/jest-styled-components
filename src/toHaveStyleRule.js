@@ -3,6 +3,9 @@ const { getCSS } = require('./utils')
 const hasAtRule = options =>
   Object.keys(options).some(option => ['media', 'supports'].includes(option))
 
+const shouldDive = node =>
+  typeof node.type() !== 'string' && 'innerRef' in node.props()
+
 const getClassNames = received => {
   let className
 
@@ -10,9 +13,10 @@ const getClassNames = received => {
     if (received.$$typeof === Symbol.for('react.test.json')) {
       className = received.props.className
     } else if (typeof received.find === 'function') {
-      const components = received.find('[className]')
+      const tree = shouldDive(received) ? received.dive() : received
+      const components = tree.find('[className]')
       if (components.length) {
-        className = components.first().prop('className')
+        className = components.last().prop('className')
       }
     }
   }

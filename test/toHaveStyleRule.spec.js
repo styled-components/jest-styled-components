@@ -83,6 +83,18 @@ test('any component', () => {
   )
 })
 
+test('styled child', () => {
+  const Parent = styled.div`
+    color: red;
+  `
+
+  const StyledChild = styled(Parent)`
+    padding: 0;
+  `
+
+  toHaveStyleRule(<StyledChild />, 'color', 'red')
+})
+
 test('extending styles', () => {
   const Button = styled.button`
     color: palevioletred;
