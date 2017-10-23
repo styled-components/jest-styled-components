@@ -57,6 +57,7 @@ const getHashes = () =>
     : []
 
 module.exports = {
+  isOverV2,
   resetStyleSheet,
   getCSS,
   getHashes,

@@ -1,5 +1,5 @@
 const css = require('css')
-const { getCSS, getHashes } = require('./utils')
+const { getCSS, getHashes, isOverV2 } = require('./utils')
 
 const KEY = '__jest-styled-components__'
 
@@ -99,7 +99,10 @@ const styleSheetSerializer = {
 
     const hashes = getHashes()
     let classNames = [...getClassNames(nodes)]
-    classNames = filterClassNames(classNames, hashes)
+
+    if (isOverV2()) {
+      classNames = filterClassNames(classNames, hashes)
+    }
 
     const style = getStyle(classNames)
     const code = print(val)
