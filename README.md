@@ -36,6 +36,18 @@ test('it works', () => {
 })
 ```
 
+Table of Contents
+=================
+
+   * [Snapshot Testing](#snapshot-testing)
+      * [Enzyme](#enzyme)
+      * [Theming](#theming)
+      * [Preact](#preact)
+   * [toHaveStyleRule](#tohavestylerule)
+   * [Global installation](#global-installation)
+   * [styled-components &lt; v2](#styled-components--v2)
+   * [Contributing](#contributing)
+
 # Snapshot Testing
 
 Jest [snapshot testing](https://facebook.github.io/jest/docs/snapshot-testing.html) is an excellent way to test [React](https://facebook.github.io/react/) components (or any serializable value) and make sure things don't change unexpectedly.
