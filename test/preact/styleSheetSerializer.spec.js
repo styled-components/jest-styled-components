@@ -3,8 +3,6 @@ import render from 'preact-render-to-json'
 import styled from 'styled-components'
 import '../../src'
 
-jest.mock('react', () => require('preact-compat'))
-
 test('basic', () => {
   const Wrapper = styled.section`
     padding: 4em;
