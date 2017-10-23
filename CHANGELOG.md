@@ -4,8 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [4.8.0](https://github.com/styled-components/jest-styled-components/compare/v4.7.1...v4.8.0) - 2017-10-21
+## [4.9.0](https://github.com/styled-components/jest-styled-components/compare/v4.8.0...v4.9.0) - 2017-10-22
+### Changed
+- [toHaveStyleRule (Native)] Full rewrite to support Styled Components v2.
+- Update dependencies.
+- Improve README.
+
 ### Fixed
+- [toHaveStyleRule (React)] Support styled components wrapped with `styled`.
+
+## [4.8.0](https://github.com/styled-components/jest-styled-components/compare/v4.7.1...v4.8.0) - 2017-10-21
+### Changed
 - [toMatchSnapshot] Support Preact.
 
 ## [4.7.1](https://github.com/styled-components/jest-styled-components/compare/v4.7.0...v4.7.1) - 2017-10-18
