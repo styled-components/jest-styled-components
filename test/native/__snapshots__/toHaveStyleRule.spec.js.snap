@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`message when property not found 1`] = `"Cannot read property 'props' of null"`;
+
+exports[`message when value does not match 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toHaveStyleRule([22m[32mexpected[39m[2m)[22m
+
+Expected View to have a style rule:
+  [32m\\"background: red\\"[39m
+Received:
+  [31m\\"background isn't in the style rules\\"[39m"
+`;
