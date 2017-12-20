@@ -8,9 +8,7 @@ exports[`any component - mount 1`] = `
 
 <div>
   <Link>
-    <a
-      className={undefined}
-    >
+    <a>
       Unstyled, boring Link
     </a>
   </Link>
