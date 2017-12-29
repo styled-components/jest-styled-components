@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`message when property not found 1`] = `"Cannot read property 'props' of null"`;
-
 exports[`message when value does not match 1`] = `
 "[2mexpect([22m[31mreceived[39m[2m).toHaveStyleRule([22m[32mexpected[39m[2m)[22m
 
