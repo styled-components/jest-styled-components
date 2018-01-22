@@ -155,17 +155,11 @@ test('at rules', () => {
     @media (max-width: 640px) {
       color: green;
     }
-    @supports (display: flexbox) {
-      color: blue;
-    }
   `
 
   toHaveStyleRule(<Wrapper />, 'color', 'red')
   toHaveStyleRule(<Wrapper />, 'color', 'green', {
-    media: '(max-width: 640px)',
-  })
-  toHaveStyleRule(<Wrapper />, 'color', 'blue', {
-    supports: '(display: flexbox)',
+    media: '(max-width:640px)',
   })
 })
 
@@ -205,22 +199,13 @@ test('option combinations', () => {
         color: blue;
       }
     }
-    @supports (display: flexbox) {
-      &[href*='somelink.com'] {
-        color: green;
-      }
-    }
   `
 
   toHaveStyleRule(<Link />, 'color', 'black', {
     modifier: ':hover',
   })
   toHaveStyleRule(<Link />, 'color', 'blue', {
-    media: '(max-width: 640px)',
+    media: '(max-width:640px)',
     modifier: ':hover',
-  })
-  toHaveStyleRule(<Link />, 'color', 'green', {
-    supports: '(display: flexbox)',
-    modifier: "[href*='somelink.com']",
   })
 })

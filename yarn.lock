@@ -2930,7 +2930,7 @@ is-fullwidth-code-point@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/is-fullwidth-code-point/-/is-fullwidth-code-point-2.0.0.tgz#a3b30a5c4f199183167aaab93beefae3ddfb654f"
 
-is-function@^1.0.1, is-function@~1.0.0:
+is-function@~1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/is-function/-/is-function-1.0.1.tgz#12cfb98b65b57dd3d193a3121f5f6e2f437602b5"
 
@@ -5434,23 +5434,22 @@ strip-json-comments@~2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
 
-styled-components@^2.1.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-2.2.1.tgz#f4835f1001c37bcc301ac3865b5d93466de4dd5b"
+styled-components@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/styled-components/-/styled-components-3.0.2.tgz#dbcd66ee84d444ee4332a7f74027e8a675191593"
   dependencies:
     buffer "^5.0.3"
     css-to-react-native "^2.0.3"
     fbjs "^0.8.9"
     hoist-non-react-statics "^1.2.0"
-    is-function "^1.0.1"
     is-plain-object "^2.0.1"
     prop-types "^15.5.4"
-    stylis "^3.2.1"
+    stylis "^3.4.0"
     supports-color "^3.2.3"
 
-stylis@^3.2.1:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.2.3.tgz#fed751d792af3f48a247769f55aca05c1a100a09"
+stylis@^3.4.0:
+  version "3.4.8"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.4.8.tgz#94380babbcd4c75726215794ca985b38ec96d1a3"
 
 supports-color@^2.0.0:
   version "2.0.0"

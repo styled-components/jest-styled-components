@@ -1,21 +1,43 @@
 const css = require('css')
-const { ServerStyleSheet } = require('styled-components')
-const StyleSheet = require('styled-components/lib/models/StyleSheet')
+const { ServerStyleSheet, isStyledComponent } = require('styled-components')
 
-const isOverV2 = () => Boolean(ServerStyleSheet)
+const isOverV3 = !!isStyledComponent
+const isOverV2 = () => !!ServerStyleSheet
+
+let StyleSheet
+
+/* eslint-disable */
+if (isOverV3) {
+  const secretInternals = require('styled-components')
+    .__DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS
+
+  if (
+    secretInternals === undefined ||
+    secretInternals.StyleSheet === undefined
+  ) {
+    throw new Error(
+      'Could neither find styled-components secret internals nor styled-components/lib/models/StyleSheet.js'
+    )
+  } else {
+    StyleSheet = secretInternals.StyleSheet
+  }
+} else {
+  StyleSheet = require('styled-components/lib/models/StyleSheet').default
+}
+/* eslint-enable */
 
 const isServer = () => typeof document === 'undefined'
 
 const resetStyleSheet = () => {
   if (isOverV2()) {
-    StyleSheet.default.reset(isServer())
+    StyleSheet.reset(isServer())
   }
 }
 
 const getHTML = () =>
   isServer()
     ? new ServerStyleSheet().getStyleTags()
-    : StyleSheet.default.instance.toHTML()
+    : StyleSheet.instance.toHTML()
 
 const extract = regex => {
   let style = ''

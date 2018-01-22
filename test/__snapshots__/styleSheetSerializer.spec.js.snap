@@ -540,7 +540,7 @@ html.test .c0 {
   display: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width:600px) {
   .c0 {
     background: tomato;
   }
@@ -579,7 +579,7 @@ html.test .c0 {
   display: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width:600px) {
   .c0 {
     background: tomato;
   }
@@ -616,7 +616,7 @@ html.test .c0 {
   display: none;
 }
 
-@media (max-width: 600px) {
+@media (max-width:600px) {
   .c0 {
     background: tomato;
   }

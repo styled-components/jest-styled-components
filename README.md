@@ -300,7 +300,7 @@ test('it works', () => {
 })
 ```
 
-The matcher supports a third `options` parameter which makes it possible to search for rules nested within an [At-rule](https://developer.mozilla.org/en/docs/Web/CSS/At-rule) ([media](https://developer.mozilla.org/en-US/docs/Web/CSS/@media) and [supports](https://developer.mozilla.org/en-US/docs/Web/CSS/@supports)) or to add modifiers to the class selector. This feature is supported in React only, and more options are coming soon.
+The matcher supports a third `options` parameter which makes it possible to search for rules nested within an [At-rule](https://developer.mozilla.org/en/docs/Web/CSS/At-rule) ([media](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)) or to add modifiers to the class selector. This feature is supported in React only, and more options are coming soon.
 
 ```js
 const Button = styled.button`
@@ -314,7 +314,7 @@ const Button = styled.button`
 test('it works', () => {
   const tree = renderer.create(<Button />).toJSON()
   expect(tree).toHaveStyleRule('color', 'red', {
-    media: '(max-width: 640px)',
+    media: '(max-width:640px)',
     modifier: ':hover',
   })
 })
