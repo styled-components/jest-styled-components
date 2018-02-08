@@ -39,11 +39,25 @@ const getAtRules = (ast, options) =>
     )
     .reduce((acc, rules) => acc.concat(rules), [])
 
+const getModifiedClassName = (className, modifier = '') => {
+  const classNameSelector = `.${className}`
+  let prefix = ''
+  modifier = modifier.trim()
+  if (modifier.includes('&')) {
+    modifier = modifier.replace('&', classNameSelector)
+  } else {
+    prefix += classNameSelector
+  }
+  const first = modifier[0]
+  if (first !== ':' && first !== '[') {
+    prefix += ' '
+  }
+  return `${prefix}${modifier}`.trim()
+}
+
 const hasClassNames = (classNames, selectors, options) =>
   classNames.some(className =>
-    selectors.includes(
-      `.${className}${options.modifier ? `${options.modifier}` : ''}`
-    )
+    selectors.includes(getModifiedClassName(className, options.modifier))
   )
 
 const getRules = (ast, classNames, options) => {

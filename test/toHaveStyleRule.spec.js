@@ -166,6 +166,7 @@ test('at rules', () => {
 test('selector modifiers', () => {
   const Link = styled.a`
     color: white;
+
     &:hover {
       color: blue;
     }
@@ -174,6 +175,41 @@ test('selector modifiers', () => {
     }
     &[href*='somelink.com'] {
       color: green;
+    }
+    > div {
+      color: yellow;
+    }
+    span {
+      color: purple;
+    }
+    .child {
+      color: orange;
+    }
+    &.self {
+      color: black;
+    }
+
+    .one,
+    .two {
+      color: olive;
+    }
+
+    ~ div {
+      &.one,
+      &.two {
+        color: pink;
+      }
+    }
+
+    + div {
+      .one,
+      .two {
+        color: salmon;
+      }
+    }
+
+    .parent & {
+      color: red;
     }
   `
 
@@ -187,25 +223,37 @@ test('selector modifiers', () => {
   toHaveStyleRule(<Link />, 'color', 'green', {
     modifier: "[href*='somelink.com']",
   })
-})
-
-test('option combinations', () => {
-  const Link = styled.a`
-    &:hover {
-      color: black;
-    }
-    @media (max-width: 640px) {
-      &:hover {
-        color: blue;
-      }
-    }
-  `
-
-  toHaveStyleRule(<Link />, 'color', 'black', {
-    modifier: ':hover',
+  toHaveStyleRule(<Link />, 'color', 'yellow', {
+    modifier: '> div',
   })
-  toHaveStyleRule(<Link />, 'color', 'blue', {
-    media: '(max-width:640px)',
-    modifier: ':hover',
+  toHaveStyleRule(<Link />, 'color', 'purple', {
+    modifier: 'span',
+  })
+  toHaveStyleRule(<Link />, 'color', 'purple', {
+    modifier: ' span',
+  })
+  toHaveStyleRule(<Link />, 'color', 'orange', {
+    modifier: '.child',
+  })
+  toHaveStyleRule(<Link />, 'color', 'orange', {
+    modifier: ' .child',
+  })
+  toHaveStyleRule(<Link />, 'color', 'black', {
+    modifier: '&.self',
+  })
+  toHaveStyleRule(<Link />, 'color', 'olive', {
+    modifier: '.one',
+  })
+  toHaveStyleRule(<Link />, 'color', 'olive', {
+    modifier: '.two',
+  })
+  toHaveStyleRule(<Link />, 'color', 'pink', {
+    modifier: '~ div.one',
+  })
+  toHaveStyleRule(<Link />, 'color', 'salmon', {
+    modifier: '+ div .two',
+  })
+  toHaveStyleRule(<Link />, 'color', 'red', {
+    modifier: '.parent &',
   })
 })
