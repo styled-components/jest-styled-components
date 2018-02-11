@@ -1,4 +1,5 @@
 const { getCSS } = require('./utils')
+const { isStyledComponent } = require('styled-components')
 
 const shouldDive = node =>
   typeof node.dive === 'function' && typeof node.type() !== 'string'
@@ -87,9 +88,20 @@ const getDeclaration = (rule, property) =>
 const getDeclarations = (rules, property) =>
   rules.map(rule => getDeclaration(rule, property)).filter(Boolean)
 
+const normalizeModifierOption = (modifiers = []) =>
+  modifiers
+    .map(
+      modifier =>
+        isStyledComponent(modifier)
+          ? `.${modifier.styledComponentId}`
+          : modifier
+    )
+    .join('')
+
 function toHaveStyleRule(received, property, value, options = {}) {
   const classNames = getClassNames(received)
   const ast = getCSS()
+  options.modifier = normalizeModifierOption([].concat(options.modifier))
   const rules = getRules(ast, classNames, options)
 
   if (!rules.length) {

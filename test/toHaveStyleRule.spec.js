@@ -257,3 +257,58 @@ test('selector modifiers', () => {
     modifier: '.parent &',
   })
 })
+
+test('component modifiers', () => {
+  const Text = styled.span`
+    color: grey;
+  `
+
+  const Link = styled.a`
+    color: white;
+
+    ${Text} {
+      color: blue;
+    }
+
+    > ${Text} span {
+      color: green;
+    }
+
+    ${Text} & {
+      color: purple;
+    }
+  `
+
+  toHaveStyleRule(<Link />, 'color', 'white')
+  toHaveStyleRule(<Text />, 'color', 'grey')
+  toHaveStyleRule(
+    <Link>
+      <Text />
+    </Link>,
+    'color',
+    'blue',
+    {
+      modifier: Text,
+    }
+  )
+  toHaveStyleRule(
+    <Link>
+      <Text />
+    </Link>,
+    'color',
+    'green',
+    {
+      modifier: ['> ', Text, ' span'],
+    }
+  )
+  toHaveStyleRule(
+    <Link>
+      <Text />
+    </Link>,
+    'color',
+    'purple',
+    {
+      modifier: [Text, ' &'],
+    }
+  )
+})
