@@ -1,6 +1,6 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import styled, { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider, css } from 'styled-components'
 import { shallow, mount } from 'enzyme'
 import '../src'
 
@@ -288,7 +288,8 @@ test('component modifiers', () => {
     'color',
     'blue',
     {
-      modifier: Text,
+      // eslint-disable-next-line prettier/prettier
+      modifier: css`${Text}`,
     }
   )
   toHaveStyleRule(
@@ -298,7 +299,7 @@ test('component modifiers', () => {
     'color',
     'green',
     {
-      modifier: ['> ', Text, ' span'],
+      modifier: css`> ${Text} span`,
     }
   )
   toHaveStyleRule(
@@ -308,7 +309,8 @@ test('component modifiers', () => {
     'color',
     'purple',
     {
-      modifier: [Text, ' &'],
+      // eslint-disable-next-line prettier/prettier
+      modifier: css`${Text} &`,
     }
   )
 })
