@@ -320,6 +320,31 @@ test('it works', () => {
 })
 ```
 
+If a rule is nested within another styled-component, the modifier option can be used with the [`css`](https://www.styled-components.com/docs/api#css) helper to target the nested rule.
+
+```js
+const Button = styled.button`
+  color: red;
+`
+
+const ButtonList = styled.div`
+  display: flex;
+
+  ${Button} {
+    flex: 1 0 auto;
+  }
+`
+
+import { css } from 'styled-components';
+
+test('nested buttons are flexed', () => {
+  const tree = renderer.create(<ButtonList><Button /></ButtonList>).toJSON()
+  expect(tree).toHaveStyleRule('flex', '1 0 auto', {
+    modifier: css`${Button}`,
+  })
+})
+```
+
 This matcher works with trees serialized with `react-test-renderer` and shallow renderered or mounted with Enzyme.
 It checks the style rules applied to the root component it receives, therefore to make assertions on components further in the tree they must be provided separately (Enzyme's [find](http://airbnb.io/enzyme/docs/api/ShallowWrapper/find.html) might help).
 

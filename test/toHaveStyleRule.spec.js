@@ -1,6 +1,6 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
-import styled, { ThemeProvider } from 'styled-components'
+import styled, { ThemeProvider, css } from 'styled-components'
 import { shallow, mount } from 'enzyme'
 import '../src'
 
@@ -166,6 +166,7 @@ test('at rules', () => {
 test('selector modifiers', () => {
   const Link = styled.a`
     color: white;
+
     &:hover {
       color: blue;
     }
@@ -174,6 +175,41 @@ test('selector modifiers', () => {
     }
     &[href*='somelink.com'] {
       color: green;
+    }
+    > div {
+      color: yellow;
+    }
+    span {
+      color: purple;
+    }
+    .child {
+      color: orange;
+    }
+    &.self {
+      color: black;
+    }
+
+    .one,
+    .two {
+      color: olive;
+    }
+
+    ~ div {
+      &.one,
+      &.two {
+        color: pink;
+      }
+    }
+
+    + div {
+      .one,
+      .two {
+        color: salmon;
+      }
+    }
+
+    .parent & {
+      color: red;
     }
   `
 
@@ -187,25 +223,94 @@ test('selector modifiers', () => {
   toHaveStyleRule(<Link />, 'color', 'green', {
     modifier: "[href*='somelink.com']",
   })
+  toHaveStyleRule(<Link />, 'color', 'yellow', {
+    modifier: '> div',
+  })
+  toHaveStyleRule(<Link />, 'color', 'purple', {
+    modifier: 'span',
+  })
+  toHaveStyleRule(<Link />, 'color', 'purple', {
+    modifier: ' span',
+  })
+  toHaveStyleRule(<Link />, 'color', 'orange', {
+    modifier: '.child',
+  })
+  toHaveStyleRule(<Link />, 'color', 'orange', {
+    modifier: ' .child',
+  })
+  toHaveStyleRule(<Link />, 'color', 'black', {
+    modifier: '&.self',
+  })
+  toHaveStyleRule(<Link />, 'color', 'olive', {
+    modifier: '.one',
+  })
+  toHaveStyleRule(<Link />, 'color', 'olive', {
+    modifier: '.two',
+  })
+  toHaveStyleRule(<Link />, 'color', 'pink', {
+    modifier: '~ div.one',
+  })
+  toHaveStyleRule(<Link />, 'color', 'salmon', {
+    modifier: '+ div .two',
+  })
+  toHaveStyleRule(<Link />, 'color', 'red', {
+    modifier: '.parent &',
+  })
 })
 
-test('option combinations', () => {
+test('component modifiers', () => {
+  const Text = styled.span`
+    color: grey;
+  `
+
   const Link = styled.a`
-    &:hover {
-      color: black;
+    color: white;
+
+    ${Text} {
+      color: blue;
     }
-    @media (max-width: 640px) {
-      &:hover {
-        color: blue;
-      }
+
+    > ${Text} span {
+      color: green;
+    }
+
+    ${Text} & {
+      color: purple;
     }
   `
 
-  toHaveStyleRule(<Link />, 'color', 'black', {
-    modifier: ':hover',
-  })
-  toHaveStyleRule(<Link />, 'color', 'blue', {
-    media: '(max-width:640px)',
-    modifier: ':hover',
-  })
+  toHaveStyleRule(<Link />, 'color', 'white')
+  toHaveStyleRule(<Text />, 'color', 'grey')
+  toHaveStyleRule(
+    <Link>
+      <Text />
+    </Link>,
+    'color',
+    'blue',
+    {
+      // eslint-disable-next-line prettier/prettier
+      modifier: css`${Text}`,
+    }
+  )
+  toHaveStyleRule(
+    <Link>
+      <Text />
+    </Link>,
+    'color',
+    'green',
+    {
+      modifier: css`> ${Text} span`,
+    }
+  )
+  toHaveStyleRule(
+    <Link>
+      <Text />
+    </Link>,
+    'color',
+    'purple',
+    {
+      // eslint-disable-next-line prettier/prettier
+      modifier: css`${Text} &`,
+    }
+  )
 })
