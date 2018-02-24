@@ -45,7 +45,6 @@ Table of Contents
       * [Preact](#preact)
    * [toHaveStyleRule](#tohavestylerule)
    * [Global installation](#global-installation)
-   * [styled-components &lt; v2](#styled-components--v2)
    * [Contributing](#contributing)
 
 # Snapshot Testing
@@ -368,17 +367,6 @@ And import the library once in the `setupTest.js` as follows:
 
 ```js
 import 'jest-styled-components'
-```
-
-# styled-components < v2
-
-To use this package with styled-components < v2 (e.g. v1.4.6) the following annotation must be added at the top of the test files.
-Consequently, it won't be possible to use Enzyme's full DOM rendering.
-
-```js
-/**
- * @jest-environment node
- */
 ```
 
 # Contributing
