@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`any component - mount 1`] = `
+exports[`any component: mount 1`] = `
 .c0 {
   color: palevioletred;
   font-weight: bold;
@@ -27,7 +27,7 @@ exports[`any component - mount 1`] = `
 </div>
 `;
 
-exports[`any component - react-test-renderer 1`] = `
+exports[`any component: react-test-renderer 1`] = `
 .c0 {
   color: palevioletred;
   font-weight: bold;
@@ -48,7 +48,7 @@ exports[`any component - react-test-renderer 1`] = `
 </div>
 `;
 
-exports[`any component - shallow 1`] = `
+exports[`any component: shallow 1`] = `
 <div>
   <Link>
     Unstyled, boring Link
@@ -60,7 +60,7 @@ exports[`any component - shallow 1`] = `
 </div>
 `;
 
-exports[`attaching additional props - mount 1`] = `
+exports[`attaching additional props: mount 1`] = `
 .c0 {
   color: red;
 }
@@ -72,7 +72,7 @@ exports[`attaching additional props - mount 1`] = `
 </styled.div>
 `;
 
-exports[`attaching additional props - react-test-renderer 1`] = `
+exports[`attaching additional props: react-test-renderer 1`] = `
 .c0 {
   color: red;
 }
@@ -82,7 +82,7 @@ exports[`attaching additional props - react-test-renderer 1`] = `
 />
 `;
 
-exports[`attaching additional props - shallow 1`] = `
+exports[`attaching additional props: shallow 1`] = `
 .c0 {
   color: red;
 }
@@ -92,7 +92,7 @@ exports[`attaching additional props - shallow 1`] = `
 />
 `;
 
-exports[`basic - mount 1`] = `
+exports[`basic: mount 1`] = `
 .c0 {
   padding: 4em;
   background: papayawhip;
@@ -119,7 +119,7 @@ exports[`basic - mount 1`] = `
 </styled.section>
 `;
 
-exports[`basic - react-test-renderer 1`] = `
+exports[`basic: react-test-renderer 1`] = `
 .c0 {
   padding: 4em;
   background: papayawhip;
@@ -142,7 +142,7 @@ exports[`basic - react-test-renderer 1`] = `
 </section>
 `;
 
-exports[`basic - shallow 1`] = `
+exports[`basic: shallow 1`] = `
 .c0 {
   padding: 4em;
   background: papayawhip;
@@ -157,7 +157,7 @@ exports[`basic - shallow 1`] = `
 </section>
 `;
 
-exports[`duplicated components - mount 1`] = `
+exports[`duplicated components: mount 1`] = `
 .c0 {
   color: red;
 }
@@ -187,7 +187,7 @@ exports[`duplicated components - mount 1`] = `
 </div>
 `;
 
-exports[`duplicated components - react-test-renderer 1`] = `
+exports[`duplicated components: react-test-renderer 1`] = `
 .c0 {
   color: red;
 }
@@ -211,7 +211,7 @@ exports[`duplicated components - react-test-renderer 1`] = `
 </div>
 `;
 
-exports[`duplicated components - shallow 1`] = `
+exports[`duplicated components: shallow 1`] = `
 <div>
   <styled.div />
    
@@ -221,7 +221,7 @@ exports[`duplicated components - shallow 1`] = `
 </div>
 `;
 
-exports[`empty style - mount 1`] = `
+exports[`empty style: mount 1`] = `
 <styled.div>
   <div
     className=""
@@ -229,19 +229,19 @@ exports[`empty style - mount 1`] = `
 </styled.div>
 `;
 
-exports[`empty style - react-test-renderer 1`] = `
+exports[`empty style: react-test-renderer 1`] = `
 <div
   className=""
 />
 `;
 
-exports[`empty style - shallow 1`] = `
+exports[`empty style: shallow 1`] = `
 <div
   className=""
 />
 `;
 
-exports[`extending styles - mount 1`] = `
+exports[`extending styles: mount 1`] = `
 .c0 {
   color: palevioletred;
   font-size: 1em;
@@ -280,7 +280,7 @@ exports[`extending styles - mount 1`] = `
 </div>
 `;
 
-exports[`extending styles - react-test-renderer 1`] = `
+exports[`extending styles: react-test-renderer 1`] = `
 .c0 {
   color: palevioletred;
   font-size: 1em;
@@ -315,7 +315,7 @@ exports[`extending styles - react-test-renderer 1`] = `
 </div>
 `;
 
-exports[`extending styles - shallow 1`] = `
+exports[`extending styles: shallow 1`] = `
 <div>
   <styled.button>
     Normal Button
@@ -326,7 +326,7 @@ exports[`extending styles - shallow 1`] = `
 </div>
 `;
 
-exports[`included class name - mount 1`] = `
+exports[`included class name: mount 1`] = `
 .c0 {
   color: red;
 }
@@ -338,7 +338,7 @@ exports[`included class name - mount 1`] = `
 </styled.div>
 `;
 
-exports[`included class name - react-test-renderer 1`] = `
+exports[`included class name: react-test-renderer 1`] = `
 .c0 {
   color: red;
 }
@@ -348,7 +348,7 @@ exports[`included class name - react-test-renderer 1`] = `
 />
 `;
 
-exports[`included class name - shallow 1`] = `
+exports[`included class name: shallow 1`] = `
 .c0 {
   color: red;
 }
@@ -358,7 +358,7 @@ exports[`included class name - shallow 1`] = `
 />
 `;
 
-exports[`leading white spaces - mount 1`] = `
+exports[`leading white spaces: mount 1`] = `
 <Div>
   <div
     className="  div"
@@ -366,27 +366,27 @@ exports[`leading white spaces - mount 1`] = `
 </Div>
 `;
 
-exports[`leading white spaces - react-test-renderer 1`] = `
+exports[`leading white spaces: react-test-renderer 1`] = `
 <div
   className="  div"
 />
 `;
 
-exports[`leading white spaces - shallow 1`] = `
+exports[`leading white spaces: shallow 1`] = `
 <div
   className="  div"
 />
 `;
 
-exports[`non-styled - mount 1`] = `<div />`;
+exports[`non-styled: mount 1`] = `<div />`;
 
-exports[`non-styled - react-test-renderer 1`] = `<div />`;
+exports[`non-styled: react-test-renderer 1`] = `<div />`;
 
-exports[`non-styled - shallow 1`] = `<div />`;
+exports[`non-styled: shallow 1`] = `<div />`;
 
 exports[`null 1`] = `null`;
 
-exports[`referring to other components - mount 1`] = `
+exports[`referring to other components: mount 1`] = `
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -452,7 +452,7 @@ exports[`referring to other components - mount 1`] = `
 </styled.a>
 `;
 
-exports[`referring to other components - react-test-renderer 1`] = `
+exports[`referring to other components: react-test-renderer 1`] = `
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -522,7 +522,7 @@ exports[`shallow with theme 1`] = `
 </button>
 `;
 
-exports[`supported css - mount 1`] = `
+exports[`supported css: mount 1`] = `
 .c0 {
   padding: 2em 1em;
   background: papayawhip;
@@ -561,7 +561,7 @@ html.test .c0 {
 </styled.div>
 `;
 
-exports[`supported css - react-test-renderer 1`] = `
+exports[`supported css: react-test-renderer 1`] = `
 .c0 {
   padding: 2em 1em;
   background: papayawhip;
@@ -598,7 +598,7 @@ html.test .c0 {
 </div>
 `;
 
-exports[`supported css - shallow 1`] = `
+exports[`supported css: shallow 1`] = `
 .c0 {
   padding: 2em 1em;
   background: papayawhip;
@@ -635,7 +635,7 @@ html.test .c0 {
 </div>
 `;
 
-exports[`theming - mount 1`] = `
+exports[`theming: mount 1`] = `
 .c0 {
   font-size: 1em;
   margin: 1em;
@@ -692,7 +692,7 @@ exports[`theming - mount 1`] = `
 </div>
 `;
 
-exports[`theming - react-test-renderer 1`] = `
+exports[`theming: react-test-renderer 1`] = `
 .c0 {
   font-size: 1em;
   margin: 1em;
@@ -725,7 +725,7 @@ exports[`theming - react-test-renderer 1`] = `
 </div>
 `;
 
-exports[`theming - shallow 1`] = `
+exports[`theming: shallow 1`] = `
 <div>
   <styled.button
     theme={
@@ -756,7 +756,7 @@ exports[`theming - shallow 1`] = `
 </div>
 `;
 
-exports[`trailing white spaces - mount 1`] = `
+exports[`trailing white spaces: mount 1`] = `
 .c0 {
   color: red;
 }
@@ -768,7 +768,7 @@ exports[`trailing white spaces - mount 1`] = `
 </styled.div>
 `;
 
-exports[`trailing white spaces - react-test-renderer 1`] = `
+exports[`trailing white spaces: react-test-renderer 1`] = `
 .c0 {
   color: red;
 }
@@ -778,7 +778,7 @@ exports[`trailing white spaces - react-test-renderer 1`] = `
 />
 `;
 
-exports[`trailing white spaces - shallow 1`] = `
+exports[`trailing white spaces: shallow 1`] = `
 .c0 {
   color: red;
 }
