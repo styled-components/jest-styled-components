@@ -6,10 +6,10 @@ import '../src'
 
 const toMatchSnapshot = (name, component) => {
   expect(renderer.create(component).toJSON()).toMatchSnapshot(
-    `${name} - react-test-renderer`
+    'react-test-renderer'
   )
-  expect(shallow(component)).toMatchSnapshot(`${name} - shallow`)
-  expect(mount(component)).toMatchSnapshot(`${name} - mount`)
+  expect(shallow(component)).toMatchSnapshot('shallow')
+  expect(mount(component)).toMatchSnapshot('mount')
 }
 
 const shallowWithTheme = (tree, theme) => {
@@ -267,9 +267,7 @@ test('referring to other components', () => {
   )
 
   expect(renderer.create(component).toJSON()).toMatchSnapshot(
-    'referring to other components - react-test-renderer'
+    'react-test-renderer'
   )
-  expect(mount(component)).toMatchSnapshot(
-    'referring to other components - mount'
-  )
+  expect(mount(component)).toMatchSnapshot('mount')
 })

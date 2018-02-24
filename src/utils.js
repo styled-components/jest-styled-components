@@ -1,13 +1,10 @@
 const css = require('css')
 const { ServerStyleSheet, isStyledComponent } = require('styled-components')
 
-const isOverV3 = !!isStyledComponent
-const isOverV2 = () => !!ServerStyleSheet
-
 let StyleSheet
 
 /* eslint-disable */
-if (isOverV3) {
+if (!!isStyledComponent) {
   const secretInternals = require('styled-components')
     .__DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS
 
@@ -28,11 +25,7 @@ if (isOverV3) {
 
 const isServer = () => typeof document === 'undefined'
 
-const resetStyleSheet = () => {
-  if (isOverV2()) {
-    StyleSheet.reset(isServer())
-  }
-}
+const resetStyleSheet = () => StyleSheet.reset(isServer())
 
 const getHTML = () =>
   isServer()
@@ -52,18 +45,7 @@ const extract = regex => {
 
 const getStyle = () => extract(/<style[^>]*>([^<]*)</g)
 
-const getRules = () =>
-  StyleSheet.globalStyleSheet.sheet && StyleSheet.componentStyleSheet.sheet
-    ? StyleSheet.rules()
-        .map(rule => rule.cssText)
-        .join('\n')
-    : ''
-
-const getCSS = () => {
-  const style = isOverV2() ? getStyle() : getRules()
-
-  return css.parse(style)
-}
+const getCSS = () => css.parse(getStyle())
 
 const getClassNames = () =>
   extract(/data-styled-components="([^"]*)"/g).split(/\s/)
@@ -72,14 +54,11 @@ const getComponentIDs = () =>
   extract(/sc-component-id: ([^\\*\\/]*) \*\//g).split(/\s/)
 
 const getHashes = () =>
-  isOverV2()
-    ? getClassNames()
-        .concat(getComponentIDs())
-        .filter(Boolean)
-    : []
+  getClassNames()
+    .concat(getComponentIDs())
+    .filter(Boolean)
 
 module.exports = {
-  isOverV2,
   resetStyleSheet,
   getCSS,
   getHashes,
