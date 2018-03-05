@@ -533,6 +533,7 @@ exports[`supported css: mount 1`] = `
 }
 
 .c0 > p {
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
@@ -572,6 +573,7 @@ exports[`supported css: react-test-renderer 1`] = `
 }
 
 .c0 > p {
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
@@ -609,6 +611,7 @@ exports[`supported css: shallow 1`] = `
 }
 
 .c0 > p {
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
