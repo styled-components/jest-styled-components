@@ -33,11 +33,17 @@ const getHTML = () =>
     : StyleSheet.instance.toHTML()
 
 const extract = regex => {
+  // Catches any rules that are wrapped in `()` and contains `:`
+  // Most often found in @media queries
+  const mediaRegex = /(\([a-z-]+:)([a-z0-9]+\))/g
   let style = ''
+  let match
   let matches
 
   while ((matches = regex.exec(getHTML())) !== null) {
-    style += `${matches[1]} `
+    match = `${matches[1]} `
+    match = match.replace(mediaRegex, '$1 $2')
+    style += match
   }
 
   return style.trim()
