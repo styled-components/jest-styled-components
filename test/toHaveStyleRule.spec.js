@@ -155,11 +155,17 @@ test('at rules', () => {
     @media (max-width: 640px) {
       color: green;
     }
+    @media screen and (min-width: 100px) and (max-width: 200px) {
+      color: purple;
+    }
   `
 
   toHaveStyleRule(<Wrapper />, 'color', 'red')
   toHaveStyleRule(<Wrapper />, 'color', 'green', {
-    media: '(max-width:640px)',
+    media: '(max-width: 640px)',
+  })
+  toHaveStyleRule(<Wrapper />, 'color', 'purple', {
+    media: 'screen and (min-width: 100px) and (max-width: 200px)',
   })
 })
 
