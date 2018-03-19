@@ -219,7 +219,7 @@ test('it works', () => {
 
 ## Theming
 
-In some scenario, testing components that depend on a theme can be [tricky](https://github.com/styled-components/jest-styled-components/issues/61),
+In some scenarios, testing components that depend on a theme can be [tricky](https://github.com/styled-components/jest-styled-components/issues/61),
 especially when using Enzyme's shallow rendering.
 
 For example:
@@ -319,7 +319,7 @@ test('it works', () => {
 })
 ```
 
-If a rule is nested within another styled-component, the modifier option can be used with the [`css`](https://www.styled-components.com/docs/api#css) helper to target the nested rule.
+If a rule is nested within another styled-component, the `modifier` option can be used with the [`css`](https://www.styled-components.com/docs/api#css) helper to target the nested rule.
 
 ```js
 const Button = styled.button`
