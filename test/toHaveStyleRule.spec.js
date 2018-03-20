@@ -155,11 +155,29 @@ test('at rules', () => {
     @media (max-width: 640px) {
       color: green;
     }
+    @media (min-width: 200px) and (max-width: 640px) {
+      color: blue;
+    }
   `
 
   toHaveStyleRule(<Wrapper />, 'color', 'red')
   toHaveStyleRule(<Wrapper />, 'color', 'green', {
     media: '(max-width:640px)',
+  })
+  toHaveStyleRule(<Wrapper />, 'color', 'green', {
+    media: '(max-width: 640px)',
+  })
+  toHaveStyleRule(<Wrapper />, 'color', 'blue', {
+    media: '(min-width:200px) and (max-width:640px)',
+  })
+  toHaveStyleRule(<Wrapper />, 'color', 'blue', {
+    media: '(min-width: 200px) and (max-width: 640px)',
+  })
+  toHaveStyleRule(<Wrapper />, 'color', 'blue', {
+    media: '(min-width: 200px) and (max-width:640px)',
+  })
+  toHaveStyleRule(<Wrapper />, 'color', 'blue', {
+    media: '(min-width:200px) and (max-width: 640px)',
   })
 })
 
