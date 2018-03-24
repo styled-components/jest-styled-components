@@ -45,6 +45,7 @@ Table of Contents
       * [Preact](#preact)
    * [toHaveStyleRule](#tohavestylerule)
    * [Global installation](#global-installation)
+   * [FAQ](#faq)
    * [Contributing](#contributing)
 
 # Snapshot Testing
@@ -368,6 +369,14 @@ And import the library once in the `setupTest.js` as follows:
 ```js
 import 'jest-styled-components'
 ```
+
+# FAQ
+
+### Why is Jest Styled Components not working?
+
+Jest Styled Components may not work for several reasons, but most likely the problem is caused by loading multiple instances of `styled-components`. Starting with `styled-components@3.2.0`, a warning will be logged when multiple instances of it are being included and run as part of the Jest tests. Using `styled-components@3.1.6` and lower with multiple instances will cause a silent error with unexpected results.
+
+To debug and fix multiple instances of `styled-components` see the FAQ on ["Why am I getting a warning about several instances of module on the page?"](https://www.styled-components.com/docs/faqs#why-am-i-getting-a-warning-about-several-instances-of-module-on-the-page).
 
 # Contributing
 
