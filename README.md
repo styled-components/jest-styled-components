@@ -240,7 +240,7 @@ The recommended solution is to pass the theme as a prop:
 const wrapper = shallow(<Button theme={theme} />)
 ```
 
-The following function might also help:
+The following function might also help for shallow rendering:
 
 ```js
 const shallowWithTheme = (tree, theme) => {
@@ -251,6 +251,21 @@ const shallowWithTheme = (tree, theme) => {
 }
 
 const wrapper = shallowWithTheme(<Button />, theme)
+```
+
+and for full DOM rendering:
+
+```js
+const mountWithTheme = (tree, theme) => {
+  const context = shallow(<ThemeProvider theme={theme} />)
+    .instance()
+    .getChildContext()
+
+  return mount(tree, {
+    context,
+    childContextTypes: ThemeProvider.childContextTypes // Needed so child components receive the theme prop
+  })
+}
 ```
 
 ## Preact
