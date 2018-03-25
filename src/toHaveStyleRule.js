@@ -27,17 +27,22 @@ const getClassNames = received => {
 const hasAtRule = options =>
   Object.keys(options).some(option => ['media', 'supports'].includes(option))
 
-const getAtRules = (ast, options) =>
-  Object.keys(options)
+const getAtRules = (ast, options) => {
+  const mediaRegex = /(\([a-z-]+:)\s?([a-z0-9]+\))/g
+
+  return Object.keys(options)
     .map(option =>
       ast.stylesheet.rules
         .filter(
-          rule => rule.type === option && rule[option] === options[option]
+          rule =>
+            rule.type === option &&
+            rule[option] === options[option].replace(mediaRegex, '$1$2')
         )
         .map(rule => rule.rules)
         .reduce((acc, rules) => acc.concat(rules), [])
     )
     .reduce((acc, rules) => acc.concat(rules), [])
+}
 
 const getModifiedClassName = (className, modifier = '') => {
   const classNameSelector = `.${className}`
