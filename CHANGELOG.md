@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [5.0.1](https://github.com/styled-components/jest-styled-components/compare/v5.0.0...v5.0.1) - 2018-04-01
+### Fixed
+- [toHaveStyleRule] Allow spaces or no spaces in media queries (see
+  [#128](https://github.com/styled-components/jest-styled-components/pull/128)).
+
+### Changed
+- Improve README (see
+  [#127](https://github.com/styled-components/jest-styled-components/pull/127)
+  [#131](https://github.com/styled-components/jest-styled-components/pull/131)
+  [#132](https://github.com/styled-components/jest-styled-components/pull/132)).
+
 ## [5.0.0](https://github.com/styled-components/jest-styled-components/compare/v4.10.0...v5.0.0) - 2018-02-24
 ### Changed
 - [toHaveStyleRule] Improve support for complex modifiers.
