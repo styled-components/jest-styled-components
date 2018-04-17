@@ -27,10 +27,24 @@ const isServer = () => typeof document === 'undefined'
 
 const resetStyleSheet = () => StyleSheet.reset(isServer())
 
+const getDocumentHTML = () => {
+  let HTML = StyleSheet.instance.toHTML();
+  if(!HTML) {
+    const styleTags = document.getElementsByTagName('style');
+    const parsedStyles = [];
+    for (let i = 0; i < styleTags.length; i += 1) {
+      parsedStyles.push(styleTags[i].outerHTML);
+    }
+    HTML = parsedStyles.join(' ');
+  }
+
+  return HTML;
+}
+
 const getHTML = () =>
   isServer()
     ? new ServerStyleSheet().getStyleTags()
-    : StyleSheet.instance.toHTML()
+    : getDocumentHTML()
 
 const extract = regex => {
   let style = ''
