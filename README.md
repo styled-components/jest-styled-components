@@ -372,10 +372,10 @@ import 'jest-styled-components/native'
 
 # Styled Component mocking
 
-When you write unit tests with Jest, you maybe don't want to unmock all the styled components and have big snapshot files. The file `mock.js` can be used in your Jest config to avoid this and help you to write real unit tests.
+When you write unit tests with Jest, you maybe don't want to unmock all the styled components and have big snapshot files. The file `mock.js` can be used in your Jest config to avoid this and help you to write actual unit tests.
 
 ```js
-// If all your styled component files have a specific pattern
+// If all your styled component file names have a specific pattern
 "jest": {
   "moduleNameMapper": {
     '.*\\.styled$': '<rootDir>node_modules/jest-styled-components/src/mock.js' 
