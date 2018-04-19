@@ -408,9 +408,9 @@ The snapshot will look like this:
 
 ```js
 exports[`it works 1`] = `
-<StyledMyNewStyledComponent_AnotherComponent>
+<StyledMyStyledComponent_AnotherComponent>
   Some children
-</StyledMyNewStyledComponent_AnotherComponent>
+</StyledMyStyledComponent_AnotherComponent>
 `;
 ```
 
