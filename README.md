@@ -44,6 +44,7 @@ Table of Contents
       * [Theming](#theming)
       * [Preact](#preact)
    * [toHaveStyleRule](#tohavestylerule)
+   * [Styled Component mocking](#styled-component-mocking)
    * [Global installation](#global-installation)
    * [Working with multiple packages](#working-with-multiple-packages)
    * [Contributing](#contributing)
@@ -367,6 +368,51 @@ To use the `toHaveStyleRule` matcher with [React Native](https://facebook.github
 
 ```js
 import 'jest-styled-components/native'
+```
+
+# Styled Component mocking
+
+When you write unit tests with Jest, you maybe don't want to unmock all the styled components and have big snapshot files. The file `mock.js` can be used in your Jest config to avoid this and help you to write real unit tests.
+
+```js
+// If all your styled component files have a specific pattern
+"jest": {
+  "moduleNameMapper": {
+    '.*\\.styled$': '<rootDir>node_modules/jest-styled-components/src/mock.js' 
+  }
+}
+```
+
+Then you can write unit tests for components that use styled components and extending features:
+
+```js
+import React from 'react'
+import MyStyledComponent from './my-styled-component.styled'
+import AnotherComponent from './anothercomponent.component'
+
+
+const MyNewStyledComponent = MyStyledComponent.withComponent(AnotherComponent)
+
+export default props => <MyNewStyledComponent {...props}>{props.children}</MyNewStyledComponent>
+```
+
+```js
+import { shallow } from 'enzyme'
+
+test('it works', () => {
+  const wrapper = shallow(<MyComponent>Some children</MyComponent>)
+  expect(wrapper).toMatchSnapshot()
+})
+```
+
+The snapshot will look like this:
+
+```js
+exports[`it works 1`] = `
+<StyledMyNewStyledComponent_AnotherComponent>
+  Some children
+</StyledMyNewStyledComponent_AnotherComponent>
+`;
 ```
 
 # Global installation
