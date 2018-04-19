@@ -390,7 +390,6 @@ import React from 'react'
 import MyStyledComponent from './my-styled-component.styled'
 import AnotherComponent from './anothercomponent.component'
 
-
 const MyNewStyledComponent = MyStyledComponent.withComponent(AnotherComponent)
 
 export default props => <MyNewStyledComponent {...props}>{props.children}</MyNewStyledComponent>
