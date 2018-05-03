@@ -4,7 +4,8 @@ const shouldDive = node =>
   typeof node.dive === 'function' && typeof node.type() !== 'string'
 
 const isTagWithClassName = node =>
-  node.prop('className') && typeof node.type() === 'string'
+  node.prop('className') &&
+  ['string', 'function'].indexOf(typeof node.type()) !== -1
 
 const getClassNames = received => {
   let className
