@@ -49,7 +49,7 @@ const getModifiedClassName = (className, modifier = '') => {
   let prefix = ''
   modifier = modifier.trim()
   if (modifier.includes('&')) {
-    modifier = modifier.replace('&', classNameSelector)
+    modifier = modifier.replace(/&/g, classNameSelector)
   } else {
     prefix += classNameSelector
   }

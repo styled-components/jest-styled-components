@@ -229,6 +229,18 @@ test('selector modifiers', () => {
     .parent & {
       color: red;
     }
+
+    && {
+      color: fuchsia;
+    }
+
+    &&& {
+      color: olive;
+    }
+
+    & & {
+      color: deepskyblue;
+    }
   `
 
   toHaveStyleRule(<Link />, 'color', 'white')
@@ -273,6 +285,15 @@ test('selector modifiers', () => {
   })
   toHaveStyleRule(<Link />, 'color', 'red', {
     modifier: '.parent &',
+  })
+  toHaveStyleRule(<Link />, 'color', 'fuchsia', {
+    modifier: '&&',
+  })
+  toHaveStyleRule(<Link />, 'color', 'olive', {
+    modifier: '&&&',
+  })
+  toHaveStyleRule(<Link />, 'color', 'deepskyblue', {
+    modifier: '& &',
   })
 })
 
