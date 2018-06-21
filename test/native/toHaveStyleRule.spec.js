@@ -13,48 +13,100 @@ test('basic', () => {
   expect(tree).toHaveStyleRule('background-color', 'papayawhip')
 })
 
-xtest('message when property not found', () => {
-  expect(() => expect(null).toHaveStyleRule('a')).toThrowErrorMatchingSnapshot()
-})
+test('message when property not found', () => {
+  const Button = styled.Text`
+    background-color: papayawhip;
+  `
 
-xtest('null', () => {
-  expect(null).not.toHaveStyleRule('a', 'b')
+  expect(() =>
+    expect(renderer.create(<Button />).toJSON()).toHaveStyleRule(
+      'color',
+      'black'
+    )
+  ).toThrowErrorMatchingSnapshot()
 })
 
 test('message when value does not match', () => {
   const StyledView = styled.View`
-    background: orange;
+    background-color: orange;
   `
 
   expect(() => {
     expect(renderer.create(<StyledView />).toJSON()).toHaveStyleRule(
-      'background',
+      'background-color',
       'red'
     )
   }).toThrowErrorMatchingSnapshot()
 })
 
-xtest('basic', () => {
+test('basic', () => {
   const StyledView = styled.View`
     padding: 4px;
-    background: papayawhip;
+    background-color: papayawhip;
   `
 
   expect(renderer.create(<StyledView />).toJSON()).toHaveStyleRule(
-    'background',
+    'background-color',
     'papayawhip'
   )
 })
 
-xtest('regex', () => {
+test('regex', () => {
   const StyledView = styled.View`
     padding: 4px;
-    background: papayawhip;
+    background-color: papayawhip;
   `
 
   expect(renderer.create(<StyledView />).toJSON()).toHaveStyleRule(
-    'background',
-    /^p/
+    'background-color',
+    /^papaya/
+  )
+})
+
+test('undefined', () => {
+  const Button = styled.Text`
+    ${({ transparent }) => !transparent && 'background-color: papayawhip;'};
+  `
+
+  expect(renderer.create(<Button />).toJSON()).toHaveStyleRule(
+    'background-color',
+    'papayawhip'
+  )
+  expect(renderer.create(<Button transparent />).toJSON()).toHaveStyleRule(
+    'background-color',
+    undefined
+  )
+})
+
+test('jest asymmetric matchers', () => {
+  const Button = styled.Text`
+    background-color: ${({ transparent }) =>
+      transparent ? 'transparent' : 'papayawhip'};
+  `
+
+  expect(renderer.create(<Button />).toJSON()).toHaveStyleRule(
+    'background-color',
+    expect.any(String)
+  )
+  expect(renderer.create(<Button />).toJSON()).toHaveStyleRule(
+    'background-color',
+    expect.stringMatching('papayawhip')
+  )
+  expect(renderer.create(<Button />).toJSON()).toHaveStyleRule(
+    'background-color',
+    expect.stringMatching(/^papaya/)
+  )
+  expect(renderer.create(<Button transparent />).toJSON()).toHaveStyleRule(
+    'background-color',
+    expect.stringContaining('transparent')
+  )
+  expect(renderer.create(<Button transparent />).toJSON()).not.toHaveStyleRule(
+    'color',
+    expect.any(String)
+  )
+  expect(renderer.create(<Button transparent />).toJSON()).not.toHaveStyleRule(
+    'color',
+    expect.anything()
   )
 })
 

@@ -23,16 +23,49 @@ const toHaveStyleRule = (component, property, value, options) => {
   expect(mount(component)).toHaveStyleRule(property, value, options)
 }
 
-test('message when property not found', () => {
-  expect(() => expect(null).toHaveStyleRule('a')).toThrowErrorMatchingSnapshot()
-})
-
 test('null', () => {
   expect(null).not.toHaveStyleRule('a', 'b')
 })
 
 test('non-styled', () => {
   notToHaveStyleRule(<div />, 'a', 'b')
+})
+
+test('message when rules not found', () => {
+  expect(() =>
+    expect(renderer.create(<div />).toJSON()).toHaveStyleRule('color', 'black')
+  ).toThrowErrorMatchingSnapshot()
+})
+
+test('message when rules not found using options', () => {
+  const Button = styled.button`
+    color: red;
+  `
+
+  toHaveStyleRule(<Button />, 'color', 'red')
+  expect(() =>
+    expect(renderer.create(<Button />).toJSON()).toHaveStyleRule(
+      'color',
+      'red',
+      {
+        media: '(max-width:640px)',
+        modifier: ':hover',
+      }
+    )
+  ).toThrowErrorMatchingSnapshot()
+})
+
+test('message when property not found', () => {
+  const Button = styled.button`
+    color: red;
+  `
+
+  expect(() =>
+    expect(renderer.create(<Button />).toJSON()).toHaveStyleRule(
+      'background-color',
+      'black'
+    )
+  ).toThrowErrorMatchingSnapshot()
 })
 
 test('message when value does not match', () => {
@@ -64,6 +97,42 @@ test('regex', () => {
   `
 
   toHaveStyleRule(<Wrapper />, 'background', /^p/)
+})
+
+test('undefined', () => {
+  const Button = styled.button`
+    cursor: ${({ disabled }) => !disabled && 'pointer'};
+    opacity: ${({ disabled }) => disabled && '.65'};
+  `
+
+  toHaveStyleRule(<Button />, 'opacity', undefined)
+  toHaveStyleRule(<Button />, 'cursor', 'pointer')
+  toHaveStyleRule(<Button disabled />, 'opacity', '.65')
+  toHaveStyleRule(<Button disabled />, 'cursor', undefined)
+})
+
+test('jest asymmetric matchers', () => {
+  const Button = styled.button`
+    border: 0.1em solid
+      ${({ transparent }) => (transparent ? 'transparent' : 'black')};
+  `
+
+  toHaveStyleRule(<Button />, 'border', expect.any(String))
+  toHaveStyleRule(<Button />, 'border', expect.stringMatching('solid'))
+  toHaveStyleRule(<Button />, 'border', expect.stringMatching(/^0.1em/))
+  toHaveStyleRule(<Button />, 'border', expect.stringContaining('black'))
+  notToHaveStyleRule(
+    <Button transparent />,
+    'border',
+    expect.stringContaining('black')
+  )
+  toHaveStyleRule(
+    <Button transparent />,
+    'border',
+    expect.stringContaining('transparent')
+  )
+  notToHaveStyleRule(<Button />, 'color', expect.any(String))
+  notToHaveStyleRule(<Button />, 'color', expect.anything())
 })
 
 test('any component', () => {
