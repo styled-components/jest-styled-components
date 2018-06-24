@@ -306,16 +306,34 @@ test('it works', () => {
 # toHaveStyleRule
 
 The `toHaveStyleRule` matcher is useful to test if a given rule is applied to a component.
-The first argument is the expected property, the second is the expected value (string or RegExp).
+The first argument is the expected property, the second is the expected value which can be a String, RegExp, Jest asymmetric matcher or `undefined`.
 
 ```js
-test('it works', () => {
+const Button = styled.button`
+  color: red;
+  border: 0.05em solid ${props => props.transparent ? 'transparent' : 'black'};
+  cursor: ${props => !props.disabled && 'pointer'};
+  opacity: ${props => props.disabled && '.65'};
+`
+
+test('it applies default styles', () => {
   const tree = renderer.create(<Button />).toJSON()
   expect(tree).toHaveStyleRule('color', 'red')
+  expect(tree).toHaveStyleRule('border', '0.05em solid black')
+  expect(tree).toHaveStyleRule('cursor', 'pointer')
+  expect(tree).toHaveStyleRule('opacity', undefined) // equivalent of the following
+  expect(tree).not.toHaveStyleRule('opacity', expect.any(String))
+})
+
+test('it applies styles according to passed props', () => {
+  const tree = renderer.create(<Button disabled transparent />).toJSON()
+  expect(tree).toHaveStyleRule('border', expect.stringContaining('transparent'))
+  expect(tree).toHaveStyleRule('cursor', undefined)
+  expect(tree).toHaveStyleRule('opacity', '.65')
 })
 ```
 
-The matcher supports a third `options` parameter which makes it possible to search for rules nested within an [At-rule](https://developer.mozilla.org/en/docs/Web/CSS/At-rule) ([media](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)) or to add modifiers to the class selector. This feature is supported in React only, and more options are coming soon.
+The matcher supports an optional third `options` parameter which makes it possible to search for rules nested within an [At-rule](https://developer.mozilla.org/en/docs/Web/CSS/At-rule) ([media](https://developer.mozilla.org/en-US/docs/Web/CSS/@media)) or to add modifiers to the class selector. This feature is supported in React only, and more options are coming soon.
 
 ```js
 const Button = styled.button`

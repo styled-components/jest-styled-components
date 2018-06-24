@@ -1,10 +1,12 @@
-function toHaveStyleRule(component, name, expected) {
+const { matcherTest, buildReturnMessage } = require('../utils')
+
+function toHaveStyleRule(component, property, expected) {
   const styles = component.props.style.filter(x => x)
 
   /**
    * Convert style name to camel case (so we can compare)
    */
-  const camelCasedName = name.replace(/-(\w)/, (_, match) =>
+  const camelCasedProperty = property.replace(/-(\w)/, (_, match) =>
     match.toUpperCase()
   )
 
@@ -13,37 +15,13 @@ function toHaveStyleRule(component, name, expected) {
    * stylename against this object
    */
   const mergedStyles = styles.reduce((acc, item) => ({ ...acc, ...item }), {})
-  const received = mergedStyles[camelCasedName]
-  const pass = received === expected
+  const received = mergedStyles[camelCasedProperty]
+  const pass = matcherTest(received, expected)
 
-  if (!received) {
-    const error = `${name} isn't in the style rules`
-    return {
-      message: () =>
-        `${this.utils.matcherHint('.toHaveStyleRule')}\n\n` +
-        `Expected ${component.type} to have a style rule:\n` +
-        `  ${this.utils.printExpected(`${name}: ${expected}`)}\n` +
-        'Received:\n' +
-        `  ${this.utils.printReceived(error)}`,
-      pass: false,
-    }
+  return {
+    pass,
+    message: buildReturnMessage(this.utils, pass, property, received, expected),
   }
-
-  const diff =
-    '' +
-    `  ${this.utils.printExpected(`${name}: ${expected}`)}\n` +
-    'Received:\n' +
-    `  ${this.utils.printReceived(`${name}: ${received}`)}`
-
-  const message = pass
-    ? () =>
-        `${this.utils.matcherHint('.not.toHaveStyleRule')}\n\n` +
-        `Expected ${component.type} not to contain:\n${diff}`
-    : () =>
-        `${this.utils.matcherHint('.toHaveStyleRule')}\n\n` +
-        `Expected ${component.type} to have a style rule:\n${diff}`
-
-  return { message, pass }
 }
 
 module.exports = toHaveStyleRule

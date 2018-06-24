@@ -1,10 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`message when value does not match 1`] = `
-"[2mexpect([22m[31mreceived[39m[2m).toHaveStyleRule([22m[32mexpected[39m[2m)[22m
+exports[`message when property not found 1`] = `
+"[31m\\"Property 'color' not found in style rules\\"[39m
 
-Expected View to have a style rule:
-  [32m\\"background: red\\"[39m
+Expected
+  [32m\\"color: black\\"[39m
 Received:
-  [31m\\"background isn't in the style rules\\"[39m"
+  [31m\\"color: undefined\\"[39m"
+`;
+
+exports[`message when value does not match 1`] = `
+"[31m\\"Value mismatch for property 'background-color'\\"[39m
+
+Expected
+  [32m\\"background-color: red\\"[39m
+Received:
+  [31m\\"background-color: orange\\"[39m"
 `;

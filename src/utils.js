@@ -58,8 +58,36 @@ const getHashes = () =>
     .concat(getComponentIDs())
     .filter(Boolean)
 
+const buildReturnMessage = (utils, pass, property, received, expected) => () =>
+  `${utils.printReceived(
+    !received && !pass
+      ? `Property '${property}' not found in style rules`
+      : `Value mismatch for property '${property}'`
+  )}\n\n` +
+  'Expected\n' +
+  `  ${utils.printExpected(`${property}: ${expected}`)}\n` +
+  'Received:\n' +
+  `  ${utils.printReceived(`${property}: ${received}`)}`
+
+const matcherTest = (received, expected) => {
+  try {
+    const matcher =
+      expected === undefined ||
+      expected.$$typeof === Symbol.for('jest.asymmetricMatcher')
+        ? expected
+        : expect.stringMatching(expected)
+
+    expect(received).toEqual(matcher)
+    return true
+  } catch (error) {
+    return false
+  }
+}
+
 module.exports = {
   resetStyleSheet,
   getCSS,
   getHashes,
+  buildReturnMessage,
+  matcherTest,
 }
