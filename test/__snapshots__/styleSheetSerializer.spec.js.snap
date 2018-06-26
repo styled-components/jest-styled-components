@@ -1,12 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`any component: mount 1`] = `
-<style>
 .c0 {
   color: palevioletred;
   font-weight: bold;
 }
-</style>
 
 <div>
   <Link>
@@ -30,12 +28,10 @@ exports[`any component: mount 1`] = `
 `;
 
 exports[`any component: react-test-renderer 1`] = `
-<style>
 .c0 {
   color: palevioletred;
   font-weight: bold;
 }
-</style>
 
 <div>
   <a
@@ -65,11 +61,9 @@ exports[`any component: shallow 1`] = `
 `;
 
 exports[`attaching additional props: mount 1`] = `
-<style>
 .c0 {
   color: red;
 }
-</style>
 
 <styled.div>
   <div
@@ -79,11 +73,9 @@ exports[`attaching additional props: mount 1`] = `
 `;
 
 exports[`attaching additional props: react-test-renderer 1`] = `
-<style>
 .c0 {
   color: red;
 }
-</style>
 
 <div
   className="div c0"
@@ -91,11 +83,9 @@ exports[`attaching additional props: react-test-renderer 1`] = `
 `;
 
 exports[`attaching additional props: shallow 1`] = `
-<style>
 .c0 {
   color: red;
 }
-</style>
 
 <div
   className="div c0"
@@ -103,7 +93,6 @@ exports[`attaching additional props: shallow 1`] = `
 `;
 
 exports[`basic: mount 1`] = `
-<style>
 .c0 {
   padding: 4em;
   background: papayawhip;
@@ -114,7 +103,6 @@ exports[`basic: mount 1`] = `
   text-align: center;
   color: palevioletred;
 }
-</style>
 
 <styled.section>
   <section
@@ -132,7 +120,6 @@ exports[`basic: mount 1`] = `
 `;
 
 exports[`basic: react-test-renderer 1`] = `
-<style>
 .c0 {
   padding: 4em;
   background: papayawhip;
@@ -143,7 +130,6 @@ exports[`basic: react-test-renderer 1`] = `
   text-align: center;
   color: palevioletred;
 }
-</style>
 
 <section
   className="c0"
@@ -157,12 +143,10 @@ exports[`basic: react-test-renderer 1`] = `
 `;
 
 exports[`basic: shallow 1`] = `
-<style>
 .c0 {
   padding: 4em;
   background: papayawhip;
 }
-</style>
 
 <section
   className="c0"
@@ -174,7 +158,6 @@ exports[`basic: shallow 1`] = `
 `;
 
 exports[`duplicated components: mount 1`] = `
-<style>
 .c0 {
   color: red;
 }
@@ -182,7 +165,6 @@ exports[`duplicated components: mount 1`] = `
 .c1 {
   color: green;
 }
-</style>
 
 <div>
   <styled.div>
@@ -206,7 +188,6 @@ exports[`duplicated components: mount 1`] = `
 `;
 
 exports[`duplicated components: react-test-renderer 1`] = `
-<style>
 .c0 {
   color: red;
 }
@@ -214,7 +195,6 @@ exports[`duplicated components: react-test-renderer 1`] = `
 .c1 {
   color: green;
 }
-</style>
 
 <div>
   <div
@@ -262,7 +242,6 @@ exports[`empty style: shallow 1`] = `
 `;
 
 exports[`extending styles: mount 1`] = `
-<style>
 .c0 {
   color: palevioletred;
   font-size: 1em;
@@ -282,7 +261,6 @@ exports[`extending styles: mount 1`] = `
   color: tomato;
   border-color: tomato;
 }
-</style>
 
 <div>
   <styled.button>
@@ -303,7 +281,6 @@ exports[`extending styles: mount 1`] = `
 `;
 
 exports[`extending styles: react-test-renderer 1`] = `
-<style>
 .c0 {
   color: palevioletred;
   font-size: 1em;
@@ -323,7 +300,6 @@ exports[`extending styles: react-test-renderer 1`] = `
   color: tomato;
   border-color: tomato;
 }
-</style>
 
 <div>
   <button
@@ -351,11 +327,9 @@ exports[`extending styles: shallow 1`] = `
 `;
 
 exports[`included class name: mount 1`] = `
-<style>
 .c0 {
   color: red;
 }
-</style>
 
 <styled.div>
   <div
@@ -365,11 +339,9 @@ exports[`included class name: mount 1`] = `
 `;
 
 exports[`included class name: react-test-renderer 1`] = `
-<style>
 .c0 {
   color: red;
 }
-</style>
 
 <div
   className="i c0"
@@ -377,11 +349,9 @@ exports[`included class name: react-test-renderer 1`] = `
 `;
 
 exports[`included class name: shallow 1`] = `
-<style>
 .c0 {
   color: red;
 }
-</style>
 
 <div
   className="i c0"
@@ -417,7 +387,6 @@ exports[`non-styled: shallow 1`] = `<div />`;
 exports[`null 1`] = `null`;
 
 exports[`referring to other components: mount 1`] = `
-<style>
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -459,7 +428,6 @@ exports[`referring to other components: mount 1`] = `
   content: '◀';
   margin: 0 10px;
 }
-</style>
 
 <styled.a
   href="#"
@@ -485,7 +453,6 @@ exports[`referring to other components: mount 1`] = `
 `;
 
 exports[`referring to other components: react-test-renderer 1`] = `
-<style>
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -527,7 +494,6 @@ exports[`referring to other components: react-test-renderer 1`] = `
   content: '◀';
   margin: 0 10px;
 }
-</style>
 
 <a
   className="c0 c1"
@@ -545,11 +511,9 @@ exports[`referring to other components: react-test-renderer 1`] = `
 `;
 
 exports[`shallow with theme 1`] = `
-<style>
 .c0 {
   color: mediumseagreen;
 }
-</style>
 
 <button
   className="c0"
@@ -559,7 +523,6 @@ exports[`shallow with theme 1`] = `
 `;
 
 exports[`supported css: mount 1`] = `
-<style>
 .c0 {
   padding: 2em 1em;
   background: papayawhip;
@@ -587,7 +550,6 @@ html.test .c0 {
     background: yellow;
   }
 }
-</style>
 
 <styled.div>
   <div
@@ -601,7 +563,6 @@ html.test .c0 {
 `;
 
 exports[`supported css: react-test-renderer 1`] = `
-<style>
 .c0 {
   padding: 2em 1em;
   background: papayawhip;
@@ -629,7 +590,6 @@ html.test .c0 {
     background: yellow;
   }
 }
-</style>
 
 <div
   className="c0"
@@ -641,7 +601,6 @@ html.test .c0 {
 `;
 
 exports[`supported css: shallow 1`] = `
-<style>
 .c0 {
   padding: 2em 1em;
   background: papayawhip;
@@ -669,7 +628,6 @@ html.test .c0 {
     background: yellow;
   }
 }
-</style>
 
 <div
   className="c0"
@@ -681,7 +639,6 @@ html.test .c0 {
 `;
 
 exports[`theming: mount 1`] = `
-<style>
 .c0 {
   font-size: 1em;
   margin: 1em;
@@ -699,7 +656,6 @@ exports[`theming: mount 1`] = `
   color: mediumseagreen;
   border: 2px solid mediumseagreen;
 }
-</style>
 
 <div>
   <styled.button
@@ -740,7 +696,6 @@ exports[`theming: mount 1`] = `
 `;
 
 exports[`theming: react-test-renderer 1`] = `
-<style>
 .c0 {
   font-size: 1em;
   margin: 1em;
@@ -758,7 +713,6 @@ exports[`theming: react-test-renderer 1`] = `
   color: mediumseagreen;
   border: 2px solid mediumseagreen;
 }
-</style>
 
 <div>
   <button
@@ -806,11 +760,9 @@ exports[`theming: shallow 1`] = `
 `;
 
 exports[`trailing white spaces: mount 1`] = `
-<style>
 .c0 {
   color: red;
 }
-</style>
 
 <styled.div>
   <div
@@ -820,11 +772,9 @@ exports[`trailing white spaces: mount 1`] = `
 `;
 
 exports[`trailing white spaces: react-test-renderer 1`] = `
-<style>
 .c0 {
   color: red;
 }
-</style>
 
 <div
   className="div   c0"
@@ -832,11 +782,9 @@ exports[`trailing white spaces: react-test-renderer 1`] = `
 `;
 
 exports[`trailing white spaces: shallow 1`] = `
-<style>
 .c0 {
   color: red;
 }
-</style>
 
 <div
   className="div   c0"
