@@ -120,11 +120,9 @@ When we rerun the test, the output is different: the style rules are included in
 - Snapshot
 + Received
 
-+<style>
 +.c0 {
 +  color: green;
 +}
-+</style>
 +
  <button
 -  className="sc-bdVaJa rOCEJ"
@@ -136,11 +134,9 @@ This is the resulting snapshot:
 
 ```js
 exports[`it works 1`] = `
-<style>
 .c0 {
   color: green;
 }
-</style>
 
 <button
   className="c0"
@@ -166,7 +162,6 @@ Thanks to Jest Styled Components, Jest is now able to provide the exact informat
 -  color: green;
 +  color: blue;
  }
- </style>
 
  <button
    className="c0"
