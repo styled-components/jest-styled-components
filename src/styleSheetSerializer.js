@@ -15,7 +15,10 @@ const getNodes = (node, nodes = []) => {
   return nodes
 }
 
-const markNodes = nodes => nodes.forEach(node => (node[KEY] = true))
+const markNodes = nodes =>
+  nodes.forEach(node => {
+    node[KEY] = true
+  })
 
 const getClassNames = nodes =>
   nodes.reduce((classNames, node) => {
@@ -104,7 +107,7 @@ const styleSheetSerializer = {
     const style = getStyle(classNames)
     const code = print(val)
 
-    let result = `${style}${style ? '\n\n' : ''}${code}`
+    let result = style ? `<style>\n${style}\n</style>\n\n${code}` : code
     result = replaceClassNames(result, classNames, style)
     result = replaceHashes(result, hashes)
 

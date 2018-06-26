@@ -1,6 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`basic 1`] = `
+<style>
 .c0 {
   padding: 4em;
   background: papayawhip;
@@ -11,6 +12,7 @@ exports[`basic 1`] = `
   text-align: center;
   color: palevioletred;
 }
+</style>
 
 <section
   class="c0"
