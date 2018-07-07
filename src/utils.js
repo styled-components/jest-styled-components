@@ -72,10 +72,7 @@ const buildReturnMessage = (utils, pass, property, received, expected) => () =>
 const matcherTest = (received, expected) => {
   try {
     const matcher =
-      expected === undefined ||
-      expected.$$typeof === Symbol.for('jest.asymmetricMatcher')
-        ? expected
-        : expect.stringMatching(expected)
+      expected instanceof RegExp ? expect.stringMatching(expected) : expected
 
     expect(received).toEqual(matcher)
     return true
