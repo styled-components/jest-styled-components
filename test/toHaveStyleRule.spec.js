@@ -99,6 +99,14 @@ test('regex', () => {
   toHaveStyleRule(<Wrapper />, 'background', /^p/)
 })
 
+test('complex string', () => {
+  const Wrapper = styled.section`
+    border: 1px solid rgba(0, 0, 0, 0.125);
+  `
+
+  toHaveStyleRule(<Wrapper />, 'border', '1px solid rgba(0,0,0,0.125)')
+})
+
 test('undefined', () => {
   const Button = styled.button`
     cursor: ${({ disabled }) => !disabled && 'pointer'};

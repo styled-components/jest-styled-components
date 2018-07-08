@@ -100,9 +100,10 @@ const getDeclarations = (rules, property) =>
 /* eslint-disable prettier/prettier */
 const normalizeOptions = ({ modifier, ...options }) =>
   modifier
-    ? Object.assign(options, {
+    ? {
+      ...options,
       modifier: Array.isArray(modifier) ? modifier.join('') : modifier,
-    })
+    }
     : options
 /* eslint-enable prettier/prettier */
 
