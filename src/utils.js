@@ -3,8 +3,7 @@ const { ServerStyleSheet, isStyledComponent } = require('styled-components')
 
 let StyleSheet
 
-/* eslint-disable */
-if (!!isStyledComponent) {
+if (isStyledComponent) {
   const secretInternals = require('styled-components')
     .__DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS
 
@@ -21,7 +20,6 @@ if (!!isStyledComponent) {
 } else {
   StyleSheet = require('styled-components/lib/models/StyleSheet').default
 }
-/* eslint-enable */
 
 const isServer = () => typeof document === 'undefined'
 
