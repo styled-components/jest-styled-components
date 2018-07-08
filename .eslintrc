@@ -1,12 +1,8 @@
 {
-  "extends": "airbnb",
-
-  "plugins": [
-    "prettier"
-  ],
+  "extends": ["airbnb", "plugin:prettier/recommended"],
 
   "env": {
-    "jest": "true"
+    "jest": true
   },
 
   "rules": {
@@ -31,6 +27,6 @@
     }],
     "react/jsx-filename-extension": ["error", { "extensions": [".js"] }],
     "react/prop-types": ["error", { "skipUndeclared": true }],
-    "semi": ["error", "never"],
+    "semi": ["error", "never"]
   }
 }

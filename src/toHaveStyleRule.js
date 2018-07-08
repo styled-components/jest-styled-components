@@ -97,15 +97,13 @@ const getDeclaration = (rule, property) =>
 const getDeclarations = (rules, property) =>
   rules.map(rule => getDeclaration(rule, property)).filter(Boolean)
 
-/* eslint-disable prettier/prettier */
 const normalizeOptions = ({ modifier, ...options }) =>
   modifier
     ? {
-      ...options,
-      modifier: Array.isArray(modifier) ? modifier.join('') : modifier,
-    }
+        ...options,
+        modifier: Array.isArray(modifier) ? modifier.join('') : modifier,
+      }
     : options
-/* eslint-enable prettier/prettier */
 
 function toHaveStyleRule(component, property, expected, options = {}) {
   const ast = getCSS()
