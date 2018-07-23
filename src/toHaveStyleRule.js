@@ -1,4 +1,4 @@
-const { getCSS } = require('./utils')
+const { getCSS, matcherTest, buildReturnMessage } = require('./utils')
 
 const shouldDive = node =>
   typeof node.dive === 'function' && typeof node.type() !== 'string'
@@ -49,7 +49,7 @@ const getModifiedClassName = (className, modifier = '') => {
   let prefix = ''
   modifier = modifier.trim()
   if (modifier.includes('&')) {
-    modifier = modifier.replace('&', classNameSelector)
+    modifier = modifier.replace(/&/g, classNameSelector)
   } else {
     prefix += classNameSelector
   }
@@ -76,9 +76,14 @@ const getRules = (ast, classNames, options) => {
   )
 }
 
-const die = (utils, property) => ({
+const handleMissingRules = options => ({
   pass: false,
-  message: () => `Property not found: ${utils.printReceived(property)}`,
+  message: () =>
+    `No style rules found on passed Component${
+      Object.keys(options).length
+        ? ` using options:\n${JSON.stringify(options)}`
+        : ''
+    }`,
 })
 
 const getDeclaration = (rule, property) =>
@@ -92,41 +97,30 @@ const getDeclaration = (rule, property) =>
 const getDeclarations = (rules, property) =>
   rules.map(rule => getDeclaration(rule, property)).filter(Boolean)
 
-const normalizeModifierOption = modifier =>
-  Array.isArray(modifier) ? modifier.join('') : modifier
+const normalizeOptions = ({ modifier, ...options }) =>
+  modifier
+    ? {
+        ...options,
+        modifier: Array.isArray(modifier) ? modifier.join('') : modifier,
+      }
+    : options
 
-function toHaveStyleRule(received, property, value, options = {}) {
-  const classNames = getClassNames(received)
+function toHaveStyleRule(component, property, expected, options = {}) {
   const ast = getCSS()
-  options.modifier = normalizeModifierOption(options.modifier)
-  const rules = getRules(ast, classNames, options)
+  const classNames = getClassNames(component)
+  const normalizedOptions = normalizeOptions(options)
+  const rules = getRules(ast, classNames, normalizedOptions)
 
-  if (!rules.length) {
-    return die(this.utils, property)
-  }
+  if (!rules.length) return handleMissingRules(normalizedOptions)
 
   const declarations = getDeclarations(rules, property)
-
-  if (!declarations.length) {
-    return die(this.utils, property)
-  }
-
-  const declaration = declarations.pop()
-
-  const pass =
-    value instanceof RegExp
-      ? value.test(declaration.value)
-      : value === declaration.value
-
-  const message = () =>
-    `Expected ${property}${pass ? ' not ' : ' '}to match:\n` +
-    `  ${this.utils.printExpected(value)}\n` +
-    'Received:\n' +
-    `  ${this.utils.printReceived(declaration.value)}`
+  const declaration = declarations.pop() || {}
+  const received = declaration.value
+  const pass = matcherTest(received, expected)
 
   return {
     pass,
-    message,
+    message: buildReturnMessage(this.utils, pass, property, received, expected),
   }
 }
 
