@@ -58,15 +58,25 @@ const getAtRules = (ast, filter) =>
       return acc
     }, [])
 
-const getStyle = classNames => {
+const getStyleAndClassNamesFromSelectorsByHashes = (classNames, hashes) => {
   const ast = getCSS()
   const filter = filterRules(classNames)
   const rules = ast.stylesheet.rules.filter(filter)
   const atRules = getAtRules(ast, filter)
 
+  const selectors = rules.map(rule => rule.selectors)
+  const classNamesIncludingFromSelectors = new Set(classNames)
+  const addHashFromSelectorListToClassNames = hash =>
+    selectors.forEach(
+      selectorList =>
+        selectorList[0].includes(hash) &&
+        classNamesIncludingFromSelectors.add(hash)
+    )
+
+  hashes.forEach(addHashFromSelectorListToClassNames)
   ast.stylesheet.rules = rules.concat(atRules)
 
-  return css.stringify(ast)
+  return [css.stringify(ast), [...classNamesIncludingFromSelectors]]
 }
 
 const replaceClassNames = (result, classNames, style) =>
@@ -101,11 +111,14 @@ const styleSheetSerializer = {
     let classNames = [...getClassNames(nodes)]
     classNames = filterClassNames(classNames, hashes)
 
-    const style = getStyle(classNames)
+    const [
+      style,
+      classNamesToReplace,
+    ] = getStyleAndClassNamesFromSelectorsByHashes(classNames, hashes)
     const code = print(val)
 
     let result = `${style}${style ? '\n\n' : ''}${code}`
-    result = replaceClassNames(result, classNames, style)
+    result = replaceClassNames(result, classNamesToReplace, style)
     result = replaceHashes(result, hashes)
 
     return result

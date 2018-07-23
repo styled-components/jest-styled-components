@@ -259,10 +259,26 @@ test('referring to other components', () => {
     }
   `
 
+  const Container = styled.div`
+    color: black;
+  `
+  const TextWithConditionalFormatting = styled.span`
+    ${Container} & {
+      color: yellow;
+      background-color: ${props => (props.error ? 'red' : 'green')};
+    }
+  `
+
   const component = (
     <Link href="#">
       <Icon />
       <Label>Hovering my parent changes my style!</Label>
+      <TextWithConditionalFormatting>
+        I should be green
+      </TextWithConditionalFormatting>
+      <TextWithConditionalFormatting error>
+        I should be red
+      </TextWithConditionalFormatting>
     </Link>
   )
 
