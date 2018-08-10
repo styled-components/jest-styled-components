@@ -429,6 +429,16 @@ exports[`referring to other components: mount 1`] = `
   margin: 0 10px;
 }
 
+.c6 .c4 {
+  color: yellow;
+  background-color: green;
+}
+
+.c6 .c5 {
+  color: yellow;
+  background-color: red;
+}
+
 <styled.a
   href="#"
 >
@@ -446,6 +456,22 @@ exports[`referring to other components: mount 1`] = `
         className="c3"
       >
         Hovering my parent changes my style!
+      </span>
+    </styled.span>
+    <styled.span>
+      <span
+        className="c4"
+      >
+        I should be green
+      </span>
+    </styled.span>
+    <styled.span
+      error={true}
+    >
+      <span
+        className="c5"
+      >
+        I should be red
       </span>
     </styled.span>
   </a>
@@ -495,6 +521,16 @@ exports[`referring to other components: react-test-renderer 1`] = `
   margin: 0 10px;
 }
 
+.c6 .c4 {
+  color: yellow;
+  background-color: green;
+}
+
+.c6 .c5 {
+  color: yellow;
+  background-color: red;
+}
+
 <a
   className="c0 c1"
   href="#"
@@ -506,6 +542,16 @@ exports[`referring to other components: react-test-renderer 1`] = `
     className="c3"
   >
     Hovering my parent changes my style!
+  </span>
+  <span
+    className="c4"
+  >
+    I should be green
+  </span>
+  <span
+    className="c5"
+  >
+    I should be red
   </span>
 </a>
 `;
