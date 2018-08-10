@@ -111,7 +111,9 @@ function toHaveStyleRule(component, property, expected, options = {}) {
   const normalizedOptions = normalizeOptions(options)
   const rules = getRules(ast, classNames, normalizedOptions)
 
-  if (!rules.length) return handleMissingRules(normalizedOptions)
+  if (!rules.length) {
+    return handleMissingRules(normalizedOptions)
+  }
 
   const declarations = getDeclarations(rules, property)
   const declaration = declarations.pop() || {}
