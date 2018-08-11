@@ -1,6 +1,6 @@
 interface AsymmetricMatcher {
   $$typeof: Symbol;
-  sample?: string | RegExp | object | Array<any>, Function;
+  sample?: string | RegExp | object | Array<any> | Function;
 }
 
 type Value = string | RegExp | AsymmetricMatcher | undefined
