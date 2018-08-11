@@ -6,7 +6,8 @@
   "typings": "./typings/index.d.ts",
   "files": [
     "native",
-    "src"
+    "src",
+    "typings"
   ],
   "repository": "git@github.com:styled-components/jest-styled-components.git",
   "author": "Michele Bertoli",
