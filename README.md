@@ -264,7 +264,7 @@ const mountWithTheme = (tree, theme) => {
 
   return mount(tree, {
     context,
-    childContextTypes: ThemeProvider.childContextTypes // Needed so child components receive the theme prop
+    childContextTypes: ThemeProvider.childContextTypes,
   })
 }
 ```

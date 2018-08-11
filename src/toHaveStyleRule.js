@@ -47,6 +47,7 @@ const getAtRules = (ast, options) => {
 const getModifiedClassName = (className, modifier = '') => {
   const classNameSelector = `.${className}`
   let prefix = ''
+
   modifier = modifier.trim()
   if (modifier.includes('&')) {
     modifier = modifier.replace(/&/g, classNameSelector)
@@ -57,6 +58,7 @@ const getModifiedClassName = (className, modifier = '') => {
   if (first !== ':' && first !== '[') {
     prefix += ' '
   }
+
   return `${prefix}${modifier}`.trim()
 }
 
