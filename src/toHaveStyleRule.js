@@ -18,6 +18,8 @@ const getClassNames = received => {
       if (components.length) {
         className = components.first().prop('className')
       }
+    } else if (received instanceof global.Element) {
+      className = Array.from(received.classList).join(' ')
     }
   }
 

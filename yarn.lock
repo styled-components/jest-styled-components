@@ -2046,6 +2046,14 @@ dom-serializer@0, dom-serializer@~0.1.0:
     domelementtype "~1.1.1"
     entities "~1.1.1"
 
+dom-testing-library@^3.1.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-3.3.0.tgz#2044e067cad1588df6b06deaf01add98a9dbee74"
+  dependencies:
+    mutationobserver-shim "^0.3.2"
+    pretty-format "^22.4.3"
+    wait-for-expect "^0.4.0"
+
 dom-walk@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/dom-walk/-/dom-walk-0.1.1.tgz#672226dc74c8f799ad35307df936aba11acd6018"
@@ -4832,6 +4840,10 @@ multipipe@^0.1.2:
   dependencies:
     duplexer2 "0.0.2"
 
+mutationobserver-shim@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#f4d5dae7a4971a2207914fb5a90ebd514b65acca"
+
 mute-stream@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.5.tgz#8fbfabb0a98a253d3184331f9e8deb7372fac6c0"
@@ -5418,6 +5430,13 @@ prettier@^1.14.2:
   version "1.14.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.2.tgz#0ac1c6e1a90baa22a62925f41963c841983282f9"
 
+pretty-format@^22.4.3:
+  version "22.4.3"
+  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-22.4.3.tgz#f873d780839a9c02e9664c8a082e9ee79eaac16f"
+  dependencies:
+    ansi-regex "^3.0.0"
+    ansi-styles "^3.2.0"
+
 pretty-format@^23.2.0:
   version "23.2.0"
   resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-23.2.0.tgz#3b0aaa63c018a53583373c1cb3a5d96cc5e83017"
@@ -5689,6 +5708,13 @@ react-test-renderer@^16.4.2:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
     react-is "^16.4.2"
+
+react-testing-library@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/react-testing-library/-/react-testing-library-5.0.0.tgz#a6d63dfb0efb69b4b0f7035cff11310b1a78a702"
+  dependencies:
+    dom-testing-library "^3.1.0"
+    wait-for-expect "^1.0.0"
 
 react-timer-mixin@^0.13.2:
   version "0.13.3"
@@ -6979,6 +7005,14 @@ w3c-hr-time@^1.0.1:
   resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.1.tgz#82ac2bff63d950ea9e3189a58a65625fedf19045"
   dependencies:
     browser-process-hrtime "^0.1.2"
+
+wait-for-expect@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/wait-for-expect/-/wait-for-expect-0.4.0.tgz#341c96ab89d6102a0169a9be6cd0de354de92c17"
+
+wait-for-expect@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/wait-for-expect/-/wait-for-expect-1.0.0.tgz#edf2d5790c36dc67c4e21ac6ccedd7d4b79dc6ac"
 
 walker@~1.0.5:
   version "1.0.7"

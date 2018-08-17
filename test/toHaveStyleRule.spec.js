@@ -1,6 +1,7 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 import styled, { ThemeProvider, css } from 'styled-components'
+import { render } from 'react-testing-library'
 import { shallow, mount } from 'enzyme'
 import '../src'
 
@@ -11,6 +12,10 @@ const notToHaveStyleRule = (component, property, value) => {
   )
   expect(shallow(component)).not.toHaveStyleRule(property, value)
   expect(mount(component)).not.toHaveStyleRule(property, value)
+  expect(render(component).container.firstChild).not.toHaveStyleRule(
+    property,
+    value
+  )
 }
 
 const toHaveStyleRule = (component, property, value, options) => {
@@ -21,6 +26,11 @@ const toHaveStyleRule = (component, property, value, options) => {
   )
   expect(shallow(component)).toHaveStyleRule(property, value, options)
   expect(mount(component)).toHaveStyleRule(property, value, options)
+  expect(render(component).container.firstChild).toHaveStyleRule(
+    property,
+    value,
+    options
+  )
 }
 
 test('null', () => {
