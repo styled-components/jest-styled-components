@@ -41,6 +41,7 @@ Table of Contents
 
    * [Snapshot Testing](#snapshot-testing)
       * [Enzyme](#enzyme)
+      * [react-testing-library](#react-testing-library)
       * [Theming](#theming)
       * [Preact](#preact)
    * [toHaveStyleRule](#tohavestylerule)
@@ -218,6 +219,21 @@ test('it works', () => {
 })
 ```
 
+## react-testing-library
+
+To generate snapshots with [react-testing-library](https://github.com/kentcdodds/react-testing-library), you can just follow the example below:
+
+```js
+import { render } from 'react-testing-library'
+
+test('it works', () => {
+  const { container } = render(<Button />)
+  expect(container.firstChild).toMatchSnapshot()
+})
+```
+
+> The snapshots will contain `class` instead of `className` because the snapshots are of DOM elements
+
 ## Theming
 
 In some scenarios, testing components that depend on a theme can be [tricky](https://github.com/styled-components/jest-styled-components/issues/61),
@@ -378,8 +394,10 @@ test('nested buttons are flexed', () => {
 })
 ```
 
-This matcher works with trees serialized with `react-test-renderer` and shallow renderered or mounted with Enzyme.
+This matcher works with trees serialized with `react-test-renderer`, `react-testing-library`, or those shallow rendered or mounted with Enzyme.
 It checks the style rules applied to the root component it receives, therefore to make assertions on components further in the tree they must be provided separately (Enzyme's [find](http://airbnb.io/enzyme/docs/api/ShallowWrapper/find.html) might help).
+
+> Note: for `react-testing-library`, you'll need to pass the first child to check the top-level component's style. To check the styles of deeper components, you can use one of the `getBy*` methods to find the element (e.g. `expect(getByTestId('styled-button')).toHaveStyleRule('color', 'blue')`)
 
 To use the `toHaveStyleRule` matcher with [React Native](https://facebook.github.io/react-native/), change the import statement to:
 
