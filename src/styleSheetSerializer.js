@@ -9,7 +9,7 @@ const getNodes = (node, nodes = []) => {
   }
 
   if (node.children) {
-    node.children.forEach(child => getNodes(child, nodes))
+    Array.from(node.children).forEach(child => getNodes(child, nodes))
   }
 
   return nodes
@@ -17,17 +17,28 @@ const getNodes = (node, nodes = []) => {
 
 const markNodes = nodes => nodes.forEach(node => (node[KEY] = true))
 
+const getClassNamesFromDOM = node => Array.from(node.classList)
+const getClassNamesFromProps = node => {
+  const classNameProp = node.props && (node.props.class || node.props.className)
+
+  if (classNameProp) {
+    return classNameProp.trim().split(/\s+/)
+  }
+
+  return []
+}
+
 const getClassNames = nodes =>
   nodes.reduce((classNames, node) => {
-    const classNameProp =
-      node.props && (node.props.class || node.props.className)
+    let newClassNames = null
 
-    if (classNameProp) {
-      classNameProp
-        .trim()
-        .split(/\s+/)
-        .forEach(className => classNames.add(className))
+    if (node instanceof global.Element) {
+      newClassNames = getClassNamesFromDOM(node)
+    } else {
+      newClassNames = getClassNamesFromProps(node)
     }
+
+    newClassNames.forEach(className => classNames.add(className))
 
     return classNames
   }, new Set())
@@ -109,7 +120,12 @@ const replaceHashes = (result, hashes) =>
 
 const styleSheetSerializer = {
   test(val) {
-    return val && !val[KEY] && val.$$typeof === Symbol.for('react.test.json')
+    return (
+      val &&
+      !val[KEY] &&
+      (val.$$typeof === Symbol.for('react.test.json') ||
+        val instanceof global.Element)
+    )
   },
 
   print(val, print) {
