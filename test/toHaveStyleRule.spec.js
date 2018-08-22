@@ -91,6 +91,20 @@ test('message when value does not match', () => {
   }).toThrowErrorMatchingSnapshot()
 })
 
+test('non existing', () => {
+  const Wrapper = styled.section`
+    padding: 4em;
+    background: papayawhip;
+  `
+
+  expect(() => {
+    expect(shallow(<Wrapper />).find('div')).toHaveStyleRule(
+      'background',
+      'papayawhip'
+    )
+  }).toThrowErrorMatchingSnapshot()
+})
+
 test('basic', () => {
   const Wrapper = styled.section`
     padding: 4em;

@@ -12,7 +12,7 @@ const getClassNames = received => {
   if (received) {
     if (received.$$typeof === Symbol.for('react.test.json')) {
       className = received.props.className || received.props.class
-    } else if (typeof received.findWhere === 'function') {
+    } else if (typeof received.exists === 'function' && received.exists()) {
       const tree = shouldDive(received) ? received.dive() : received
       const components = tree.findWhere(isTagWithClassName)
       if (components.length) {

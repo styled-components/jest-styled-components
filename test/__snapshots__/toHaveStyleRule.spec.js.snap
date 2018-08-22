@@ -24,3 +24,5 @@ Expected
 Received:
   [31m\\"background: orange\\"[39m"
 `;
+
+exports[`non existing 1`] = `"No style rules found on passed Component"`;
