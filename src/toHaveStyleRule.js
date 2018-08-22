@@ -110,8 +110,8 @@ const normalizeOptions = ({ modifier, ...options }) =>
     : options
 
 function toHaveStyleRule(component, property, expected, options = {}) {
-  const ast = getCSS()
   const classNames = getClassNames(component)
+  const ast = getCSS()
   const normalizedOptions = normalizeOptions(options)
   const rules = getRules(ast, classNames, normalizedOptions)
 

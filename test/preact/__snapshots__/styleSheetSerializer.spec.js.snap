@@ -14,9 +14,11 @@ exports[`basic 1`] = `
 
 <section
   class="c0"
+  ref={undefined}
 >
   <h1
     class="c1"
+    ref={undefined}
   >
     Hello World, this is my first styled component!
   </h1>
