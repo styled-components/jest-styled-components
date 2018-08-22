@@ -454,3 +454,14 @@ test('component modifiers', () => {
     }
   )
 })
+
+test('nested', () => {
+  const Wrapper = styled.section`
+    padding: 4em;
+    background: papayawhip;
+  `
+
+  const MyComponent = () => <Wrapper />
+
+  toHaveStyleRule(<MyComponent />, 'background', 'papayawhip')
+})
