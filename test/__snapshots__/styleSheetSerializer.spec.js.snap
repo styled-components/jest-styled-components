@@ -34,9 +34,7 @@ exports[`any component: react-test-renderer 1`] = `
 }
 
 <div>
-  <a
-    className={undefined}
-  >
+  <a>
     Unstyled, boring Link
   </a>
   <br />
