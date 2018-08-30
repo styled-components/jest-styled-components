@@ -6,6 +6,7 @@
   "typings": "./typings/index.d.ts",
   "files": [
     "native",
+    "serializer",
     "src",
     "typings"
   ],
