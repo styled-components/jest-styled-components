@@ -30,7 +30,7 @@ const hasAtRule = options =>
   Object.keys(options).some(option => ['media', 'supports'].includes(option))
 
 const getAtRules = (ast, options) => {
-  const mediaRegex = /(\([a-z-]+:)\s?([a-z0-9]+\))/g
+  const mediaRegex = /(\([a-z-]+:)\s?([a-z0-9.]+\))/g
 
   return Object.keys(options)
     .map(option =>
