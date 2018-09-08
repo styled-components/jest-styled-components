@@ -18,7 +18,7 @@ if (isStyledComponent) {
     StyleSheet = secretInternals.StyleSheet
   }
 } else {
-  StyleSheet = require('styled-components/lib/models/StyleSheet').default
+  StyleSheet = require('styled-components/lib/models/StyleSheet').default // eslint-disable-line
 }
 
 const isServer = () => typeof document === 'undefined'
@@ -46,7 +46,7 @@ const getStyle = () => extract(/<style[^>]*>([^<]*)</g)
 const getCSS = () => css.parse(getStyle())
 
 const getClassNames = () =>
-  extract(/data-styled-components="([^"]*)"/g).split(/\s/)
+  extract(/data-styled(?:-components)?="([^"]*)"/g).split(/\s/)
 
 const getComponentIDs = () =>
   extract(/sc-component-id: ([^\\*\\/]*) \*\//g).split(/\s/)

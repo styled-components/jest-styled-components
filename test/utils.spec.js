@@ -19,6 +19,12 @@ jest.mock('styled-components', () => ({
               .b { color: green; }
               .c { color: blue; }
             </style>
+            <style data-styled="d e">
+              /* sc-component-id: sc-3 */
+              .sc-3 {}
+              .d { color: pink; }
+              .e { color: indianred; }
+            </style>
           `
         },
       },
@@ -27,5 +33,5 @@ jest.mock('styled-components', () => ({
 }))
 
 test('extracts hashes', () => {
-  expect(getHashes()).toEqual(['a', 'b', 'c', 'sc-1', 'sc-2'])
+  expect(getHashes()).toEqual(['a', 'b', 'c', 'd', 'e', 'sc-1', 'sc-2', 'sc-3'])
 })
