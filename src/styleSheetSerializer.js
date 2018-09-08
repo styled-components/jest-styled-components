@@ -32,7 +32,7 @@ const getClassNames = nodes =>
   nodes.reduce((classNames, node) => {
     let newClassNames = null
 
-    if (node instanceof global.Element) {
+    if (global.Element && node instanceof global.Element) {
       newClassNames = getClassNamesFromDOM(node)
     } else {
       newClassNames = getClassNamesFromProps(node)
@@ -124,7 +124,7 @@ const styleSheetSerializer = {
       val &&
       !val[KEY] &&
       (val.$$typeof === Symbol.for('react.test.json') ||
-        val instanceof global.Element)
+        (global.Element && val instanceof global.Element))
     )
   },
 
