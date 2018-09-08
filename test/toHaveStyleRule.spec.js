@@ -259,6 +259,9 @@ test('at rules', () => {
     @media (min-width: 200px) and (max-width: 640px) {
       color: blue;
     }
+    @media (min-width: 576px) and (max-width: 767.98px) {
+      color: red;
+    }
   `
 
   toHaveStyleRule(<Wrapper />, 'color', 'red')
@@ -279,6 +282,9 @@ test('at rules', () => {
   })
   toHaveStyleRule(<Wrapper />, 'color', 'blue', {
     media: '(min-width:200px) and (max-width: 640px)',
+  })
+  toHaveStyleRule(<Wrapper />, 'color', 'red', {
+    media: '(min-width: 576px) and (max-width: 767.98px)',
   })
 })
 
