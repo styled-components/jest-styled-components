@@ -404,6 +404,35 @@ To use the `toHaveStyleRule` matcher with [React Native](https://facebook.github
 ```js
 import 'jest-styled-components/native'
 ```
+## Serializer
+If you need this serializer is available at `jest-styled-components/serialzier`. It's usefull for is a [specific-snapshot](https://github.com/igor-dv/jest-specific-snapshot).
+
+```js
+import React from 'react'
+import renderer from 'react-test-renderer'
+import styled from 'styled-components'
+import { styleSheetSerializer } from "jest-styled-components/serializer"
+import { addSerializer } from "jest-specific-snapshot"
+
+addSerializer(styleSheetSerializer)
+
+const Button = styled.button`
+  border: 1px solid #eee;
+  borderradius: 3;
+  backgroundcolor: #ffffff;
+  cursor: pointer;
+  fontsize: 16px;
+  padding: 3px 10px;
+  margin: 10;
+`
+
+test('it works', () => {
+  const tree = renderer.create(<Button />).toJSON()
+  expect(tree).toMatchSpecificSnapshot("./buttons.snap")
+})
+````
+
+If you looking for ready example of how to setup [`jest-styled-components`](https://github.com/styled-components/jest-styled-components) with [`storybook`](https://github.com/storybooks/storybook) and [`jest-specific-snapshot`](https://github.com/igor-dv/jest-specific-snapshot) is available: (jest-styled-components-storybook-example)[jest-styled-components-storybook-example)
 
 # Global installation
 
