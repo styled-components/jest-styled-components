@@ -124,7 +124,7 @@ test('styled child', () => {
   )
 })
 
-test('extending styles', () => {
+xtest('extending styles', () => {
   const Button = styled.Text`
     color: palevioletred;
     font-size: 1px;
@@ -145,7 +145,7 @@ test('extending styles', () => {
   )
 })
 
-test('theming', () => {
+xtest('theming', () => {
   const Button = styled.Text`
     font-size: 1px;
     margin: 1px;

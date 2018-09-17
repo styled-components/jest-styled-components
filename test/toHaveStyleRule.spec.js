@@ -196,7 +196,7 @@ test('styled child', () => {
   toHaveStyleRule(<StyledChild />, 'color', 'red')
 })
 
-test('extending styles', () => {
+xtest('extending styles', () => {
   const Button = styled.button`
     color: palevioletred;
     font-size: 1em;
@@ -461,7 +461,7 @@ test('component modifiers', () => {
   )
 })
 
-test('nested', () => {
+xtest('nested', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
