@@ -1,32 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`any component: mount 1`] = `
-.c0 {
-  color: palevioletred;
-  font-weight: bold;
-}
-
-<div>
-  <Link>
-    <a>
-      Unstyled, boring Link
-    </a>
-  </Link>
-  <br />
-  <Styled(Link)>
-    <Link
-      className="c0"
-    >
-      <a
-        className="c0"
-      >
-        Styled, exciting Link
-      </a>
-    </Link>
-  </Styled(Link)>
-</div>
-`;
-
 exports[`any component: react-test-renderer 1`] = `
 .c0 {
   color: palevioletred;
@@ -65,30 +38,6 @@ exports[`any component: react-testing-library 1`] = `
 </div>
 `;
 
-exports[`any component: shallow 1`] = `
-<div>
-  <Link>
-    Unstyled, boring Link
-  </Link>
-  <br />
-  <Styled(Link)>
-    Styled, exciting Link
-  </Styled(Link)>
-</div>
-`;
-
-exports[`attaching additional props: mount 1`] = `
-.c0 {
-  color: red;
-}
-
-<styled.div>
-  <div
-    className="div c0"
-  />
-</styled.div>
-`;
-
 exports[`attaching additional props: react-test-renderer 1`] = `
 .c0 {
   color: red;
@@ -107,43 +56,6 @@ exports[`attaching additional props: react-testing-library 1`] = `
 <div
   class="div c0"
 />
-`;
-
-exports[`attaching additional props: shallow 1`] = `
-.c0 {
-  color: red;
-}
-
-<div
-  className="div c0"
-/>
-`;
-
-exports[`basic: mount 1`] = `
-.c0 {
-  padding: 4em;
-  background: papayawhip;
-}
-
-.c1 {
-  font-size: 1.5em;
-  text-align: center;
-  color: palevioletred;
-}
-
-<styled.section>
-  <section
-    className="c0"
-  >
-    <styled.h1>
-      <h1
-        className="c1"
-      >
-        Hello World, this is my first styled component!
-      </h1>
-    </styled.h1>
-  </section>
-</styled.section>
 `;
 
 exports[`basic: react-test-renderer 1`] = `
@@ -190,51 +102,6 @@ exports[`basic: react-testing-library 1`] = `
     Hello World, this is my first styled component!
   </h1>
 </section>
-`;
-
-exports[`basic: shallow 1`] = `
-.c0 {
-  padding: 4em;
-  background: papayawhip;
-}
-
-<section
-  className="c0"
->
-  <styled.h1>
-    Hello World, this is my first styled component!
-  </styled.h1>
-</section>
-`;
-
-exports[`duplicated components: mount 1`] = `
-.c0 {
-  color: red;
-}
-
-.c1 {
-  color: green;
-}
-
-<div>
-  <styled.div>
-    <div
-      className="c0"
-    />
-  </styled.div>
-   
-  <styled.div>
-    <div
-      className="c0"
-    />
-  </styled.div>
-   
-  <styled.div>
-    <div
-      className="c1"
-    />
-  </styled.div>
-</div>
 `;
 
 exports[`duplicated components: react-test-renderer 1`] = `
@@ -285,24 +152,6 @@ exports[`duplicated components: react-testing-library 1`] = `
 </div>
 `;
 
-exports[`duplicated components: shallow 1`] = `
-<div>
-  <styled.div />
-   
-  <styled.div />
-   
-  <styled.div />
-</div>
-`;
-
-exports[`empty style: mount 1`] = `
-<styled.div>
-  <div
-    className=""
-  />
-</styled.div>
-`;
-
 exports[`empty style: react-test-renderer 1`] = `
 <div
   className=""
@@ -313,144 +162,6 @@ exports[`empty style: react-testing-library 1`] = `
 <div
   class=""
 />
-`;
-
-exports[`empty style: shallow 1`] = `
-<div
-  className=""
-/>
-`;
-
-exports[`extending styles: mount 1`] = `
-.c0 {
-  color: palevioletred;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-}
-
-.c1 {
-  color: palevioletred;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-  color: tomato;
-  border-color: tomato;
-}
-
-<div>
-  <styled.button>
-    <button
-      className="c0"
-    >
-      Normal Button
-    </button>
-  </styled.button>
-  <styled.button>
-    <button
-      className="c1"
-    >
-      Tomato Button
-    </button>
-  </styled.button>
-</div>
-`;
-
-exports[`extending styles: react-test-renderer 1`] = `
-.c0 {
-  color: palevioletred;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-}
-
-.c1 {
-  color: palevioletred;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-  color: tomato;
-  border-color: tomato;
-}
-
-<div>
-  <button
-    className="c0"
-  >
-    Normal Button
-  </button>
-  <button
-    className="c1"
-  >
-    Tomato Button
-  </button>
-</div>
-`;
-
-exports[`extending styles: react-testing-library 1`] = `
-.c0 {
-  color: palevioletred;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-}
-
-.c1 {
-  color: palevioletred;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid palevioletred;
-  border-radius: 3px;
-  color: tomato;
-  border-color: tomato;
-}
-
-<div>
-  <button
-    class="c0"
-  >
-    Normal Button
-  </button>
-  <button
-    class="c1"
-  >
-    Tomato Button
-  </button>
-</div>
-`;
-
-exports[`extending styles: shallow 1`] = `
-<div>
-  <styled.button>
-    Normal Button
-  </styled.button>
-  <styled.button>
-    Tomato Button
-  </styled.button>
-</div>
-`;
-
-exports[`included class name: mount 1`] = `
-.c0 {
-  color: red;
-}
-
-<styled.div>
-  <div
-    className="i c0"
-  />
-</styled.div>
 `;
 
 exports[`included class name: react-test-renderer 1`] = `
@@ -473,24 +184,6 @@ exports[`included class name: react-testing-library 1`] = `
 />
 `;
 
-exports[`included class name: shallow 1`] = `
-.c0 {
-  color: red;
-}
-
-<div
-  className="i c0"
-/>
-`;
-
-exports[`leading white spaces: mount 1`] = `
-<Div>
-  <div
-    className="  div"
-  />
-</Div>
-`;
-
 exports[`leading white spaces: react-test-renderer 1`] = `
 <div
   className="  div"
@@ -503,113 +196,11 @@ exports[`leading white spaces: react-testing-library 1`] = `
 />
 `;
 
-exports[`leading white spaces: shallow 1`] = `
-<div
-  className="  div"
-/>
-`;
-
-exports[`non-styled: mount 1`] = `<div />`;
-
 exports[`non-styled: react-test-renderer 1`] = `<div />`;
 
 exports[`non-styled: react-testing-library 1`] = `<div />`;
 
-exports[`non-styled: shallow 1`] = `<div />`;
-
 exports[`null 1`] = `null`;
-
-exports[`referring to other components: mount 1`] = `
-.c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 5px 10px;
-  background: papayawhip;
-  color: palevioletred;
-}
-
-.c2 {
-  -webkit-transition: fill 0.25s;
-  transition: fill 0.25s;
-  width: 48px;
-  height: 48px;
-}
-
-.c0:hover .c2 {
-  fill: rebeccapurple;
-}
-
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  line-height: 1.2;
-}
-
-.c3::before {
-  content: '◀';
-  margin: 0 10px;
-}
-
-.c6 .c4 {
-  color: yellow;
-  background-color: green;
-}
-
-.c6 .c5 {
-  color: yellow;
-  background-color: red;
-}
-
-<styled.a
-  href="#"
->
-  <a
-    className="c0 c1"
-    href="#"
-  >
-    <styled.svg>
-      <svg
-        className="c2"
-      />
-    </styled.svg>
-    <styled.span>
-      <span
-        className="c3"
-      >
-        Hovering my parent changes my style!
-      </span>
-    </styled.span>
-    <styled.span>
-      <span
-        className="c4"
-      >
-        I should be green
-      </span>
-    </styled.span>
-    <styled.span
-      error={true}
-    >
-      <span
-        className="c5"
-      >
-        I should be red
-      </span>
-    </styled.span>
-  </a>
-</styled.a>
-`;
 
 exports[`referring to other components: react-test-renderer 1`] = `
 .c1 {
@@ -779,46 +370,6 @@ exports[`shallow with theme 1`] = `
 </button>
 `;
 
-exports[`supported css: mount 1`] = `
-.c0 {
-  padding: 2em 1em;
-  background: papayawhip;
-}
-
-.c0:hover {
-  background: palevioletred;
-}
-
-.c0 > p {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-html.test .c0 {
-  display: none;
-}
-
-@media (max-width:600px) {
-  .c0 {
-    background: tomato;
-  }
-
-  .c0:hover {
-    background: yellow;
-  }
-}
-
-<styled.div>
-  <div
-    className="c0"
-  >
-    <p>
-      Hello World!
-    </p>
-  </div>
-</styled.div>
-`;
-
 exports[`supported css: react-test-renderer 1`] = `
 .c0 {
   padding: 2em 1em;
@@ -895,101 +446,6 @@ html.test .c0 {
 </div>
 `;
 
-exports[`supported css: shallow 1`] = `
-.c0 {
-  padding: 2em 1em;
-  background: papayawhip;
-}
-
-.c0:hover {
-  background: palevioletred;
-}
-
-.c0 > p {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-html.test .c0 {
-  display: none;
-}
-
-@media (max-width:600px) {
-  .c0 {
-    background: tomato;
-  }
-
-  .c0:hover {
-    background: yellow;
-  }
-}
-
-<div
-  className="c0"
->
-  <p>
-    Hello World!
-  </p>
-</div>
-`;
-
-exports[`theming: mount 1`] = `
-.c0 {
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border-radius: 3px;
-  color: palevioletred;
-  border: 2px solid palevioletred;
-}
-
-.c1 {
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border-radius: 3px;
-  color: mediumseagreen;
-  border: 2px solid mediumseagreen;
-}
-
-<div>
-  <styled.button
-    theme={
-      Object {
-        "main": "palevioletred",
-      }
-    }
-  >
-    <button
-      className="c0"
-    >
-      Normal
-    </button>
-  </styled.button>
-  <ThemeProvider
-    theme={
-      Object {
-        "main": "mediumseagreen",
-      }
-    }
-  >
-    <styled.button
-      theme={
-        Object {
-          "main": "palevioletred",
-        }
-      }
-    >
-      <button
-        className="c1"
-      >
-        Themed
-      </button>
-    </styled.button>
-  </ThemeProvider>
-</div>
-`;
-
 exports[`theming: react-test-renderer 1`] = `
 .c0 {
   font-size: 1em;
@@ -1056,49 +512,6 @@ exports[`theming: react-testing-library 1`] = `
 </div>
 `;
 
-exports[`theming: shallow 1`] = `
-<div>
-  <styled.button
-    theme={
-      Object {
-        "main": "palevioletred",
-      }
-    }
-  >
-    Normal
-  </styled.button>
-  <ThemeProvider
-    theme={
-      Object {
-        "main": "mediumseagreen",
-      }
-    }
-  >
-    <styled.button
-      theme={
-        Object {
-          "main": "palevioletred",
-        }
-      }
-    >
-      Themed
-    </styled.button>
-  </ThemeProvider>
-</div>
-`;
-
-exports[`trailing white spaces: mount 1`] = `
-.c0 {
-  color: red;
-}
-
-<styled.div>
-  <div
-    className="div   c0"
-  />
-</styled.div>
-`;
-
 exports[`trailing white spaces: react-test-renderer 1`] = `
 .c0 {
   color: red;
@@ -1116,15 +529,5 @@ exports[`trailing white spaces: react-testing-library 1`] = `
 
 <div
   class="div   c0"
-/>
-`;
-
-exports[`trailing white spaces: shallow 1`] = `
-.c0 {
-  color: red;
-}
-
-<div
-  className="div   c0"
 />
 `;

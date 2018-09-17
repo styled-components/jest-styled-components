@@ -1,10 +1,8 @@
+import { __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS as internals } from 'styled-components'
+
 const { getCSS, matcherTest, buildReturnMessage } = require('./utils')
 
-const shouldDive = node =>
-  typeof node.dive === 'function' && typeof node.type() !== 'string'
-
-const isTagWithClassName = node =>
-  node.exists() && node.prop('className') && typeof node.type() === 'string'
+const { StyleSheet } = internals
 
 const getClassNames = received => {
   let className
@@ -13,10 +11,20 @@ const getClassNames = received => {
     if (received.$$typeof === Symbol.for('react.test.json')) {
       className = received.props.className || received.props.class
     } else if (typeof received.exists === 'function' && received.exists()) {
-      const tree = shouldDive(received) ? received.dive() : received
-      const components = tree.findWhere(isTagWithClassName)
-      if (components.length) {
-        className = components.first().prop('className')
+      const base = received.find('BaseStyledComponent')
+      if (base.length) {
+        if (received.dive) {
+          className = base
+            .dive()
+            .props()
+            .children(StyleSheet.master)
+            .props.children().props.className
+        } else {
+          className = base
+            .children()
+            .first()
+            .prop('className')
+        }
       }
     } else if (global.Element && received instanceof global.Element) {
       className = Array.from(received.classList).join(' ')

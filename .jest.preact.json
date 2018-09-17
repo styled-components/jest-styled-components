@@ -2,5 +2,5 @@
   "moduleNameMapper": {
     "^react$": "preact-compat"
   },
-  "testRegex": "test/preact/.*\\.spec\\.js$"
+  "testRegex": "xtest/preact/.*\\.spec\\.js$"
 }
