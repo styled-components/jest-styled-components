@@ -101,12 +101,13 @@ const getDeclaration = (rule, property) =>
 const getDeclarations = (rules, property) =>
   rules.map(rule => getDeclaration(rule, property)).filter(Boolean)
 
-const normalizeOptions = ({ modifier, ...options }) =>
-  modifier
-    ? {
-        ...options,
-        modifier: Array.isArray(modifier) ? modifier.join('') : modifier,
-      }
+const normalizeOptions = (options) =>
+  options.modifier
+    ? Object.assign(
+        {},
+        options,
+        { modifier: Array.isArray(options.modifier) ? options.modifier.join('') : options.modifier },
+      )
     : options
 
 function toHaveStyleRule(component, property, expected, options = {}) {
