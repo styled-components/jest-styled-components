@@ -202,7 +202,7 @@ test('styled child', () => {
   toHaveStyleRule(<StyledChild />, 'color', 'red')
 })
 
-xtest('extending styles', () => {
+test('extending styles', () => {
   const Button = styled.button`
     color: palevioletred;
     font-size: 1em;
@@ -212,7 +212,7 @@ xtest('extending styles', () => {
     border-radius: 3px;
   `
 
-  const TomatoButton = Button.extend`
+  const TomatoButton = styled(Button)`
     color: tomato;
     border-color: tomato;
   `

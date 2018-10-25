@@ -56,28 +56,49 @@ const getAtRules = (ast, options) => {
     .reduce((acc, rules) => acc.concat(rules), [])
 }
 
-const getModifiedClassName = (className, modifier = '') => {
-  const classNameSelector = `.${className}`
-  let prefix = ''
-
-  modifier = modifier.trim()
-  if (modifier.includes('&')) {
-    modifier = modifier.replace(/&/g, classNameSelector)
-  } else {
-    prefix += classNameSelector
-  }
-  const first = modifier[0]
-  if (first !== ':' && first !== '[') {
-    prefix += ' '
-  }
-
-  return `${prefix}${modifier}`.trim()
+const getModifiedClassName = ({ className, modifier = '', componentId }) => {
+  const modifierPartials = modifier.split(/\s/)
+  return modifierPartials
+    .map((rawSel, index) => {
+      const selector = rawSel.trim()
+      // when there is no self-ref in whole modifier
+      if (!modifier.includes('&')) {
+        // when not dealing with first partial things are easy
+        if (index > 0) {
+          return selector
+        }
+        // on first partial watch out for implicit self-refs
+        const first = rawSel[0]
+        if (first !== ':' && first !== '[') {
+          return `.${className} ${selector}`.trim()
+        }
+        return `.${className}${selector}`.trim()
+      }
+      if (
+        // the first self-ref is always untouched
+        index > 0 &&
+        // there should be at least two self-refs to do a replacement (.b > .b)
+        // no consecutive self refs (.b.b); that is a precedence boost and treated differently
+        modifierPartials.filter(partial => partial.trim().startsWith('&'))
+          .length > 1
+      ) {
+        return `.${componentId}`
+      }
+      // fallback for other cases with self ref
+      return selector.replace(/&/g, `.${className}`)
+    })
+    .join(' ')
 }
 
 const hasClassNames = (classNames, selectors, options) =>
-  classNames.some(className =>
-    selectors.includes(getModifiedClassName(className, options.modifier))
-  )
+  classNames.some(className => {
+    const alignedModifiers = getModifiedClassName({
+      className,
+      modifier: options.modifier,
+      componentId: classNames.find(cn => cn.startsWith('sc-')),
+    })
+    return selectors.includes(alignedModifiers)
+  })
 
 const getRules = (ast, classNames, options) => {
   const rules = hasAtRule(options)
