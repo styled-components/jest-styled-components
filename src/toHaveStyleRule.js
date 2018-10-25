@@ -13,7 +13,7 @@ const getClassNames = received => {
     if (received.$$typeof === Symbol.for('react.test.json')) {
       className = received.props.className || received.props.class
     } else if (typeof received.exists === 'function' && received.exists()) {
-      const base = received.find('BaseStyledComponent')
+      const base = received.find('StyledComponent')
       if (base.length) {
         if (received.dive) {
           className = base

@@ -10,7 +10,9 @@ const notToHaveStyleRule = (component, property, value) => {
     property,
     value
   )
-  expect(shallow(component)).not.toHaveStyleRule(property, value)
+  expect(
+    shallow(component, { disableLifecycleMethods: true })
+  ).not.toHaveStyleRule(property, value)
   expect(mount(component)).not.toHaveStyleRule(property, value)
   expect(render(component).container.firstChild).not.toHaveStyleRule(
     property,
@@ -24,7 +26,11 @@ const toHaveStyleRule = (component, property, value, options) => {
     value,
     options
   )
-  expect(shallow(component)).toHaveStyleRule(property, value, options)
+  expect(shallow(component, { disableLifecycleMethods: true })).toHaveStyleRule(
+    property,
+    value,
+    options
+  )
   expect(mount(component)).toHaveStyleRule(property, value, options)
   expect(render(component).container.firstChild).toHaveStyleRule(
     property,
