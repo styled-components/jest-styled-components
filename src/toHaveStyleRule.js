@@ -1,8 +1,10 @@
-import { __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS as internals } from 'styled-components'
+const {
+  __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS,
+} = require('styled-components')
 
 const { getCSS, matcherTest, buildReturnMessage } = require('./utils')
 
-const { StyleSheet } = internals
+const { StyleSheet } = __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS
 
 const getClassNames = received => {
   let className
