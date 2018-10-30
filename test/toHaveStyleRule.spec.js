@@ -202,24 +202,6 @@ test('styled child', () => {
   toHaveStyleRule(<StyledChild />, 'color', 'red')
 })
 
-test('extending styles', () => {
-  const Button = styled.button`
-    color: palevioletred;
-    font-size: 1em;
-    margin: 1em;
-    padding: 0.25em 1em;
-    border: 2px solid palevioletred;
-    border-radius: 3px;
-  `
-
-  const TomatoButton = styled(Button)`
-    color: tomato;
-    border-color: tomato;
-  `
-
-  toHaveStyleRule(<TomatoButton>Tomato Button</TomatoButton>, 'color', 'tomato')
-})
-
 test('theming', () => {
   const Button = styled.button`
     font-size: 1em;
@@ -467,7 +449,7 @@ test('component modifiers', () => {
   )
 })
 
-xtest('nested', () => {
+test('nested', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
@@ -475,5 +457,13 @@ xtest('nested', () => {
 
   const MyComponent = () => <Wrapper />
 
-  toHaveStyleRule(<MyComponent />, 'background', 'papayawhip')
+  expect(renderer.create(<MyComponent />).toJSON()).toHaveStyleRule(
+    'background',
+    'papayawhip'
+  )
+  expect(mount(<MyComponent />)).toHaveStyleRule('background', 'papayawhip')
+  expect(render(<MyComponent />).container.firstChild).toHaveStyleRule(
+    'background',
+    'papayawhip'
+  )
 })
