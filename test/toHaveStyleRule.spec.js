@@ -10,7 +10,9 @@ const notToHaveStyleRule = (component, property, value) => {
     property,
     value
   )
-  expect(shallow(component)).not.toHaveStyleRule(property, value)
+  expect(
+    shallow(component, { disableLifecycleMethods: true })
+  ).not.toHaveStyleRule(property, value)
   expect(mount(component)).not.toHaveStyleRule(property, value)
   expect(render(component).container.firstChild).not.toHaveStyleRule(
     property,
@@ -24,7 +26,11 @@ const toHaveStyleRule = (component, property, value, options) => {
     value,
     options
   )
-  expect(shallow(component)).toHaveStyleRule(property, value, options)
+  expect(shallow(component, { disableLifecycleMethods: true })).toHaveStyleRule(
+    property,
+    value,
+    options
+  )
   expect(mount(component)).toHaveStyleRule(property, value, options)
   expect(render(component).container.firstChild).toHaveStyleRule(
     property,
@@ -194,24 +200,6 @@ test('styled child', () => {
   `
 
   toHaveStyleRule(<StyledChild />, 'color', 'red')
-})
-
-xtest('extending styles', () => {
-  const Button = styled.button`
-    color: palevioletred;
-    font-size: 1em;
-    margin: 1em;
-    padding: 0.25em 1em;
-    border: 2px solid palevioletred;
-    border-radius: 3px;
-  `
-
-  const TomatoButton = Button.extend`
-    color: tomato;
-    border-color: tomato;
-  `
-
-  toHaveStyleRule(<TomatoButton>Tomato Button</TomatoButton>, 'color', 'tomato')
 })
 
 test('theming', () => {
@@ -461,7 +449,7 @@ test('component modifiers', () => {
   )
 })
 
-xtest('nested', () => {
+test('nested', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
@@ -469,5 +457,13 @@ xtest('nested', () => {
 
   const MyComponent = () => <Wrapper />
 
-  toHaveStyleRule(<MyComponent />, 'background', 'papayawhip')
+  expect(renderer.create(<MyComponent />).toJSON()).toHaveStyleRule(
+    'background',
+    'papayawhip'
+  )
+  expect(mount(<MyComponent />)).toHaveStyleRule('background', 'papayawhip')
+  expect(render(<MyComponent />).container.firstChild).toHaveStyleRule(
+    'background',
+    'papayawhip'
+  )
 })
