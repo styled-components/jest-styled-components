@@ -6,7 +6,7 @@ exports[`message when property not found 1`] = `
 Expected
   [32m\\"background-color: black\\"[39m
 Received:
-  [31m\\"background-color: undefined\\"[39m"
+  [31m\\"background-color: null\\"[39m"
 `;
 
 exports[`message when rules not found 1`] = `"No style rules found on passed Component"`;

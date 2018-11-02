@@ -45,6 +45,7 @@ test('null', () => {
 
 test('non-styled', () => {
   notToHaveStyleRule(<div />, 'a', 'b')
+  notToHaveStyleRule(<div />, 'a')
 })
 
 test('message when rules not found', () => {
@@ -137,16 +138,29 @@ test('complex string', () => {
   toHaveStyleRule(<Wrapper />, 'border', '1px solid rgba(0,0,0,0.125)')
 })
 
-test('undefined', () => {
+test('conditional rule - null value', () => {
   const Button = styled.button`
     cursor: ${({ disabled }) => !disabled && 'pointer'};
     opacity: ${({ disabled }) => disabled && '.65'};
   `
 
-  toHaveStyleRule(<Button />, 'opacity', undefined)
+  toHaveStyleRule(<Button />, 'opacity', null)
   toHaveStyleRule(<Button />, 'cursor', 'pointer')
   toHaveStyleRule(<Button disabled />, 'opacity', '.65')
-  toHaveStyleRule(<Button disabled />, 'cursor', undefined)
+  toHaveStyleRule(<Button disabled />, 'cursor', null)
+})
+
+test('at rules initially no value', () => {
+  const Button = styled.button`
+    @media (max-width: 640px) {
+      width: 50%;
+    }
+  `
+  notToHaveStyleRule(<Button />, 'width')
+  toHaveStyleRule(<Button />, 'width', null)
+  toHaveStyleRule(<Button />, 'width', expect.any(String), {
+    media: '(max-width: 640px)',
+  })
 })
 
 test('jest asymmetric matchers', () => {
