@@ -471,3 +471,16 @@ test('nested', () => {
 
   toHaveStyleRule(<MyComponent />, 'background', 'papayawhip')
 })
+
+test('empty children', () => {
+  const Wrapper = styled.section`
+    padding: 4em;
+    background: papayawhip;
+  `
+
+  Wrapper.defaultProps = {
+    children: '',
+  }
+
+  toHaveStyleRule(<Wrapper />, 'background', 'papayawhip')
+})

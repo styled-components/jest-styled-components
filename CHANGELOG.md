@@ -4,6 +4,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [6.2.2](https://github.com/styled-components/jest-styled-components/compare/v6.2.1...v6.2.2) - 2018-10-21
+### Fixed
+- Avoid using object spread to make this package compatible with Node <8.6 (see [#196](https://github.com/styled-components/jest-styled-components/pull/196)).
+
+## [6.2.1](https://github.com/styled-components/jest-styled-components/compare/v6.2.0...v6.2.1) - 2018-09-22
+### Fixed
+- [toHaveStyleRule] Do not fail when components have empty string as children (see [#189](https://github.com/styled-components/jest-styled-components/pull/189)).
+
+## [6.2.0](https://github.com/styled-components/jest-styled-components/compare/v6.1.1...v6.2.0) - 2018-09-08
+### Added
+- Ability to export serializer (see [#173](https://github.com/styled-components/jest-styled-components/pull/173)).
+- Support for v4 data attribute (see [#181](https://github.com/styled-components/jest-styled-components/pull/181)).
+
+### Fixed
+- [toHaveStyleRule] Fix media regex to allow dots (see [#182](https://github.com/styled-components/jest-styled-components/pull/182)).
+
 ## [6.1.1](https://github.com/styled-components/jest-styled-components/compare/v6.1.0...v6.1.1) - 2018-08-22
 ### Fixed
 - [toHaveStyleRule] Fix regression with nested components.

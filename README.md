@@ -44,6 +44,7 @@ Table of Contents
       * [react-testing-library](#react-testing-library)
       * [Theming](#theming)
       * [Preact](#preact)
+      * [Serializer](#serializer)
    * [toHaveStyleRule](#tohavestylerule)
    * [Global installation](#global-installation)
    * [Working with multiple packages](#working-with-multiple-packages)
@@ -318,6 +319,30 @@ test('it works', () => {
 
 > The snapshots will contain `class` instead of `className`.
 [Learn more](https://github.com/developit/preact/issues/103).
+
+## Serializer
+
+The serializer can be imported separately from `jest-styled-components/serializer`.
+This makes it possible to use this package with [specific-snapshot](https://github.com/igor-dv/jest-specific-snapshot) and other libraries.
+
+```js
+import React from 'react'
+import styled from 'styled-components'
+import renderer from 'react-test-renderer'
+import { styleSheetSerializer } from "jest-styled-components/serializer"
+import { addSerializer } from "jest-specific-snapshot"
+
+addSerializer(styleSheetSerializer)
+
+const Button = styled.button`
+  color: red;
+`
+
+test('it works', () => {
+  const tree = renderer.create(<Button />).toJSON()
+  expect(tree).toMatchSpecificSnapshot("./Button.snap")
+})
+````
 
 # toHaveStyleRule
 

@@ -4,7 +4,7 @@ const shouldDive = node =>
   typeof node.dive === 'function' && typeof node.type() !== 'string'
 
 const isTagWithClassName = node =>
-  node.prop('className') && typeof node.type() === 'string'
+  node.exists() && node.prop('className') && typeof node.type() === 'string'
 
 const getClassNames = received => {
   let className
@@ -18,7 +18,7 @@ const getClassNames = received => {
       if (components.length) {
         className = components.first().prop('className')
       }
-    } else if (received instanceof global.Element) {
+    } else if (global.Element && received instanceof global.Element) {
       className = Array.from(received.classList).join(' ')
     }
   }
@@ -101,12 +101,13 @@ const getDeclaration = (rule, property) =>
 const getDeclarations = (rules, property) =>
   rules.map(rule => getDeclaration(rule, property)).filter(Boolean)
 
-const normalizeOptions = ({ modifier, ...options }) =>
-  modifier
-    ? {
-        ...options,
-        modifier: Array.isArray(modifier) ? modifier.join('') : modifier,
-      }
+const normalizeOptions = (options) =>
+  options.modifier
+    ? Object.assign(
+        {},
+        options,
+        { modifier: Array.isArray(options.modifier) ? options.modifier.join('') : options.modifier },
+      )
     : options
 
 function toHaveStyleRule(component, property, expected, options = {}) {

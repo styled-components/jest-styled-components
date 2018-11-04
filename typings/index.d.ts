@@ -3,7 +3,7 @@ interface AsymmetricMatcher {
   sample?: string | RegExp | object | Array<any> | Function;
 }
 
-type Value = string | RegExp | AsymmetricMatcher | undefined
+type Value = string | number | RegExp | AsymmetricMatcher | undefined
 
 interface Options {
   media?: string;
