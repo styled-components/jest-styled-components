@@ -143,6 +143,15 @@ test('undefined', () => {
   toHaveStyleRule(<Button disabled />, 'cursor', undefined)
 })
 
+test('negated ".not" modifier with no value', () => {
+  const Button = styled.button`
+    opacity: ${({ disabled }) => disabled && '.65'};
+  `
+
+  notToHaveStyleRule(<Button />, 'opacity')
+  toHaveStyleRule(<Button disabled />, 'opacity', '.65')
+})
+
 test('jest asymmetric matchers', () => {
   const Button = styled.button`
     border: 0.1em solid
