@@ -348,6 +348,7 @@ test('it works', () => {
 
 The `toHaveStyleRule` matcher is useful to test if a given rule is applied to a component.
 The first argument is the expected property, the second is the expected value which can be a String, RegExp, Jest asymmetric matcher or `undefined`.
+When used with a negated ".not" modifier the second argument is optional and can be omitted.
 
 ```js
 const Button = styled.button`
@@ -362,8 +363,9 @@ test('it applies default styles', () => {
   expect(tree).toHaveStyleRule('color', 'red')
   expect(tree).toHaveStyleRule('border', '0.05em solid black')
   expect(tree).toHaveStyleRule('cursor', 'pointer')
-  expect(tree).toHaveStyleRule('opacity', undefined) // equivalent of the following
+  expect(tree).not.toHaveStyleRule('opacity') // equivalent of the following two
   expect(tree).not.toHaveStyleRule('opacity', expect.any(String))
+  expect(tree).toHaveStyleRule('opacity', undefined)
 })
 
 test('it applies styles according to passed props', () => {
