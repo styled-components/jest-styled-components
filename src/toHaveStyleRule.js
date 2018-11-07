@@ -106,7 +106,7 @@ const normalizeOptions = (options) =>
     ? Object.assign(
         {},
         options,
-        { modifier: Array.isArray(options.modifier) ? options.modifier.join('') : options.modifier },
+        { modifier: Array.isArray(options.modifier) ? options.modifier.join('') : options.modifier }
       )
     : options
 
