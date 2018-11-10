@@ -78,6 +78,20 @@ test('undefined', () => {
   )
 })
 
+test('negated ".not" modifier with no value', () => {
+  const Button = styled.Text`
+    ${({ transparent }) => !transparent && 'background-color: papayawhip;'};
+  `
+
+  expect(renderer.create(<Button />).toJSON()).toHaveStyleRule(
+    'background-color',
+    'papayawhip'
+  )
+  expect(renderer.create(<Button transparent />).toJSON()).not.toHaveStyleRule(
+    'background-color'
+  )
+})
+
 test('jest asymmetric matchers', () => {
   const Button = styled.Text`
     background-color: ${({ transparent }) =>

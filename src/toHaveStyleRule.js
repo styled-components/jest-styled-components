@@ -101,13 +101,13 @@ const getDeclaration = (rule, property) =>
 const getDeclarations = (rules, property) =>
   rules.map(rule => getDeclaration(rule, property)).filter(Boolean)
 
-const normalizeOptions = (options) =>
+const normalizeOptions = options =>
   options.modifier
-    ? Object.assign(
-        {},
-        options,
-        { modifier: Array.isArray(options.modifier) ? options.modifier.join('') : options.modifier },
-      )
+    ? Object.assign({}, options, {
+        modifier: Array.isArray(options.modifier)
+          ? options.modifier.join('')
+          : options.modifier,
+      })
     : options
 
 function toHaveStyleRule(component, property, expected, options = {}) {
@@ -123,7 +123,9 @@ function toHaveStyleRule(component, property, expected, options = {}) {
   const declarations = getDeclarations(rules, property)
   const declaration = declarations.pop() || {}
   const received = declaration.value
-  const pass = matcherTest(received, expected)
+  const matches = matcherTest(received, expected)
+  // if expected value is not passed and we have a negated ".not" modifier we need to flip our assertion
+  const pass = !expected && this.isNot ? !matches : matches
 
   return {
     pass,
