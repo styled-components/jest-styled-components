@@ -3,7 +3,7 @@ interface AsymmetricMatcher {
   sample?: string | RegExp | object | Array<any> | Function;
 }
 
-type Value = string | number | RegExp | AsymmetricMatcher | undefined
+type Value = string | number | RegExp | AsymmetricMatcher | undefined;
 
 interface Options {
   media?: string;
@@ -14,6 +14,6 @@ interface Options {
 declare namespace jest {
 
   interface Matchers<R> {
-    toHaveStyleRule(property: string, value: Value, options?: Options): R;
+    toHaveStyleRule(property: string, value?: Value, options?: Options): R;
   }
 }
