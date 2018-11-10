@@ -123,9 +123,10 @@ function toHaveStyleRule(component, property, expected, options = {}) {
   const declarations = getDeclarations(rules, property)
   const declaration = declarations.pop() || {}
   const received = declaration.value
-  const matches = matcherTest(received, expected)
-  // if expected value is not passed and we have a negated ".not" modifier we need to flip our assertion
-  const pass = !expected && this.isNot ? !matches : matches
+  const pass =
+    !received && !expected && this.isNot
+      ? false
+      : matcherTest(received, expected)
 
   return {
     pass,

@@ -90,6 +90,10 @@ test('negated ".not" modifier with no value', () => {
   expect(renderer.create(<Button transparent />).toJSON()).not.toHaveStyleRule(
     'background-color'
   )
+  expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule(
+    'background-color',
+    undefined
+  )
 })
 
 test('jest asymmetric matchers', () => {

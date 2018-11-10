@@ -150,6 +150,7 @@ test('negated ".not" modifier with no value', () => {
 
   notToHaveStyleRule(<Button />, 'opacity')
   toHaveStyleRule(<Button disabled />, 'opacity', '.65')
+  notToHaveStyleRule(<Button disabled />, 'opacity', undefined)
 })
 
 test('jest asymmetric matchers', () => {
