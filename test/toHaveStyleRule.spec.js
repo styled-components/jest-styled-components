@@ -150,7 +150,18 @@ test('negated ".not" modifier with no value', () => {
 
   notToHaveStyleRule(<Button />, 'opacity')
   toHaveStyleRule(<Button disabled />, 'opacity', '.65')
-  notToHaveStyleRule(<Button disabled />, 'opacity', undefined)
+})
+
+test('negated ".not" modifier with value', () => {
+  const Button = styled.button`
+    opacity: 0.65;
+  `
+
+  notToHaveStyleRule(<Button />, 'opacity', '0.50')
+  notToHaveStyleRule(<Button />, 'opacity', '')
+  notToHaveStyleRule(<Button />, 'opacity', null)
+  notToHaveStyleRule(<Button />, 'opacity', false)
+  notToHaveStyleRule(<Button />, 'opacity', undefined)
 })
 
 test('jest asymmetric matchers', () => {

@@ -90,8 +90,31 @@ test('negated ".not" modifier with no value', () => {
   expect(renderer.create(<Button transparent />).toJSON()).not.toHaveStyleRule(
     'background-color'
   )
+})
+
+test('negated ".not" modifier with value', () => {
+  const Button = styled.Text`
+    padding: 4px;
+  `
+
   expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule(
-    'background-color',
+    'padding',
+    '2px'
+  )
+  expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule(
+    'padding',
+    ''
+  )
+  expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule(
+    'padding',
+    null
+  )
+  expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule(
+    'padding',
+    false
+  )
+  expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule(
+    'padding',
     undefined
   )
 })
