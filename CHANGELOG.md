@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [6.3.1](https://github.com/styled-components/jest-styled-components/compare/v6.3.0...v6.3.1) - 2018-11-11
+### Fixed
+- [toHaveStyleRule] Fix `.not undefinded` edge-case introduced in [#206](https://github.com/styled-components/jest-styled-components/pull/206) (see [#210](https://github.com/styled-components/jest-styled-components/pull/210)).
+
 ## [6.3.0](https://github.com/styled-components/jest-styled-components/compare/v6.2.2...v6.3.0) - 2018-11-10
 ### Added
 - [toHaveStyleRule] Ability to avoid passing the expected value and use the `.not` modifier (see [#206](https://github.com/styled-components/jest-styled-components/pull/206)).
