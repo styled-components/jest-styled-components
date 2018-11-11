@@ -16,9 +16,10 @@ function toHaveStyleRule(component, property, expected) {
    */
   const mergedStyles = styles.reduce((acc, item) => ({ ...acc, ...item }), {})
   const received = mergedStyles[camelCasedProperty]
-  const matches = matcherTest(received, expected)
-  // if expected value is not passed and we have a negated ".not" modifier we need to flip our assertion
-  const pass = !expected && this.isNot ? !matches : matches
+  const pass =
+    !received && !expected && this.isNot
+      ? false
+      : matcherTest(received, expected)
 
   return {
     pass,

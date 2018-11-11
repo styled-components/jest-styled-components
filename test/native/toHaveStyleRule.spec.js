@@ -92,6 +92,33 @@ test('negated ".not" modifier with no value', () => {
   )
 })
 
+test('negated ".not" modifier with value', () => {
+  const Button = styled.Text`
+    padding: 4px;
+  `
+
+  expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule(
+    'padding',
+    '2px'
+  )
+  expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule(
+    'padding',
+    ''
+  )
+  expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule(
+    'padding',
+    null
+  )
+  expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule(
+    'padding',
+    false
+  )
+  expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule(
+    'padding',
+    undefined
+  )
+})
+
 test('jest asymmetric matchers', () => {
   const Button = styled.Text`
     background-color: ${({ transparent }) =>
