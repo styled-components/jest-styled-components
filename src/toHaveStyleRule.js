@@ -149,4 +149,4 @@ function toHaveStyleRule(component, property, expected, options = {}) {
   }
 }
 
-module.exports = toHaveStyleRule
+module.exports = { getStyleRule, toHaveStyleRule }
