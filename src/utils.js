@@ -1,5 +1,6 @@
 const css = require('css')
 const { ServerStyleSheet, isStyledComponent } = require('styled-components')
+const { getStyleRule } = require('./toHaveStyleRule')
 
 let StyleSheet
 
@@ -85,4 +86,5 @@ module.exports = {
   getHashes,
   buildReturnMessage,
   matcherTest,
+  getStyleRule,
 }
