@@ -323,7 +323,10 @@ test('it works', () => {
 ## Serializer
 
 The serializer can be imported separately from `jest-styled-components/serializer`.
-This makes it possible to use this package with [specific-snapshot](https://github.com/igor-dv/jest-specific-snapshot) and other libraries.
+
+### Per Snapshot
+
+It is possible to use this package with [specific-snapshot](https://github.com/igor-dv/jest-specific-snapshot) and other libraries.
 
 ```js
 import React from 'react'
@@ -343,6 +346,19 @@ test('it works', () => {
   expect(tree).toMatchSpecificSnapshot("./Button.snap")
 })
 ````
+
+### Jest Configuration
+
+Update your [Jest config](https://jestjs.io/docs/en/configuration) to include this serializer in the [`snapshotSerializers`](https://jestjs.io/docs/en/configuration#snapshotserializers-array-string) array property.
+
+```js
+// jest.config.js
+
+module.exports = {
+  // ...
+  snapshotSerializers: ['jest-styled-components/serializer'],
+};
+```
 
 # toHaveStyleRule
 
