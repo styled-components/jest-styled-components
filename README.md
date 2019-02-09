@@ -329,7 +329,7 @@ This makes it possible to use this package with [specific-snapshot](https://gith
 import React from 'react'
 import styled from 'styled-components'
 import renderer from 'react-test-renderer'
-import { styleSheetSerializer } from "jest-styled-components/serializer"
+import styleSheetSerializer from "jest-styled-components/serializer"
 import { addSerializer } from "jest-specific-snapshot"
 
 addSerializer(styleSheetSerializer)
