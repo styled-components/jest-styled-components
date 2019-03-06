@@ -40,7 +40,7 @@
     "eslint-plugin-prettier": "^2.1.2",
     "eslint-plugin-react": "^6.10.0",
     "husky": "^0.14.3",
-    "jest": "^23.5.0",
+    "jest": "^24.1.0",
     "lint-staged": "^7.2.2",
     "preact": "^8.3.1",
     "preact-compat": "^3.18.4",
@@ -70,7 +70,7 @@
     "setupFiles": [
       "<rootDir>/test/__mocks__/requestAnimationFrame.js"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/test/setup.js",
+    "setupFilesAfterEnv": ["<rootDir>/test/setup.js"],
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
