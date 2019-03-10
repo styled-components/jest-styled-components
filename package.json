@@ -15,7 +15,7 @@
   "license": "MIT",
   "scripts": {
     "precommit": "lint-staged",
-    "test": "run-p -l test:*",
+    "test": "yarn test:web && yarn test:native && yarn test:preact && yarn test:ts",
     "test:web": "jest",
     "test:web:watch": "jest --watch",
     "test:native": "jest --config .jest.native.json",
@@ -40,7 +40,6 @@
     "husky": "^0.14.3",
     "jest": "^24.1.0",
     "lint-staged": "^7.2.2",
-    "npm-run-all": "^4.1.5",
     "preact": "^8.3.1",
     "preact-compat": "^3.18.4",
     "preact-render-to-json": "^3.6.6",
