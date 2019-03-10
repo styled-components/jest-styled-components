@@ -438,7 +438,7 @@ It is possibile to setup this package for all the tests using the [setupFilesAft
 
 ```js
 "jest": {
-  "setupFilesAfterEnv": "./setupTest.js"
+  "setupFilesAfterEnv": ["./setupTest.js"]
 }
 ```
 
