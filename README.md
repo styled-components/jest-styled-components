@@ -434,7 +434,7 @@ import 'jest-styled-components/native'
 
 # Global installation
 
-It is possibile to setup this package for all the tests using the [setupTestFrameworkScriptFile](https://facebook.github.io/jest/docs/en/configuration.html#setuptestframeworkscriptfile-string) option:
+It is possibile to setup this package for all the tests using the [setupFilesAfterEnv](https://jestjs.io/docs/en/configuration#setupfilesafterenv-array) option:
 
 ```js
 "jest": {
