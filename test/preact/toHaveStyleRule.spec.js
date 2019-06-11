@@ -1,15 +1,15 @@
-import React from 'react'
-import render from 'preact-render-to-json'
-import styled from 'styled-components'
-import '../../src'
+import React from 'react';
+import render from 'preact-render-to-json';
+import styled from 'styled-components';
+import '../../src';
 
-test('basic', () => {
+it('basic', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
-  `
+  `;
 
-  const tree = render(<Wrapper />)
+  const tree = render(<Wrapper />);
 
-  expect(tree).toHaveStyleRule('background', 'papayawhip')
-})
+  expect(tree).toHaveStyleRule('background', 'papayawhip');
+});
