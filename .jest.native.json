@@ -1,4 +1,7 @@
 {
   "preset": "react-native",
-  "testRegex": "test/native/.*\\.spec\\.js$"
+  "testRegex": "test/native/.*\\.spec\\.js$",
+  "transform": {
+    "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+  }
 }

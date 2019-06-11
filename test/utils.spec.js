@@ -1,4 +1,4 @@
-const { getHashes } = require('../src/utils')
+const { getHashes } = require('../src/utils');
 
 jest.mock('styled-components', () => ({
   ServerStyleSheet: true,
@@ -25,13 +25,13 @@ jest.mock('styled-components', () => ({
               .d { color: pink; }
               .e { color: indianred; }
             </style>
-          `
+          `;
         },
       },
     },
   },
-}))
+}));
 
-test('extracts hashes', () => {
-  expect(getHashes()).toEqual(['a', 'b', 'c', 'd', 'e', 'sc-1', 'sc-2', 'sc-3'])
-})
+it('extracts hashes', () => {
+  expect(getHashes()).toEqual(['a', 'b', 'c', 'd', 'e', 'sc-1', 'sc-2', 'sc-3']);
+});
