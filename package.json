@@ -58,7 +58,7 @@
     "css": "^2.2.4"
   },
   "peerDependencies": {
-    "styled-components": "^2.0.0 || ^3.0.2"
+    "styled-components": ">= 2"
   },
   "lint-staged": {
     "*.js": [
