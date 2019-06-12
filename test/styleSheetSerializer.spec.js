@@ -4,6 +4,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import styled, { ThemeContext, ThemeProvider } from 'styled-components';
 import '../src';
+import { resetStyleSheet } from '../src/utils';
 
 const toMatchSnapshot = (name, component) => {
   expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
@@ -18,6 +19,10 @@ const shallowWithTheme = (tree, theme) => {
 
   return shallow(tree);
 };
+
+beforeEach(() => {
+  resetStyleSheet();
+});
 
 it('null', () => {
   expect(null).toMatchSnapshot();
