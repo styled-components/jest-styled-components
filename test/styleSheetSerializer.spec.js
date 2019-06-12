@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeContext, ThemeProvider } from 'styled-components';
 import '../src';
 
 const toMatchSnapshot = (name, component) => {
@@ -13,10 +13,10 @@ const toMatchSnapshot = (name, component) => {
 };
 
 const shallowWithTheme = (tree, theme) => {
-  const context = shallow(<ThemeProvider theme={theme} />)
-    .instance()
-    .getChildContext();
-  return shallow(tree, { context });
+  // this is terrible but couldn't figure out how to do it properly within the framework of enzyme
+  ThemeContext._currentValue = theme;
+
+  return shallow(tree);
 };
 
 it('null', () => {
@@ -87,34 +87,10 @@ it('any component', () => {
   );
 });
 
-it('extending styles', () => {
-  const Button = styled.button`
-    color: palevioletred;
-    font-size: 1em;
-    margin: 1em;
-    padding: 0.25em 1em;
-    border: 2px solid palevioletred;
-    border-radius: 3px;
-  `;
-
-  const TomatoButton = Button.extend`
-    color: tomato;
-    border-color: tomato;
-  `;
-
-  toMatchSnapshot(
-    'extending styles',
-    <div>
-      <Button>Normal Button</Button>
-      <TomatoButton>Tomato Button</TomatoButton>
-    </div>
-  );
-});
-
 it('attaching additional props', () => {
-  const Div = styled.div.attrs({
+  const Div = styled.div.attrs(() => ({
     className: 'div',
-  })`
+  }))`
     color: red;
   `;
 
@@ -128,9 +104,9 @@ it('leading white spaces', () => {
 });
 
 it('trailing white spaces', () => {
-  const Div = styled.div.attrs({
+  const Div = styled.div.attrs(() => ({
     className: 'div  ',
-  })`
+  }))`
     color: red;
   `;
 
@@ -138,9 +114,9 @@ it('trailing white spaces', () => {
 });
 
 it('included class name', () => {
-  const Div = styled.div.attrs({
+  const Div = styled.div.attrs(() => ({
     className: 'i',
-  })`
+  }))`
     color: red;
   `;
 

@@ -107,24 +107,6 @@ it('styled child', () => {
   expect(renderer.create(<StyledChild />).toJSON()).toHaveStyleRule('color', 'red');
 });
 
-it('extending styles', () => {
-  const Button = styled.Text`
-    color: palevioletred;
-    font-size: 1px;
-    margin: 1px;
-    padding: 0.25px 1px;
-    border: 2px solid palevioletred;
-    border-radius: 3px;
-  `;
-
-  const TomatoButton = Button.extend`
-    color: tomato;
-    border-color: tomato;
-  `;
-
-  expect(renderer.create(<TomatoButton />).toJSON()).toHaveStyleRule('color', 'tomato');
-});
-
 it('theming', () => {
   const Button = styled.Text`
     font-size: 1px;
