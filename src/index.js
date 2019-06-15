@@ -6,3 +6,7 @@ global.beforeEach(resetStyleSheet);
 
 expect.addSnapshotSerializer(styleSheetSerializer);
 expect.extend({ toHaveStyleRule });
+
+module.exports = {
+  styleSheetSerializer,
+};
