@@ -4,7 +4,7 @@ import React from 'react';
 import renderer from 'react-test-renderer';
 import styled, { ThemeContext, ThemeProvider } from 'styled-components';
 
-const toMatchSnapshot = (name, component) => {
+const toMatchSnapshot = component => {
   expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
   expect(shallow(component)).toMatchSnapshot('shallow');
   expect(mount(component)).toMatchSnapshot('mount');

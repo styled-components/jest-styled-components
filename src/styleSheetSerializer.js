@@ -97,7 +97,7 @@ const replaceHashes = (result, hashes) =>
     result
   );
 
-const styleSheetSerializer = {
+module.exports = {
   test(val) {
     return (
       val &&
@@ -126,5 +126,3 @@ const styleSheetSerializer = {
     return result;
   },
 };
-
-module.exports = styleSheetSerializer;

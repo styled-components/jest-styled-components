@@ -1,6 +1,8 @@
 {
   "moduleNameMapper": {
-    "^react$": "preact-compat"
+    "^react$": "preact/compat"
   },
+  "setupFilesAfterEnv": ["<rootDir>/test/preact/setup.js"],
+  "snapshotSerializers": ["enzyme-to-json/serializer"],
   "testRegex": "test/preact/.*\\.spec\\.js$"
 }

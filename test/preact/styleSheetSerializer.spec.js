@@ -1,7 +1,11 @@
+import { mount, shallow } from 'enzyme';
 import React from 'react';
-import render from 'preact-render-to-json';
 import styled from 'styled-components';
-import '../../src';
+
+const toMatchSnapshot = component => {
+  expect(shallow(component)).toMatchSnapshot('shallow');
+  expect(mount(component)).toMatchSnapshot('mount');
+};
 
 it('basic', () => {
   const Wrapper = styled.section`
@@ -15,11 +19,9 @@ it('basic', () => {
     color: palevioletred;
   `;
 
-  const tree = render(
+  toMatchSnapshot(
     <Wrapper>
       <Title>Hello World, this is my first styled component!</Title>
     </Wrapper>
   );
-
-  expect(tree).toMatchSnapshot();
 });
