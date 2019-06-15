@@ -23,13 +23,13 @@ it('null', () => {
 });
 
 it('non-styled', () => {
-  toMatchSnapshot('non-styled', <div />);
+  toMatchSnapshot(<div />);
 });
 
 it('empty style', () => {
   const Component = styled.div``;
 
-  toMatchSnapshot('empty style', <Component />);
+  toMatchSnapshot(<Component />);
 });
 
 it('duplicated components', () => {
@@ -41,7 +41,6 @@ it('duplicated components', () => {
   `;
 
   toMatchSnapshot(
-    'duplicated components',
     <div>
       <A /> <A /> <B />
     </div>
@@ -61,7 +60,6 @@ it('basic', () => {
   `;
 
   toMatchSnapshot(
-    'basic',
     <Wrapper>
       <Title>Hello World, this is my first styled component!</Title>
     </Wrapper>
@@ -77,7 +75,6 @@ it('any component', () => {
   `;
 
   toMatchSnapshot(
-    'any component',
     <div>
       <Link>Unstyled, boring Link</Link>
       <br />
@@ -93,13 +90,13 @@ it('attaching additional props', () => {
     color: red;
   `;
 
-  toMatchSnapshot('attaching additional props', <Div />);
+  toMatchSnapshot(<Div />);
 });
 
 it('leading white spaces', () => {
   const Div = () => <div className="  div" />;
 
-  toMatchSnapshot('leading white spaces', <Div />);
+  toMatchSnapshot(<Div />);
 });
 
 it('trailing white spaces', () => {
@@ -109,7 +106,7 @@ it('trailing white spaces', () => {
     color: red;
   `;
 
-  toMatchSnapshot('trailing white spaces', <Div />);
+  toMatchSnapshot(<Div />);
 });
 
 it('included class name', () => {
@@ -119,7 +116,7 @@ it('included class name', () => {
     color: red;
   `;
 
-  toMatchSnapshot('included class name', <Div />);
+  toMatchSnapshot(<Div />);
 });
 
 it('theming', () => {
@@ -144,7 +141,6 @@ it('theming', () => {
   };
 
   toMatchSnapshot(
-    'theming',
     <div>
       <Button>Normal</Button>
       <ThemeProvider theme={theme}>
@@ -195,7 +191,6 @@ it('supported css', () => {
   `;
 
   toMatchSnapshot(
-    'supported css',
     <Example>
       <p>Hello World!</p>
     </Example>
