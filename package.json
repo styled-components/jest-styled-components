@@ -1,6 +1,6 @@
 {
   "name": "jest-styled-components",
-  "version": "6.3.1",
+  "version": "7.0.0-beta.0",
   "description": "Jest utilities for Styled Components",
   "main": "./src/index.js",
   "typings": "./typings/index.d.ts",
@@ -32,6 +32,7 @@
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.8.0",
     "enzyme": "^3.6.0",
+    "enzyme-adapter-preact-pure": "^1.13.4",
     "enzyme-adapter-react-16": "^1.5.0",
     "enzyme-to-json": "^3.3.1",
     "eslint": "^5.16.0",
@@ -39,8 +40,7 @@
     "husky": "^2.4.0",
     "jest": "^24.8.0",
     "lint-staged": "^8.2.0",
-    "preact": "^8.3.1",
-    "preact-compat": "^3.18.4",
+    "preact": "^10.0.0-beta.2",
     "preact-render-to-json": "^3.6.6",
     "prettier": "^1.18.2",
     "react": "^16.8.0",
@@ -48,14 +48,14 @@
     "react-is": "^16.8.6",
     "react-native": "^0.59.9",
     "react-test-renderer": "^16.8.0",
-    "styled-components": "^3",
+    "styled-components": "beta",
     "typescript": "^3.0.3"
   },
   "dependencies": {
     "css": "^2.2.4"
   },
   "peerDependencies": {
-    "styled-components": ">= 2"
+    "styled-components": ">= 5 || >= 5.0.0-alpha.0 || >= 5.0.0-beta.0"
   },
   "husky": {
     "hooks": {

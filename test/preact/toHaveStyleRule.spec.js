@@ -1,7 +1,11 @@
+import { mount, shallow } from 'enzyme';
 import React from 'react';
-import render from 'preact-render-to-json';
 import styled from 'styled-components';
-import '../../src';
+
+const toHaveStyleRule = (component, property, value, options) => {
+  expect(shallow(component)).toHaveStyleRule(property, value, options);
+  expect(mount(component)).toHaveStyleRule(property, value, options);
+};
 
 it('basic', () => {
   const Wrapper = styled.section`
@@ -9,7 +13,5 @@ it('basic', () => {
     background: papayawhip;
   `;
 
-  const tree = render(<Wrapper />);
-
-  expect(tree).toHaveStyleRule('background', 'papayawhip');
+  toHaveStyleRule(<Wrapper />, 'background', 'papayawhip');
 });

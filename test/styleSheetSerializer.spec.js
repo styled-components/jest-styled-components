@@ -2,10 +2,9 @@ import { render } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import styled, { ThemeProvider } from 'styled-components';
-import '../src';
+import styled, { ThemeContext, ThemeProvider } from 'styled-components';
 
-const toMatchSnapshot = (name, component) => {
+const toMatchSnapshot = component => {
   expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
   expect(shallow(component)).toMatchSnapshot('shallow');
   expect(mount(component)).toMatchSnapshot('mount');
@@ -13,10 +12,10 @@ const toMatchSnapshot = (name, component) => {
 };
 
 const shallowWithTheme = (tree, theme) => {
-  const context = shallow(<ThemeProvider theme={theme} />)
-    .instance()
-    .getChildContext();
-  return shallow(tree, { context });
+  // this is terrible but couldn't figure out how to do it properly within the framework of enzyme
+  ThemeContext._currentValue = theme;
+
+  return shallow(tree);
 };
 
 it('null', () => {
@@ -24,13 +23,13 @@ it('null', () => {
 });
 
 it('non-styled', () => {
-  toMatchSnapshot('non-styled', <div />);
+  toMatchSnapshot(<div />);
 });
 
 it('empty style', () => {
   const Component = styled.div``;
 
-  toMatchSnapshot('empty style', <Component />);
+  toMatchSnapshot(<Component />);
 });
 
 it('duplicated components', () => {
@@ -42,7 +41,6 @@ it('duplicated components', () => {
   `;
 
   toMatchSnapshot(
-    'duplicated components',
     <div>
       <A /> <A /> <B />
     </div>
@@ -62,7 +60,6 @@ it('basic', () => {
   `;
 
   toMatchSnapshot(
-    'basic',
     <Wrapper>
       <Title>Hello World, this is my first styled component!</Title>
     </Wrapper>
@@ -78,7 +75,6 @@ it('any component', () => {
   `;
 
   toMatchSnapshot(
-    'any component',
     <div>
       <Link>Unstyled, boring Link</Link>
       <br />
@@ -87,64 +83,40 @@ it('any component', () => {
   );
 });
 
-it('extending styles', () => {
-  const Button = styled.button`
-    color: palevioletred;
-    font-size: 1em;
-    margin: 1em;
-    padding: 0.25em 1em;
-    border: 2px solid palevioletred;
-    border-radius: 3px;
-  `;
-
-  const TomatoButton = Button.extend`
-    color: tomato;
-    border-color: tomato;
-  `;
-
-  toMatchSnapshot(
-    'extending styles',
-    <div>
-      <Button>Normal Button</Button>
-      <TomatoButton>Tomato Button</TomatoButton>
-    </div>
-  );
-});
-
 it('attaching additional props', () => {
-  const Div = styled.div.attrs({
+  const Div = styled.div.attrs(() => ({
     className: 'div',
-  })`
+  }))`
     color: red;
   `;
 
-  toMatchSnapshot('attaching additional props', <Div />);
+  toMatchSnapshot(<Div />);
 });
 
 it('leading white spaces', () => {
   const Div = () => <div className="  div" />;
 
-  toMatchSnapshot('leading white spaces', <Div />);
+  toMatchSnapshot(<Div />);
 });
 
 it('trailing white spaces', () => {
-  const Div = styled.div.attrs({
+  const Div = styled.div.attrs(() => ({
     className: 'div  ',
-  })`
+  }))`
     color: red;
   `;
 
-  toMatchSnapshot('trailing white spaces', <Div />);
+  toMatchSnapshot(<Div />);
 });
 
 it('included class name', () => {
-  const Div = styled.div.attrs({
+  const Div = styled.div.attrs(() => ({
     className: 'i',
-  })`
+  }))`
     color: red;
   `;
 
-  toMatchSnapshot('included class name', <Div />);
+  toMatchSnapshot(<Div />);
 });
 
 it('theming', () => {
@@ -169,7 +141,6 @@ it('theming', () => {
   };
 
   toMatchSnapshot(
-    'theming',
     <div>
       <Button>Normal</Button>
       <ThemeProvider theme={theme}>
@@ -220,7 +191,6 @@ it('supported css', () => {
   `;
 
   toMatchSnapshot(
-    'supported css',
     <Example>
       <p>Hello World!</p>
     </Example>

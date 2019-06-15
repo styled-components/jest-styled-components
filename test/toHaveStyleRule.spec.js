@@ -19,21 +19,21 @@ const toHaveStyleRule = (component, property, value, options) => {
   expect(render(component).container.firstChild).toHaveStyleRule(property, value, options);
 };
 
-test('null', () => {
+it('null', () => {
   expect(null).not.toHaveStyleRule('a', 'b');
 });
 
-test('non-styled', () => {
+it('non-styled', () => {
   notToHaveStyleRule(<div />, 'a', 'b');
 });
 
-test('message when rules not found', () => {
+it('message when rules not found', () => {
   expect(() =>
     expect(renderer.create(<div />).toJSON()).toHaveStyleRule('color', 'black')
   ).toThrowErrorMatchingSnapshot();
 });
 
-test('message when rules not found using options', () => {
+it('message when rules not found using options', () => {
   const Button = styled.button`
     color: red;
   `;
@@ -47,7 +47,7 @@ test('message when rules not found using options', () => {
   ).toThrowErrorMatchingSnapshot();
 });
 
-test('message when property not found', () => {
+it('message when property not found', () => {
   const Button = styled.button`
     color: red;
   `;
@@ -57,7 +57,7 @@ test('message when property not found', () => {
   ).toThrowErrorMatchingSnapshot();
 });
 
-test('message when value does not match', () => {
+it('message when value does not match', () => {
   const Wrapper = styled.section`
     background: orange;
   `;
@@ -67,7 +67,7 @@ test('message when value does not match', () => {
   }).toThrowErrorMatchingSnapshot();
 });
 
-test('non existing', () => {
+it('non existing', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
@@ -78,7 +78,7 @@ test('non existing', () => {
   }).toThrowErrorMatchingSnapshot();
 });
 
-test('basic', () => {
+it('basic', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
@@ -87,7 +87,7 @@ test('basic', () => {
   toHaveStyleRule(<Wrapper />, 'background', 'papayawhip');
 });
 
-test('regex', () => {
+it('regex', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
@@ -96,7 +96,7 @@ test('regex', () => {
   toHaveStyleRule(<Wrapper />, 'background', /^p/);
 });
 
-test('complex string', () => {
+it('complex string', () => {
   const Wrapper = styled.section`
     border: 1px solid rgba(0, 0, 0, 0.125);
   `;
@@ -104,7 +104,7 @@ test('complex string', () => {
   toHaveStyleRule(<Wrapper />, 'border', '1px solid rgba(0,0,0,0.125)');
 });
 
-test('undefined', () => {
+it('undefined', () => {
   const Button = styled.button`
     cursor: ${({ disabled }) => !disabled && 'pointer'};
     opacity: ${({ disabled }) => disabled && '.65'};
@@ -116,7 +116,7 @@ test('undefined', () => {
   toHaveStyleRule(<Button disabled />, 'cursor', undefined);
 });
 
-test('negated ".not" modifier with no value', () => {
+it('negated ".not" modifier with no value', () => {
   const Button = styled.button`
     opacity: ${({ disabled }) => disabled && '.65'};
   `;
@@ -125,7 +125,7 @@ test('negated ".not" modifier with no value', () => {
   toHaveStyleRule(<Button disabled />, 'opacity', '.65');
 });
 
-test('negated ".not" modifier with value', () => {
+it('negated ".not" modifier with value', () => {
   const Button = styled.button`
     opacity: 0.65;
   `;
@@ -137,7 +137,7 @@ test('negated ".not" modifier with value', () => {
   notToHaveStyleRule(<Button />, 'opacity', undefined);
 });
 
-test('jest asymmetric matchers', () => {
+it('jest asymmetric matchers', () => {
   const Button = styled.button`
     border: 0.1em solid ${({ transparent }) => (transparent ? 'transparent' : 'black')};
   `;
@@ -152,7 +152,7 @@ test('jest asymmetric matchers', () => {
   notToHaveStyleRule(<Button />, 'color', expect.anything());
 });
 
-test('any component', () => {
+it('any component', () => {
   const Link = ({ className, children }) => <a className={className}>{children}</a>;
 
   const StyledLink = styled(Link)`
@@ -163,7 +163,7 @@ test('any component', () => {
   toHaveStyleRule(<StyledLink>Styled, exciting Link</StyledLink>, 'color', 'palevioletred');
 });
 
-test('styled child', () => {
+it('styled child', () => {
   const Parent = styled.div`
     color: red;
   `;
@@ -175,25 +175,7 @@ test('styled child', () => {
   toHaveStyleRule(<StyledChild />, 'color', 'red');
 });
 
-test('extending styles', () => {
-  const Button = styled.button`
-    color: palevioletred;
-    font-size: 1em;
-    margin: 1em;
-    padding: 0.25em 1em;
-    border: 2px solid palevioletred;
-    border-radius: 3px;
-  `;
-
-  const TomatoButton = Button.extend`
-    color: tomato;
-    border-color: tomato;
-  `;
-
-  toHaveStyleRule(<TomatoButton>Tomato Button</TomatoButton>, 'color', 'tomato');
-});
-
-test('theming', () => {
+it('theming', () => {
   const Button = styled.button`
     font-size: 1em;
     margin: 1em;
@@ -226,7 +208,7 @@ test('theming', () => {
   expect(mount(component)).toHaveStyleRule('color', 'mediumseagreen');
 });
 
-test('at rules', () => {
+it('at rules', () => {
   const Wrapper = styled.section`
     color: red;
     @media (max-width: 640px) {
@@ -264,7 +246,7 @@ test('at rules', () => {
   });
 });
 
-test('selector modifiers', () => {
+it('selector modifiers', () => {
   const Link = styled.a`
     color: white;
 
@@ -380,7 +362,7 @@ test('selector modifiers', () => {
   });
 });
 
-test('component modifiers', () => {
+it('component modifiers', () => {
   const Text = styled.span`
     color: grey;
   `;
@@ -441,7 +423,7 @@ test('component modifiers', () => {
   );
 });
 
-test('nested', () => {
+it('nested', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
@@ -452,7 +434,7 @@ test('nested', () => {
   toHaveStyleRule(<MyComponent />, 'background', 'papayawhip');
 });
 
-test('empty children', () => {
+it('empty children', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;

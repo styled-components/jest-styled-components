@@ -1,6 +1,6 @@
 import { configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import Adapter from 'enzyme-adapter-preact-pure';
 
-import '../src';
+require('../../src');
 
 configure({ adapter: new Adapter() });
