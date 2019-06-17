@@ -36,6 +36,8 @@ test('it works', () => {
 })
 ```
 
+If you don't want to import the library in every test file, it's recommended to use the [global installation](#global-installation) method.
+
 Table of Contents
 =================
 
@@ -434,7 +436,7 @@ import 'jest-styled-components/native'
 
 # Global installation
 
-It is possibile to setup this package for all the tests using the [setupFilesAfterEnv](https://jestjs.io/docs/en/configuration#setupfilesafterenv-array) option:
+It is possible to setup this package for all the tests using the [setupFilesAfterEnv](https://jestjs.io/docs/en/configuration#setupfilesafterenv-array) option:
 
 ```js
 "jest": {
