@@ -1,83 +1,66 @@
-const css = require('css')
-const { ServerStyleSheet, isStyledComponent } = require('styled-components')
+const css = require('css');
+const { ServerStyleSheet, __PRIVATE__ } = require('styled-components');
 
-let StyleSheet
-
-if (isStyledComponent) {
-  const secretInternals = require('styled-components')
-    .__DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS
-
-  if (
-    secretInternals === undefined ||
-    secretInternals.StyleSheet === undefined
-  ) {
-    throw new Error(
-      'Could neither find styled-components secret internals nor styled-components/lib/models/StyleSheet.js'
-    )
-  } else {
-    StyleSheet = secretInternals.StyleSheet
-  }
-} else {
-  StyleSheet = require('styled-components/lib/models/StyleSheet').default // eslint-disable-line
+if (!__PRIVATE__) {
+  throw new Error('Could neither find styled-components secret internals');
 }
 
-const isServer = () => typeof document === 'undefined'
+const { masterSheet } = __PRIVATE__;
 
-const resetStyleSheet = () => StyleSheet.reset(isServer())
+const isServer = () => typeof document === 'undefined';
 
-const getHTML = () =>
-  isServer()
-    ? new ServerStyleSheet().getStyleTags()
-    : StyleSheet.instance.toHTML()
+const resetStyleSheet = () => {
+  masterSheet.names = new Map();
+  masterSheet.clearTag();
+};
+
+const getHTML = () => (isServer() ? new ServerStyleSheet().getStyleTags() : masterSheet.toString());
 
 const extract = regex => {
-  let style = ''
-  let matches
+  let style = '';
+  let matches;
 
   while ((matches = regex.exec(getHTML())) !== null) {
-    style += `${matches[1]} `
+    style += `${matches[1]} `;
   }
 
-  return style.trim()
-}
+  return style.trim();
+};
 
-const getStyle = () => extract(/<style[^>]*>([^<]*)</g)
+const getStyle = () => extract(/^(?!data-styled\.g\d+.*?\n)(.*)?\n/gm);
+const getCSS = () => css.parse(getStyle());
 
-const getCSS = () => css.parse(getStyle())
+const getHashes = () => {
+  const hashes = new Set();
 
-const getClassNames = () =>
-  extract(/data-styled(?:-components)?="([^"]*)"/g).split(/\s/)
+  for (const [masterHash, childHashSet] of masterSheet.names) {
+    hashes.add(masterHash);
 
-const getComponentIDs = () =>
-  extract(/sc-component-id: ([^\\*\\/]*) \*\//g).split(/\s/)
+    for (const childHash of childHashSet) hashes.add(childHash);
+  }
 
-const getHashes = () =>
-  getClassNames()
-    .concat(getComponentIDs())
-    .filter(Boolean)
+  return Array.from(hashes);
+};
 
 const buildReturnMessage = (utils, pass, property, received, expected) => () =>
   `${utils.printReceived(
-    !received && !pass
-      ? `Property '${property}' not found in style rules`
-      : `Value mismatch for property '${property}'`
+    !received && !pass ? `Property '${property}' not found in style rules` : `Value mismatch for property '${property}'`
   )}\n\n` +
   'Expected\n' +
   `  ${utils.printExpected(`${property}: ${expected}`)}\n` +
   'Received:\n' +
-  `  ${utils.printReceived(`${property}: ${received}`)}`
+  `  ${utils.printReceived(`${property}: ${received}`)}`;
 
 const matcherTest = (received, expected) => {
   try {
-    const matcher =
-      expected instanceof RegExp ? expect.stringMatching(expected) : expected
+    const matcher = expected instanceof RegExp ? expect.stringMatching(expected) : expected;
 
-    expect(received).toEqual(matcher)
-    return true
+    expect(received).toEqual(matcher);
+    return true;
   } catch (error) {
-    return false
+    return false;
   }
-}
+};
 
 module.exports = {
   resetStyleSheet,
@@ -85,4 +68,4 @@ module.exports = {
   getHashes,
   buildReturnMessage,
   matcherTest,
-}
+};

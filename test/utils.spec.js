@@ -1,37 +1,32 @@
-const { getHashes } = require('../src/utils')
+const {
+  __PRIVATE__: { masterSheet },
+} = require('styled-components');
 
-jest.mock('styled-components', () => ({
-  ServerStyleSheet: true,
-  isStyledComponent: true,
-  __DO_NOT_USE_OR_YOU_WILL_BE_HAUNTED_BY_SPOOKY_GHOSTS: {
-    StyleSheet: {
-      instance: {
-        toHTML() {
-          return `
-            <style data-styled-components="a">
-              /* sc-component-id: sc-1 */
-              .sc-1 {}
-              .a { color: red; }
-            </style>
-            <style data-styled-components="b c">
-              /* sc-component-id: sc-2 */
-              .sc-2 {}
-              .b { color: green; }
-              .c { color: blue; }
-            </style>
-            <style data-styled="d e">
-              /* sc-component-id: sc-3 */
-              .sc-3 {}
-              .d { color: pink; }
-              .e { color: indianred; }
-            </style>
-          `
-        },
-      },
-    },
-  },
-}))
+const { getHashes } = require('../src/utils');
 
-test('extracts hashes', () => {
-  expect(getHashes()).toEqual(['a', 'b', 'c', 'd', 'e', 'sc-1', 'sc-2', 'sc-3'])
-})
+it('extracts hashes', () => {
+  masterSheet.names = new Map([['sc-1', new Set(['a'])], ['sc-2', new Set(['b', 'c'])], ['sc-3', new Set(['d', 'e'])]]);
+  masterSheet.toString = function() {
+    return `
+      <style data-styled="active">
+        .sc-1 {}
+        data-styled.g1[id="sc-1"]{content:"sc-1,"}
+        .a { color: red; }
+      </style>
+      <style data-styled="active">
+        .sc-2 {}
+        data-styled.g2[id="sc-2"]{content:"sc-2,"}
+        .b { color: green; }
+        .c { color: blue; }
+      </style>
+      <style data-styled="active">
+        .sc-3 {}
+        data-styled.g3[id="sc-3"]{content:"sc-3,"}
+        .d { color: pink; }
+        .e { color: indianred; }
+      </style>
+    `;
+  };
+
+  expect(getHashes()).toEqual(['sc-1', 'a', 'sc-2', 'b', 'c', 'sc-3', 'd', 'e']);
+});

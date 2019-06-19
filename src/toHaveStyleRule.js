@@ -1,152 +1,122 @@
-const { getCSS, matcherTest, buildReturnMessage } = require('./utils')
+const { getCSS, matcherTest, buildReturnMessage } = require('./utils');
 
-const shouldDive = node =>
-  typeof node.dive === 'function' && typeof node.type() !== 'string'
+const shouldDive = node => typeof node.dive === 'function' && typeof node.type() !== 'string';
 
-const isTagWithClassName = node =>
-  node.exists() && node.prop('className') && typeof node.type() === 'string'
+const isTagWithClassName = node => node.exists() && node.prop('className') && typeof node.type() === 'string';
 
 const getClassNames = received => {
-  let className
+  let className;
 
   if (received) {
     if (received.$$typeof === Symbol.for('react.test.json')) {
-      className = received.props.className || received.props.class
+      className = received.props.className || received.props.class;
     } else if (typeof received.exists === 'function' && received.exists()) {
-      const tree = shouldDive(received) ? received.dive() : received
-      const components = tree.findWhere(isTagWithClassName)
+      const tree = shouldDive(received) ? received.dive() : received;
+      const components = tree.findWhere(isTagWithClassName);
       if (components.length) {
-        className = components.first().prop('className')
+        className = components.first().prop('className');
       }
     } else if (global.Element && received instanceof global.Element) {
-      className = Array.from(received.classList).join(' ')
+      className = Array.from(received.classList).join(' ');
     }
   }
 
-  return className ? className.split(/\s/) : []
-}
+  return className ? className.split(/\s/) : [];
+};
 
-const hasAtRule = options =>
-  Object.keys(options).some(option => ['media', 'supports'].includes(option))
+const hasAtRule = options => Object.keys(options).some(option => ['media', 'supports'].includes(option));
 
 const getAtRules = (ast, options) => {
-  const mediaRegex = /(\([a-z-]+:)\s?([a-z0-9.]+\))/g
+  const mediaRegex = /(\([a-z-]+:)\s?([a-z0-9.]+\))/g;
 
   return Object.keys(options)
     .map(option =>
       ast.stylesheet.rules
-        .filter(
-          rule =>
-            rule.type === option &&
-            rule[option] === options[option].replace(mediaRegex, '$1$2')
-        )
+        .filter(rule => rule.type === option && rule[option] === options[option].replace(mediaRegex, '$1$2'))
         .map(rule => rule.rules)
         .reduce((acc, rules) => acc.concat(rules), [])
     )
-    .reduce((acc, rules) => acc.concat(rules), [])
-}
+    .reduce((acc, rules) => acc.concat(rules), []);
+};
 
 const getModifiedClassName = (className, modifier = '') => {
-  const classNameSelector = `.${className}`
-  let prefix = ''
+  const classNameSelector = `.${className}`;
+  let prefix = '';
 
-  modifier = modifier.trim()
+  modifier = modifier.trim();
   if (modifier.includes('&')) {
-    modifier = modifier.replace(/&/g, classNameSelector)
+    modifier = modifier.replace(/&/g, classNameSelector);
   } else {
-    prefix += classNameSelector
+    prefix += classNameSelector;
   }
-  const first = modifier[0]
+  const first = modifier[0];
   if (first !== ':' && first !== '[') {
-    prefix += ' '
+    prefix += ' ';
   }
 
-  return `${prefix}${modifier}`.trim()
-}
+  return `${prefix}${modifier}`.trim();
+};
 
 const hasClassNames = (classNames, selectors, options) =>
-  classNames.some(className =>
-    selectors.includes(getModifiedClassName(className, options.modifier))
-  )
+  classNames.some(className => selectors.includes(getModifiedClassName(className, options.modifier)));
 
 const getRules = (ast, classNames, options) => {
-  const rules = hasAtRule(options)
-    ? getAtRules(ast, options)
-    : ast.stylesheet.rules
+  const rules = hasAtRule(options) ? getAtRules(ast, options) : ast.stylesheet.rules;
 
-  return rules.filter(
-    rule =>
-      rule.type === 'rule' && hasClassNames(classNames, rule.selectors, options)
-  )
-}
+  return rules.filter(rule => rule.type === 'rule' && hasClassNames(classNames, rule.selectors, options));
+};
 
 const handleMissingRules = options =>
   `No style rules found on passed Component${
     Object.keys(options).length
       ? ` using options:\n${JSON.stringify(options)}`
       : ''
-  }`
+  }`;
 
 const getDeclaration = (rule, property) =>
   rule.declarations
-    .filter(
-      declaration =>
-        declaration.type === 'declaration' && declaration.property === property
-    )
-    .pop()
+    .filter(declaration => declaration.type === 'declaration' && declaration.property === property)
+    .pop();
 
-const getDeclarations = (rules, property) =>
-  rules.map(rule => getDeclaration(rule, property)).filter(Boolean)
+const getDeclarations = (rules, property) => rules.map(rule => getDeclaration(rule, property)).filter(Boolean);
 
 const normalizeOptions = options =>
   options.modifier
     ? Object.assign({}, options, {
-        modifier: Array.isArray(options.modifier)
-          ? options.modifier.join('')
-          : options.modifier,
+        modifier: Array.isArray(options.modifier) ? options.modifier.join('') : options.modifier,
       })
-    : options
+    : options;
 
 function getStyleRule(component, property, options = {}) {
-  const classNames = getClassNames(component)
-  const ast = getCSS()
-  const normalizedOptions = normalizeOptions(options)
-  const rules = getRules(ast, classNames, normalizedOptions)
+  const classNames = getClassNames(component);
+  const ast = getCSS();
+  const normalizedOptions = normalizeOptions(options);
+  const rules = getRules(ast, classNames, normalizedOptions);
 
   if (!rules.length) {
-    throw new Error(handleMissingRules(normalizedOptions))
+    throw new Error(handleMissingRules(normalizedOptions));
   }
 
-  const declarations = getDeclarations(rules, property)
-  const declaration = declarations.pop() || {}
-  return declaration.value
+  const declarations = getDeclarations(rules, property);
+  const declaration = declarations.pop() || {};
+  return declaration.value;
 }
 
 function toHaveStyleRule(component, property, expected, options = {}) {
   try {
-    const received = getStyleRule(component, property, options)
-
-    const pass =
-      !received && !expected && this.isNot
-        ? false
-        : matcherTest(received, expected)
+    const received = getStyleRule(component, property, options);
+    const pass = !received && !expected && this.isNot ? false : matcherTest(received, expected);
 
     return {
       pass,
-      message: buildReturnMessage(
-        this.utils,
-        pass,
-        property,
-        received,
-        expected
-      ),
-    }
+      message: buildReturnMessage(this.utils, pass, property, received, expected),
+    };
   } catch (e) {
     return {
       pass: false,
       message: () => e.message,
-    }
+    };
   }
 }
 
-module.exports = { getStyleRule, toHaveStyleRule }
+module.exports = { getStyleRule, toHaveStyleRule };

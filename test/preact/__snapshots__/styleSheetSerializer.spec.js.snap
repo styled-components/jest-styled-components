@@ -1,24 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`basic 1`] = `
+exports[`basic: mount 1`] = `
 .c0 {
   padding: 4em;
   background: papayawhip;
 }
 
-.c1 {
-  font-size: 1.5em;
-  text-align: center;
-  color: palevioletred;
+<styled.section>
+  <section
+    className="c0"
+  >
+    <styled.h1>
+      Hello World, this is my first styled component!
+    </styled.h1>
+  </section>
+</styled.section>
+`;
+
+exports[`basic: shallow 1`] = `
+.c0 {
+  padding: 4em;
+  background: papayawhip;
 }
 
 <section
-  class="c0"
+  className="c0"
 >
-  <h1
-    class="c1"
-  >
+  <styled.h1>
     Hello World, this is my first styled component!
-  </h1>
+  </styled.h1>
 </section>
 `;
