@@ -224,10 +224,10 @@ test('it works', () => {
 
 ## react-testing-library
 
-To generate snapshots with [react-testing-library](https://github.com/kentcdodds/react-testing-library), you can follow the example below:
+To generate snapshots with [react-testing-library](https://github.com/testing-library/react-testing-library), you can follow the example below:
 
 ```js
-import { render } from 'react-testing-library'
+import { render } from '@testing-library/react'
 
 test('it works', () => {
   const { container } = render(<Button />)
