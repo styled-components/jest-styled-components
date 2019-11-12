@@ -1,3 +1,5 @@
+import { Plugin, NewPlugin } from 'pretty-format'
+
 declare namespace jest {
   interface AsymmetricMatcher {
     $$typeof: Symbol;
@@ -16,3 +18,5 @@ declare namespace jest {
     toHaveStyleRule(property: string, value?: Value, options?: Options): R;
   }
 }
+
+export declare const styleSheetSerializer: Exclude<Plugin, NewPlugin>;
