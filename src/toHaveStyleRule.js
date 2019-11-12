@@ -66,13 +66,12 @@ const getRules = (ast, classNames, options) => {
   return rules.filter(rule => rule.type === 'rule' && hasClassNames(classNames, rule.selectors, options));
 };
 
-const handleMissingRules = options => ({
-  pass: false,
-  message: () =>
-    `No style rules found on passed Component${
-      Object.keys(options).length ? ` using options:\n${JSON.stringify(options)}` : ''
-    }`,
-});
+const handleMissingRules = options =>
+  `No style rules found on passed Component${
+    Object.keys(options).length
+      ? ` using options:\n${JSON.stringify(options)}`
+      : ''
+  }`;
 
 const getDeclaration = (rule, property) =>
   rule.declarations
@@ -88,25 +87,36 @@ const normalizeOptions = options =>
       })
     : options;
 
-function toHaveStyleRule(component, property, expected, options = {}) {
+function getStyleRule(component, property, options = {}) {
   const classNames = getClassNames(component);
   const ast = getCSS();
   const normalizedOptions = normalizeOptions(options);
   const rules = getRules(ast, classNames, normalizedOptions);
 
   if (!rules.length) {
-    return handleMissingRules(normalizedOptions);
+    throw new Error(handleMissingRules(normalizedOptions));
   }
 
   const declarations = getDeclarations(rules, property);
   const declaration = declarations.pop() || {};
-  const received = declaration.value;
-  const pass = !received && !expected && this.isNot ? false : matcherTest(received, expected);
-
-  return {
-    pass,
-    message: buildReturnMessage(this.utils, pass, property, received, expected),
-  };
+  return declaration.value;
 }
 
-module.exports = toHaveStyleRule;
+function toHaveStyleRule(component, property, expected, options = {}) {
+  try {
+    const received = getStyleRule(component, property, options);
+    const pass = !received && !expected && this.isNot ? false : matcherTest(received, expected);
+
+    return {
+      pass,
+      message: buildReturnMessage(this.utils, pass, property, received, expected),
+    };
+  } catch (e) {
+    return {
+      pass: false,
+      message: () => e.message,
+    };
+  }
+}
+
+module.exports = { getStyleRule, toHaveStyleRule };

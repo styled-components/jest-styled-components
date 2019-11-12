@@ -1,4 +1,4 @@
-const toHaveStyleRule = require('./toHaveStyleRule');
+const { toHaveStyleRule } = require('./toHaveStyleRule');
 const styleSheetSerializer = require('./styleSheetSerializer');
 const { resetStyleSheet } = require('./utils');
 
