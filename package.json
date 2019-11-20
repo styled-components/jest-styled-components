@@ -1,5 +1,5 @@
 {
-  "name": "jest-styled-components",
+  "name": "@ro/jest-styled-components",
   "version": "7.0.0-beta.2",
   "description": "Jest utilities for Styled Components",
   "main": "./src/index.js",
