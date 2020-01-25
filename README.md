@@ -436,9 +436,7 @@ import 'jest-styled-components/native'
 
 # Global installation
 
-It is possible to setup this package for all the tests:
-
-Import the library once in the `src/setupTests.js` as follows:
+It is possible to setup this package for all the tests. Import the library once in the `src/setupTests.js` as follows:
 
 ```js
 import 'jest-styled-components'
