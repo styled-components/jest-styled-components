@@ -14,7 +14,7 @@ declare namespace jest {
     supports?: string;
   }
 
-  interface Matchers<R> {
+  interface Matchers<R, T> {
     toHaveStyleRule(property: string, value?: Value, options?: Options): R;
   }
 }
