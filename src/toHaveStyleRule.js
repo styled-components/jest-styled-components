@@ -68,7 +68,7 @@ const getModifiedClassName = (className, staticClassName, modifier = "") => {
 };
 
 const hasClassNames = (classNames, selectors, options) => {
-  const staticClassNames = classNames.filter(x => x.startsWith("sc-"));
+  const staticClassNames = classNames.filter(x => /^(\w+-)?sc-\w+/.test(x));
 
   return classNames.some(className =>
     staticClassNames.some(staticClassName =>
