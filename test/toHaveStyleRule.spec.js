@@ -479,6 +479,19 @@ it("nested", () => {
   toHaveStyleRule(<MyComponent />, "background", "papayawhip");
 });
 
+it("nested with styling", () => {
+  const Wrapper = styled.section`
+    background: papayawhip;
+  `;
+
+  const MyComponent = (props) => <Wrapper {...props} />;
+  const MyStyledComponent = styled(MyComponent)`
+    color: red;
+  `;
+  
+  toHaveStyleRule(<MyStyledComponent/>, "color", "red");
+});
+
 it("empty children", () => {
   const Wrapper = styled.section`
     padding: 4em;
