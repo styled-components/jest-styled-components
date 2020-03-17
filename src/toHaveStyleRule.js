@@ -5,6 +5,12 @@ const shouldDive = node =>
 
 const isTagWithClassName = node =>
   node.exists() && node.prop("className") && typeof node.type() === "string";
+  
+const hasClassName = node =>
+  node.length > 0 
+  && typeof node.props === "function" 
+  && node.props("className") 
+  && node.props("className").className;
 
 const getClassNames = received => {
   let className;
@@ -12,6 +18,8 @@ const getClassNames = received => {
   if (received) {
     if (received.$$typeof === Symbol.for("react.test.json")) {
       className = received.props.className || received.props.class;
+    } else if (hasClassName(received)) {
+      className = received.props("className").className;
     } else if (typeof received.exists === "function" && received.exists()) {
       const tree = shouldDive(received) ? received.dive() : received;
       const components = tree.findWhere(isTagWithClassName);
