@@ -504,3 +504,14 @@ it("empty children", () => {
 
   toHaveStyleRule(<Wrapper />, "background", "papayawhip");
 });
+
+it("custom display name prefix", () => {
+  const Text = styled.span.withConfig({ displayName: 'Text__sc' })`
+    color: red;
+  `;
+  const Comp = styled(Text).withConfig({ displayName: 'Comp__Sub-sc' })`
+    background: papayawhip;
+  `;
+  toHaveStyleRule(<Comp />, "background", "papayawhip");
+  toHaveStyleRule(<Comp />, "color", "red");
+});
