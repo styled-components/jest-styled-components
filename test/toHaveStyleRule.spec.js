@@ -497,6 +497,7 @@ it("nested with styling", () => {
   );
 
   toHaveStyleRule(<MyStyledComponent />, "color", "red");
+  toHaveStyleRule(<MyStyledComponent className="test-class" />, "color", "red");
   expect(shallow(<ParentComponent/>).find(Children)).toHaveStyleRule("background", "gray");
   expect(mount(<ParentComponent/>).find(Children)).toHaveStyleRule("background", "gray");
 });
