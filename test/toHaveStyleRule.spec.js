@@ -483,13 +483,22 @@ it("nested with styling", () => {
   const Wrapper = styled.section`
     background: papayawhip;
   `;
-
+  const Children = styled.span`
+    background: gray;
+  `;
   const MyComponent = (props) => <Wrapper {...props} />;
   const MyStyledComponent = styled(MyComponent)`
     color: red;
   `;
-  
-  toHaveStyleRule(<MyStyledComponent/>, "color", "red");
+  const ParentComponent = (props) => (
+    <MyStyledComponent {...props}>
+      <Children className="test-class" />
+    </MyStyledComponent>
+  );
+
+  toHaveStyleRule(<MyStyledComponent />, "color", "red");
+  expect(shallow(<ParentComponent/>).find(Children)).toHaveStyleRule("background", "gray");
+  expect(mount(<ParentComponent/>).find(Children)).toHaveStyleRule("background", "gray");
 });
 
 it("empty children", () => {
