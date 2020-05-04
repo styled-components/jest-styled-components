@@ -896,6 +896,32 @@ exports[`shallow with theme 1`] = `
 </button>
 `;
 
+exports[`should match the same snapshot rerendering the same element: first-render 1`] = `
+.c0 {
+  color: palevioletred;
+  font-weight: bold;
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`should match the same snapshot rerendering the same element: second-render 1`] = `
+.c0 {
+  color: palevioletred;
+  font-weight: bold;
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
 exports[`strips unused styles: mount 1`] = `
 .c2 {
   color: blue;
