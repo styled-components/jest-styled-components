@@ -1,123 +1,129 @@
-import { render } from '@testing-library/react';
-import { mount, shallow } from 'enzyme';
-import React from 'react';
-import renderer from 'react-test-renderer';
-import styled, { ThemeContext, ThemeProvider } from 'styled-components';
+import {render} from '@testing-library/react'
+import {mount, shallow} from 'enzyme'
+import React from 'react'
+import renderer from 'react-test-renderer'
+import styled, {ThemeContext, ThemeProvider} from 'styled-components'
 
-const toMatchSnapshot = component => {
-  expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
-  expect(shallow(component)).toMatchSnapshot('shallow');
-  expect(mount(component)).toMatchSnapshot('mount');
-  expect(render(component).container.firstChild).toMatchSnapshot('react-testing-library');
-};
+const toMatchSnapshot = (component) => {
+  expect(renderer.create(component).toJSON()).toMatchSnapshot(
+    'react-test-renderer',
+  )
+  expect(shallow(component)).toMatchSnapshot('shallow')
+  expect(mount(component)).toMatchSnapshot('mount')
+  expect(render(component).container.firstChild).toMatchSnapshot(
+    'react-testing-library',
+  )
+}
 
 const shallowWithTheme = (tree, theme) => {
   // this is terrible but couldn't figure out how to do it properly within the framework of enzyme
-  ThemeContext._currentValue = theme;
+  ThemeContext._currentValue = theme
 
-  return shallow(tree);
-};
+  return shallow(tree)
+}
 
 it('null', () => {
-  expect(null).toMatchSnapshot();
-});
+  expect(null).toMatchSnapshot()
+})
 
 it('non-styled', () => {
-  toMatchSnapshot(<div />);
-});
+  toMatchSnapshot(<div />)
+})
 
 it('empty style', () => {
-  const Component = styled.div``;
+  const Component = styled.div``
 
-  toMatchSnapshot(<Component />);
-});
+  toMatchSnapshot(<Component />)
+})
 
 it('duplicated components', () => {
   const A = styled.div`
     color: red;
-  `;
+  `
   const B = styled.div`
     color: green;
-  `;
+  `
 
   toMatchSnapshot(
     <div>
       <A /> <A /> <B />
-    </div>
-  );
-});
+    </div>,
+  )
+})
 
 it('basic', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
-  `;
+  `
 
   const Title = styled.h1`
     font-size: 1.5em;
     text-align: center;
     color: palevioletred;
-  `;
+  `
 
   toMatchSnapshot(
     <Wrapper>
       <Title>Hello World, this is my first styled component!</Title>
-    </Wrapper>
-  );
-});
+    </Wrapper>,
+  )
+})
 
 it('any component', () => {
-  const Link = ({ className, children }) => <a className={className}>{children}</a>;
+  const Link = ({className, children}) => (
+    <a className={className}>{children}</a>
+  )
 
   const StyledLink = styled(Link)`
     color: palevioletred;
     font-weight: bold;
-  `;
+  `
 
   toMatchSnapshot(
     <div>
       <Link>Unstyled, boring Link</Link>
       <br />
       <StyledLink>Styled, exciting Link</StyledLink>
-    </div>
-  );
-});
+    </div>,
+  )
+})
 
 it('attaching additional props', () => {
   const Div = styled.div.attrs(() => ({
     className: 'div',
   }))`
     color: red;
-  `;
+  `
 
-  toMatchSnapshot(<Div />);
-});
+  toMatchSnapshot(<Div />)
+})
 
 it('leading white spaces', () => {
-  const Div = () => <div className="  div" />;
+  const Div = () => <div className="  div" />
 
-  toMatchSnapshot(<Div />);
-});
+  toMatchSnapshot(<Div />)
+})
 
 it('trailing white spaces', () => {
   const Div = styled.div.attrs(() => ({
     className: 'div  ',
   }))`
     color: red;
-  `;
+  `
 
-  toMatchSnapshot(<Div />);
-});
+  toMatchSnapshot(<Div />)
+})
 
 it('included class name', () => {
   const Div = styled.div.attrs(() => ({
     className: 'i',
   }))`
     color: red;
-  `;
+  `
 
-  toMatchSnapshot(<Div />);
-});
+  toMatchSnapshot(<Div />)
+})
 
 it('theming', () => {
   const Button = styled.button`
@@ -126,19 +132,19 @@ it('theming', () => {
     padding: 0.25em 1em;
     border-radius: 3px;
 
-    color: ${props => props.theme.main};
-    border: 2px solid ${props => props.theme.main};
-  `;
+    color: ${(props) => props.theme.main};
+    border: 2px solid ${(props) => props.theme.main};
+  `
 
   Button.defaultProps = {
     theme: {
       main: 'palevioletred',
     },
-  };
+  }
 
   const theme = {
     main: 'mediumseagreen',
-  };
+  }
 
   toMatchSnapshot(
     <div>
@@ -146,23 +152,23 @@ it('theming', () => {
       <ThemeProvider theme={theme}>
         <Button>Themed</Button>
       </ThemeProvider>
-    </div>
-  );
-});
+    </div>,
+  )
+})
 
 it('shallow with theme', () => {
   const Button = styled.button`
-    color: ${props => props.theme.main};
-  `;
+    color: ${(props) => props.theme.main};
+  `
 
   const theme = {
     main: 'mediumseagreen',
-  };
+  }
 
-  const wrapper = shallowWithTheme(<Button>Themed</Button>, theme);
+  const wrapper = shallowWithTheme(<Button>Themed</Button>, theme)
 
-  expect(wrapper).toMatchSnapshot();
-});
+  expect(wrapper).toMatchSnapshot()
+})
 
 it('supported css', () => {
   const Example = styled.div`
@@ -188,14 +194,14 @@ it('supported css', () => {
     html.test & {
       display: none;
     }
-  `;
+  `
 
   toMatchSnapshot(
     <Example>
       <p>Hello World!</p>
-    </Example>
-  );
-});
+    </Example>,
+  )
+})
 
 it('referring to other components', () => {
   const Link = styled.a`
@@ -204,7 +210,7 @@ it('referring to other components', () => {
     padding: 5px 10px;
     background: papayawhip;
     color: palevioletred;
-  `;
+  `
 
   const Icon = styled.svg`
     transition: fill 0.25s;
@@ -214,7 +220,7 @@ it('referring to other components', () => {
     ${Link}:hover & {
       fill: rebeccapurple;
     }
-  `;
+  `
 
   const Label = styled.span`
     display: flex;
@@ -225,31 +231,39 @@ it('referring to other components', () => {
       content: '◀';
       margin: 0 10px;
     }
-  `;
+  `
 
   const Container = styled.div`
     color: black;
-  `;
+  `
   const TextWithConditionalFormatting = styled.span`
     ${Container} & {
       color: yellow;
-      background-color: ${props => (props.error ? 'red' : 'green')};
+      background-color: ${(props) => (props.error ? 'red' : 'green')};
     }
-  `;
+  `
 
   const component = (
     <Link href="#">
       <Icon />
       <Label>Hovering my parent changes my style!</Label>
-      <TextWithConditionalFormatting>I should be green</TextWithConditionalFormatting>
-      <TextWithConditionalFormatting error>I should be red</TextWithConditionalFormatting>
+      <TextWithConditionalFormatting>
+        I should be green
+      </TextWithConditionalFormatting>
+      <TextWithConditionalFormatting error>
+        I should be red
+      </TextWithConditionalFormatting>
     </Link>
-  );
+  )
 
-  expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
-  expect(mount(component)).toMatchSnapshot('mount');
-  expect(render(component).container.firstChild).toMatchSnapshot('react-testing-library');
-});
+  expect(renderer.create(component).toJSON()).toMatchSnapshot(
+    'react-test-renderer',
+  )
+  expect(mount(component)).toMatchSnapshot('mount')
+  expect(render(component).container.firstChild).toMatchSnapshot(
+    'react-testing-library',
+  )
+})
 
 it('referring to other unreferenced components', () => {
   const UnreferencedLink = styled.a`
@@ -264,6 +278,19 @@ it('referring to other unreferenced components', () => {
   toMatchSnapshot(
     <div>
       <ReferencedLink>Styled, exciting Link</ReferencedLink>
-    </div>
-  );
-});
+    </div>,
+  )
+})
+
+it('should match the same snapshot rerendering the same element', () => {
+  const StyledDiv = styled.div`
+    color: palevioletred;
+    font-weight: bold;
+  `
+
+  const {rerender, container} = render(<StyledDiv />)
+
+  expect(container).toMatchSnapshot('first-render')
+  rerender(<StyledDiv />)
+  expect(container).toMatchSnapshot('second-render')
+})
