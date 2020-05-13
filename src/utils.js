@@ -2,7 +2,7 @@ const css = require('css');
 const { ServerStyleSheet, __PRIVATE__ } = require('styled-components');
 
 if (!__PRIVATE__) {
-  throw new Error('Could neither find styled-components secret internals');
+  throw new Error('jest-styled-components must be used with styled-components v5 or higher');
 }
 
 const { masterSheet } = __PRIVATE__;
