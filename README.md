@@ -6,7 +6,7 @@
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 # Jest Styled Components
-A set of utilities for testing [Styled Components](https://github.com/styled-components/styled-components) with [Jest](https://github.com/facebook/jest).
+A set of utilities for testing [Styled Components](https://github.com/styled-components/styled-components) (version `5.0.0` and above) with [Jest](https://github.com/facebook/jest).
 This package improves the snapshot testing experience and provides a brand new matcher to make expectations on the style rules.
 
 # Quick Start
