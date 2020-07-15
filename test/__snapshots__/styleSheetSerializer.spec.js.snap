@@ -647,6 +647,64 @@ exports[`referring to other components: react-testing-library 1`] = `
 </a>
 `;
 
+exports[`referring to other unreferenced components: mount 1`] = `
+.c0 {
+  font-size: 1.5em;
+  color: palevioletred;
+  font-weight: bold;
+}
+
+<div>
+  <Styled(styled.a)>
+    <a
+      className="c0"
+    >
+      Styled, exciting Link
+    </a>
+  </Styled(styled.a)>
+</div>
+`;
+
+exports[`referring to other unreferenced components: react-test-renderer 1`] = `
+.c0 {
+  font-size: 1.5em;
+  color: palevioletred;
+  font-weight: bold;
+}
+
+<div>
+  <a
+    className="c0"
+  >
+    Styled, exciting Link
+  </a>
+</div>
+`;
+
+exports[`referring to other unreferenced components: react-testing-library 1`] = `
+.c0 {
+  font-size: 1.5em;
+  color: palevioletred;
+  font-weight: bold;
+}
+
+<div>
+  <a
+    class="c0"
+  >
+    Styled, exciting Link
+  </a>
+</div>
+`;
+
+exports[`referring to other unreferenced components: shallow 1`] = `
+<div>
+  <Styled(styled.a)>
+    Styled, exciting Link
+  </Styled(styled.a)>
+</div>
+`;
+
 exports[`shallow with theme 1`] = `
 .c0 {
   color: mediumseagreen;
