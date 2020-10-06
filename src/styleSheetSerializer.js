@@ -44,6 +44,7 @@ const getClassNames = nodes =>
   }, new Set());
 
 const filterClassNames = (classNames, hashes) => classNames.filter(className => hashes.includes(className));
+const filterUnreferencedClassNames = (classNames, hashes) => classNames.filter(className => className.startsWith('sc-') && !hashes.includes(className));
 
 const includesClassNames = (classNames, selectors) =>
   classNames.some(className => selectors.some(selector => selector.includes(className)));
@@ -91,6 +92,10 @@ const replaceClassNames = (result, classNames, style) =>
     .filter(className => style.includes(className))
     .reduce((acc, className, index) => acc.replace(new RegExp(className, 'g'), ''), result);
 
+const stripUnreferencedClassNames = (result, classNames) =>
+    classNames
+      .reduce((acc, className) => acc.replace(new RegExp(`${className}\\s?`,'g'), ''), result);
+
 const replaceHashes = (result, hashes) =>
   hashes.reduce(
     (acc, className) => acc.replace(new RegExp(`((class|className)="[^"]*?)${className}\\s?([^"]*")`, 'g'), '$1$3'),
@@ -113,13 +118,17 @@ module.exports = {
     const hashes = getHashes();
 
     let classNames = [...getClassNames(nodes)];
+    let unreferencedClassNames = classNames;
+
     classNames = filterClassNames(classNames, hashes);
+    unreferencedClassNames = filterUnreferencedClassNames(unreferencedClassNames, hashes);
 
     const style = getStyle(classNames);
     const classNamesToReplace = getClassNamesFromSelectorsByHashes(classNames, hashes);
     const code = print(val);
 
     let result = `${style}${style ? '\n\n' : ''}${code}`;
+    result = stripUnreferencedClassNames(result, unreferencedClassNames);
     result = replaceClassNames(result, classNamesToReplace, style);
     result = replaceHashes(result, hashes);
 

@@ -250,3 +250,20 @@ it('referring to other components', () => {
   expect(mount(component)).toMatchSnapshot('mount');
   expect(render(component).container.firstChild).toMatchSnapshot('react-testing-library');
 });
+
+it('referring to other unreferenced components', () => {
+  const UnreferencedLink = styled.a`
+    font-size: 1.5em;
+  `
+
+  const ReferencedLink = styled(UnreferencedLink)`
+    color: palevioletred;
+    font-weight: bold;
+  `
+
+  toMatchSnapshot(
+    <div>
+      <ReferencedLink>Styled, exciting Link</ReferencedLink>
+    </div>
+  );
+});

@@ -479,6 +479,29 @@ it("nested", () => {
   toHaveStyleRule(<MyComponent />, "background", "papayawhip");
 });
 
+it("nested with styling", () => {
+  const Wrapper = styled.section`
+    background: papayawhip;
+  `;
+  const Children = styled.span`
+    background: gray;
+  `;
+  const MyComponent = (props) => <Wrapper {...props} />;
+  const MyStyledComponent = styled(MyComponent)`
+    color: red;
+  `;
+  const ParentComponent = (props) => (
+    <MyStyledComponent {...props}>
+      <Children className="test-class" />
+    </MyStyledComponent>
+  );
+
+  toHaveStyleRule(<MyStyledComponent />, "color", "red");
+  toHaveStyleRule(<MyStyledComponent className="test-class" />, "color", "red");
+  expect(shallow(<ParentComponent/>).find(Children)).toHaveStyleRule("background", "gray");
+  expect(mount(<ParentComponent/>).find(Children)).toHaveStyleRule("background", "gray");
+});
+
 it("empty children", () => {
   const Wrapper = styled.section`
     padding: 4em;
@@ -490,4 +513,15 @@ it("empty children", () => {
   };
 
   toHaveStyleRule(<Wrapper />, "background", "papayawhip");
+});
+
+it("custom display name prefix", () => {
+  const Text = styled.span.withConfig({ displayName: 'Text__sc' })`
+    color: red;
+  `;
+  const Comp = styled(Text).withConfig({ displayName: 'Comp__Sub-sc' })`
+    background: papayawhip;
+  `;
+  toHaveStyleRule(<Comp />, "background", "papayawhip");
+  toHaveStyleRule(<Comp />, "color", "red");
 });

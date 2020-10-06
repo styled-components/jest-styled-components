@@ -14,7 +14,7 @@ function toHaveStyleRule(component, property, expected) {
    * Merge all styles into one final style object and search for the desired
    * stylename against this object
    */
-  const mergedStyles = styles.reduce((acc, item) => ({ ...acc, ...item }), {})
+  const mergedStyles = styles.reduce((acc, item) => (Object.assign({}, acc, item )), {})
   const received = mergedStyles[camelCasedProperty]
   const pass =
     !received && !expected && this.isNot
