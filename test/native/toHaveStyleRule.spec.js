@@ -80,6 +80,18 @@ it('negated ".not" modifier with value', () => {
   expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule('padding', undefined);
 });
 
+it('negated ".not" modifier fails when rule present with no value being asserted', () => {
+  const Button = styled.Text`
+    background-color: blue;
+  `;
+
+  expect(renderer.create(<Button />).toJSON()).toHaveStyleRule('background-color', 'blue');
+  expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule('opacity');
+  expect(() => {
+    expect(renderer.create(<Button />).toJSON()).not.toHaveStyleRule('background-color');
+  }).toThrowError();
+});
+
 it('jest asymmetric matchers', () => {
   const Button = styled.Text`
     background-color: ${({ transparent }) => (transparent ? 'transparent' : 'papayawhip')};
