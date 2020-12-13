@@ -238,18 +238,50 @@ it('referring to other components', () => {
   `;
 
   const component = (
-    <Link href="#">
-      <Icon />
-      <Label>Hovering my parent changes my style!</Label>
-      <TextWithConditionalFormatting>I should be green</TextWithConditionalFormatting>
-      <TextWithConditionalFormatting error>I should be red</TextWithConditionalFormatting>
-    </Link>
+    <Container>
+      <Link href="#">
+        <Icon />
+        <Label>Hovering my parent changes my style!</Label>
+        <TextWithConditionalFormatting>I should be green</TextWithConditionalFormatting>
+        <TextWithConditionalFormatting error>I should be red</TextWithConditionalFormatting>
+      </Link>
+    </Container>
   );
 
   expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
   expect(mount(component)).toMatchSnapshot('mount');
   expect(render(component).container.firstChild).toMatchSnapshot('react-testing-library');
 });
+
+it('strips unused styles', () => {
+  const BlueText = styled.div`
+    color: blue;
+  `;
+  const RedText = styled.div`
+    color: red;
+  `;
+
+  const FancyText = styled.div`
+    font-size: 16px;
+
+    ${BlueText} {
+      text-align: right;
+    }
+    ${RedText} {
+      text-align: center;
+    }
+  `;
+
+  const component = (
+    <FancyText>
+      <BlueText>A container that has styles for an unused child</BlueText>
+    </FancyText>
+  );
+
+  expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
+  expect(mount(component)).toMatchSnapshot('mount');
+  expect(render(component).container.firstChild).toMatchSnapshot('react-testing-library');
+})
 
 it('referring to other unreferenced components', () => {
   const UnreferencedLink = styled.a`
