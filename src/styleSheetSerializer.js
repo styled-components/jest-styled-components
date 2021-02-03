@@ -62,22 +62,19 @@ const filterRules = (classNames) => (rule) =>
   includesClassNames(classNames, rule.selectors) &&
   rule.declarations.length;
 
-const getAtRules = (ast, filter) =>
-  ast.stylesheet.rules
-    .filter((rule) => rule.type === 'media' || rule.type === 'supports')
-    .reduce((acc, atRule) => {
-      atRule.rules = atRule.rules.filter(filter);
-
-      return acc.concat(atRule);
-    }, []);
+const getAllRules = (rules, classNames) => rules
+  .filter(
+    (rule) => rule.type === 'media'
+      || rule.type === 'supports'
+      || filterRules(classNames)(rule)
+  )
+  .map(rule => (rule.type === "rule" ? rule : Object.assign({}, rule, { rules: getAllRules(rule.rules, classNames) })))
+  .filter(rule => (rule.type === "rule" && rule.declarations.length) || rule.rules.length);
 
 const getStyle = (classNames) => {
   const ast = getCSS();
-  const filter = filterRules(classNames);
-  const rules = ast.stylesheet.rules.filter(filter);
-  const atRules = getAtRules(ast, filter);
 
-  ast.stylesheet.rules = rules.concat(atRules);
+  ast.stylesheet.rules = getAllRules(ast.stylesheet.rules, classNames);
 
   return css.stringify(ast);
 };

@@ -36,17 +36,6 @@ const getClassNames = (received) => {
 
 const hasAtRule = (options) => Object.keys(options).some((option) => ['media', 'supports'].includes(option));
 
-const getAtRules = (ast, options) => {
-  return Object.keys(options)
-    .map((option) =>
-      ast.stylesheet.rules
-        .filter((rule) => rule.type === option && rule[option] === options[option].replace(/:\s/g, ":"))
-        .map((rule) => rule.rules)
-        .reduce((acc, rules) => acc.concat(rules), [])
-    )
-    .reduce((acc, rules) => acc.concat(rules), []);
-};
-
 const normalizeQuotations = (input) => input.replace(/['"]/g, '"');
 
 const getModifiedClassName = (className, staticClassName, modifier = '') => {
@@ -82,14 +71,20 @@ const hasClassNames = (classNames, selectors, options) => {
   );
 };
 
-const getRules = (ast, classNames, options) => {
-  const rules = (hasAtRule(options) ? getAtRules(ast, options) : ast.stylesheet.rules).map((rule) => ({
+const getRules = (rules, classNames, options) =>
+  rules.map((rule) => ({
     ...rule,
     selectors: Array.isArray(rule.selectors) ? rule.selectors.map(normalizeQuotations) : rule.selectors,
-  }));
+  }))
+    .flatMap((rule) => {
+      if (!hasAtRule(options)) {
+        return rule.type === 'rule' && hasClassNames(classNames, rule.selectors, options) ? [rule] : [];
+      }
 
-  return rules.filter((rule) => rule.type === 'rule' && hasClassNames(classNames, rule.selectors, options));
-};
+      return ['media', 'supports'].includes(rule.type) && options[rule.type] && rule[rule.type] === options[rule.type].replace(/:\s/g, ':')
+        ? getRules(rule.rules, classNames, Object.fromEntries(Object.entries(options).filter(([key]) => key !== rule.type)))
+        : [];
+    });
 
 const handleMissingRules = (options) => ({
   pass: false,
@@ -116,7 +111,7 @@ function toHaveStyleRule(component, property, expected, options = {}) {
   const classNames = getClassNames(component);
   const ast = getCSS();
   const normalizedOptions = normalizeOptions(options);
-  const rules = getRules(ast, classNames, normalizedOptions);
+  const rules = getRules(ast.stylesheet.rules, classNames, normalizedOptions);
 
   if (!rules.length) {
     return handleMissingRules(normalizedOptions);

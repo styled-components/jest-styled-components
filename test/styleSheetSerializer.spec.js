@@ -179,6 +179,10 @@ it('supported css', () => {
       &:hover {
         background: yellow;
       }
+
+      @supports (top: max(1px, 0px)) {
+        padding-left: max(1em, env(safe-area-inset-left, 0px));
+      }
     }
 
     > p {
