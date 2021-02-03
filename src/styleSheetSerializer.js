@@ -52,22 +52,18 @@ const includesClassNames = (classNames, selectors) =>
 const filterRules = classNames => rule =>
   rule.type === 'rule' && includesClassNames(classNames, rule.selectors) && rule.declarations.length;
 
-const getAtRules = (ast, filter) =>
-  ast.stylesheet.rules
-    .filter(rule => rule.type === 'media' || rule.type === 'supports')
-    .reduce((acc, atRule) => {
-      atRule.rules = atRule.rules.filter(filter);
-
-      return acc.concat(atRule);
-    }, []);
+const getAllRules = (rules, classNames) => rules
+  .filter(
+    rule => rule.type === 'media'
+      || rule.type === 'supports'
+      || (rule.type === 'rule' && includesClassNames(classNames, rule.selectors) && rule.declarations.length)
+  )
+  .map(rule => (rule.type === "rule" ? rule : Object.assign({}, rule, { rules: getAllRules(rule.rules, classNames) })));
 
 const getStyle = classNames => {
   const ast = getCSS();
-  const filter = filterRules(classNames);
-  const rules = ast.stylesheet.rules.filter(filter);
-  const atRules = getAtRules(ast, filter);
 
-  ast.stylesheet.rules = rules.concat(atRules);
+  ast.stylesheet.rules = getAllRules(ast.stylesheet.rules, classNames);
 
   return css.stringify(ast);
 };
@@ -93,8 +89,8 @@ const replaceClassNames = (result, classNames, style) =>
     .reduce((acc, className, index) => acc.replace(new RegExp(className, 'g'), `c${index++}`), result);
 
 const stripUnreferencedClassNames = (result, classNames) =>
-    classNames
-      .reduce((acc, className) => acc.replace(new RegExp(`${className}\\s?`,'g'), ''), result);
+  classNames
+    .reduce((acc, className) => acc.replace(new RegExp(`${className}\\s?`, 'g'), ''), result);
 
 const replaceHashes = (result, hashes) =>
   hashes.reduce(
