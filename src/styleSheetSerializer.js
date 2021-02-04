@@ -56,9 +56,10 @@ const getAllRules = (rules, classNames) => rules
   .filter(
     rule => rule.type === 'media'
       || rule.type === 'supports'
-      || (rule.type === 'rule' && includesClassNames(classNames, rule.selectors) && rule.declarations.length)
+      || (rule.type === 'rule' && includesClassNames(classNames, rule.selectors))
   )
-  .map(rule => (rule.type === "rule" ? rule : Object.assign({}, rule, { rules: getAllRules(rule.rules, classNames) })));
+  .map(rule => (rule.type === "rule" ? rule : Object.assign({}, rule, { rules: getAllRules(rule.rules, classNames) })))
+  .filter(rule => (rule.type === "rule" && rule.declarations.length) || rule.rules.length);
 
 const getStyle = classNames => {
   const ast = getCSS();
