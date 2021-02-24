@@ -137,7 +137,7 @@ module.exports = {
     );
   },
 
-  print(val, print) {
+  serialize(val, config, indentation, depth, refs, printer) {
     const nodes = getNodes(val);
     nodes.forEach(cache.add, cache);
 
@@ -151,7 +151,7 @@ module.exports = {
 
     const style = getStyle(classNames);
     const classNamesToReplace = getClassNamesFromSelectorsByHashes(classNames, hashes);
-    const code = print(val);
+    const code = printer(val, config, indentation, depth, refs);
 
     let result = serializerOptions.addStyles ? `${style}${style ? '\n\n' : ''}${code}` : code;
     result = stripUnreferencedClassNames(result, unreferencedClassNames);

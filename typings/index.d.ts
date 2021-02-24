@@ -1,4 +1,4 @@
-import { Plugin, NewPlugin } from 'pretty-format'
+import { NewPlugin } from 'pretty-format'
 import { css } from 'styled-components'
 
 declare global {
@@ -27,6 +27,6 @@ export interface StyledComponentsSerializerOptions {
   classNameFormatter?: (index: number) => string 
 } 
 
-export declare const styleSheetSerializer: Exclude<Plugin, NewPlugin> & { 
+export declare const styleSheetSerializer: NewPlugin & {
   setStyleSheetSerializerOptions: (options?: StyledComponentsSerializerOptions) => void 
 };
