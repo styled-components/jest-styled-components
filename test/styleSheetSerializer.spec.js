@@ -3,6 +3,8 @@ import { mount, shallow } from 'enzyme';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import styled, { ThemeContext, ThemeProvider } from 'styled-components';
+import prettyFormat, { plugins } from 'pretty-format';
+import styleSheetSerializer from '../src/styleSheetSerializer';
 
 const toMatchSnapshot = component => {
   expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
@@ -17,6 +19,22 @@ const shallowWithTheme = (tree, theme) => {
 
   return shallow(tree);
 };
+
+const serialize = (val, indent = 2) =>
+  prettyFormat(val, {
+    escapeRegex: true,
+    indent,
+    plugins: [
+      styleSheetSerializer,
+      plugins.ReactTestComponent,
+      plugins.ReactElement,
+      plugins.DOMElement,
+      plugins.DOMCollection,
+      plugins.Immutable,
+      plugins.AsymmetricMatcher,
+    ],
+    printFunctionName: false,
+  });
 
 it('null', () => {
   expect(null).toMatchSnapshot();
@@ -266,4 +284,36 @@ it('referring to other unreferenced components', () => {
       <ReferencedLink>Styled, exciting Link</ReferencedLink>
     </div>
   );
+});
+
+it('responds to indent configuration', () => {
+  const Link = styled.a`
+    color: blue;
+  `;
+
+  const mounted = renderer.create(<Link>Styled, exciting Link</Link>);
+
+  expect(serialize(mounted)).toMatchInlineSnapshot(`
+    ".c0 {
+      color: blue;
+    }
+
+    <a
+      className=\\"c0\\"
+    >
+      Styled, exciting Link
+    </a>"
+  `);
+
+  expect(serialize(mounted, 0)).toMatchInlineSnapshot(`
+    ".c0 {
+    color: blue;
+    }
+
+    <a
+    className=\\"c0\\"
+    >
+    Styled, exciting Link
+    </a>"
+  `);
 });
