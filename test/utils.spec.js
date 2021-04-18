@@ -1,12 +1,18 @@
 const {
-  __PRIVATE__: { masterSheet },
+  __PRIVATE__: { mainSheet, masterSheet },
 } = require('styled-components');
 
 const { getHashes } = require('../src/utils');
 
+const sheet = mainSheet || masterSheet;
+
 it('extracts hashes', () => {
-  masterSheet.names = new Map([['sc-1', new Set(['a'])], ['sc-2', new Set(['b', 'c'])], ['sc-3', new Set(['d', 'e'])]]);
-  masterSheet.toString = function() {
+  sheet.names = new Map([
+    ['sc-1', new Set(['a'])],
+    ['sc-2', new Set(['b', 'c'])],
+    ['sc-3', new Set(['d', 'e'])],
+  ]);
+  sheet.toString = function() {
     return `
       <style data-styled="active">
         .sc-1 {}
