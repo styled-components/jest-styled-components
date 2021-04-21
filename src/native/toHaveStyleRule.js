@@ -16,10 +16,7 @@ function toHaveStyleRule(component, property, expected) {
    */
   const mergedStyles = styles.reduce((acc, item) => (Object.assign({}, acc, item )), {})
   const received = mergedStyles[camelCasedProperty]
-  const pass =
-    !received && !expected && this.isNot
-      ? false
-      : matcherTest(received, expected)
+  const pass = matcherTest(received, expected, this.isNot)
 
   return {
     pass,
