@@ -727,15 +727,6 @@ exports[`supported css: mount 1`] = `
   background: palevioletred;
 }
 
-.c0 > p {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-html.test .c0 {
-  display: none;
-}
-
 @media (max-width:600px) {
   .c0 {
     background: tomato;
@@ -744,6 +735,21 @@ html.test .c0 {
   .c0:hover {
     background: yellow;
   }
+
+@supports (top:max(1px,0px)) {
+    .c0 {
+      padding-left: max(1em,env(safe-area-inset-left,0px));
+    }
+}
+}
+
+.c0 > p {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+html.test .c0 {
+  display: none;
 }
 
 <styled.div>
@@ -767,15 +773,6 @@ exports[`supported css: react-test-renderer 1`] = `
   background: palevioletred;
 }
 
-.c0 > p {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-html.test .c0 {
-  display: none;
-}
-
 @media (max-width:600px) {
   .c0 {
     background: tomato;
@@ -784,6 +781,21 @@ html.test .c0 {
   .c0:hover {
     background: yellow;
   }
+
+@supports (top:max(1px,0px)) {
+    .c0 {
+      padding-left: max(1em,env(safe-area-inset-left,0px));
+    }
+}
+}
+
+.c0 > p {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+html.test .c0 {
+  display: none;
 }
 
 <div
@@ -805,15 +817,6 @@ exports[`supported css: react-testing-library 1`] = `
   background: palevioletred;
 }
 
-.c0 > p {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-html.test .c0 {
-  display: none;
-}
-
 @media (max-width:600px) {
   .c0 {
     background: tomato;
@@ -822,6 +825,21 @@ html.test .c0 {
   .c0:hover {
     background: yellow;
   }
+
+@supports (top:max(1px,0px)) {
+    .c0 {
+      padding-left: max(1em,env(safe-area-inset-left,0px));
+    }
+}
+}
+
+.c0 > p {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+html.test .c0 {
+  display: none;
 }
 
 <div
@@ -843,15 +861,6 @@ exports[`supported css: shallow 1`] = `
   background: palevioletred;
 }
 
-.c0 > p {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-html.test .c0 {
-  display: none;
-}
-
 @media (max-width:600px) {
   .c0 {
     background: tomato;
@@ -860,6 +869,21 @@ html.test .c0 {
   .c0:hover {
     background: yellow;
   }
+
+@supports (top:max(1px,0px)) {
+    .c0 {
+      padding-left: max(1em,env(safe-area-inset-left,0px));
+    }
+}
+}
+
+.c0 > p {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+html.test .c0 {
+  display: none;
 }
 
 <div
