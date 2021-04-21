@@ -1,8 +1,7 @@
 const css = require('css');
 const { getCSS, getHashes } = require('./utils');
 
-const KEY = '__jest-styled-components__';
-
+let cache = new WeakSet()
 const getNodes = (node, nodes = []) => {
   if (typeof node === 'object') {
     nodes.push(node);
@@ -14,8 +13,6 @@ const getNodes = (node, nodes = []) => {
 
   return nodes;
 };
-
-const markNodes = nodes => nodes.forEach(node => (node[KEY] = true));
 
 const getClassNamesFromDOM = node => Array.from(node.classList);
 const getClassNamesFromProps = node => {
@@ -106,14 +103,14 @@ module.exports = {
   test(val) {
     return (
       val &&
-      !val[KEY] &&
+      !cache.has(val) &&
       (val.$$typeof === Symbol.for('react.test.json') || (global.Element && val instanceof global.Element))
     );
   },
 
   print(val, print) {
     const nodes = getNodes(val);
-    markNodes(nodes);
+    nodes.forEach(cache.add, cache);
 
     const hashes = getHashes();
 
@@ -131,7 +128,7 @@ module.exports = {
     result = stripUnreferencedClassNames(result, unreferencedClassNames);
     result = replaceClassNames(result, classNamesToReplace, style);
     result = replaceHashes(result, hashes);
-
+    nodes.forEach(cache.delete, cache);
     return result;
   },
 };
