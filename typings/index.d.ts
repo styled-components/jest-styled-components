@@ -1,4 +1,4 @@
-import { Plugin, NewPlugin } from 'pretty-format'
+import { NewPlugin } from 'pretty-format'
 
 declare global {
   namespace jest {
@@ -21,4 +21,4 @@ declare global {
   }
 }
 
-export declare const styleSheetSerializer: Exclude<Plugin, NewPlugin>;
+export declare const styleSheetSerializer: NewPlugin;

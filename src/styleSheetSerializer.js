@@ -61,7 +61,7 @@ const getAtRules = (ast, filter) =>
       return acc.concat(atRule);
     }, []);
 
-const getStyle = classNames => {
+const getStyle = (classNames, config = {}) => {
   const ast = getCSS();
   const filter = filterRules(classNames);
   const rules = ast.stylesheet.rules.filter(filter);
@@ -69,7 +69,7 @@ const getStyle = classNames => {
 
   ast.stylesheet.rules = rules.concat(atRules);
 
-  return css.stringify(ast);
+  return css.stringify(ast, { indent: config.indent });
 };
 
 const getClassNamesFromSelectorsByHashes = (classNames, hashes) => {
@@ -111,7 +111,7 @@ module.exports = {
     );
   },
 
-  print(val, print) {
+  serialize(val, config, indentation, depth, refs, printer) {
     const nodes = getNodes(val);
     markNodes(nodes);
 
@@ -123,9 +123,9 @@ module.exports = {
     classNames = filterClassNames(classNames, hashes);
     unreferencedClassNames = filterUnreferencedClassNames(unreferencedClassNames, hashes);
 
-    const style = getStyle(classNames);
+    const style = getStyle(classNames, config);
     const classNamesToReplace = getClassNamesFromSelectorsByHashes(classNames, hashes);
-    const code = print(val);
+    const code = printer(val, config, indentation, depth, refs);
 
     let result = `${style}${style ? '\n\n' : ''}${code}`;
     result = stripUnreferencedClassNames(result, unreferencedClassNames);
