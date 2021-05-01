@@ -27,6 +27,7 @@
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@testing-library/react": "^9.3.2",
+    "@types/styled-components": "^5.1.11",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^26.0.0",
