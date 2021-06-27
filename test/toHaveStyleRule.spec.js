@@ -220,6 +220,9 @@ it('at rules', () => {
     @media (min-width: 576px) and (max-width: 767.98px) {
       color: red;
     }
+    @media (min-width: calc(768px + 1px)) and (max-width:calc(1024px + 1px)) {
+      color: purple;
+    }
   `;
 
   toHaveStyleRule(<Wrapper />, 'color', 'red');
@@ -243,6 +246,9 @@ it('at rules', () => {
   });
   toHaveStyleRule(<Wrapper />, 'color', 'red', {
     media: '(min-width: 576px) and (max-width: 767.98px)',
+  });
+  toHaveStyleRule(<Wrapper />, "color", "purple", {
+    media: "(min-width: calc(768px + 1px)) and (max-width:calc(1024px + 1px))"
   });
 });
 
@@ -392,10 +398,7 @@ it('component modifiers', () => {
     'color',
     'blue',
     {
-      // eslint-disable-next-line prettier/prettier
-      modifier: css`
-        ${Text}
-      `,
+      modifier: css`${Text}`
     }
   );
   toHaveStyleRule(
@@ -415,10 +418,7 @@ it('component modifiers', () => {
     'color',
     'purple',
     {
-      // eslint-disable-next-line prettier/prettier
-      modifier: css`
-        ${Text} &
-      `,
+      modifier: css`${Text} &`
     }
   );
 });

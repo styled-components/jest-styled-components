@@ -37,12 +37,10 @@ const getClassNames = (received) => {
 const hasAtRule = (options) => Object.keys(options).some((option) => ['media', 'supports'].includes(option));
 
 const getAtRules = (ast, options) => {
-  const mediaRegex = /(\([a-z-]+:)\s?([a-z0-9.]+\))/g;
-
   return Object.keys(options)
     .map((option) =>
       ast.stylesheet.rules
-        .filter((rule) => rule.type === option && rule[option] === options[option].replace(mediaRegex, '$1$2'))
+        .filter((rule) => rule.type === option && rule[option] === options[option].replace(/:\s/g, ":"))
         .map((rule) => rule.rules)
         .reduce((acc, rules) => acc.concat(rules), [])
     )
@@ -96,8 +94,7 @@ const getRules = (ast, classNames, options) => {
 const handleMissingRules = (options) => ({
   pass: false,
   message: () =>
-    `No style rules found on passed Component${
-      Object.keys(options).length ? ` using options:\n${JSON.stringify(options)}` : ''
+    `No style rules found on passed Component${Object.keys(options).length ? ` using options:\n${JSON.stringify(options)}` : ''
     }`,
 });
 
@@ -111,8 +108,8 @@ const getDeclarations = (rules, property) => rules.map((rule) => getDeclaration(
 const normalizeOptions = (options) =>
   options.modifier
     ? Object.assign({}, options, {
-        modifier: Array.isArray(options.modifier) ? options.modifier.join('') : options.modifier,
-      })
+      modifier: Array.isArray(options.modifier) ? options.modifier.join('') : options.modifier,
+    })
     : options;
 
 function toHaveStyleRule(component, property, expected, options = {}) {
