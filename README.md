@@ -344,7 +344,26 @@ test('it works', () => {
   const tree = renderer.create(<Button />).toJSON()
   expect(tree).toMatchSpecificSnapshot("./Button.snap")
 })
-````
+```
+
+## Serializer Options
+
+The serializer can be configured to control the snapshot output.
+
+```js
+import { render } from '@testing-library/react'
+import { setStyleSheetSerializerOptions } from 'jest-styled-components/serializer'
+
+setStyleSheetSerializerOptions({
+  addStyles: false,
+  classNameFormatter: (index) => `styled${index}`
+});
+
+test('it works', () => {
+  const { container } = render(<Button />)
+  expect(container.firstChild).toMatchSnapshot()
+})
+```
 
 # toHaveStyleRule
 
