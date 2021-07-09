@@ -30,7 +30,7 @@ it('non-styled', () => {
 it('message when rules not found', () => {
   expect(() =>
     expect(renderer.create(<div />).toJSON()).toHaveStyleRule('color', 'black')
-  ).toThrowErrorMatchingInlineSnapshot(`"No style rules found on passed Component"`);
+  ).toThrowErrorMatchingSnapshot();
 });
 
 it('message when rules not found using options', () => {
@@ -44,10 +44,7 @@ it('message when rules not found using options', () => {
       media: '(max-width:640px)',
       modifier: ':hover',
     })
-  ).toThrowErrorMatchingInlineSnapshot(`
-    "No style rules found on passed Component using options:
-    {\\"media\\":\\"(max-width:640px)\\",\\"modifier\\":\\":hover\\"}"
-  `);
+  ).toThrowErrorMatchingSnapshot();
 });
 
 it('message when property not found', () => {
@@ -55,15 +52,9 @@ it('message when property not found', () => {
     color: red;
   `;
 
-  expect(() => expect(renderer.create(<Button />).toJSON()).toHaveStyleRule('background-color', 'black'))
-    .toThrowErrorMatchingInlineSnapshot(`
-    "[31m\\"Property 'background-color' not found in style rules\\"[39m
-
-    Expected
-      [32m\\"background-color: black\\"[39m
-    Received:
-      [31m\\"background-color: undefined\\"[39m"
-  `);
+  expect(() =>
+    expect(renderer.create(<Button />).toJSON()).toHaveStyleRule('background-color', 'black')
+  ).toThrowErrorMatchingSnapshot();
 });
 
 it('message when value does not match', () => {
@@ -73,14 +64,7 @@ it('message when value does not match', () => {
 
   expect(() => {
     expect(renderer.create(<Wrapper />).toJSON()).toHaveStyleRule('background', 'red');
-  }).toThrowErrorMatchingInlineSnapshot(`
-    "[31m\\"Value mismatch for property 'background'\\"[39m
-
-    Expected
-      [32m\\"background: red\\"[39m
-    Received:
-      [31m\\"background: orange\\"[39m"
-  `);
+  }).toThrowErrorMatchingSnapshot();
 });
 
 it('non existing', () => {
@@ -91,7 +75,7 @@ it('non existing', () => {
 
   expect(() => {
     expect(shallow(<Wrapper />).find('div')).toHaveStyleRule('background', 'papayawhip');
-  }).toThrowErrorMatchingInlineSnapshot(`"No style rules found on passed Component"`);
+  }).toThrowErrorMatchingSnapshot();
 });
 
 it('basic', () => {
