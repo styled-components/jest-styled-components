@@ -42,7 +42,7 @@
     "lint-staged": "^9.4.2",
     "preact": "^10.0.0-beta.2",
     "preact-render-to-json": "^3.6.6",
-    "prettier": "^1.18.2",
+    "prettier": "^2.3.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-is": "^16.8.6",
@@ -51,7 +51,7 @@
     "styled-components": "^5.0.0"
   },
   "dependencies": {
-    "css": "^2.2.4"
+    "css": "^3.0.0"
   },
   "peerDependencies": {
     "styled-components": ">= 5"
