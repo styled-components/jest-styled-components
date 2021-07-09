@@ -2,7 +2,7 @@ import { mount, shallow } from 'enzyme';
 import React from 'react';
 import styled from 'styled-components';
 
-const toMatchSnapshot = component => {
+const toMatchSnapshot = (component) => {
   expect(shallow(component)).toMatchSnapshot('shallow');
   expect(mount(component)).toMatchSnapshot('mount');
 };

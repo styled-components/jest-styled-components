@@ -114,8 +114,8 @@ it('theming', () => {
     padding: 0.25px 1px;
     border-radius: 3px;
 
-    color: ${props => props.theme.main};
-    border: 2px solid ${props => props.theme.main};
+    color: ${(props) => props.theme.main};
+    border: 2px solid ${(props) => props.theme.main};
   `;
 
   Button.defaultProps = {

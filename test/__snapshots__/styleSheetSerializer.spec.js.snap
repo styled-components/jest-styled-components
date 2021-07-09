@@ -414,7 +414,7 @@ exports[`referring to other components: mount 1`] = `
   color: palevioletred;
 }
 
-.c4 {
+.c5 {
   -webkit-transition: fill 0.25s;
   transition: fill 0.25s;
   width: 48px;
@@ -425,7 +425,7 @@ exports[`referring to other components: mount 1`] = `
   fill: rebeccapurple;
 }
 
-.c5 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -437,7 +437,7 @@ exports[`referring to other components: mount 1`] = `
   line-height: 1.2;
 }
 
-.c5::before {
+.c6::before {
   content: '◀';
   margin: 0 10px;
 }
@@ -446,7 +446,7 @@ exports[`referring to other components: mount 1`] = `
   color: black;
 }
 
-.c0 .c6 {
+.c0 .c7 {
   color: yellow;
   background-color: green;
 }
@@ -469,19 +469,19 @@ exports[`referring to other components: mount 1`] = `
       >
         <styled.svg>
           <svg
-            className="c4"
+            className="c4 c5"
           />
         </styled.svg>
         <styled.span>
           <span
-            className="c5"
+            className="c6"
           >
             Hovering my parent changes my style!
           </span>
         </styled.span>
         <styled.span>
           <span
-            className="c6"
+            className="c7 "
           >
             I should be green
           </span>
@@ -490,7 +490,7 @@ exports[`referring to other components: mount 1`] = `
           error={true}
         >
           <span
-            className="c7"
+            className="c7 "
           >
             I should be red
           </span>
@@ -516,7 +516,7 @@ exports[`referring to other components: react-test-renderer 1`] = `
   color: palevioletred;
 }
 
-.c4 {
+.c5 {
   -webkit-transition: fill 0.25s;
   transition: fill 0.25s;
   width: 48px;
@@ -527,7 +527,7 @@ exports[`referring to other components: react-test-renderer 1`] = `
   fill: rebeccapurple;
 }
 
-.c5 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -539,7 +539,7 @@ exports[`referring to other components: react-test-renderer 1`] = `
   line-height: 1.2;
 }
 
-.c5::before {
+.c6::before {
   content: '◀';
   margin: 0 10px;
 }
@@ -548,7 +548,7 @@ exports[`referring to other components: react-test-renderer 1`] = `
   color: black;
 }
 
-.c0 .c6 {
+.c0 .c7 {
   color: yellow;
   background-color: green;
 }
@@ -566,20 +566,20 @@ exports[`referring to other components: react-test-renderer 1`] = `
     href="#"
   >
     <svg
-      className="c4"
+      className="c4 c5"
     />
     <span
-      className="c5"
+      className="c6"
     >
       Hovering my parent changes my style!
     </span>
     <span
-      className="c6"
+      className="c7 "
     >
       I should be green
     </span>
     <span
-      className="c7"
+      className="c7 "
     >
       I should be red
     </span>
@@ -602,7 +602,7 @@ exports[`referring to other components: react-testing-library 1`] = `
   color: palevioletred;
 }
 
-.c4 {
+.c5 {
   -webkit-transition: fill 0.25s;
   transition: fill 0.25s;
   width: 48px;
@@ -613,7 +613,7 @@ exports[`referring to other components: react-testing-library 1`] = `
   fill: rebeccapurple;
 }
 
-.c5 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -625,7 +625,7 @@ exports[`referring to other components: react-testing-library 1`] = `
   line-height: 1.2;
 }
 
-.c5::before {
+.c6::before {
   content: '◀';
   margin: 0 10px;
 }
@@ -634,7 +634,7 @@ exports[`referring to other components: react-testing-library 1`] = `
   color: black;
 }
 
-.c0 .c6 {
+.c0 .c7 {
   color: yellow;
   background-color: green;
 }
@@ -652,20 +652,20 @@ exports[`referring to other components: react-testing-library 1`] = `
     href="#"
   >
     <svg
-      class="c4"
+      class="c4 c5"
     />
     <span
-      class="c5"
+      class="c6"
     >
       Hovering my parent changes my style!
     </span>
     <span
-      class="c6"
+      class="c7 "
     >
       I should be green
     </span>
     <span
-      class="c7"
+      class="c7 "
     >
       I should be red
     </span>
@@ -676,6 +676,9 @@ exports[`referring to other components: react-testing-library 1`] = `
 exports[`referring to other unreferenced components: mount 1`] = `
 .c0 {
   font-size: 1.5em;
+}
+
+.c1 {
   color: palevioletred;
   font-weight: bold;
 }
@@ -683,7 +686,7 @@ exports[`referring to other unreferenced components: mount 1`] = `
 <div>
   <Styled(styled.a)>
     <a
-      className="c0"
+      className="c0 c1"
     >
       Styled, exciting Link
     </a>
@@ -694,13 +697,16 @@ exports[`referring to other unreferenced components: mount 1`] = `
 exports[`referring to other unreferenced components: react-test-renderer 1`] = `
 .c0 {
   font-size: 1.5em;
+}
+
+.c1 {
   color: palevioletred;
   font-weight: bold;
 }
 
 <div>
   <a
-    className="c0"
+    className="c0 c1"
   >
     Styled, exciting Link
   </a>
@@ -710,13 +716,16 @@ exports[`referring to other unreferenced components: react-test-renderer 1`] = `
 exports[`referring to other unreferenced components: react-testing-library 1`] = `
 .c0 {
   font-size: 1.5em;
+}
+
+.c1 {
   color: palevioletred;
   font-weight: bold;
 }
 
 <div>
   <a
-    class="c0"
+    class="c0 c1"
   >
     Styled, exciting Link
   </a>
@@ -820,16 +829,16 @@ exports[`strips unused styles: react-testing-library 1`] = `
 `;
 
 exports[`supported css: mount 1`] = `
-.c0 {
+.c1 {
   padding: 2em 1em;
   background: papayawhip;
 }
 
-.c0:hover {
+.c1:hover {
   background: palevioletred;
 }
 
-.c0 > p {
+.c1 > p {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -839,18 +848,18 @@ html.test .c0 {
 }
 
 @media (max-width:600px) {
-  .c0 {
+  .c1 {
     background: tomato;
   }
 
-  .c0:hover {
+  .c1:hover {
     background: yellow;
   }
 }
 
 <styled.div>
   <div
-    className="c0"
+    className="c0 c1"
   >
     <p>
       Hello World!
@@ -860,16 +869,16 @@ html.test .c0 {
 `;
 
 exports[`supported css: react-test-renderer 1`] = `
-.c0 {
+.c1 {
   padding: 2em 1em;
   background: papayawhip;
 }
 
-.c0:hover {
+.c1:hover {
   background: palevioletred;
 }
 
-.c0 > p {
+.c1 > p {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -879,17 +888,17 @@ html.test .c0 {
 }
 
 @media (max-width:600px) {
-  .c0 {
+  .c1 {
     background: tomato;
   }
 
-  .c0:hover {
+  .c1:hover {
     background: yellow;
   }
 }
 
 <div
-  className="c0"
+  className="c0 c1"
 >
   <p>
     Hello World!
@@ -898,16 +907,16 @@ html.test .c0 {
 `;
 
 exports[`supported css: react-testing-library 1`] = `
-.c0 {
+.c1 {
   padding: 2em 1em;
   background: papayawhip;
 }
 
-.c0:hover {
+.c1:hover {
   background: palevioletred;
 }
 
-.c0 > p {
+.c1 > p {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -917,17 +926,17 @@ html.test .c0 {
 }
 
 @media (max-width:600px) {
-  .c0 {
+  .c1 {
     background: tomato;
   }
 
-  .c0:hover {
+  .c1:hover {
     background: yellow;
   }
 }
 
 <div
-  class="c0"
+  class="c0 c1"
 >
   <p>
     Hello World!
@@ -936,16 +945,16 @@ html.test .c0 {
 `;
 
 exports[`supported css: shallow 1`] = `
-.c0 {
+.c1 {
   padding: 2em 1em;
   background: papayawhip;
 }
 
-.c0:hover {
+.c1:hover {
   background: palevioletred;
 }
 
-.c0 > p {
+.c1 > p {
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
@@ -955,17 +964,17 @@ html.test .c0 {
 }
 
 @media (max-width:600px) {
-  .c0 {
+  .c1 {
     background: tomato;
   }
 
-  .c0:hover {
+  .c1:hover {
     background: yellow;
   }
 }
 
 <div
-  className="c0"
+  className="c0 c1"
 >
   <p>
     Hello World!
@@ -1006,7 +1015,7 @@ exports[`theming: mount 1`] = `
       Normal
     </button>
   </styled.button>
-  <ThemeProvider
+  <Component
     theme={
       Object {
         "main": "mediumseagreen",
@@ -1026,7 +1035,7 @@ exports[`theming: mount 1`] = `
         Themed
       </button>
     </styled.button>
-  </ThemeProvider>
+  </Component>
 </div>
 `;
 
@@ -1107,7 +1116,7 @@ exports[`theming: shallow 1`] = `
   >
     Normal
   </styled.button>
-  <ThemeProvider
+  <Component
     theme={
       Object {
         "main": "mediumseagreen",
@@ -1123,7 +1132,7 @@ exports[`theming: shallow 1`] = `
     >
       Themed
     </styled.button>
-  </ThemeProvider>
+  </Component>
 </div>
 `;
 
