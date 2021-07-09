@@ -81,5 +81,8 @@
       "<rootDir>/test/native",
       "<rootDir>/test/preact"
     ]
+  },
+  "engines": {
+    "node": ">= 12"
   }
 }
