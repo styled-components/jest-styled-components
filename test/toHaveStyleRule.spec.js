@@ -1,86 +1,62 @@
-import { render } from "@testing-library/react";
-import { mount, shallow } from "enzyme";
-import React from "react";
-import renderer from "react-test-renderer";
-import styled, { css, ThemeProvider } from "styled-components";
-import "../src";
+import { render } from '@testing-library/react';
+import { mount, shallow } from 'enzyme';
+import React from 'react';
+import renderer from 'react-test-renderer';
+import styled, { css, ThemeProvider } from 'styled-components';
+import '../src';
 
 const notToHaveStyleRule = (component, property, value) => {
-  expect(renderer.create(component).toJSON()).not.toHaveStyleRule(
-    property,
-    value
-  );
+  expect(renderer.create(component).toJSON()).not.toHaveStyleRule(property, value);
   expect(shallow(component)).not.toHaveStyleRule(property, value);
   expect(mount(component)).not.toHaveStyleRule(property, value);
-  expect(render(component).container.firstChild).not.toHaveStyleRule(
-    property,
-    value
-  );
+  expect(render(component).container.firstChild).not.toHaveStyleRule(property, value);
 };
 
 const toHaveStyleRule = (component, property, value, options) => {
-  expect(renderer.create(component).toJSON()).toHaveStyleRule(
-    property,
-    value,
-    options
-  );
+  expect(renderer.create(component).toJSON()).toHaveStyleRule(property, value, options);
   expect(shallow(component)).toHaveStyleRule(property, value, options);
   expect(mount(component)).toHaveStyleRule(property, value, options);
-  expect(render(component).container.firstChild).toHaveStyleRule(
-    property,
-    value,
-    options
-  );
+  expect(render(component).container.firstChild).toHaveStyleRule(property, value, options);
 };
 
-it("null", () => {
-  expect(null).not.toHaveStyleRule("a", "b");
+it('null', () => {
+  expect(null).not.toHaveStyleRule('a', 'b');
 });
 
-it("non-styled", () => {
-  notToHaveStyleRule(<div />, "a", "b");
+it('non-styled', () => {
+  notToHaveStyleRule(<div />, 'a', 'b');
 });
 
-it("message when rules not found", () => {
+it('message when rules not found', () => {
   expect(() =>
-    expect(renderer.create(<div />).toJSON()).toHaveStyleRule("color", "black")
-  ).toThrowErrorMatchingInlineSnapshot(
-    `"No style rules found on passed Component"`
-  );
+    expect(renderer.create(<div />).toJSON()).toHaveStyleRule('color', 'black')
+  ).toThrowErrorMatchingInlineSnapshot(`"No style rules found on passed Component"`);
 });
 
-it("message when rules not found using options", () => {
+it('message when rules not found using options', () => {
   const Button = styled.button`
     color: red;
   `;
 
-  toHaveStyleRule(<Button />, "color", "red");
+  toHaveStyleRule(<Button />, 'color', 'red');
   expect(() =>
-    expect(renderer.create(<Button />).toJSON()).toHaveStyleRule(
-      "color",
-      "red",
-      {
-        media: "(max-width:640px)",
-        modifier: ":hover"
-      }
-    )
+    expect(renderer.create(<Button />).toJSON()).toHaveStyleRule('color', 'red', {
+      media: '(max-width:640px)',
+      modifier: ':hover',
+    })
   ).toThrowErrorMatchingInlineSnapshot(`
     "No style rules found on passed Component using options:
     {\\"media\\":\\"(max-width:640px)\\",\\"modifier\\":\\":hover\\"}"
   `);
 });
 
-it("message when property not found", () => {
+it('message when property not found', () => {
   const Button = styled.button`
     color: red;
   `;
 
-  expect(() =>
-    expect(renderer.create(<Button />).toJSON()).toHaveStyleRule(
-      "background-color",
-      "black"
-    )
-  ).toThrowErrorMatchingInlineSnapshot(`
+  expect(() => expect(renderer.create(<Button />).toJSON()).toHaveStyleRule('background-color', 'black'))
+    .toThrowErrorMatchingInlineSnapshot(`
     "[31m\\"Property 'background-color' not found in style rules\\"[39m
 
     Expected
@@ -90,16 +66,13 @@ it("message when property not found", () => {
   `);
 });
 
-it("message when value does not match", () => {
+it('message when value does not match', () => {
   const Wrapper = styled.section`
     background: orange;
   `;
 
   expect(() => {
-    expect(renderer.create(<Wrapper />).toJSON()).toHaveStyleRule(
-      "background",
-      "red"
-    );
+    expect(renderer.create(<Wrapper />).toJSON()).toHaveStyleRule('background', 'red');
   }).toThrowErrorMatchingInlineSnapshot(`
     "[31m\\"Value mismatch for property 'background'\\"[39m
 
@@ -110,67 +83,62 @@ it("message when value does not match", () => {
   `);
 });
 
-it("non existing", () => {
+it('non existing', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
   `;
 
   expect(() => {
-    expect(shallow(<Wrapper />).find("div")).toHaveStyleRule(
-      "background",
-      "papayawhip"
-    );
-  }).toThrowErrorMatchingInlineSnapshot(
-    `"No style rules found on passed Component"`
-  );
+    expect(shallow(<Wrapper />).find('div')).toHaveStyleRule('background', 'papayawhip');
+  }).toThrowErrorMatchingInlineSnapshot(`"No style rules found on passed Component"`);
 });
 
-it("basic", () => {
+it('basic', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
   `;
 
-  toHaveStyleRule(<Wrapper />, "background", "papayawhip");
+  toHaveStyleRule(<Wrapper />, 'background', 'papayawhip');
 });
 
-it("regex", () => {
+it('regex', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
   `;
 
-  toHaveStyleRule(<Wrapper />, "background", /^p/);
+  toHaveStyleRule(<Wrapper />, 'background', /^p/);
 });
 
-it("complex string", () => {
+it('complex string', () => {
   const Wrapper = styled.section`
     border: 1px solid rgba(0, 0, 0, 0.125);
   `;
 
-  toHaveStyleRule(<Wrapper />, "border", "1px solid rgba(0,0,0,0.125)");
+  toHaveStyleRule(<Wrapper />, 'border', '1px solid rgba(0,0,0,0.125)');
 });
 
-it("undefined", () => {
+it('undefined', () => {
   const Button = styled.button`
-    cursor: ${({ disabled }) => !disabled && "pointer"};
-    opacity: ${({ disabled }) => disabled && ".65"};
+    cursor: ${({ disabled }) => !disabled && 'pointer'};
+    opacity: ${({ disabled }) => disabled && '.65'};
   `;
 
-  toHaveStyleRule(<Button />, "opacity", undefined);
-  toHaveStyleRule(<Button />, "cursor", "pointer");
-  toHaveStyleRule(<Button disabled />, "opacity", ".65");
-  toHaveStyleRule(<Button disabled />, "cursor", undefined);
+  toHaveStyleRule(<Button />, 'opacity', undefined);
+  toHaveStyleRule(<Button />, 'cursor', 'pointer');
+  toHaveStyleRule(<Button disabled />, 'opacity', '.65');
+  toHaveStyleRule(<Button disabled />, 'cursor', undefined);
 });
 
 it('negated ".not" modifier with no value', () => {
   const Button = styled.button`
-    opacity: ${({ disabled }) => disabled && ".65"};
+    opacity: ${({ disabled }) => disabled && '.65'};
   `;
 
-  notToHaveStyleRule(<Button />, "opacity");
-  toHaveStyleRule(<Button disabled />, "opacity", ".65");
+  notToHaveStyleRule(<Button />, 'opacity');
+  toHaveStyleRule(<Button disabled />, 'opacity', '.65');
 });
 
 it('negated ".not" modifier with value', () => {
@@ -178,55 +146,40 @@ it('negated ".not" modifier with value', () => {
     opacity: 0.65;
   `;
 
-  notToHaveStyleRule(<Button />, "opacity", "0.50");
-  notToHaveStyleRule(<Button />, "opacity", "");
-  notToHaveStyleRule(<Button />, "opacity", null);
-  notToHaveStyleRule(<Button />, "opacity", false);
-  notToHaveStyleRule(<Button />, "opacity", undefined);
+  notToHaveStyleRule(<Button />, 'opacity', '0.50');
+  notToHaveStyleRule(<Button />, 'opacity', '');
+  notToHaveStyleRule(<Button />, 'opacity', null);
+  notToHaveStyleRule(<Button />, 'opacity', false);
+  notToHaveStyleRule(<Button />, 'opacity', undefined);
 });
 
-it("jest asymmetric matchers", () => {
+it('jest asymmetric matchers', () => {
   const Button = styled.button`
-    border: 0.1em solid
-      ${({ transparent }) => (transparent ? "transparent" : "black")};
+    border: 0.1em solid ${({ transparent }) => (transparent ? 'transparent' : 'black')};
   `;
 
-  toHaveStyleRule(<Button />, "border", expect.any(String));
-  toHaveStyleRule(<Button />, "border", expect.stringMatching("solid"));
-  toHaveStyleRule(<Button />, "border", expect.stringMatching(/^0.1em/));
-  toHaveStyleRule(<Button />, "border", expect.stringContaining("black"));
-  notToHaveStyleRule(
-    <Button transparent />,
-    "border",
-    expect.stringContaining("black")
-  );
-  toHaveStyleRule(
-    <Button transparent />,
-    "border",
-    expect.stringContaining("transparent")
-  );
-  notToHaveStyleRule(<Button />, "color", expect.any(String));
-  notToHaveStyleRule(<Button />, "color", expect.anything());
+  toHaveStyleRule(<Button />, 'border', expect.any(String));
+  toHaveStyleRule(<Button />, 'border', expect.stringMatching('solid'));
+  toHaveStyleRule(<Button />, 'border', expect.stringMatching(/^0.1em/));
+  toHaveStyleRule(<Button />, 'border', expect.stringContaining('black'));
+  notToHaveStyleRule(<Button transparent />, 'border', expect.stringContaining('black'));
+  toHaveStyleRule(<Button transparent />, 'border', expect.stringContaining('transparent'));
+  notToHaveStyleRule(<Button />, 'color', expect.any(String));
+  notToHaveStyleRule(<Button />, 'color', expect.anything());
 });
 
-it("any component", () => {
-  const Link = ({ className, children }) => (
-    <a className={className}>{children}</a>
-  );
+it('any component', () => {
+  const Link = ({ className, children }) => <a className={className}>{children}</a>;
 
   const StyledLink = styled(Link)`
     color: palevioletred;
     font-weight: bold;
   `;
 
-  toHaveStyleRule(
-    <StyledLink>Styled, exciting Link</StyledLink>,
-    "color",
-    "palevioletred"
-  );
+  toHaveStyleRule(<StyledLink>Styled, exciting Link</StyledLink>, 'color', 'palevioletred');
 });
 
-it("styled child", () => {
+it('styled child', () => {
   const Parent = styled.div`
     color: red;
   `;
@@ -235,31 +188,31 @@ it("styled child", () => {
     padding: 0;
   `;
 
-  toHaveStyleRule(<StyledChild />, "color", "red");
+  toHaveStyleRule(<StyledChild />, 'color', 'red');
 });
 
-it("theming", () => {
+it('theming', () => {
   const Button = styled.button`
     font-size: 1em;
     margin: 1em;
     padding: 0.25em 1em;
     border-radius: 3px;
 
-    color: ${props => props.theme.main};
-    border: 2px solid ${props => props.theme.main};
+    color: ${(props) => props.theme.main};
+    border: 2px solid ${(props) => props.theme.main};
   `;
 
   Button.defaultProps = {
     theme: {
-      main: "palevioletred"
-    }
+      main: 'palevioletred',
+    },
   };
 
   const theme = {
-    main: "mediumseagreen"
+    main: 'mediumseagreen',
   };
 
-  toHaveStyleRule(<Button>Normal</Button>, "color", "palevioletred");
+  toHaveStyleRule(<Button>Normal</Button>, 'color', 'palevioletred');
 
   const component = (
     <ThemeProvider theme={theme}>
@@ -267,14 +220,11 @@ it("theming", () => {
     </ThemeProvider>
   );
 
-  expect(renderer.create(component).toJSON()).toHaveStyleRule(
-    "color",
-    "mediumseagreen"
-  );
-  expect(mount(component)).toHaveStyleRule("color", "mediumseagreen");
+  expect(renderer.create(component).toJSON()).toHaveStyleRule('color', 'mediumseagreen');
+  expect(mount(component)).toHaveStyleRule('color', 'mediumseagreen');
 });
 
-it("at rules", () => {
+it('at rules', () => {
   const Wrapper = styled.section`
     color: red;
     @media (max-width: 640px) {
@@ -288,31 +238,31 @@ it("at rules", () => {
     }
   `;
 
-  toHaveStyleRule(<Wrapper />, "color", "red");
-  toHaveStyleRule(<Wrapper />, "color", "green", {
-    media: "(max-width:640px)"
+  toHaveStyleRule(<Wrapper />, 'color', 'red');
+  toHaveStyleRule(<Wrapper />, 'color', 'green', {
+    media: '(max-width:640px)',
   });
-  toHaveStyleRule(<Wrapper />, "color", "green", {
-    media: "(max-width: 640px)"
+  toHaveStyleRule(<Wrapper />, 'color', 'green', {
+    media: '(max-width: 640px)',
   });
-  toHaveStyleRule(<Wrapper />, "color", "blue", {
-    media: "(min-width:200px) and (max-width:640px)"
+  toHaveStyleRule(<Wrapper />, 'color', 'blue', {
+    media: '(min-width:200px) and (max-width:640px)',
   });
-  toHaveStyleRule(<Wrapper />, "color", "blue", {
-    media: "(min-width: 200px) and (max-width: 640px)"
+  toHaveStyleRule(<Wrapper />, 'color', 'blue', {
+    media: '(min-width: 200px) and (max-width: 640px)',
   });
-  toHaveStyleRule(<Wrapper />, "color", "blue", {
-    media: "(min-width: 200px) and (max-width:640px)"
+  toHaveStyleRule(<Wrapper />, 'color', 'blue', {
+    media: '(min-width: 200px) and (max-width:640px)',
   });
-  toHaveStyleRule(<Wrapper />, "color", "blue", {
-    media: "(min-width:200px) and (max-width: 640px)"
+  toHaveStyleRule(<Wrapper />, 'color', 'blue', {
+    media: '(min-width:200px) and (max-width: 640px)',
   });
-  toHaveStyleRule(<Wrapper />, "color", "red", {
-    media: "(min-width: 576px) and (max-width: 767.98px)"
+  toHaveStyleRule(<Wrapper />, 'color', 'red', {
+    media: '(min-width: 576px) and (max-width: 767.98px)',
   });
 });
 
-it("selector modifiers", () => {
+it('selector modifiers', () => {
   const Link = styled.a`
     color: white;
 
@@ -322,7 +272,7 @@ it("selector modifiers", () => {
     &::after {
       color: red;
     }
-    &[href*="somelink.com"] {
+    &[href*='somelink.com'] {
       color: green;
     }
     > div {
@@ -374,61 +324,61 @@ it("selector modifiers", () => {
     }
   `;
 
-  toHaveStyleRule(<Link />, "color", "white");
-  toHaveStyleRule(<Link />, "color", "blue", {
-    modifier: ":hover"
+  toHaveStyleRule(<Link />, 'color', 'white');
+  toHaveStyleRule(<Link />, 'color', 'blue', {
+    modifier: ':hover',
   });
-  toHaveStyleRule(<Link />, "color", "red", {
-    modifier: "::after"
+  toHaveStyleRule(<Link />, 'color', 'red', {
+    modifier: '::after',
   });
-  toHaveStyleRule(<Link />, "color", "green", {
-    modifier: "[href*='somelink.com']"
+  toHaveStyleRule(<Link />, 'color', 'green', {
+    modifier: "[href*='somelink.com']",
   });
-  toHaveStyleRule(<Link />, "color", "yellow", {
-    modifier: "> div"
+  toHaveStyleRule(<Link />, 'color', 'yellow', {
+    modifier: '> div',
   });
-  toHaveStyleRule(<Link />, "color", "purple", {
-    modifier: "span"
+  toHaveStyleRule(<Link />, 'color', 'purple', {
+    modifier: 'span',
   });
-  toHaveStyleRule(<Link />, "color", "purple", {
-    modifier: " span"
+  toHaveStyleRule(<Link />, 'color', 'purple', {
+    modifier: ' span',
   });
-  toHaveStyleRule(<Link />, "color", "orange", {
-    modifier: ".child"
+  toHaveStyleRule(<Link />, 'color', 'orange', {
+    modifier: '.child',
   });
-  toHaveStyleRule(<Link />, "color", "orange", {
-    modifier: " .child"
+  toHaveStyleRule(<Link />, 'color', 'orange', {
+    modifier: ' .child',
   });
-  toHaveStyleRule(<Link />, "color", "black", {
-    modifier: "&.self"
+  toHaveStyleRule(<Link />, 'color', 'black', {
+    modifier: '&.self',
   });
-  toHaveStyleRule(<Link />, "color", "olive", {
-    modifier: ".one"
+  toHaveStyleRule(<Link />, 'color', 'olive', {
+    modifier: '.one',
   });
-  toHaveStyleRule(<Link />, "color", "olive", {
-    modifier: ".two"
+  toHaveStyleRule(<Link />, 'color', 'olive', {
+    modifier: '.two',
   });
-  toHaveStyleRule(<Link />, "color", "pink", {
-    modifier: "~ div.one"
+  toHaveStyleRule(<Link />, 'color', 'pink', {
+    modifier: '~ div.one',
   });
-  toHaveStyleRule(<Link />, "color", "salmon", {
-    modifier: "+ div .two"
+  toHaveStyleRule(<Link />, 'color', 'salmon', {
+    modifier: '+ div .two',
   });
-  toHaveStyleRule(<Link />, "color", "red", {
-    modifier: ".parent &"
+  toHaveStyleRule(<Link />, 'color', 'red', {
+    modifier: '.parent &',
   });
-  toHaveStyleRule(<Link />, "color", "fuchsia", {
-    modifier: "&&"
+  toHaveStyleRule(<Link />, 'color', 'fuchsia', {
+    modifier: '&&',
   });
-  toHaveStyleRule(<Link />, "color", "olive", {
-    modifier: "&&&"
+  toHaveStyleRule(<Link />, 'color', 'olive', {
+    modifier: '&&&',
   });
-  toHaveStyleRule(<Link />, "color", "deepskyblue", {
-    modifier: "& &"
+  toHaveStyleRule(<Link />, 'color', 'deepskyblue', {
+    modifier: '& &',
   });
 });
 
-it("component modifiers", () => {
+it('component modifiers', () => {
   const Text = styled.span`
     color: grey;
   `;
@@ -449,47 +399,47 @@ it("component modifiers", () => {
     }
   `;
 
-  toHaveStyleRule(<Link />, "color", "white");
-  toHaveStyleRule(<Text />, "color", "grey");
+  toHaveStyleRule(<Link />, 'color', 'white');
+  toHaveStyleRule(<Text />, 'color', 'grey');
   toHaveStyleRule(
     <Link>
       <Text />
     </Link>,
-    "color",
-    "blue",
+    'color',
+    'blue',
     {
       // eslint-disable-next-line prettier/prettier
       modifier: css`
         ${Text}
-      `
+      `,
     }
   );
   toHaveStyleRule(
     <Link>
       <Text />
     </Link>,
-    "color",
-    "green",
+    'color',
+    'green',
     {
-      modifier: css`> ${Text} span`
+      modifier: css`> ${Text} span`,
     }
   );
   toHaveStyleRule(
     <Link>
       <Text />
     </Link>,
-    "color",
-    "purple",
+    'color',
+    'purple',
     {
       // eslint-disable-next-line prettier/prettier
       modifier: css`
         ${Text} &
-      `
+      `,
     }
   );
 });
 
-it("nested", () => {
+it('nested', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
@@ -497,58 +447,52 @@ it("nested", () => {
 
   const MyComponent = () => <Wrapper />;
 
-  toHaveStyleRule(<MyComponent />, "background", "papayawhip");
+  toHaveStyleRule(<MyComponent />, 'background', 'papayawhip');
 });
 
-it("nested with styling", () => {
+it('nested with styling', () => {
   const Wrapper = styled.section`
     background: papayawhip;
   `;
   const Children = styled.span`
     background: gray;
   `;
-  const MyComponent = props => <Wrapper {...props} />;
+  const MyComponent = (props) => <Wrapper {...props} />;
   const MyStyledComponent = styled(MyComponent)`
     color: red;
   `;
-  const ParentComponent = props => (
+  const ParentComponent = (props) => (
     <MyStyledComponent {...props}>
       <Children className="test-class" />
     </MyStyledComponent>
   );
 
-  toHaveStyleRule(<MyStyledComponent />, "color", "red");
-  toHaveStyleRule(<MyStyledComponent className="test-class" />, "color", "red");
-  expect(shallow(<ParentComponent />).find(Children)).toHaveStyleRule(
-    "background",
-    "gray"
-  );
-  expect(mount(<ParentComponent />).find(Children)).toHaveStyleRule(
-    "background",
-    "gray"
-  );
+  toHaveStyleRule(<MyStyledComponent />, 'color', 'red');
+  toHaveStyleRule(<MyStyledComponent className="test-class" />, 'color', 'red');
+  expect(shallow(<ParentComponent />).find(Children)).toHaveStyleRule('background', 'gray');
+  expect(mount(<ParentComponent />).find(Children)).toHaveStyleRule('background', 'gray');
 });
 
-it("empty children", () => {
+it('empty children', () => {
   const Wrapper = styled.section`
     padding: 4em;
     background: papayawhip;
   `;
 
   Wrapper.defaultProps = {
-    children: ""
+    children: '',
   };
 
-  toHaveStyleRule(<Wrapper />, "background", "papayawhip");
+  toHaveStyleRule(<Wrapper />, 'background', 'papayawhip');
 });
 
-it("custom display name prefix", () => {
-  const Text = styled.span.withConfig({ displayName: "Text__sc" })`
+it('custom display name prefix', () => {
+  const Text = styled.span.withConfig({ displayName: 'Text__sc' })`
     color: red;
   `;
-  const Comp = styled(Text).withConfig({ displayName: "Comp__Sub-sc" })`
+  const Comp = styled(Text).withConfig({ displayName: 'Comp__Sub-sc' })`
     background: papayawhip;
   `;
-  toHaveStyleRule(<Comp />, "background", "papayawhip");
-  toHaveStyleRule(<Comp />, "color", "red");
+  toHaveStyleRule(<Comp />, 'background', 'papayawhip');
+  toHaveStyleRule(<Comp />, 'color', 'red');
 });
