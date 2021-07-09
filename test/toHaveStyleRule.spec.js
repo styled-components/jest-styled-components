@@ -44,7 +44,9 @@ it("non-styled", () => {
 it("message when rules not found", () => {
   expect(() =>
     expect(renderer.create(<div />).toJSON()).toHaveStyleRule("color", "black")
-  ).toThrowErrorMatchingSnapshot();
+  ).toThrowErrorMatchingInlineSnapshot(
+    `"No style rules found on passed Component"`
+  );
 });
 
 it("message when rules not found using options", () => {
@@ -62,7 +64,10 @@ it("message when rules not found using options", () => {
         modifier: ":hover"
       }
     )
-  ).toThrowErrorMatchingSnapshot();
+  ).toThrowErrorMatchingInlineSnapshot(`
+    "No style rules found on passed Component using options:
+    {\\"media\\":\\"(max-width:640px)\\",\\"modifier\\":\\":hover\\"}"
+  `);
 });
 
 it("message when property not found", () => {
@@ -75,7 +80,14 @@ it("message when property not found", () => {
       "background-color",
       "black"
     )
-  ).toThrowErrorMatchingSnapshot();
+  ).toThrowErrorMatchingInlineSnapshot(`
+    "[31m\\"Property 'background-color' not found in style rules\\"[39m
+
+    Expected
+      [32m\\"background-color: black\\"[39m
+    Received:
+      [31m\\"background-color: undefined\\"[39m"
+  `);
 });
 
 it("message when value does not match", () => {
@@ -88,7 +100,14 @@ it("message when value does not match", () => {
       "background",
       "red"
     );
-  }).toThrowErrorMatchingSnapshot();
+  }).toThrowErrorMatchingInlineSnapshot(`
+    "[31m\\"Value mismatch for property 'background'\\"[39m
+
+    Expected
+      [32m\\"background: red\\"[39m
+    Received:
+      [31m\\"background: orange\\"[39m"
+  `);
 });
 
 it("non existing", () => {
@@ -102,7 +121,9 @@ it("non existing", () => {
       "background",
       "papayawhip"
     );
-  }).toThrowErrorMatchingSnapshot();
+  }).toThrowErrorMatchingInlineSnapshot(
+    `"No style rules found on passed Component"`
+  );
 });
 
 it("basic", () => {
@@ -486,11 +507,11 @@ it("nested with styling", () => {
   const Children = styled.span`
     background: gray;
   `;
-  const MyComponent = (props) => <Wrapper {...props} />;
+  const MyComponent = props => <Wrapper {...props} />;
   const MyStyledComponent = styled(MyComponent)`
     color: red;
   `;
-  const ParentComponent = (props) => (
+  const ParentComponent = props => (
     <MyStyledComponent {...props}>
       <Children className="test-class" />
     </MyStyledComponent>
@@ -498,8 +519,14 @@ it("nested with styling", () => {
 
   toHaveStyleRule(<MyStyledComponent />, "color", "red");
   toHaveStyleRule(<MyStyledComponent className="test-class" />, "color", "red");
-  expect(shallow(<ParentComponent/>).find(Children)).toHaveStyleRule("background", "gray");
-  expect(mount(<ParentComponent/>).find(Children)).toHaveStyleRule("background", "gray");
+  expect(shallow(<ParentComponent />).find(Children)).toHaveStyleRule(
+    "background",
+    "gray"
+  );
+  expect(mount(<ParentComponent />).find(Children)).toHaveStyleRule(
+    "background",
+    "gray"
+  );
 });
 
 it("empty children", () => {
@@ -516,10 +543,10 @@ it("empty children", () => {
 });
 
 it("custom display name prefix", () => {
-  const Text = styled.span.withConfig({ displayName: 'Text__sc' })`
+  const Text = styled.span.withConfig({ displayName: "Text__sc" })`
     color: red;
   `;
-  const Comp = styled(Text).withConfig({ displayName: 'Comp__Sub-sc' })`
+  const Comp = styled(Text).withConfig({ displayName: "Comp__Sub-sc" })`
     background: papayawhip;
   `;
   toHaveStyleRule(<Comp />, "background", "papayawhip");
