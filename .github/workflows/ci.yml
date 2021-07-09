@@ -5,11 +5,11 @@ on: [push, pull_request_target]
 jobs:
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: ["12", "14", "16"]
     steps:
       - uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -25,11 +25,6 @@ jobs:
 
       - name: Install modules
         run: yarn --pure-lockfile
-
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node }}
 
       - name: Run tests
         run: yarn test
