@@ -3,7 +3,7 @@ name: CI
 on: [push, pull_request_target]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
