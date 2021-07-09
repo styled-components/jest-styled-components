@@ -49,6 +49,8 @@ const getAtRules = (ast, options) => {
     .reduce((acc, rules) => acc.concat(rules), []);
 };
 
+const normalizeQuotations = (input) => input.replace(/['"]/g, '"');
+
 const getModifiedClassName = (className, staticClassName, modifier = '') => {
   const classNameSelector = `.${className}`;
   let prefix = '';
@@ -75,13 +77,18 @@ const hasClassNames = (classNames, selectors, options) => {
 
   return classNames.some((className) =>
     staticClassNames.some((staticClassName) =>
-      selectors.includes(getModifiedClassName(className, staticClassName, options.modifier).replace(/['"]/g, '"'))
+      selectors.includes(
+        normalizeQuotations(getModifiedClassName(className, staticClassName, options.modifier).replace(/['"]/g, '"'))
+      )
     )
   );
 };
 
 const getRules = (ast, classNames, options) => {
-  const rules = hasAtRule(options) ? getAtRules(ast, options) : ast.stylesheet.rules;
+  const rules = (hasAtRule(options) ? getAtRules(ast, options) : ast.stylesheet.rules).map((rule) => ({
+    ...rule,
+    selectors: Array.isArray(rule.selectors) ? rule.selectors.map(normalizeQuotations) : rule.selectors,
+  }));
 
   return rules.filter((rule) => rule.type === 'rule' && hasClassNames(classNames, rule.selectors, options));
 };
