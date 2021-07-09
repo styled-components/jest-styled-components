@@ -49,8 +49,14 @@ const filterUnreferencedClassNames = (classNames, hashes) => classNames.filter(c
 const includesClassNames = (classNames, selectors) =>
   classNames.some(className => selectors.some(selector => selector.includes(className)));
 
+const includesUnknownClassNames = (classNames, selectors) =>
+  !selectors
+    .flatMap(selector => selector.split(' '))
+    .filter(chunk => chunk.includes('sc-'))
+    .every(chunk => classNames.some(className => chunk.includes(className)))
+
 const filterRules = classNames => rule =>
-  rule.type === 'rule' && includesClassNames(classNames, rule.selectors) && rule.declarations.length;
+  rule.type === 'rule' && !includesUnknownClassNames(classNames, rule.selectors) && includesClassNames(classNames, rule.selectors) && rule.declarations.length;
 
 const getAtRules = (ast, filter) =>
   ast.stylesheet.rules
