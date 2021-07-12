@@ -11,6 +11,13 @@ const sheet = mainSheet || masterSheet;
 const isServer = () => typeof document === 'undefined';
 
 const resetStyleSheet = () => {
+  if (!isServer()) {
+    const scStyles = document.querySelectorAll('style[data-styled-version]')
+    for (const item of scStyles) {
+      item.parentElement.removeChild(item)
+    }
+  }
+
   sheet.names = new Map();
   sheet.clearTag();
 };
