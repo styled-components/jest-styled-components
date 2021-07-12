@@ -2,7 +2,6 @@ import styled, { __PRIVATE__ } from 'styled-components'
 import { render } from '@testing-library/react';
 import React from 'react'
 import { getHashes, resetStyleSheet } from '../src/utils';
-import { expect } from '@jest/globals';
 
 const { mainSheet, masterSheet } = __PRIVATE__
 const sheet = mainSheet || masterSheet;
