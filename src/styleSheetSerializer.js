@@ -9,16 +9,16 @@ const getNodes = (node, nodes = []) => {
   }
 
   if (node.children) {
-    Array.from(node.children).forEach(child => getNodes(child, nodes));
+    Array.from(node.children).forEach((child) => getNodes(child, nodes));
   }
 
   return nodes;
 };
 
-const markNodes = nodes => nodes.forEach(node => (node[KEY] = true));
+const markNodes = (nodes) => nodes.forEach((node) => (node[KEY] = true));
 
-const getClassNamesFromDOM = node => Array.from(node.classList);
-const getClassNamesFromProps = node => {
+const getClassNamesFromDOM = (node) => Array.from(node.classList);
+const getClassNamesFromProps = (node) => {
   const classNameProp = node.props && (node.props.class || node.props.className);
 
   if (classNameProp) {
@@ -28,7 +28,7 @@ const getClassNamesFromProps = node => {
   return [];
 };
 
-const getClassNames = nodes =>
+const getClassNames = (nodes) =>
   nodes.reduce((classNames, node) => {
     let newClassNames = null;
 
@@ -38,30 +38,40 @@ const getClassNames = nodes =>
       newClassNames = getClassNamesFromProps(node);
     }
 
-    newClassNames.forEach(className => classNames.add(className));
+    newClassNames.forEach((className) => classNames.add(className));
 
     return classNames;
   }, new Set());
 
-const filterClassNames = (classNames, hashes) => classNames.filter(className => hashes.includes(className));
-const filterUnreferencedClassNames = (classNames, hashes) => classNames.filter(className => className.startsWith('sc-') && !hashes.includes(className));
+const filterClassNames = (classNames, hashes) => classNames.filter((className) => hashes.includes(className));
+const filterUnreferencedClassNames = (classNames, hashes) =>
+  classNames.filter((className) => className.startsWith('sc-') && !hashes.includes(className));
 
 const includesClassNames = (classNames, selectors) =>
-  classNames.some(className => selectors.some(selector => selector.includes(className)));
+  classNames.some((className) => selectors.some((selector) => selector.includes(className)));
 
-const filterRules = classNames => rule =>
-  rule.type === 'rule' && includesClassNames(classNames, rule.selectors) && rule.declarations.length;
+const includesUnknownClassNames = (classNames, selectors) =>
+  !selectors
+    .flatMap((selector) => selector.split(' '))
+    .filter((chunk) => chunk.includes('sc-'))
+    .every((chunk) => classNames.some((className) => chunk.includes(className)));
+
+const filterRules = (classNames) => (rule) =>
+  rule.type === 'rule' &&
+  !includesUnknownClassNames(classNames, rule.selectors) &&
+  includesClassNames(classNames, rule.selectors) &&
+  rule.declarations.length;
 
 const getAtRules = (ast, filter) =>
   ast.stylesheet.rules
-    .filter(rule => rule.type === 'media' || rule.type === 'supports')
+    .filter((rule) => rule.type === 'media' || rule.type === 'supports')
     .reduce((acc, atRule) => {
       atRule.rules = atRule.rules.filter(filter);
 
       return acc.concat(atRule);
     }, []);
 
-const getStyle = classNames => {
+const getStyle = (classNames) => {
   const ast = getCSS();
   const filter = filterRules(classNames);
   const rules = ast.stylesheet.rules.filter(filter);
@@ -77,10 +87,10 @@ const getClassNamesFromSelectorsByHashes = (classNames, hashes) => {
   const filter = filterRules(classNames);
   const rules = ast.stylesheet.rules.filter(filter);
 
-  const selectors = rules.map(rule => rule.selectors);
+  const selectors = rules.map((rule) => rule.selectors);
   const classNamesIncludingFromSelectors = new Set(classNames);
-  const addHashFromSelectorListToClassNames = hash =>
-    selectors.forEach(selectorList => selectorList[0].includes(hash) && classNamesIncludingFromSelectors.add(hash));
+  const addHashFromSelectorListToClassNames = (hash) =>
+    selectors.forEach((selectorList) => selectorList[0].includes(hash) && classNamesIncludingFromSelectors.add(hash));
 
   hashes.forEach(addHashFromSelectorListToClassNames);
 
@@ -89,12 +99,11 @@ const getClassNamesFromSelectorsByHashes = (classNames, hashes) => {
 
 const replaceClassNames = (result, classNames, style) =>
   classNames
-    .filter(className => style.includes(className))
+    .filter((className) => style.includes(className))
     .reduce((acc, className, index) => acc.replace(new RegExp(className, 'g'), `c${index++}`), result);
 
 const stripUnreferencedClassNames = (result, classNames) =>
-    classNames
-      .reduce((acc, className) => acc.replace(new RegExp(`${className}\\s?`,'g'), ''), result);
+  classNames.reduce((acc, className) => acc.replace(new RegExp(`${className}\\s?`, 'g'), ''), result);
 
 const replaceHashes = (result, hashes) =>
   hashes.reduce(

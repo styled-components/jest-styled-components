@@ -1,6 +1,6 @@
 {
   "name": "jest-styled-components",
-  "version": "7.0.4",
+  "version": "7.0.5",
   "description": "Jest utilities for Styled Components",
   "main": "./src/index.js",
   "typings": "./typings/index.d.ts",
@@ -14,12 +14,11 @@
   "author": "Michele Bertoli",
   "license": "MIT",
   "scripts": {
-    "test": "yarn test:web && yarn test:native && yarn test:preact && yarn test:ts",
-    "test:web": "jest",
+    "test": "yarn test:web && yarn test:native && yarn test:preact",
+    "test:web": "jest --color",
     "test:web:watch": "jest --watch",
-    "test:native": "jest --config .jest.native.json",
-    "test:preact": "jest --config .jest.preact.json",
-    "test:ts": "tsc --strict ./typings/index.d.ts"
+    "test:native": "jest --color --config .jest.native.json",
+    "test:preact": "jest --color --config .jest.preact.json"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -30,29 +29,29 @@
     "@testing-library/react": "^9.3.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.8.0",
+    "babel-jest": "^26.0.0",
     "enzyme": "^3.6.0",
     "enzyme-adapter-preact-pure": "^2.2.0",
     "enzyme-adapter-react-16": "^1.5.0",
     "enzyme-to-json": "^3.3.1",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "husky": "^3.0.9",
-    "jest": "^24.8.0",
+    "jest": "^26.0.0",
     "lint-staged": "^9.4.2",
     "preact": "^10.0.0-beta.2",
     "preact-render-to-json": "^3.6.6",
-    "prettier": "^1.18.2",
+    "prettier": "^2.3.2",
     "react": "^16.8.0",
     "react-dom": "^16.8.0",
     "react-is": "^16.8.6",
-    "react-native": "^0.61.4",
+    "react-native": "^0.62.3",
     "react-test-renderer": "^16.8.0",
-    "styled-components": "^5.0.0",
-    "typescript": "^3.0.3"
+    "styled-components": "^5.0.0"
   },
   "dependencies": {
-    "css": "^2.2.4"
+    "css": "^3.0.0"
   },
   "peerDependencies": {
     "styled-components": ">= 5"
@@ -82,5 +81,8 @@
       "<rootDir>/test/native",
       "<rootDir>/test/preact"
     ]
+  },
+  "engines": {
+    "node": ">= 12"
   }
 }
