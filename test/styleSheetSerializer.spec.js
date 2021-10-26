@@ -5,7 +5,7 @@ import renderer from 'react-test-renderer';
 import styled, { ThemeContext, ThemeProvider } from 'styled-components';
 import {setStyleSheetSerializerOptions} from '../serializer';
 
-const toMatchSnapshot = component => {
+const toMatchSnapshot = (component) => {
   expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
   expect(shallow(component)).toMatchSnapshot('shallow');
   expect(mount(component)).toMatchSnapshot('mount');
@@ -127,8 +127,8 @@ it('theming', () => {
     padding: 0.25em 1em;
     border-radius: 3px;
 
-    color: ${props => props.theme.main};
-    border: 2px solid ${props => props.theme.main};
+    color: ${(props) => props.theme.main};
+    border: 2px solid ${(props) => props.theme.main};
   `;
 
   Button.defaultProps = {
@@ -153,7 +153,7 @@ it('theming', () => {
 
 it('shallow with theme', () => {
   const Button = styled.button`
-    color: ${props => props.theme.main};
+    color: ${(props) => props.theme.main};
   `;
 
   const theme = {
@@ -234,17 +234,49 @@ it('referring to other components', () => {
   const TextWithConditionalFormatting = styled.span`
     ${Container} & {
       color: yellow;
-      background-color: ${props => (props.error ? 'red' : 'green')};
+      background-color: ${(props) => (props.error ? 'red' : 'green')};
     }
   `;
 
   const component = (
-    <Link href="#">
-      <Icon />
-      <Label>Hovering my parent changes my style!</Label>
-      <TextWithConditionalFormatting>I should be green</TextWithConditionalFormatting>
-      <TextWithConditionalFormatting error>I should be red</TextWithConditionalFormatting>
-    </Link>
+    <Container>
+      <Link href="#">
+        <Icon />
+        <Label>Hovering my parent changes my style!</Label>
+        <TextWithConditionalFormatting>I should be green</TextWithConditionalFormatting>
+        <TextWithConditionalFormatting error>I should be red</TextWithConditionalFormatting>
+      </Link>
+    </Container>
+  );
+
+  expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
+  expect(mount(component)).toMatchSnapshot('mount');
+  expect(render(component).container.firstChild).toMatchSnapshot('react-testing-library');
+});
+
+it('strips unused styles', () => {
+  const BlueText = styled.div`
+    color: blue;
+  `;
+  const RedText = styled.div`
+    color: red;
+  `;
+
+  const FancyText = styled.div`
+    font-size: 16px;
+
+    ${BlueText} {
+      text-align: right;
+    }
+    ${RedText} {
+      text-align: center;
+    }
+  `;
+
+  const component = (
+    <FancyText>
+      <BlueText>A container that has styles for an unused child</BlueText>
+    </FancyText>
   );
 
   expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
@@ -255,12 +287,12 @@ it('referring to other components', () => {
 it('referring to other unreferenced components', () => {
   const UnreferencedLink = styled.a`
     font-size: 1.5em;
-  `
+  `;
 
   const ReferencedLink = styled(UnreferencedLink)`
     color: palevioletred;
     font-weight: bold;
-  `
+  `;
 
   toMatchSnapshot(
     <div>
