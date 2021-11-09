@@ -22,4 +22,11 @@ declare global {
   }
 }
 
-export declare const styleSheetSerializer: Exclude<Plugin, NewPlugin>;
+export interface StyledComponentsSerializerOptions { 
+  addStyles?: boolean, 
+  classNameFormatter?: (index: number) => string 
+} 
+
+export declare const styleSheetSerializer: Exclude<Plugin, NewPlugin> & { 
+  setStyleSheetSerializerOptions: (options?: StyledComponentsSerializerOptions) => void 
+};
