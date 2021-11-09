@@ -36,14 +36,14 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^26.0.0",
     "enzyme": "^3.6.0",
-    "enzyme-adapter-preact-pure": "^2.2.0",
+    "enzyme-adapter-preact-pure": "^3.3.0",
     "enzyme-to-json": "^3.3.1",
     "eslint": "^8.2.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "husky-v4": "^4.3.8",
     "jest": "^26.0.0",
-    "lint-staged": "^9.4.2",
+    "lint-staged": "^11.2.6",
     "preact": "^10.0.0-beta.2",
     "preact-render-to-json": "^3.6.6",
     "prettier": "^2.3.2",
@@ -67,8 +67,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "jest": {
