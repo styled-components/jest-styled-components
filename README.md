@@ -442,6 +442,22 @@ test('nested buttons are flexed', () => {
 })
 ```
 
+You can take a similar approach when you have classNames that override styles
+```js
+const Button = styled.button`
+  background-color: red;
+  
+  &.override {
+    background-color: blue;
+  }
+`
+const wrapper = mount(<Button className="override">I am a button!</Button>);
+
+expect(wrapper).toHaveStyleRule('background-color', 'blue', {
+  modifier: '&.override',
+});
+```
+
 This matcher works with trees serialized with `react-test-renderer`, `react-testing-library`, or those shallow rendered or mounted with Enzyme.
 It checks the style rules applied to the root component it receives, therefore to make assertions on components further in the tree they must be provided separately (Enzyme's [find](http://airbnb.io/enzyme/docs/api/ShallowWrapper/find.html) might help).
 
