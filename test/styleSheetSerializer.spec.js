@@ -234,7 +234,7 @@ it('referring to other components', () => {
   const TextWithConditionalFormatting = styled.span`
     ${Container} & {
       color: yellow;
-      background-color: ${(props) => (props.error ? 'red' : 'green')};
+      background-color: ${props => (props.error ? 'red' : 'green')};
     }
   `;
 
@@ -299,6 +299,19 @@ it('referring to other unreferenced components', () => {
       <ReferencedLink>Styled, exciting Link</ReferencedLink>
     </div>
   );
+});
+
+it('should match the same snapshot rerendering the same element', () => {
+  const StyledDiv = styled.div`
+    color: palevioletred;
+    font-weight: bold;
+  `;
+
+  const {rerender, container} = render(<StyledDiv />);
+
+  expect(container).toMatchSnapshot('first-render');
+  rerender(<StyledDiv />);
+  expect(container).toMatchSnapshot('second-render');
 });
 
 it('allows to disable css snapshotting', () => {
