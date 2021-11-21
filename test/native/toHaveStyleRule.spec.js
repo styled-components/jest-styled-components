@@ -150,3 +150,13 @@ it('theming', () => {
 
   expect(renderer.create(component).toJSON()).toHaveStyleRule('color', 'mediumseagreen');
 });
+
+it('style prop is an object', () => {
+  const StyledView = styled.TouchableOpacity`
+    background-color: papayawhip;
+  `;
+  const tree = renderer.create(<StyledView />).toJSON();
+
+  expect(typeof tree.props.style).toBe('object')
+  expect(tree).toHaveStyleRule('background-color', 'papayawhip');
+});
