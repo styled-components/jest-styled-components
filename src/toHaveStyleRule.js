@@ -125,7 +125,7 @@ function toHaveStyleRule(component, property, expected, options = {}) {
   const declarations = getDeclarations(rules, property);
   const declaration = declarations.pop() || {};
   const received = declaration.value;
-  const pass = !received && !expected && this.isNot ? false : matcherTest(received, expected);
+  const pass = matcherTest(received, expected, this.isNot);
 
   return {
     pass,

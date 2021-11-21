@@ -59,7 +59,12 @@ const buildReturnMessage = (utils, pass, property, received, expected) => () =>
   'Received:\n' +
   `  ${utils.printReceived(`${property}: ${received}`)}`;
 
-const matcherTest = (received, expected) => {
+const matcherTest = (received, expected, isNot) => {
+  // when negating, assert on existence of the style, rather than the value
+  if (isNot && expected === undefined) {
+      return received !== undefined;
+  }
+
   try {
     const matcher = expected instanceof RegExp ? expect.stringMatching(expected) : expected;
 

@@ -130,11 +130,24 @@ it('negated ".not" modifier with value', () => {
     opacity: 0.65;
   `;
 
-  notToHaveStyleRule(<Button />, 'opacity', '0.50');
-  notToHaveStyleRule(<Button />, 'opacity', '');
-  notToHaveStyleRule(<Button />, 'opacity', null);
-  notToHaveStyleRule(<Button />, 'opacity', false);
-  notToHaveStyleRule(<Button />, 'opacity', undefined);
+  notToHaveStyleRule(<Button />, "opacity", "0.50");
+  notToHaveStyleRule(<Button />, "opacity", "");
+  notToHaveStyleRule(<Button />, "opacity", null);
+  notToHaveStyleRule(<Button />, "opacity", false);
+  expect(() => {
+    toHaveStyleRule(<Button />, "opacity", undefined);
+  }).toThrowError();
+});
+
+it('negated ".not" modifier fails when rule present with no value being asserted', () => {
+  const Button = styled.button`
+    opacity: 0.65;
+  `;
+
+  toHaveStyleRule(<Button />, "opacity", "0.65");
+  expect(() => {
+    notToHaveStyleRule(<Button />, "opacity");
+  }).toThrowError();
 });
 
 it('jest asymmetric matchers', () => {
