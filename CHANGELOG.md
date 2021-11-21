@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [7.0.7](https://github.com/styled-components/jest-styled-components/compare/v7.0.7...v7.0.7) - 2021-11-21
+
+- Fix issue #317 (#319)
+
+After the first render the node are marked with KEY property and calling rerender function of react-testing-library the test function will return false preventing the print to work as expected
+
+- fix: incorrect negated assertion for rule existence check
+- Fix native toHaveStyleRule to work with object style props (#337)
+- Make the global installation [instructions] clearer (#323)
+- minor dependency updates
+
 ## [7.0.6](https://github.com/styled-components/jest-styled-components/compare/v7.0.5...v7.0.6) - 2021-11-09
 
 - Fix false negative detection of some media queries by simplifying media query regex for stripping spaces (#379)
