@@ -1,6 +1,6 @@
 {
   "name": "jest-styled-components",
-  "version": "7.0.5",
+  "version": "7.0.6",
   "description": "Jest utilities for Styled Components",
   "main": "./src/index.js",
   "typings": "./typings/index.d.ts",
@@ -11,6 +11,9 @@
     "typings"
   ],
   "repository": "git@github.com:styled-components/jest-styled-components.git",
+  "bugs": {
+    "url": "https://github.com/styled-components/jest-styled-components/issues"
+  },
   "author": "Michele Bertoli",
   "license": "MIT",
   "scripts": {
@@ -22,32 +25,33 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
+    "@babel/eslint-parser": "^7.16.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@testing-library/react": "^9.3.2",
+    "@testing-library/react": "^12.1.2",
+    "@types/styled-components": "^5.1.11",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^10.0.1",
     "babel-jest": "^26.0.0",
     "enzyme": "^3.6.0",
-    "enzyme-adapter-preact-pure": "^2.2.0",
-    "enzyme-adapter-react-16": "^1.5.0",
+    "enzyme-adapter-preact-pure": "^3.3.0",
     "enzyme-to-json": "^3.3.1",
-    "eslint": "^6.6.0",
-    "eslint-config-prettier": "^6.5.0",
-    "eslint-plugin-prettier": "^3.4.0",
-    "husky": "^3.0.9",
+    "eslint": "^8.2.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky-v4": "^4.3.8",
     "jest": "^26.0.0",
-    "lint-staged": "^9.4.2",
+    "lint-staged": "^11.2.6",
     "preact": "^10.0.0-beta.2",
     "preact-render-to-json": "^3.6.6",
     "prettier": "^2.3.2",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0",
-    "react-is": "^16.8.6",
-    "react-native": "^0.61.4",
-    "react-test-renderer": "^16.8.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-is": "^17.0.2",
+    "react-native": "^0.66.2",
+    "react-test-renderer": "^17.0.2",
     "styled-components": "^5.0.0"
   },
   "dependencies": {
@@ -63,8 +67,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "jest": {

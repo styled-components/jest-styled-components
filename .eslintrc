@@ -3,6 +3,6 @@
   "env": {
     "jest": true
   },
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "plugins": ["prettier"]
 }
