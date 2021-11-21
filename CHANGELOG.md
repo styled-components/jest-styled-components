@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [7.0.6](https://github.com/styled-components/jest-styled-components/compare/v7.0.5...v7.0.6) - 2021-11-09
+
+- Fix false negative detection of some media queries by simplifying media query regex for stripping spaces (#379)
+- Improve test and memory utilization by removing sc style nodes on cleanup (#382)
+- Add snapshot options to customize what CSS is included in jest snapshots (#375)
+- Fix type error when using css ttl with "modifier" option (#367)
+- Add example of how to handle override styles to README.md (#372)
+
+## [7.0.5](https://github.com/styled-components/jest-styled-components/compare/v7.0.4...v7.0.5) - 2021-07-09
+
+- Add setStyleSheetSerializerOptions to control snapshot output
+- Strip styled components referenced in css by not used in the render (#351)
+- Set minimum node engine version to v12 (current minimum maintenance version)
+
+## [7.0.4](https://github.com/styled-components/jest-styled-components/compare/v7.0.3...v7.0.4) - 2021-04-18
+
+- support styled-components v6
+
 ## [7.0.3](https://github.com/styled-components/jest-styled-components/compare/v7.0.2...v7.0.3) - 2020-08-19
 
 - Strip static class names from jest snapshot results (#320) thanks @blnoonan

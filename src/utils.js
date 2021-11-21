@@ -5,18 +5,26 @@ if (!__PRIVATE__) {
   throw new Error('Could neither find styled-components secret internals');
 }
 
-const { masterSheet } = __PRIVATE__;
+const { mainSheet, masterSheet } = __PRIVATE__;
 
+const sheet = mainSheet || masterSheet;
 const isServer = () => typeof document === 'undefined';
 
 const resetStyleSheet = () => {
-  masterSheet.names = new Map();
-  masterSheet.clearTag();
+  if (!isServer()) {
+    const scStyles = document.querySelectorAll('style[data-styled-version]')
+    for (const item of scStyles) {
+      item.parentElement.removeChild(item)
+    }
+  }
+
+  sheet.names = new Map();
+  sheet.clearTag();
 };
 
-const getHTML = () => (isServer() ? new ServerStyleSheet().getStyleTags() : masterSheet.toString());
+const getHTML = () => (isServer() ? new ServerStyleSheet().getStyleTags() : sheet.toString());
 
-const extract = regex => {
+const extract = (regex) => {
   let style = '';
   let matches;
 
@@ -33,8 +41,8 @@ const getCSS = () => css.parse(getStyle());
 const getHashes = () => {
   const hashes = new Set();
 
-  for (const [masterHash, childHashSet] of masterSheet.names) {
-    hashes.add(masterHash);
+  for (const [mainHash, childHashSet] of sheet.names) {
+    hashes.add(mainHash);
 
     for (const childHash of childHashSet) hashes.add(childHash);
   }
@@ -51,7 +59,12 @@ const buildReturnMessage = (utils, pass, property, received, expected) => () =>
   'Received:\n' +
   `  ${utils.printReceived(`${property}: ${received}`)}`;
 
-const matcherTest = (received, expected) => {
+const matcherTest = (received, expected, isNot) => {
+  // when negating, assert on existence of the style, rather than the value
+  if (isNot && expected === undefined) {
+      return received !== undefined;
+  }
+
   try {
     const matcher = expected instanceof RegExp ? expect.stringMatching(expected) : expected;
 

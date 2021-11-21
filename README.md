@@ -344,7 +344,26 @@ test('it works', () => {
   const tree = renderer.create(<Button />).toJSON()
   expect(tree).toMatchSpecificSnapshot("./Button.snap")
 })
-````
+```
+
+## Serializer Options
+
+The serializer can be configured to control the snapshot output.
+
+```js
+import { render } from '@testing-library/react'
+import { setStyleSheetSerializerOptions } from 'jest-styled-components/serializer'
+
+setStyleSheetSerializerOptions({
+  addStyles: false,
+  classNameFormatter: (index) => `styled${index}`
+});
+
+test('it works', () => {
+  const { container } = render(<Button />)
+  expect(container.firstChild).toMatchSnapshot()
+})
+```
 
 # toHaveStyleRule
 
@@ -421,6 +440,22 @@ test('nested buttons are flexed', () => {
     modifier: css`${Button}`,
   })
 })
+```
+
+You can take a similar approach when you have classNames that override styles
+```js
+const Button = styled.button`
+  background-color: red;
+  
+  &.override {
+    background-color: blue;
+  }
+`
+const wrapper = mount(<Button className="override">I am a button!</Button>);
+
+expect(wrapper).toHaveStyleRule('background-color', 'blue', {
+  modifier: '&.override',
+});
 ```
 
 This matcher works with trees serialized with `react-test-renderer`, `react-testing-library`, or those shallow rendered or mounted with Enzyme.
