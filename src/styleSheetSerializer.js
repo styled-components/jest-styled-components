@@ -1,7 +1,7 @@
 const css = require('css');
 const { getCSS, getHashes } = require('./utils');
 
-let cache = new WeakSet()
+let cache = new WeakSet();
 const getNodes = (node, nodes = []) => {
   if (typeof node === 'object') {
     nodes.push(node);
@@ -40,9 +40,11 @@ const getClassNames = (nodes) =>
     return classNames;
   }, new Set());
 
+const isStyledClass = (className) => /^\.?(\w+(-|_))?sc-/.test(className);
+
 const filterClassNames = (classNames, hashes) => classNames.filter((className) => hashes.includes(className));
 const filterUnreferencedClassNames = (classNames, hashes) =>
-  classNames.filter((className) => className.startsWith('sc-') && !hashes.includes(className));
+  classNames.filter((className) => isStyledClass(className) && !hashes.includes(className));
 
 const includesClassNames = (classNames, selectors) =>
   classNames.some((className) => selectors.some((selector) => selector.includes(className)));
@@ -50,7 +52,7 @@ const includesClassNames = (classNames, selectors) =>
 const includesUnknownClassNames = (classNames, selectors) =>
   !selectors
     .flatMap((selector) => selector.split(' '))
-    .filter((chunk) => chunk.includes('sc-'))
+    .filter((chunk) => isStyledClass(chunk))
     .every((chunk) => classNames.some((className) => chunk.includes(className)));
 
 const filterRules = (classNames) => (rule) =>
@@ -110,12 +112,11 @@ const replaceHashes = (result, hashes) =>
 
 const serializerOptionDefaults = {
   addStyles: true,
-  classNameFormatter: (index) => `c${index}`
+  classNameFormatter: (index) => `c${index}`,
 };
 let serializerOptions = serializerOptionDefaults;
 
 module.exports = {
-
   /**
    * Configure jest-styled-components/serializer
    *
@@ -124,7 +125,7 @@ module.exports = {
   setStyleSheetSerializerOptions(options = {}) {
     serializerOptions = {
       ...serializerOptionDefaults,
-      ...options
+      ...options,
     };
   },
 
@@ -152,7 +153,7 @@ module.exports = {
     const classNamesToReplace = getClassNamesFromSelectorsByHashes(classNames, hashes);
     const code = print(val);
 
-    let result = serializerOptions.addStyles ? `${style}${style ? '\n\n' : ''}${code}`: code;
+    let result = serializerOptions.addStyles ? `${style}${style ? '\n\n' : ''}${code}` : code;
     result = stripUnreferencedClassNames(result, unreferencedClassNames);
     result = replaceClassNames(result, classNamesToReplace, style, serializerOptions.classNameFormatter);
     result = replaceHashes(result, hashes);
