@@ -41,7 +41,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "husky-v4": "^4.3.8",
     "jest": "^27.3.1",
-    "lint-staged": "^12.0.3",
+    "lint-staged": "^12.1.1",
     "preact": "^10.0.0-beta.2",
     "preact-render-to-json": "^3.6.6",
     "prettier": "^2.3.2",
