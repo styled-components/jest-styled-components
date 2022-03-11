@@ -493,3 +493,12 @@ it('custom display name prefix', () => {
   toHaveStyleRule(<Comp />, 'background', 'papayawhip');
   toHaveStyleRule(<Comp />, 'color', 'red');
 });
+
+it("supports snake case display name prefix", () => {
+  const Text = styled.span`
+    color: blue;
+  `;
+  Text.styledComponentId = `test-case-${Text.styledComponentId}`;
+
+  toHaveStyleRule(<Text />, "color", "blue");
+});

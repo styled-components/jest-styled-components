@@ -4,7 +4,7 @@ const shouldDive = (node) => typeof node.dive === 'function' && typeof node.type
 
 const isTagWithClassName = (node) => node.exists() && node.prop('className') && typeof node.type() === 'string';
 
-const isStyledClass = (className) => /^(\w+(-|_))?sc-/.test(className);
+const isStyledClass = (className) => /(_|-)+sc-.+|^sc-/.test(className);
 
 const hasClassName = (node) =>
   node.length > 0 &&
