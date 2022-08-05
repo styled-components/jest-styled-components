@@ -1,4 +1,4 @@
-const css = require('css');
+const css = require('@adobe/css-tools');
 const { ServerStyleSheet, __PRIVATE__ } = require('styled-components');
 
 if (!__PRIVATE__) {

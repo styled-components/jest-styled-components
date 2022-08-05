@@ -1,4 +1,4 @@
-const css = require('css');
+const css = require('@adobe/css-tools');
 const { getCSS, getHashes } = require('./utils');
 
 let cache = new WeakSet();
