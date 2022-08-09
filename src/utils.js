@@ -28,7 +28,8 @@ const extract = (regex) => {
   let style = '';
   let matches;
 
-  while ((matches = regex.exec(getHTML())) !== null) {
+  const html = getHTML();
+  while ((matches = regex.exec(html)) !== null) {
     style += `${matches[1]} `;
   }
 
