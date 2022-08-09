@@ -10,7 +10,7 @@
     "src",
     "typings"
   ],
-  "repository": "git@github.com:styled-components/jest-styled-components.git",
+  "repository": "github:styled-components/jest-styled-components",
   "bugs": {
     "url": "https://github.com/styled-components/jest-styled-components/issues"
   },
