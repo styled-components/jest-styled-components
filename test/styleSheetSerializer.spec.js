@@ -382,24 +382,24 @@ it('responds to indent configuration', () => {
   const mounted = renderer.create(<Link>Styled, exciting Link</Link>);
 
   expect(serialize(mounted)).toMatchInlineSnapshot(`
-    ".c0 {
+    ".styledComponent0 {
       color: blue;
     }
 
     <a
-      className=\\"c0\\"
+      className=\\"styledComponent0\\"
     >
       Styled, exciting Link
     </a>"
   `);
 
   expect(serialize(mounted, 0)).toMatchInlineSnapshot(`
-    ".c0 {
+    ".styledComponent0 {
     color: blue;
     }
 
     <a
-    className=\\"c0\\"
+    className=\\"styledComponent0\\"
     >
     Styled, exciting Link
     </a>"
