@@ -3,7 +3,9 @@ import { mount, shallow } from 'enzyme';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import styled, { ThemeContext, ThemeProvider } from 'styled-components';
+import prettyFormat, { plugins } from 'pretty-format';
 import {setStyleSheetSerializerOptions} from '../serializer';
+import styleSheetSerializer from '../src/styleSheetSerializer';
 
 const toMatchSnapshot = (component) => {
   expect(renderer.create(component).toJSON()).toMatchSnapshot('react-test-renderer');
@@ -18,6 +20,31 @@ const shallowWithTheme = (tree, theme) => {
 
   return shallow(tree);
 };
+
+/**
+ * Serializes a value similarly to jest-snapshot
+ *
+ * Imitates the serialization logic inside jest-snapshot,
+ * so we can pass options, including indent, to it.
+ *
+ * @see https://github.com/facebook/jest/blob/615084195ae1ae61ddd56162c62bbdda17587569/packages/jest-snapshot/src/utils.ts#L155-L163
+ * @see https://github.com/facebook/jest/blob/615084195ae1ae61ddd56162c62bbdda17587569/packages/jest-snapshot/src/plugins.ts#L24-L32
+ */
+const serialize = (val, indent = 2) =>
+  prettyFormat(val, {
+    escapeRegex: true,
+    indent,
+    plugins: [
+      styleSheetSerializer,
+      plugins.ReactTestComponent,
+      plugins.ReactElement,
+      plugins.DOMElement,
+      plugins.DOMCollection,
+      plugins.Immutable,
+      plugins.AsymmetricMatcher,
+    ],
+    printFunctionName: false,
+  });
 
 it('null', () => {
   expect(null).toMatchSnapshot();
@@ -345,4 +372,36 @@ it('allows to set a css classNameFormatter', () => {
       <B>Styled, exciting div</B>
     </div>
   );
+});
+
+it('responds to indent configuration', () => {
+  const Link = styled.a`
+    color: blue;
+  `;
+
+  const mounted = renderer.create(<Link>Styled, exciting Link</Link>);
+
+  expect(serialize(mounted)).toMatchInlineSnapshot(`
+    ".styledComponent0 {
+      color: blue;
+    }
+
+    <a
+      className=\\"styledComponent0\\"
+    >
+      Styled, exciting Link
+    </a>"
+  `);
+
+  expect(serialize(mounted, 0)).toMatchInlineSnapshot(`
+    ".styledComponent0 {
+    color: blue;
+    }
+
+    <a
+    className=\\"styledComponent0\\"
+    >
+    Styled, exciting Link
+    </a>"
+  `);
 });

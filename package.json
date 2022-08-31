@@ -45,6 +45,7 @@
     "preact": "^10.0.0-beta.2",
     "preact-render-to-json": "^3.6.6",
     "prettier": "^2.3.2",
+    "pretty-format": "^27.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-is": "^17.0.2",
