@@ -265,6 +265,42 @@ it('at rules', () => {
   });
 });
 
+it('nested at rules', () => {
+  const Container = styled.div`
+    @media (min-width: 320px) {
+      top: 0px;
+      @supports (top:env(safe-area-inset-top,0px)) {
+        top: env(safe-area-inset-top,0px);
+      }
+    }
+
+    @supports (bottom:env(safe-area-inset-bottom,0px)) {
+      bottom: 0px;
+      @media (min-width: 320px) {
+        bottom: env(safe-area-inset-bottom,0px);
+      }
+    }
+  `;
+
+  toHaveStyleRule(<Container />, "top", "0px", {
+    media: "(min-width: 320px)",
+  });
+
+  toHaveStyleRule(<Container />, "top", "env(safe-area-inset-top,0px)", {
+    media: "(min-width: 320px)",
+    supports: "(top:env(safe-area-inset-top,0px))",
+  });
+
+  toHaveStyleRule(<Container />, "bottom", "0px", {
+    supports: "(bottom:env(safe-area-inset-bottom,0px))",
+  });
+
+  toHaveStyleRule(<Container />, "bottom", "env(safe-area-inset-bottom,0px)", {
+    media: "(min-width: 320px)",
+    supports: "(bottom:env(safe-area-inset-bottom,0px))",
+  });
+});
+
 it('selector modifiers', () => {
   const Link = styled.a`
     color: white;
