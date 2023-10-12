@@ -47,6 +47,9 @@ const getAtRules = (ast, options) => {
     .reduce((acc, rules) => acc.concat(rules), []);
 };
 
+/** stylis v4 renders descendant selectors without a trailing space sometimes which trips up detection */
+const removeSpaceAfterSelector = input => input.replace(/([>~+]) +/g, '$1')
+
 const normalizeQuotations = (input) => input.replace(/['"]/g, '"');
 
 const getModifiedClassName = (className, staticClassName, modifier = '') => {
@@ -75,8 +78,8 @@ const hasClassNames = (classNames, selectors, options) => {
 
   return classNames.some((className) =>
     staticClassNames.some((staticClassName) =>
-      selectors.includes(
-        normalizeQuotations(getModifiedClassName(className, staticClassName, options.modifier).replace(/['"]/g, '"'))
+      selectors.map(removeSpaceAfterSelector).includes(
+        removeSpaceAfterSelector(normalizeQuotations(getModifiedClassName(className, staticClassName, options.modifier).replace(/['"]/g, '"')))
       )
     )
   );
