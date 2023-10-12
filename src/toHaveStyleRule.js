@@ -48,7 +48,7 @@ const getAtRules = (ast, options) => {
 };
 
 /** stylis v4 renders descendant selectors without a trailing space sometimes which trips up detection */
-const removeSpaceAfterSelector = input => input.replace(/([>~+])( +)/g, '$1')
+const removeSpaceAfterSelector = input => input.replace(/([>~+]) +/g, '$1')
 
 const normalizeQuotations = (input) => input.replace(/['"]/g, '"');
 
