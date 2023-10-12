@@ -545,21 +545,14 @@ exports[`null 1`] = `null`;
 
 exports[`referring to other components: mount 1`] = `
 .c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   padding: 5px 10px;
   background: papayawhip;
   color: palevioletred;
 }
 
-.c5 {
-  -webkit-transition: fill 0.25s;
+.c4 {
   transition: fill 0.25s;
   width: 48px;
   height: 48px;
@@ -569,19 +562,13 @@ exports[`referring to other components: mount 1`] = `
   fill: rebeccapurple;
 }
 
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+.c5 {
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   line-height: 1.2;
 }
 
-.c6::before {
+.c5::before {
   content: '◀';
   margin: 0 10px;
 }
@@ -590,7 +577,7 @@ exports[`referring to other components: mount 1`] = `
   color: black;
 }
 
-.c0 .c7 {
+.c0 .c6 {
   color: yellow;
   background-color: green;
 }
@@ -613,19 +600,19 @@ exports[`referring to other components: mount 1`] = `
       >
         <styleSheetSerializerspec__Icon>
           <svg
-            className="c4 c5"
+            className="c4"
           />
         </styleSheetSerializerspec__Icon>
         <styleSheetSerializerspec__Label>
           <span
-            className="c6"
+            className="c5"
           >
             Hovering my parent changes my style!
           </span>
         </styleSheetSerializerspec__Label>
         <styleSheetSerializerspec__TextWithConditionalFormatting>
           <span
-            className="c7 "
+            className="c6"
           >
             I should be green
           </span>
@@ -634,7 +621,8 @@ exports[`referring to other components: mount 1`] = `
           error={true}
         >
           <span
-            className="c7 "
+            className="c7"
+            error={true}
           >
             I should be red
           </span>
@@ -647,21 +635,14 @@ exports[`referring to other components: mount 1`] = `
 
 exports[`referring to other components: react-test-renderer 1`] = `
 .c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   padding: 5px 10px;
   background: papayawhip;
   color: palevioletred;
 }
 
-.c5 {
-  -webkit-transition: fill 0.25s;
+.c4 {
   transition: fill 0.25s;
   width: 48px;
   height: 48px;
@@ -671,19 +652,13 @@ exports[`referring to other components: react-test-renderer 1`] = `
   fill: rebeccapurple;
 }
 
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+.c5 {
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   line-height: 1.2;
 }
 
-.c6::before {
+.c5::before {
   content: '◀';
   margin: 0 10px;
 }
@@ -692,7 +667,7 @@ exports[`referring to other components: react-test-renderer 1`] = `
   color: black;
 }
 
-.c0 .c7 {
+.c0 .c6 {
   color: yellow;
   background-color: green;
 }
@@ -710,20 +685,21 @@ exports[`referring to other components: react-test-renderer 1`] = `
     href="#"
   >
     <svg
-      className="c4 c5"
+      className="c4"
     />
     <span
-      className="c6"
+      className="c5"
     >
       Hovering my parent changes my style!
     </span>
     <span
-      className="c7 "
+      className="c6"
     >
       I should be green
     </span>
     <span
-      className="c7 "
+      className="c7"
+      error={true}
     >
       I should be red
     </span>
@@ -733,21 +709,14 @@ exports[`referring to other components: react-test-renderer 1`] = `
 
 exports[`referring to other components: react-testing-library 1`] = `
 .c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   padding: 5px 10px;
   background: papayawhip;
   color: palevioletred;
 }
 
-.c5 {
-  -webkit-transition: fill 0.25s;
+.c4 {
   transition: fill 0.25s;
   width: 48px;
   height: 48px;
@@ -757,19 +726,13 @@ exports[`referring to other components: react-testing-library 1`] = `
   fill: rebeccapurple;
 }
 
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+.c5 {
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   line-height: 1.2;
 }
 
-.c6::before {
+.c5::before {
   content: '◀';
   margin: 0 10px;
 }
@@ -778,7 +741,7 @@ exports[`referring to other components: react-testing-library 1`] = `
   color: black;
 }
 
-.c0 .c7 {
+.c0 .c6 {
   color: yellow;
   background-color: green;
 }
@@ -796,20 +759,20 @@ exports[`referring to other components: react-testing-library 1`] = `
     href="#"
   >
     <svg
-      class="c4 c5"
+      class="c4"
     />
     <span
-      class="c6"
+      class="c5"
     >
       Hovering my parent changes my style!
     </span>
     <span
-      class="c7 "
+      class="c6"
     >
       I should be green
     </span>
     <span
-      class="c7 "
+      class="c7"
     >
       I should be red
     </span>
@@ -999,17 +962,16 @@ exports[`strips unused styles: react-testing-library 1`] = `
 `;
 
 exports[`supported css: mount 1`] = `
-.c1 {
+.c0 {
   padding: 2em 1em;
   background: papayawhip;
 }
 
-.c1:hover {
+.c0:hover {
   background: palevioletred;
 }
 
-.c1 > p {
-  -webkit-text-decoration: underline;
+.c0 >p {
   text-decoration: underline;
 }
 
@@ -1018,18 +980,18 @@ html.test .c0 {
 }
 
 @media (max-width:600px) {
-  .c1 {
+  .c0 {
     background: tomato;
   }
 
-  .c1:hover {
+  .c0:hover {
     background: yellow;
   }
 }
 
 <styleSheetSerializerspec__Example>
   <div
-    className="c0 c1"
+    className="c0"
   >
     <p>
       Hello World!
@@ -1039,17 +1001,16 @@ html.test .c0 {
 `;
 
 exports[`supported css: react-test-renderer 1`] = `
-.c1 {
+.c0 {
   padding: 2em 1em;
   background: papayawhip;
 }
 
-.c1:hover {
+.c0:hover {
   background: palevioletred;
 }
 
-.c1 > p {
-  -webkit-text-decoration: underline;
+.c0 >p {
   text-decoration: underline;
 }
 
@@ -1058,17 +1019,17 @@ html.test .c0 {
 }
 
 @media (max-width:600px) {
-  .c1 {
+  .c0 {
     background: tomato;
   }
 
-  .c1:hover {
+  .c0:hover {
     background: yellow;
   }
 }
 
 <div
-  className="c0 c1"
+  className="c0"
 >
   <p>
     Hello World!
@@ -1077,17 +1038,16 @@ html.test .c0 {
 `;
 
 exports[`supported css: react-testing-library 1`] = `
-.c1 {
+.c0 {
   padding: 2em 1em;
   background: papayawhip;
 }
 
-.c1:hover {
+.c0:hover {
   background: palevioletred;
 }
 
-.c1 > p {
-  -webkit-text-decoration: underline;
+.c0 >p {
   text-decoration: underline;
 }
 
@@ -1096,17 +1056,17 @@ html.test .c0 {
 }
 
 @media (max-width:600px) {
-  .c1 {
+  .c0 {
     background: tomato;
   }
 
-  .c1:hover {
+  .c0:hover {
     background: yellow;
   }
 }
 
 <div
-  class="c0 c1"
+  class="c0"
 >
   <p>
     Hello World!
@@ -1115,17 +1075,16 @@ html.test .c0 {
 `;
 
 exports[`supported css: shallow 1`] = `
-.c1 {
+.c0 {
   padding: 2em 1em;
   background: papayawhip;
 }
 
-.c1:hover {
+.c0:hover {
   background: palevioletred;
 }
 
-.c1 > p {
-  -webkit-text-decoration: underline;
+.c0 >p {
   text-decoration: underline;
 }
 
@@ -1134,17 +1093,17 @@ html.test .c0 {
 }
 
 @media (max-width:600px) {
-  .c1 {
+  .c0 {
     background: tomato;
   }
 
-  .c1:hover {
+  .c0:hover {
     background: yellow;
   }
 }
 
 <div
-  className="c0 c1"
+  className="c0"
 >
   <p>
     Hello World!

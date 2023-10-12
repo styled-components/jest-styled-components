@@ -8,6 +8,7 @@ if (!__PRIVATE__) {
 const { mainSheet, masterSheet } = __PRIVATE__;
 
 const sheet = mainSheet || masterSheet;
+
 const isServer = () => typeof document === 'undefined';
 
 const resetStyleSheet = () => {
@@ -18,6 +19,7 @@ const resetStyleSheet = () => {
     }
   }
 
+  sheet.gs = {};
   sheet.names = new Map();
   sheet.clearTag();
 };
@@ -63,7 +65,7 @@ const buildReturnMessage = (utils, pass, property, received, expected) => () =>
 const matcherTest = (received, expected, isNot) => {
   // when negating, assert on existence of the style, rather than the value
   if (isNot && expected === undefined) {
-      return received !== undefined;
+    return received !== undefined;
   }
 
   try {
