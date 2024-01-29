@@ -1,24 +1,21 @@
-const css = require('css');
+const css = require('@adobe/css-tools');
 const { getCSS, getHashes } = require('./utils');
 
-const KEY = '__jest-styled-components__';
-
+let cache = new WeakSet();
 const getNodes = (node, nodes = []) => {
   if (typeof node === 'object') {
     nodes.push(node);
   }
 
   if (node.children) {
-    Array.from(node.children).forEach(child => getNodes(child, nodes));
+    Array.from(node.children).forEach((child) => getNodes(child, nodes));
   }
 
   return nodes;
 };
 
-const markNodes = nodes => nodes.forEach(node => (node[KEY] = true));
-
-const getClassNamesFromDOM = node => Array.from(node.classList);
-const getClassNamesFromProps = node => {
+const getClassNamesFromDOM = (node) => Array.from(node.classList);
+const getClassNamesFromProps = (node) => {
   const classNameProp = node.props && (node.props.class || node.props.className);
 
   if (classNameProp) {
@@ -28,7 +25,7 @@ const getClassNamesFromProps = node => {
   return [];
 };
 
-const getClassNames = nodes =>
+const getClassNames = (nodes) =>
   nodes.reduce((classNames, node) => {
     let newClassNames = null;
 
@@ -38,30 +35,42 @@ const getClassNames = nodes =>
       newClassNames = getClassNamesFromProps(node);
     }
 
-    newClassNames.forEach(className => classNames.add(className));
+    newClassNames.forEach((className) => classNames.add(className));
 
     return classNames;
   }, new Set());
 
-const filterClassNames = (classNames, hashes) => classNames.filter(className => hashes.includes(className));
-const filterUnreferencedClassNames = (classNames, hashes) => classNames.filter(className => className.startsWith('sc-') && !hashes.includes(className));
+const isStyledClass = (className) => /^\.?(\w+(-|_))?sc-/.test(className);
+
+const filterClassNames = (classNames, hashes) => classNames.filter((className) => hashes.includes(className));
+const filterUnreferencedClassNames = (classNames, hashes) =>
+  classNames.filter((className) => isStyledClass(className) && !hashes.includes(className));
 
 const includesClassNames = (classNames, selectors) =>
-  classNames.some(className => selectors.some(selector => selector.includes(className)));
+  classNames.some((className) => selectors.some((selector) => selector.includes(className)));
 
-const filterRules = classNames => rule =>
-  rule.type === 'rule' && includesClassNames(classNames, rule.selectors) && rule.declarations.length;
+const includesUnknownClassNames = (classNames, selectors) =>
+  !selectors
+    .flatMap((selector) => selector.split(' '))
+    .filter((chunk) => isStyledClass(chunk))
+    .every((chunk) => classNames.some((className) => chunk.includes(className)));
+
+const filterRules = (classNames) => (rule) =>
+  rule.type === 'rule' &&
+  !includesUnknownClassNames(classNames, rule.selectors) &&
+  includesClassNames(classNames, rule.selectors) &&
+  rule.declarations.length;
 
 const getAtRules = (ast, filter) =>
   ast.stylesheet.rules
-    .filter(rule => rule.type === 'media' || rule.type === 'supports')
+    .filter((rule) => rule.type === 'media' || rule.type === 'supports')
     .reduce((acc, atRule) => {
       atRule.rules = atRule.rules.filter(filter);
 
       return acc.concat(atRule);
     }, []);
 
-const getStyle = classNames => {
+const getStyle = (classNames, config = {}) => {
   const ast = getCSS();
   const filter = filterRules(classNames);
   const rules = ast.stylesheet.rules.filter(filter);
@@ -69,7 +78,7 @@ const getStyle = classNames => {
 
   ast.stylesheet.rules = rules.concat(atRules);
 
-  return css.stringify(ast);
+  return css.stringify(ast, { indent: config.indent });
 };
 
 const getClassNamesFromSelectorsByHashes = (classNames, hashes) => {
@@ -77,24 +86,23 @@ const getClassNamesFromSelectorsByHashes = (classNames, hashes) => {
   const filter = filterRules(classNames);
   const rules = ast.stylesheet.rules.filter(filter);
 
-  const selectors = rules.map(rule => rule.selectors);
+  const selectors = rules.map((rule) => rule.selectors);
   const classNamesIncludingFromSelectors = new Set(classNames);
-  const addHashFromSelectorListToClassNames = hash =>
-    selectors.forEach(selectorList => selectorList[0].includes(hash) && classNamesIncludingFromSelectors.add(hash));
+  const addHashFromSelectorListToClassNames = (hash) =>
+    selectors.forEach((selectorList) => selectorList[0].includes(hash) && classNamesIncludingFromSelectors.add(hash));
 
   hashes.forEach(addHashFromSelectorListToClassNames);
 
   return [...classNamesIncludingFromSelectors];
 };
 
-const replaceClassNames = (result, classNames, style) =>
+const replaceClassNames = (result, classNames, style, classNameFormatter) =>
   classNames
-    .filter(className => style.includes(className))
-    .reduce((acc, className, index) => acc.replace(new RegExp(className, 'g'), ''), result);
+    .filter((className) => style.includes(className))
+    .reduce((acc, className, index) => acc.replace(new RegExp(className, 'g'), classNameFormatter(index++)), result);
 
 const stripUnreferencedClassNames = (result, classNames) =>
-    classNames
-      .reduce((acc, className) => acc.replace(new RegExp(`${className}\\s?`,'g'), ''), result);
+  classNames.reduce((acc, className) => acc.replace(new RegExp(`${className}\\s?`, 'g'), ''), result);
 
 const replaceHashes = (result, hashes) =>
   hashes.reduce(
@@ -102,18 +110,36 @@ const replaceHashes = (result, hashes) =>
     result
   );
 
+const serializerOptionDefaults = {
+  addStyles: true,
+  classNameFormatter: (index) => `c${index}`,
+};
+let serializerOptions = serializerOptionDefaults;
+
 module.exports = {
+  /**
+   * Configure jest-styled-components/serializer
+   *
+   * @param {{ addStyles?: boolean, classNameFormatter?: (index: number) => string }} options
+   */
+  setStyleSheetSerializerOptions(options = {}) {
+    serializerOptions = {
+      ...serializerOptionDefaults,
+      ...options,
+    };
+  },
+
   test(val) {
     return (
       val &&
-      !val[KEY] &&
+      !cache.has(val) &&
       (val.$$typeof === Symbol.for('react.test.json') || (global.Element && val instanceof global.Element))
     );
   },
 
-  print(val, print) {
+  serialize(val, config, indentation, depth, refs, printer) {
     const nodes = getNodes(val);
-    markNodes(nodes);
+    nodes.forEach(cache.add, cache);
 
     const hashes = getHashes();
 
@@ -123,15 +149,15 @@ module.exports = {
     classNames = filterClassNames(classNames, hashes);
     unreferencedClassNames = filterUnreferencedClassNames(unreferencedClassNames, hashes);
 
-    const style = getStyle(classNames);
+    const style = getStyle(classNames, config);
     const classNamesToReplace = getClassNamesFromSelectorsByHashes(classNames, hashes);
-    const code = print(val);
+    const code = printer(val, config, indentation, depth, refs);
 
-    let result = `${style}${style ? '\n\n' : ''}${code}`;
+    let result = serializerOptions.addStyles ? `${style}${style ? '\n\n' : ''}${code}` : code;
     result = stripUnreferencedClassNames(result, unreferencedClassNames);
-    result = replaceClassNames(result, classNamesToReplace, style);
+    result = replaceClassNames(result, classNamesToReplace, style, serializerOptions.classNameFormatter);
     result = replaceHashes(result, hashes);
-
+    nodes.forEach(cache.delete, cache);
     return result;
   },
 };

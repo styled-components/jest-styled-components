@@ -1,5 +1,149 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`allows to disable css snapshotting: mount 1`] = `
+<div>
+  <styleSheetSerializerspec__A>
+    <div
+      className="c0"
+    >
+      Styled, exciting div
+    </div>
+  </styleSheetSerializerspec__A>
+  <styleSheetSerializerspec__B>
+    <div
+      className="c1"
+    >
+      Styled, exciting div
+    </div>
+  </styleSheetSerializerspec__B>
+</div>
+`;
+
+exports[`allows to disable css snapshotting: react-test-renderer 1`] = `
+<div>
+  <div
+    className="c0"
+  >
+    Styled, exciting div
+  </div>
+  <div
+    className="c1"
+  >
+    Styled, exciting div
+  </div>
+</div>
+`;
+
+exports[`allows to disable css snapshotting: react-testing-library 1`] = `
+<div>
+  <div
+    class="c0"
+  >
+    Styled, exciting div
+  </div>
+  <div
+    class="c1"
+  >
+    Styled, exciting div
+  </div>
+</div>
+`;
+
+exports[`allows to disable css snapshotting: shallow 1`] = `
+<div>
+  <styleSheetSerializerspec__A>
+    Styled, exciting div
+  </styleSheetSerializerspec__A>
+  <styleSheetSerializerspec__B>
+    Styled, exciting div
+  </styleSheetSerializerspec__B>
+</div>
+`;
+
+exports[`allows to set a css classNameFormatter: mount 1`] = `
+.styledComponent0 {
+  color: red;
+}
+
+.styledComponent1 {
+  color: green;
+}
+
+<div>
+  <styleSheetSerializerspec__A>
+    <div
+      className="styledComponent0"
+    >
+      Styled, exciting div
+    </div>
+  </styleSheetSerializerspec__A>
+  <styleSheetSerializerspec__B>
+    <div
+      className="styledComponent1"
+    >
+      Styled, exciting div
+    </div>
+  </styleSheetSerializerspec__B>
+</div>
+`;
+
+exports[`allows to set a css classNameFormatter: react-test-renderer 1`] = `
+.styledComponent0 {
+  color: red;
+}
+
+.styledComponent1 {
+  color: green;
+}
+
+<div>
+  <div
+    className="styledComponent0"
+  >
+    Styled, exciting div
+  </div>
+  <div
+    className="styledComponent1"
+  >
+    Styled, exciting div
+  </div>
+</div>
+`;
+
+exports[`allows to set a css classNameFormatter: react-testing-library 1`] = `
+.styledComponent0 {
+  color: red;
+}
+
+.styledComponent1 {
+  color: green;
+}
+
+<div>
+  <div
+    class="styledComponent0"
+  >
+    Styled, exciting div
+  </div>
+  <div
+    class="styledComponent1"
+  >
+    Styled, exciting div
+  </div>
+</div>
+`;
+
+exports[`allows to set a css classNameFormatter: shallow 1`] = `
+<div>
+  <styleSheetSerializerspec__A>
+    Styled, exciting div
+  </styleSheetSerializerspec__A>
+  <styleSheetSerializerspec__B>
+    Styled, exciting div
+  </styleSheetSerializerspec__B>
+</div>
+`;
+
 exports[`any component: mount 1`] = `
 .c0 {
   color: palevioletred;
@@ -13,7 +157,7 @@ exports[`any component: mount 1`] = `
     </a>
   </Link>
   <br />
-  <Styled(Link)>
+  <styleSheetSerializerspec__StyledLink>
     <Link
       className="c0"
     >
@@ -23,7 +167,7 @@ exports[`any component: mount 1`] = `
         Styled, exciting Link
       </a>
     </Link>
-  </Styled(Link)>
+  </styleSheetSerializerspec__StyledLink>
 </div>
 `;
 
@@ -71,9 +215,9 @@ exports[`any component: shallow 1`] = `
     Unstyled, boring Link
   </Link>
   <br />
-  <Styled(Link)>
+  <styleSheetSerializerspec__StyledLink>
     Styled, exciting Link
-  </Styled(Link)>
+  </styleSheetSerializerspec__StyledLink>
 </div>
 `;
 
@@ -82,11 +226,11 @@ exports[`attaching additional props: mount 1`] = `
   color: red;
 }
 
-<styled.div>
+<styleSheetSerializerspec__Div>
   <div
     className="c0 div"
   />
-</styled.div>
+</styleSheetSerializerspec__Div>
 `;
 
 exports[`attaching additional props: react-test-renderer 1`] = `
@@ -131,19 +275,19 @@ exports[`basic: mount 1`] = `
   color: palevioletred;
 }
 
-<styled.section>
+<styleSheetSerializerspec__Wrapper>
   <section
     className="c0"
   >
-    <styled.h1>
+    <styleSheetSerializerspec__Title>
       <h1
         className="c1"
       >
         Hello World, this is my first styled component!
       </h1>
-    </styled.h1>
+    </styleSheetSerializerspec__Title>
   </section>
-</styled.section>
+</styleSheetSerializerspec__Wrapper>
 `;
 
 exports[`basic: react-test-renderer 1`] = `
@@ -201,9 +345,9 @@ exports[`basic: shallow 1`] = `
 <section
   className="c0"
 >
-  <styled.h1>
+  <styleSheetSerializerspec__Title>
     Hello World, this is my first styled component!
-  </styled.h1>
+  </styleSheetSerializerspec__Title>
 </section>
 `;
 
@@ -217,23 +361,23 @@ exports[`duplicated components: mount 1`] = `
 }
 
 <div>
-  <styled.div>
+  <styleSheetSerializerspec__A>
     <div
       className="c0"
     />
-  </styled.div>
+  </styleSheetSerializerspec__A>
    
-  <styled.div>
+  <styleSheetSerializerspec__A>
     <div
       className="c0"
     />
-  </styled.div>
+  </styleSheetSerializerspec__A>
    
-  <styled.div>
+  <styleSheetSerializerspec__B>
     <div
       className="c1"
     />
-  </styled.div>
+  </styleSheetSerializerspec__B>
 </div>
 `;
 
@@ -287,20 +431,20 @@ exports[`duplicated components: react-testing-library 1`] = `
 
 exports[`duplicated components: shallow 1`] = `
 <div>
-  <styled.div />
+  <styleSheetSerializerspec__A />
    
-  <styled.div />
+  <styleSheetSerializerspec__A />
    
-  <styled.div />
+  <styleSheetSerializerspec__B />
 </div>
 `;
 
 exports[`empty style: mount 1`] = `
-<styled.div>
+<styleSheetSerializerspec__Component>
   <div
     className=""
   />
-</styled.div>
+</styleSheetSerializerspec__Component>
 `;
 
 exports[`empty style: react-test-renderer 1`] = `
@@ -326,11 +470,11 @@ exports[`included class name: mount 1`] = `
   color: red;
 }
 
-<styled.div>
+<styleSheetSerializerspec__Div>
   <div
     className="c0 i"
   />
-</styled.div>
+</styleSheetSerializerspec__Div>
 `;
 
 exports[`included class name: react-test-renderer 1`] = `
@@ -400,281 +544,276 @@ exports[`non-styled: shallow 1`] = `<div />`;
 exports[`null 1`] = `null`;
 
 exports[`referring to other components: mount 1`] = `
-.c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+.c3 {
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   padding: 5px 10px;
   background: papayawhip;
   color: palevioletred;
 }
 
-.c2 {
-  -webkit-transition: fill 0.25s;
+.c4 {
   transition: fill 0.25s;
   width: 48px;
   height: 48px;
 }
 
-.c0:hover .c2 {
+.c2:hover .c4 {
   fill: rebeccapurple;
 }
 
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+.c5 {
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   line-height: 1.2;
 }
 
-.c3::before {
+.c5::before {
   content: '◀';
   margin: 0 10px;
 }
 
-.sc-fzXfLU .c4 {
+.c1 {
+  color: black;
+}
+
+.c0 .c6 {
   color: yellow;
   background-color: green;
 }
 
-.sc-fzXfLU .c5 {
+.c0 .c7 {
   color: yellow;
   background-color: red;
 }
 
-<styled.a
-  href="#"
->
-  <a
+<styleSheetSerializerspec__Container>
+  <div
     className="c0 c1"
-    href="#"
   >
-    <styled.svg>
-      <svg
-        className="c2"
-      />
-    </styled.svg>
-    <styled.span>
-      <span
-        className="c3"
-      >
-        Hovering my parent changes my style!
-      </span>
-    </styled.span>
-    <styled.span>
-      <span
-        className="c4"
-      >
-        I should be green
-      </span>
-    </styled.span>
-    <styled.span
-      error={true}
+    <styleSheetSerializerspec__Link
+      href="#"
     >
-      <span
-        className="c5"
+      <a
+        className="c2 c3"
+        href="#"
       >
-        I should be red
-      </span>
-    </styled.span>
-  </a>
-</styled.a>
+        <styleSheetSerializerspec__Icon>
+          <svg
+            className="c4"
+          />
+        </styleSheetSerializerspec__Icon>
+        <styleSheetSerializerspec__Label>
+          <span
+            className="c5"
+          >
+            Hovering my parent changes my style!
+          </span>
+        </styleSheetSerializerspec__Label>
+        <styleSheetSerializerspec__TextWithConditionalFormatting>
+          <span
+            className="c6"
+          >
+            I should be green
+          </span>
+        </styleSheetSerializerspec__TextWithConditionalFormatting>
+        <styleSheetSerializerspec__TextWithConditionalFormatting
+          error={true}
+        >
+          <span
+            className="c7"
+            error={true}
+          >
+            I should be red
+          </span>
+        </styleSheetSerializerspec__TextWithConditionalFormatting>
+      </a>
+    </styleSheetSerializerspec__Link>
+  </div>
+</styleSheetSerializerspec__Container>
 `;
 
 exports[`referring to other components: react-test-renderer 1`] = `
-.c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+.c3 {
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   padding: 5px 10px;
   background: papayawhip;
   color: palevioletred;
 }
 
-.c2 {
-  -webkit-transition: fill 0.25s;
+.c4 {
   transition: fill 0.25s;
   width: 48px;
   height: 48px;
 }
 
-.c0:hover .c2 {
+.c2:hover .c4 {
   fill: rebeccapurple;
 }
 
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+.c5 {
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   line-height: 1.2;
 }
 
-.c3::before {
+.c5::before {
   content: '◀';
   margin: 0 10px;
 }
 
-.sc-fzXfLU .c4 {
+.c1 {
+  color: black;
+}
+
+.c0 .c6 {
   color: yellow;
   background-color: green;
 }
 
-.sc-fzXfLU .c5 {
+.c0 .c7 {
   color: yellow;
   background-color: red;
 }
 
-<a
+<div
   className="c0 c1"
-  href="#"
 >
-  <svg
-    className="c2"
-  />
-  <span
-    className="c3"
+  <a
+    className="c2 c3"
+    href="#"
   >
-    Hovering my parent changes my style!
-  </span>
-  <span
-    className="c4"
-  >
-    I should be green
-  </span>
-  <span
-    className="c5"
-  >
-    I should be red
-  </span>
-</a>
+    <svg
+      className="c4"
+    />
+    <span
+      className="c5"
+    >
+      Hovering my parent changes my style!
+    </span>
+    <span
+      className="c6"
+    >
+      I should be green
+    </span>
+    <span
+      className="c7"
+      error={true}
+    >
+      I should be red
+    </span>
+  </a>
+</div>
 `;
 
 exports[`referring to other components: react-testing-library 1`] = `
-.c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+.c3 {
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   padding: 5px 10px;
   background: papayawhip;
   color: palevioletred;
 }
 
-.c2 {
-  -webkit-transition: fill 0.25s;
+.c4 {
   transition: fill 0.25s;
   width: 48px;
   height: 48px;
 }
 
-.c0:hover .c2 {
+.c2:hover .c4 {
   fill: rebeccapurple;
 }
 
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
+.c5 {
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items: center;
   line-height: 1.2;
 }
 
-.c3::before {
+.c5::before {
   content: '◀';
   margin: 0 10px;
 }
 
-.sc-fzXfLU .c4 {
+.c1 {
+  color: black;
+}
+
+.c0 .c6 {
   color: yellow;
   background-color: green;
 }
 
-.sc-fzXfLU .c5 {
+.c0 .c7 {
   color: yellow;
   background-color: red;
 }
 
-<a
+<div
   class="c0 c1"
-  href="#"
 >
-  <svg
-    class="c2"
-  />
-  <span
-    class="c3"
+  <a
+    class="c2 c3"
+    href="#"
   >
-    Hovering my parent changes my style!
-  </span>
-  <span
-    class="c4"
-  >
-    I should be green
-  </span>
-  <span
-    class="c5"
-  >
-    I should be red
-  </span>
-</a>
+    <svg
+      class="c4"
+    />
+    <span
+      class="c5"
+    >
+      Hovering my parent changes my style!
+    </span>
+    <span
+      class="c6"
+    >
+      I should be green
+    </span>
+    <span
+      class="c7"
+    >
+      I should be red
+    </span>
+  </a>
+</div>
 `;
 
 exports[`referring to other unreferenced components: mount 1`] = `
 .c0 {
   font-size: 1.5em;
+}
+
+.c1 {
   color: palevioletred;
   font-weight: bold;
 }
 
 <div>
-  <Styled(styled.a)>
+  <styleSheetSerializerspec__ReferencedLink>
     <a
-      className="c0"
+      className="c0 c1"
     >
       Styled, exciting Link
     </a>
-  </Styled(styled.a)>
+  </styleSheetSerializerspec__ReferencedLink>
 </div>
 `;
 
 exports[`referring to other unreferenced components: react-test-renderer 1`] = `
 .c0 {
   font-size: 1.5em;
+}
+
+.c1 {
   color: palevioletred;
   font-weight: bold;
 }
 
 <div>
   <a
-    className="c0"
+    className="c0 c1"
   >
     Styled, exciting Link
   </a>
@@ -684,13 +823,16 @@ exports[`referring to other unreferenced components: react-test-renderer 1`] = `
 exports[`referring to other unreferenced components: react-testing-library 1`] = `
 .c0 {
   font-size: 1.5em;
+}
+
+.c1 {
   color: palevioletred;
   font-weight: bold;
 }
 
 <div>
   <a
-    class="c0"
+    class="c0 c1"
   >
     Styled, exciting Link
   </a>
@@ -699,9 +841,9 @@ exports[`referring to other unreferenced components: react-testing-library 1`] =
 
 exports[`referring to other unreferenced components: shallow 1`] = `
 <div>
-  <Styled(styled.a)>
+  <styleSheetSerializerspec__ReferencedLink>
     Styled, exciting Link
-  </Styled(styled.a)>
+  </styleSheetSerializerspec__ReferencedLink>
 </div>
 `;
 
@@ -717,6 +859,108 @@ exports[`shallow with theme 1`] = `
 </button>
 `;
 
+exports[`should match the same snapshot rerendering the same element: first-render 1`] = `
+.c0 {
+  color: palevioletred;
+  font-weight: bold;
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`should match the same snapshot rerendering the same element: second-render 1`] = `
+.c0 {
+  color: palevioletred;
+  font-weight: bold;
+}
+
+<div>
+  <div
+    class="c0"
+  />
+</div>
+`;
+
+exports[`strips unused styles: mount 1`] = `
+.c2 {
+  color: blue;
+}
+
+.c0 {
+  font-size: 16px;
+}
+
+.c0 .c1 {
+  text-align: right;
+}
+
+<styleSheetSerializerspec__FancyText>
+  <div
+    className="c0"
+  >
+    <styleSheetSerializerspec__BlueText>
+      <div
+        className="c1 c2"
+      >
+        A container that has styles for an unused child
+      </div>
+    </styleSheetSerializerspec__BlueText>
+  </div>
+</styleSheetSerializerspec__FancyText>
+`;
+
+exports[`strips unused styles: react-test-renderer 1`] = `
+.c2 {
+  color: blue;
+}
+
+.c0 {
+  font-size: 16px;
+}
+
+.c0 .c1 {
+  text-align: right;
+}
+
+<div
+  className="c0"
+>
+  <div
+    className="c1 c2"
+  >
+    A container that has styles for an unused child
+  </div>
+</div>
+`;
+
+exports[`strips unused styles: react-testing-library 1`] = `
+.c2 {
+  color: blue;
+}
+
+.c0 {
+  font-size: 16px;
+}
+
+.c0 .c1 {
+  text-align: right;
+}
+
+<div
+  class="c0"
+>
+  <div
+    class="c1 c2"
+  >
+    A container that has styles for an unused child
+  </div>
+</div>
+`;
+
 exports[`supported css: mount 1`] = `
 .c0 {
   padding: 2em 1em;
@@ -727,8 +971,7 @@ exports[`supported css: mount 1`] = `
   background: palevioletred;
 }
 
-.c0 > p {
-  -webkit-text-decoration: underline;
+.c0 >p {
   text-decoration: underline;
 }
 
@@ -746,7 +989,7 @@ html.test .c0 {
   }
 }
 
-<styled.div>
+<styleSheetSerializerspec__Example>
   <div
     className="c0"
   >
@@ -754,7 +997,7 @@ html.test .c0 {
       Hello World!
     </p>
   </div>
-</styled.div>
+</styleSheetSerializerspec__Example>
 `;
 
 exports[`supported css: react-test-renderer 1`] = `
@@ -767,8 +1010,7 @@ exports[`supported css: react-test-renderer 1`] = `
   background: palevioletred;
 }
 
-.c0 > p {
-  -webkit-text-decoration: underline;
+.c0 >p {
   text-decoration: underline;
 }
 
@@ -805,8 +1047,7 @@ exports[`supported css: react-testing-library 1`] = `
   background: palevioletred;
 }
 
-.c0 > p {
-  -webkit-text-decoration: underline;
+.c0 >p {
   text-decoration: underline;
 }
 
@@ -843,8 +1084,7 @@ exports[`supported css: shallow 1`] = `
   background: palevioletred;
 }
 
-.c0 > p {
-  -webkit-text-decoration: underline;
+.c0 >p {
   text-decoration: underline;
 }
 
@@ -891,7 +1131,7 @@ exports[`theming: mount 1`] = `
 }
 
 <div>
-  <styled.button
+  <styleSheetSerializerspec__Button
     theme={
       Object {
         "main": "palevioletred",
@@ -903,15 +1143,15 @@ exports[`theming: mount 1`] = `
     >
       Normal
     </button>
-  </styled.button>
-  <ThemeProvider
+  </styleSheetSerializerspec__Button>
+  <Component
     theme={
       Object {
         "main": "mediumseagreen",
       }
     }
   >
-    <styled.button
+    <styleSheetSerializerspec__Button
       theme={
         Object {
           "main": "palevioletred",
@@ -923,8 +1163,8 @@ exports[`theming: mount 1`] = `
       >
         Themed
       </button>
-    </styled.button>
-  </ThemeProvider>
+    </styleSheetSerializerspec__Button>
+  </Component>
 </div>
 `;
 
@@ -996,7 +1236,7 @@ exports[`theming: react-testing-library 1`] = `
 
 exports[`theming: shallow 1`] = `
 <div>
-  <styled.button
+  <styleSheetSerializerspec__Button
     theme={
       Object {
         "main": "palevioletred",
@@ -1004,15 +1244,15 @@ exports[`theming: shallow 1`] = `
     }
   >
     Normal
-  </styled.button>
-  <ThemeProvider
+  </styleSheetSerializerspec__Button>
+  <Component
     theme={
       Object {
         "main": "mediumseagreen",
       }
     }
   >
-    <styled.button
+    <styleSheetSerializerspec__Button
       theme={
         Object {
           "main": "palevioletred",
@@ -1020,8 +1260,8 @@ exports[`theming: shallow 1`] = `
       }
     >
       Themed
-    </styled.button>
-  </ThemeProvider>
+    </styleSheetSerializerspec__Button>
+  </Component>
 </div>
 `;
 
@@ -1030,11 +1270,11 @@ exports[`trailing white spaces: mount 1`] = `
   color: red;
 }
 
-<styled.div>
+<styleSheetSerializerspec__Div>
   <div
     className="c0 div  "
   />
-</styled.div>
+</styleSheetSerializerspec__Div>
 `;
 
 exports[`trailing white spaces: react-test-renderer 1`] = `

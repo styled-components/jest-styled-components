@@ -1,4 +1,5 @@
-import { Plugin, NewPlugin } from 'pretty-format'
+import { NewPlugin } from 'pretty-format'
+import { css } from 'styled-components'
 
 declare global {
   namespace jest {
@@ -11,7 +12,7 @@ declare global {
 
     interface Options {
       media?: string;
-      modifier?: string;
+      modifier?: string | ReturnType<typeof css>;
       supports?: string;
     }
 
@@ -21,4 +22,11 @@ declare global {
   }
 }
 
-export declare const styleSheetSerializer: Exclude<Plugin, NewPlugin>;
+export interface StyledComponentsSerializerOptions { 
+  addStyles?: boolean, 
+  classNameFormatter?: (index: number) => string 
+} 
+
+export declare const styleSheetSerializer: NewPlugin & {
+  setStyleSheetSerializerOptions: (options?: StyledComponentsSerializerOptions) => void 
+};
