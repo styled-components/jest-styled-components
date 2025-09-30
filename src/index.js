@@ -1,11 +1,7 @@
-const toHaveStyleRule = require('./toHaveStyleRule');
-const styleSheetSerializer = require('./styleSheetSerializer');
-const { resetStyleSheet } = require('./utils');
+const styleSheetSerializer = require("./styleSheetSerializer");
+const init = require("./init");
 
-global.beforeEach(resetStyleSheet);
-
-expect.addSnapshotSerializer(styleSheetSerializer);
-expect.extend({ toHaveStyleRule });
+init(global.beforeEach, expect);
 
 module.exports = {
   styleSheetSerializer,
