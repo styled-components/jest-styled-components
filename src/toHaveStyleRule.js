@@ -40,7 +40,7 @@ const getAtRules = (ast, options) => {
   return Object.keys(options)
     .map((option) =>
       ast.stylesheet.rules
-        .filter((rule) => rule.type === option && rule[option] === options[option].replace(/:\s/g, ":"))
+        .filter((rule) => rule.type === option && rule[option].replace(/:\s/g, ":") === options[option].replace(/:\s/g, ":"))
         .map((rule) => rule.rules)
         .reduce((acc, rules) => acc.concat(rules), [])
     )
