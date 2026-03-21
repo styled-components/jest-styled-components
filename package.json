@@ -2,6 +2,7 @@
   "name": "jest-styled-components",
   "version": "7.2.0",
   "description": "Jest utilities for Styled Components",
+  "type": "commonjs",
   "main": "./src/index.js",
   "types": "./typings/index.d.ts",
   "files": [
