@@ -1,28 +1,21 @@
 [![NPM version](https://img.shields.io/npm/v/jest-styled-components.svg)](https://www.npmjs.com/package/jest-styled-components)
-[![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/styled-components/jest)
-
-[![Build Status](https://travis-ci.org/styled-components/jest-styled-components.svg?branch=master)](https://travis-ci.org/styled-components/jest-styled-components)
+[![CI](https://github.com/styled-components/jest-styled-components/actions/workflows/ci.yml/badge.svg)](https://github.com/styled-components/jest-styled-components/actions/workflows/ci.yml)
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 # Jest Styled Components
-A set of utilities for testing [Styled Components](https://github.com/styled-components/styled-components) with [Jest](https://github.com/facebook/jest).
-This package improves the snapshot testing experience and provides a brand new matcher to make expectations on the style rules.
 
-# Quick Start
+A set of utilities for testing [Styled Components](https://github.com/styled-components/styled-components) (v5+) with [Jest](https://github.com/facebook/jest). Provides a snapshot serializer that inlines CSS into snapshots and a `toHaveStyleRule` matcher for asserting style rules.
 
-## Installation
+## Quick Start
 
 ```sh
-yarn add --dev jest-styled-components
+npm install --save-dev jest-styled-components
 ```
-
-## Usage
 
 ```js
 import React from 'react'
 import styled from 'styled-components'
-import renderer from 'react-test-renderer'
+import { render } from '@testing-library/react'
 import 'jest-styled-components'
 
 const Button = styled.button`
@@ -30,133 +23,29 @@ const Button = styled.button`
 `
 
 test('it works', () => {
-  const tree = renderer.create(<Button />).toJSON()
-  expect(tree).toMatchSnapshot()
-  expect(tree).toHaveStyleRule('color', 'red')
+  const { container } = render(<Button />)
+  expect(container.firstChild).toMatchSnapshot()
+  expect(container.firstChild).toHaveStyleRule('color', 'red')
 })
 ```
 
-If you don't want to import the library in every test file, it's recommended to use the [global installation](#global-installation) method.
+To avoid importing in every test file, use the [global setup](#global-setup) method.
 
-Table of Contents
-=================
+## Table of Contents
 
-   * [Snapshot Testing](#snapshot-testing)
-      * [Enzyme](#enzyme)
-      * [react-testing-library](#react-testing-library)
-      * [Theming](#theming)
-      * [Preact](#preact)
-      * [Serializer](#serializer)
-   * [toHaveStyleRule](#tohavestylerule)
-   * [Global installation](#global-installation)
-   * [Working with multiple packages](#working-with-multiple-packages)
-   * [Contributing](#contributing)
+- [Snapshot Testing](#snapshot-testing)
+- [toHaveStyleRule](#tohavestylerule)
+- [Vitest](#vitest)
+- [React Native](#react-native)
+- [Global Setup](#global-setup)
+- [Serializer](#serializer)
+- [Legacy: Enzyme](#legacy-enzyme)
 
-# Snapshot Testing
+## Snapshot Testing
 
-Jest [snapshot testing](https://facebook.github.io/jest/docs/snapshot-testing.html) is an excellent way to test [React](https://facebook.github.io/react/) components (or any serializable value) and make sure things don't change unexpectedly.
-It works with Styled Components but there are a few problems that this package addresses and solves.
+Without this package, styled-components snapshots contain opaque hashed class names and no CSS rules. Changes to styles only show up as class name diffs, which is uninformative.
 
-For example, suppose we create this styled Button:
-
-```js
-import styled from 'styled-components'
-
-const Button = styled.button`
-  color: red;
-`
-```
-
-Which we cover with the following test:
-
-```js
-import React from 'react'
-import renderer from 'react-test-renderer'
-
-test('it works', () => {
-  const tree = renderer.create(<Button />).toJSON()
-  expect(tree).toMatchSnapshot()
-})
-```
-
-When we run our test command, Jest generates a snapshot containing a few class names (which we didn't set) and no information about the style rules:
-
-```js
-exports[`it works 1`] = `
-<button
-  className="sc-bdVaJa rOCEJ"
-/>
-`;
-```
-
-Consequently, changing the color to green:
-
-```js
-const Button = styled.button`
-  color: green;
-`
-```
-
-Results in the following diff, where Jest can only tell us that the class names are changed.
-Although we can assume that if the class names are changed the style rules are also changed, this is not optimal ([and is not always true](https://github.com/styled-components/jest-styled-components/issues/29)).
-
-```diff
-- Snapshot
-+ Received
-
- <button
--  className="sc-bdVaJa rOCEJ"
-+  className="sc-bdVaJa hUzqNt"
- />
-```
-
-Here's where Jest Styled Components comes to rescue.
-
-We import the package into our test file:
-
-```js
-import 'jest-styled-components'
-```
-
-When we rerun the test, the output is different: the style rules are included in the snapshot, and the hashed class names are substituted with placeholders that make the diffs less noisy:
-
-```diff
-- Snapshot
-+ Received
-
-+.c0 {
-+  color: green;
-+}
-+
- <button
--  className="sc-bdVaJa rOCEJ"
-+  className="c0"
- />
-```
-
-This is the resulting snapshot:
-
-```js
-exports[`it works 1`] = `
-.c0 {
-  color: green;
-}
-
-<button
-  className="c0"
-/>
-`;
-```
-
-Now, suppose we change the color again to blue:
-
-```js
-const Button = styled.button`
-  color: blue;
-`
-```
-
-Thanks to Jest Styled Components, Jest is now able to provide the exact information and make our testing experience even more delightful 💖:
+After importing `jest-styled-components`, snapshots include the actual CSS rules and use deterministic class name placeholders (`c0`, `c1`, etc.), producing clear diffs 💖:
 
 ```diff
 - Snapshot
@@ -168,63 +57,11 @@ Thanks to Jest Styled Components, Jest is now able to provide the exact informat
  }
 
  <button
-   className="c0"
+   class="c0"
  />
 ```
 
-## Enzyme
-
-[enzyme-to-json](https://www.npmjs.com/package/enzyme-to-json) is necessary to generate snapshots using [Enzyme](https://github.com/airbnb/enzyme)'s [shallow](http://airbnb.io/enzyme/docs/api/shallow.html) or [full DOM](http://airbnb.io/enzyme/docs/api/mount.html) rendering.
-
-```sh
-yarn add --dev enzyme-to-json
-```
-
-It can be enabled globally in the `package.json`:
-
-```js
-"jest": {
-  "snapshotSerializers": [
-    "enzyme-to-json/serializer"
-  ]
-}
-```
-
-Or imported in each test:
-
-```js
-import toJson from 'enzyme-to-json'
-
-// ...
-
-expect(toJson(wrapper)).toMatchSnapshot()
-```
-
-Jest Styled Components works with shallow rendering:
-
-```js
-import { shallow } from 'enzyme'
-
-test('it works', () => {
-  const wrapper = shallow(<Button />)
-  expect(wrapper).toMatchSnapshot()
-})
-```
-
-And full DOM rendering as well:
-
-```js
-import { mount } from 'enzyme'
-
-test('it works', () => {
-  const wrapper = mount(<Button />)
-  expect(wrapper).toMatchSnapshot()
-})
-```
-
-## react-testing-library
-
-To generate snapshots with [react-testing-library](https://github.com/testing-library/react-testing-library), you can follow the example below:
+### @testing-library/react
 
 ```js
 import { render } from '@testing-library/react'
@@ -235,141 +72,46 @@ test('it works', () => {
 })
 ```
 
-> The snapshots will contain `class` instead of `className` because the snapshots are of DOM elements
+Snapshots from DOM elements use `class` instead of `className`.
 
-## Theming
-
-In some scenarios, testing components that depend on a theme can be [tricky](https://github.com/styled-components/jest-styled-components/issues/61),
-especially when using Enzyme's shallow rendering.
-
-For example:
+### react-test-renderer
 
 ```js
-const Button = styled.button`
-  color: ${props => props.theme.main};
-`
-
-const theme = {
-  main: 'mediumseagreen',
-}
-```
-
-The recommended solution is to pass the theme as a prop:
-
-```js
-const wrapper = shallow(<Button theme={theme} />)
-```
-
-The following function might also help for shallow rendering:
-
-```js
-const shallowWithTheme = (tree, theme) => {
-  const context = shallow(<ThemeProvider theme={theme} />)
-    .instance()
-    .getChildContext()
-  return shallow(tree, { context })
-}
-
-const wrapper = shallowWithTheme(<Button />, theme)
-```
-
-and for full DOM rendering:
-
-```js
-const mountWithTheme = (tree, theme) => {
-  const context = shallow(<ThemeProvider theme={theme} />)
-    .instance()
-    .getChildContext()
-
-  return mount(tree, {
-    context,
-    childContextTypes: ThemeProvider.childContextTypes,
-  })
-}
-```
-
-## Preact
-
-To generate snapshots of [Preact](https://preactjs.com/) components,
-add the following configuration:
-
-```js
-"jest": {
-  "moduleNameMapper": {
-    "^react$": "preact-compat"
-  }
-}
-```
-
-And render the components with [preact-render-to-json](https://github.com/nathancahill/preact-render-to-json):
-
-```js
-import React from 'react'
-import styled from 'styled-components'
-import render from 'preact-render-to-json'
-import 'jest-styled-components'
-
-const Button = styled.button`
-  color: red;
-`
+import renderer from 'react-test-renderer'
 
 test('it works', () => {
-  const tree = render(<Button />)
+  const tree = renderer.create(<Button />).toJSON()
   expect(tree).toMatchSnapshot()
 })
 ```
 
-> The snapshots will contain `class` instead of `className`.
-[Learn more](https://github.com/developit/preact/issues/103).
+### Theming
 
-## Serializer
-
-The serializer can be imported separately from `jest-styled-components/serializer`.
-This makes it possible to use this package with [specific-snapshot](https://github.com/igor-dv/jest-specific-snapshot) and other libraries.
+Pass the theme directly as a prop or wrap with `ThemeProvider`:
 
 ```js
-import React from 'react'
-import styled from 'styled-components'
-import renderer from 'react-test-renderer'
-import { styleSheetSerializer } from "jest-styled-components/serializer"
-import { addSerializer } from "jest-specific-snapshot"
+import { ThemeProvider } from 'styled-components'
 
-addSerializer(styleSheetSerializer)
+const theme = { main: 'mediumseagreen' }
 
-const Button = styled.button`
-  color: red;
-`
+test('with theme prop', () => {
+  const { container } = render(<Button theme={theme} />)
+  expect(container.firstChild).toHaveStyleRule('color', 'mediumseagreen')
+})
 
-test('it works', () => {
-  const tree = renderer.create(<Button />).toJSON()
-  expect(tree).toMatchSpecificSnapshot("./Button.snap")
+test('with ThemeProvider', () => {
+  const { container } = render(
+    <ThemeProvider theme={theme}>
+      <Button />
+    </ThemeProvider>
+  )
+  expect(container.firstChild).toHaveStyleRule('color', 'mediumseagreen')
 })
 ```
 
-## Serializer Options
+## toHaveStyleRule
 
-The serializer can be configured to control the snapshot output.
-
-```js
-import { render } from '@testing-library/react'
-import { setStyleSheetSerializerOptions } from 'jest-styled-components/serializer'
-
-setStyleSheetSerializerOptions({
-  addStyles: false,
-  classNameFormatter: (index) => `styled${index}`
-});
-
-test('it works', () => {
-  const { container } = render(<Button />)
-  expect(container.firstChild).toMatchSnapshot()
-})
-```
-
-# toHaveStyleRule
-
-The `toHaveStyleRule` matcher is useful to test if a given rule is applied to a component.
-The first argument is the expected property, the second is the expected value which can be a String, RegExp, Jest asymmetric matcher or `undefined`.
-When used with a negated ".not" modifier the second argument is optional and can be omitted.
+Asserts that a CSS property has the expected value. The second argument accepts a string, RegExp, Jest asymmetric matcher, or `undefined`. When used with `.not`, the second argument is optional.
 
 ```js
 const Button = styled.button`
@@ -379,25 +121,35 @@ const Button = styled.button`
   opacity: ${props => props.disabled && '.65'};
 `
 
-test('it applies default styles', () => {
-  const tree = renderer.create(<Button />).toJSON()
-  expect(tree).toHaveStyleRule('color', 'red')
-  expect(tree).toHaveStyleRule('border', '0.05em solid black')
-  expect(tree).toHaveStyleRule('cursor', 'pointer')
-  expect(tree).not.toHaveStyleRule('opacity') // equivalent of the following two
-  expect(tree).not.toHaveStyleRule('opacity', expect.any(String))
-  expect(tree).toHaveStyleRule('opacity', undefined)
+test('default styles', () => {
+  const { container } = render(<Button />)
+  expect(container.firstChild).toHaveStyleRule('color', 'red')
+  expect(container.firstChild).toHaveStyleRule('border', '0.05em solid black')
+  expect(container.firstChild).toHaveStyleRule('cursor', 'pointer')
+  expect(container.firstChild).not.toHaveStyleRule('opacity')
+  expect(container.firstChild).toHaveStyleRule('opacity', undefined)
 })
 
-test('it applies styles according to passed props', () => {
-  const tree = renderer.create(<Button disabled transparent />).toJSON()
-  expect(tree).toHaveStyleRule('border', expect.stringContaining('transparent'))
-  expect(tree).toHaveStyleRule('cursor', undefined)
-  expect(tree).toHaveStyleRule('opacity', '.65')
+test('prop-dependent styles', () => {
+  const { container } = render(<Button disabled transparent />)
+  expect(container.firstChild).toHaveStyleRule('border', expect.stringContaining('transparent'))
+  expect(container.firstChild).toHaveStyleRule('cursor', undefined)
+  expect(container.firstChild).toHaveStyleRule('opacity', '.65')
 })
 ```
 
-The matcher supports an optional third `options` parameter which makes it possible to search for rules nested within an [At-rule](https://developer.mozilla.org/en/docs/Web/CSS/At-rule) (see [media](https://developer.mozilla.org/en-US/docs/Web/CSS/@media) and [supports](https://developer.mozilla.org/en-US/docs/Web/CSS/@supports)) or to add modifiers to the class selector. This feature is supported in React only, and more options are coming soon.
+### Options
+
+The third argument is an options object for targeting rules within at-rules, with modifiers, or by raw CSS selector.
+
+| Option | Type | Description |
+|---|---|---|
+| `media` | `string` | Match within a `@media` at-rule, e.g. `'(max-width: 640px)'` |
+| `supports` | `string` | Match within a `@supports` at-rule, e.g. `'(display: grid)'` |
+| `modifier` | `string \| css` | Refine the selector: pseudo-selectors, combinators, `&` references, or the `css` helper for component selectors |
+| `selector` | `string` | Match by raw CSS selector instead of component class. Useful for `createGlobalStyle` |
+
+### media and modifier
 
 ```js
 const Button = styled.button`
@@ -408,16 +160,35 @@ const Button = styled.button`
   }
 `
 
-test('it works', () => {
-  const tree = renderer.create(<Button />).toJSON()
-  expect(tree).toHaveStyleRule('color', 'red', {
+test('media + modifier', () => {
+  const { container } = render(<Button />)
+  expect(container.firstChild).toHaveStyleRule('color', 'red', {
     media: '(max-width:640px)',
     modifier: ':hover',
   })
 })
 ```
 
-If a rule is nested within another styled-component, the `modifier` option can be used with the [`css`](https://www.styled-components.com/docs/api#css) helper to target the nested rule.
+### supports
+
+```js
+const Layout = styled.div`
+  @supports (display: grid) {
+    display: grid;
+  }
+`
+
+test('supports query', () => {
+  const { container } = render(<Layout />)
+  expect(container.firstChild).toHaveStyleRule('display', 'grid', {
+    supports: '(display:grid)',
+  })
+})
+```
+
+### modifier with component selectors
+
+When a rule is nested within another styled-component, use the `css` helper to target it:
 
 ```js
 const Button = styled.button`
@@ -425,70 +196,202 @@ const Button = styled.button`
 `
 
 const ButtonList = styled.div`
-  display: flex;
-
   ${Button} {
     flex: 1 0 auto;
   }
 `
 
-import { css } from 'styled-components';
+import { css } from 'styled-components'
 
-test('nested buttons are flexed', () => {
-  const tree = renderer.create(<ButtonList><Button /></ButtonList>).toJSON()
-  expect(tree).toHaveStyleRule('flex', '1 0 auto', {
+test('nested component selector', () => {
+  const { container } = render(<ButtonList><Button /></ButtonList>)
+  expect(container.firstChild).toHaveStyleRule('flex', '1 0 auto', {
     modifier: css`${Button}`,
   })
 })
 ```
 
-You can take a similar approach when you have classNames that override styles
+Class name overrides work similarly:
+
 ```js
 const Button = styled.button`
   background-color: red;
-  
   &.override {
     background-color: blue;
   }
 `
-const wrapper = mount(<Button className="override">I am a button!</Button>);
 
-expect(wrapper).toHaveStyleRule('background-color', 'blue', {
-  modifier: '&.override',
-});
+test('class override', () => {
+  const { container } = render(<Button className="override" />)
+  expect(container.firstChild).toHaveStyleRule('background-color', 'blue', {
+    modifier: '&.override',
+  })
+})
 ```
 
-This matcher works with trees serialized with `react-test-renderer`, `react-testing-library`, or those shallow rendered or mounted with Enzyme.
-It checks the style rules applied to the root component it receives, therefore to make assertions on components further in the tree they must be provided separately (Enzyme's [find](http://airbnb.io/enzyme/docs/api/ShallowWrapper/find.html) might help).
+### selector (createGlobalStyle)
 
-> Note: for `react-testing-library`, you'll need to pass the first child to check the top-level component's style. To check the styles of deeper components, you can use one of the `getBy*` methods to find the element (e.g. `expect(getByTestId('styled-button')).toHaveStyleRule('color', 'blue')`)
+The `selector` option matches rules by raw CSS selector, bypassing component class name detection. This is the way to test `createGlobalStyle`:
 
-To use the `toHaveStyleRule` matcher with [React Native](https://facebook.github.io/react-native/), change the import statement to:
+```js
+import { createGlobalStyle } from 'styled-components'
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: white;
+  }
+`
+
+test('global styles', () => {
+  render(<GlobalStyle />)
+  expect(document.documentElement).toHaveStyleRule('background', 'white', {
+    selector: 'body',
+  })
+})
+```
+
+When `selector` is set, the component argument to `toHaveStyleRule` is ignored -- any rendered element will work as the receiver.
+
+### Note on element selection
+
+The matcher checks styles on the root element it receives. To assert on nested elements, query for them first:
+
+```js
+const { getByTestId } = render(<MyComponent />)
+expect(getByTestId('inner-button')).toHaveStyleRule('color', 'blue')
+```
+
+## Vitest
+
+Import the Vitest-specific entry point in your setup file:
+
+```js
+import 'jest-styled-components/vitest'
+```
+
+This registers the serializer, matcher, and stylesheet reset using Vitest's `expect` and `beforeEach`. TypeScript types are included at `jest-styled-components/vitest`.
+
+Configure in `vitest.config.ts`:
+
+```js
+export default defineConfig({
+  test: {
+    setupFiles: ['./src/setupTests.ts'],
+  },
+})
+```
+
+## Bun
+
+Works with Bun's test runner out of the box. Import `jest-styled-components` in your test setup as usual -- Bun provides the `expect` and `beforeEach` globals that the library hooks into.
+
+## React Native
+
+For React Native, import the native entry point instead:
 
 ```js
 import 'jest-styled-components/native'
 ```
 
-# Global installation
-
-It is possible to setup this package for all the tests. For Example: import the library once in the `src/setupTests.js` as follows:
+This registers only the `toHaveStyleRule` matcher adapted for React Native's style objects (no snapshot serializer needed). It handles style arrays and converts kebab-case properties to camelCase.
 
 ```js
+import React from 'react'
+import styled from 'styled-components/native'
+import renderer from 'react-test-renderer'
+import 'jest-styled-components/native'
+
+const Label = styled.Text`
+  color: green;
+`
+
+test('native styles', () => {
+  const tree = renderer.create(<Label />).toJSON()
+  expect(tree).toHaveStyleRule('color', 'green')
+})
+```
+
+## Global Setup
+
+To avoid importing in every test file, create a setup file:
+
+```js
+// src/setupTests.js
 import 'jest-styled-components'
 ```
 
-...then add the following to `test.config.js`:
+Then add it to your Jest config:
 
 ```js
-  setupFilesAfterEnv: ['<rootDir>/src/setupTests.js']
+// jest.config.js
+module.exports = {
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
+}
 ```
 
-# Working with multiple packages
+## Serializer
 
-If Jest Styled Components is not working, it is likely caused by loading multiple instances of `styled-components`. This can happen especially when working with a Lerna monorepo. Starting with `styled-components@3.2.0`, a warning will be logged when multiple instances of it are being included and run as part of the Jest tests. Using `styled-components@3.1.6` and lower with multiple instances will cause a silent error with unexpected results.
+The serializer can be imported separately for use with libraries like [jest-specific-snapshot](https://github.com/igor-dv/jest-specific-snapshot):
 
-To debug and fix multiple instances of `styled-components` see the FAQ on ["Why am I getting a warning about several instances of module on the page?"](https://www.styled-components.com/docs/faqs#why-am-i-getting-a-warning-about-several-instances-of-module-on-the-page).
+```js
+import { styleSheetSerializer } from 'jest-styled-components/serializer'
+import { addSerializer } from 'jest-specific-snapshot'
 
-# Contributing
+addSerializer(styleSheetSerializer)
+```
 
-Please [open an issue](https://github.com/styled-components/jest-styled-components/issues/new) and discuss with us before submitting a PR.
+### Serializer Options
+
+```js
+import { setStyleSheetSerializerOptions } from 'jest-styled-components/serializer'
+
+setStyleSheetSerializerOptions({
+  addStyles: false,                          // omit CSS from snapshots
+  classNameFormatter: (index) => `styled${index}`,  // custom class placeholders
+})
+```
+
+### resetStyleSheet
+
+The main entry point calls `resetStyleSheet()` in a `beforeEach` hook automatically. If you use the standalone serializer or a custom test setup where `beforeEach` is not globally available, call it manually:
+
+```js
+import { resetStyleSheet } from 'jest-styled-components'
+
+// In your test setup or beforeEach
+resetStyleSheet()
+```
+
+## Legacy: Enzyme
+
+[Enzyme](https://github.com/enzymejs/enzyme) is no longer actively maintained. If you still use it, snapshot testing requires [enzyme-to-json](https://www.npmjs.com/package/enzyme-to-json) and `toHaveStyleRule` works with both shallow and mounted wrappers. Consider migrating to `@testing-library/react`.
+
+## Working with Multiple Packages
+
+If styles are not appearing in snapshots, you may have multiple instances of `styled-components` loaded (common in monorepos). See the styled-components FAQ: [Why am I getting a warning about several instances of module on the page?](https://www.styled-components.com/docs/faqs#why-am-i-getting-a-warning-about-several-instances-of-module-on-the-page)
+
+## Contributing
+
+[Open an issue](https://github.com/styled-components/jest-styled-components/issues/new) to discuss before submitting a PR.
+
+## Contributors
+
+This project exists thanks to all the people who contribute.
+
+<a href="https://github.com/styled-components/jest-styled-components/graphs/contributors"><img src="https://opencollective.com/styled-components/contributors.svg?width=890" /></a>
+
+## Backers
+
+Thank you to all our backers! [[Become a backer](https://opencollective.com/styled-components#backer)]
+
+<a href="https://opencollective.com/styled-components#backers" target="_blank"><img src="https://opencollective.com/styled-components/backers.svg?width=890"></a>
+
+## Sponsors
+
+Support this project by becoming a sponsor. [[Become a sponsor](https://opencollective.com/styled-components#sponsor)]
+
+<a href="https://opencollective.com/styled-components#sponsors" target="_blank"><img src="https://opencollective.com/styled-components/sponsors.svg?width=890"></a>
+
+## License
+
+Licensed under the MIT License.
