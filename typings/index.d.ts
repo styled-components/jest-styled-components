@@ -42,5 +42,8 @@ export interface StyledComponentsSerializerOptions {
 } 
 
 export declare const styleSheetSerializer: NewPlugin & {
-  setStyleSheetSerializerOptions: (options?: StyledComponentsSerializerOptions) => void 
+  setStyleSheetSerializerOptions: (options?: StyledComponentsSerializerOptions) => void
 };
+
+/** Reset the styled-components stylesheet between tests. Called automatically via `beforeEach` when available. Call manually in Vitest non-globals mode or custom test setups. */
+export declare const resetStyleSheet: () => void;

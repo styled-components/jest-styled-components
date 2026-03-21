@@ -11,4 +11,5 @@ expect.extend({ toHaveStyleRule });
 
 module.exports = {
   styleSheetSerializer,
+  resetStyleSheet,
 };

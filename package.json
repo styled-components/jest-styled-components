@@ -3,7 +3,7 @@
   "version": "7.2.0",
   "description": "Jest utilities for Styled Components",
   "main": "./src/index.js",
-  "typings": "./typings/index.d.ts",
+  "types": "./typings/index.d.ts",
   "files": [
     "native",
     "serializer",
