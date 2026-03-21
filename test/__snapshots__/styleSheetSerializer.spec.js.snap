@@ -351,6 +351,226 @@ exports[`basic: shallow 1`] = `
 </section>
 `;
 
+exports[`child styled component class names preserved (#405): mount 1`] = `
+.c1 {
+  color: blue;
+}
+
+.c0 {
+  padding: 10px;
+}
+
+<styleSheetSerializerspec__Outer>
+  <div
+    className="c0"
+  >
+    <styleSheetSerializerspec__Inner>
+      <span
+        className="c1"
+      >
+        child
+      </span>
+    </styleSheetSerializerspec__Inner>
+  </div>
+</styleSheetSerializerspec__Outer>
+`;
+
+exports[`child styled component class names preserved (#405): react-test-renderer 1`] = `
+.c1 {
+  color: blue;
+}
+
+.c0 {
+  padding: 10px;
+}
+
+<div
+  className="c0"
+>
+  <span
+    className="c1"
+  >
+    child
+  </span>
+</div>
+`;
+
+exports[`child styled component class names preserved (#405): react-testing-library 1`] = `
+.c1 {
+  color: blue;
+}
+
+.c0 {
+  padding: 10px;
+}
+
+<div
+  class="c0"
+>
+  <span
+    class="c1"
+  >
+    child
+  </span>
+</div>
+`;
+
+exports[`child styled component class names preserved (#405): shallow 1`] = `
+.c0 {
+  padding: 10px;
+}
+
+<div
+  className="c0"
+>
+  <styleSheetSerializerspec__Inner>
+    child
+  </styleSheetSerializerspec__Inner>
+</div>
+`;
+
+exports[`dot notation components (#395): mount 1`] = `
+.c0 {
+  border-collapse: collapse;
+}
+
+.c1 {
+  background: grey;
+}
+
+.c2 {
+  background: white;
+}
+
+<styleSheetSerializerspec__Table>
+  <table
+    className="c0"
+  >
+    <styleSheetSerializerspec__Head>
+      <thead
+        className="c1"
+      >
+        <tr>
+          <td>
+            Header
+          </td>
+        </tr>
+      </thead>
+    </styleSheetSerializerspec__Head>
+    <styleSheetSerializerspec__Body>
+      <tbody
+        className="c2"
+      >
+        <tr>
+          <td>
+            Body
+          </td>
+        </tr>
+      </tbody>
+    </styleSheetSerializerspec__Body>
+  </table>
+</styleSheetSerializerspec__Table>
+`;
+
+exports[`dot notation components (#395): react-test-renderer 1`] = `
+.c0 {
+  border-collapse: collapse;
+}
+
+.c1 {
+  background: grey;
+}
+
+.c2 {
+  background: white;
+}
+
+<table
+  className="c0"
+>
+  <thead
+    className="c1"
+  >
+    <tr>
+      <td>
+        Header
+      </td>
+    </tr>
+  </thead>
+  <tbody
+    className="c2"
+  >
+    <tr>
+      <td>
+        Body
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`dot notation components (#395): react-testing-library 1`] = `
+.c0 {
+  border-collapse: collapse;
+}
+
+.c1 {
+  background: grey;
+}
+
+.c2 {
+  background: white;
+}
+
+<table
+  class="c0"
+>
+  <thead
+    class="c1"
+  >
+    <tr>
+      <td>
+        Header
+      </td>
+    </tr>
+  </thead>
+  <tbody
+    class="c2"
+  >
+    <tr>
+      <td>
+        Body
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`dot notation components (#395): shallow 1`] = `
+.c0 {
+  border-collapse: collapse;
+}
+
+<table
+  className="c0"
+>
+  <styleSheetSerializerspec__Head>
+    <tr>
+      <td>
+        Header
+      </td>
+    </tr>
+  </styleSheetSerializerspec__Head>
+  <styleSheetSerializerspec__Body>
+    <tr>
+      <td>
+        Body
+      </td>
+    </tr>
+  </styleSheetSerializerspec__Body>
+</table>
+`;
+
 exports[`duplicated components: mount 1`] = `
 .c0 {
   color: red;

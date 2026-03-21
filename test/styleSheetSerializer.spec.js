@@ -111,6 +111,44 @@ it('any component', () => {
   );
 });
 
+it('dot notation components (#395)', () => {
+  const Table = styled.table`
+    border-collapse: collapse;
+  `;
+  Table.Head = styled.thead`
+    background: grey;
+  `;
+  Table.Body = styled.tbody`
+    background: white;
+  `;
+
+  toMatchSnapshot(
+    <Table>
+      <Table.Head>
+        <tr><td>Header</td></tr>
+      </Table.Head>
+      <Table.Body>
+        <tr><td>Body</td></tr>
+      </Table.Body>
+    </Table>
+  );
+});
+
+it('child styled component class names preserved (#405)', () => {
+  const Inner = styled.span`
+    color: blue;
+  `;
+  const Outer = styled.div`
+    padding: 10px;
+  `;
+
+  toMatchSnapshot(
+    <Outer>
+      <Inner>child</Inner>
+    </Outer>
+  );
+});
+
 it('attaching additional props', () => {
   const Div = styled.div.attrs(() => ({
     className: 'div',
