@@ -62,7 +62,7 @@ const buildReturnMessage = (utils, pass, property, received, expected) => () =>
   'Received:\n' +
   `  ${utils.printReceived(`${property}: ${received}`)}`;
 
-const normalizeSpaces = (value) =>
+const normalizeCommaSpacing = (value) =>
   typeof value === 'string' ? value.replace(/,\s+/g, ',') : value;
 
 const matcherTest = (received, expected, isNot) => {
@@ -74,10 +74,10 @@ const matcherTest = (received, expected, isNot) => {
   try {
     // Normalize spaces after commas so "rgb(0, 0, 0)" matches "rgb(0,0,0)"
     // (stylis strips spaces after commas in CSS values)
-    const normalizedReceived = normalizeSpaces(received);
+    const normalizedReceived = normalizeCommaSpacing(received);
     const matcher = expected instanceof RegExp
       ? expect.stringMatching(expected)
-      : normalizeSpaces(expected);
+      : normalizeCommaSpacing(expected);
 
     expect(normalizedReceived).toEqual(matcher);
     return true;
