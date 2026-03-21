@@ -36,14 +36,17 @@ const getClassNames = (received) => {
 
 const hasAtRule = (options) => Object.keys(options).some((option) => ['media', 'supports'].includes(option));
 
+const normalizeColonSpace = (s) => s.replace(/:\s/g, ':');
+
 const getAtRules = (ast, options) => {
   return Object.keys(options)
-    .map((option) =>
-      ast.stylesheet.rules
-        .filter((rule) => rule.type === option && rule[option].replace(/:\s/g, ":") === options[option].replace(/:\s/g, ":"))
+    .map((option) => {
+      const normalized = normalizeColonSpace(options[option]);
+      return ast.stylesheet.rules
+        .filter((rule) => rule.type === option && normalizeColonSpace(rule[option]) === normalized)
         .map((rule) => rule.rules)
-        .reduce((acc, rules) => acc.concat(rules), [])
-    )
+        .reduce((acc, rules) => acc.concat(rules), []);
+    })
     .reduce((acc, rules) => acc.concat(rules), []);
 };
 
