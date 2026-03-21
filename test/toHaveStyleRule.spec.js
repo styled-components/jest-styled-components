@@ -520,6 +520,16 @@ it("supports snake case display name prefix", () => {
   toHaveStyleRule(<Text />, "color", "blue");
 });
 
+it('styled.svg (#311)', () => {
+  const StyledSvg = styled.svg`
+    width: ${(props) => props.width};
+    height: ${(props) => props.height};
+  `;
+
+  toHaveStyleRule(<StyledSvg width="40px" height="40px" />, 'width', '40px');
+  toHaveStyleRule(<StyledSvg width="40px" height="40px" />, 'height', '40px');
+});
+
 it('Issue #422: chained pseudo-selectors - &:focus-visible:not(:disabled)', () => {
   const StyledButton = styled('button')`
     color: white;
@@ -557,4 +567,26 @@ it('Issue #422: chained pseudo-selectors - &[data-focus-visible-added]:not(:disa
   toHaveStyleRule(<StyledButton />, 'background', 'red', {
     modifier: '&[data-focus-visible-added]:not(:disabled)',
   });
+});
+
+it('createGlobalStyle (#397, #324)', () => {
+  const { createGlobalStyle } = require('styled-components');
+
+  const GlobalStyle = createGlobalStyle`
+    body {
+      background: red;
+    }
+    h1 {
+      color: blue;
+      font-size: 24px;
+    }
+  `;
+
+  // createGlobalStyle renders null, but styles are in the stylesheet
+  renderer.create(<GlobalStyle />);
+
+  // Should be able to assert on global styles by passing null and a selector
+  expect(null).toHaveStyleRule('background', 'red', { selector: 'body' });
+  expect(null).toHaveStyleRule('color', 'blue', { selector: 'h1' });
+  expect(null).toHaveStyleRule('font-size', '24px', { selector: 'h1' });
 });

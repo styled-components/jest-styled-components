@@ -118,11 +118,25 @@ const normalizeOptions = (options) =>
     })
     : options;
 
+const getRulesBySelector = (ast, selector, options) => {
+  const rules = hasAtRule(options) ? getAtRules(ast, options) : ast.stylesheet.rules;
+
+  return rules.filter(
+    (rule) => rule.type === 'rule' && rule.selectors.some((s) => normalizeQuotations(s) === normalizeQuotations(selector))
+  );
+};
+
 function toHaveStyleRule(component, property, expected, options = {}) {
-  const classNames = getClassNames(component);
   const ast = getCSS();
   const normalizedOptions = normalizeOptions(options);
-  const rules = getRules(ast, classNames, normalizedOptions);
+  let rules;
+
+  if (normalizedOptions.selector) {
+    rules = getRulesBySelector(ast, normalizedOptions.selector, normalizedOptions);
+  } else {
+    const classNames = getClassNames(component);
+    rules = getRules(ast, classNames, normalizedOptions);
+  }
 
   if (!rules.length) {
     return handleMissingRules(normalizedOptions);
