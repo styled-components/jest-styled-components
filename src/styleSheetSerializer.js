@@ -98,7 +98,7 @@ const getClassNamesFromSelectorsByHashes = (classNames, hashes) => {
 const replaceClassNames = (result, classNames, style, classNameFormatter) =>
   classNames
     .filter((className) => style.includes(className))
-    .reduce((acc, className, index) => acc.replace(new RegExp(`\\b${className}\\b`, 'g'), classNameFormatter(index++)), result);
+    .reduce((acc, className, index) => acc.replace(new RegExp(`\\b${className}\\b`, 'g'), classNameFormatter(index)), result);
 
 const stripUnreferencedClassNames = (result, classNames) =>
   classNames.reduce((acc, className) => acc.replace(new RegExp(`${className}\\s?`, 'g'), ''), result);
@@ -116,11 +116,6 @@ const serializerOptionDefaults = {
 let serializerOptions = serializerOptionDefaults;
 
 module.exports = {
-  /**
-   * Configure jest-styled-components/serializer
-   *
-   * @param {{ addStyles?: boolean, classNameFormatter?: (index: number) => string }} options
-   */
   setStyleSheetSerializerOptions(options = {}) {
     serializerOptions = {
       ...serializerOptionDefaults,

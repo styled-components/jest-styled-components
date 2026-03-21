@@ -100,10 +100,13 @@ const getRules = (ast, classNames, options) => {
   return rules.filter((rule) => rule.type === 'rule' && hasClassNames(classNames, rule.selectors, options));
 };
 
-const getRulesBySelector = (ast, selector, options) =>
-  getBaseRules(ast, options).filter(
-    (rule) => rule.type === 'rule' && rule.selectors.some((s) => normalizeQuotations(s) === normalizeQuotations(selector))
+const getRulesBySelector = (ast, selector, options) => {
+  const normalizedSelector = normalizeQuotations(selector);
+
+  return getBaseRules(ast, options).filter(
+    (rule) => rule.type === 'rule' && rule.selectors.some((s) => normalizeQuotations(s) === normalizedSelector)
   );
+};
 
 const handleMissingRules = (options) => ({
   pass: false,
