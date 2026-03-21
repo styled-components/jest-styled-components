@@ -13,6 +13,7 @@ declare global {
     interface Options {
       media?: string;
       modifier?: string | ReturnType<typeof css>;
+      selector?: string;
       supports?: string;
     }
 
