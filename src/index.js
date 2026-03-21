@@ -6,8 +6,10 @@ if (typeof beforeEach === 'function') {
   beforeEach(resetStyleSheet);
 }
 
-expect.addSnapshotSerializer(styleSheetSerializer);
-expect.extend({ toHaveStyleRule });
+if (typeof expect !== 'undefined') {
+  expect.addSnapshotSerializer(styleSheetSerializer);
+  expect.extend({ toHaveStyleRule });
+}
 
 module.exports = {
   styleSheetSerializer,

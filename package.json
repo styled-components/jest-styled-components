@@ -9,7 +9,8 @@
     "native",
     "serializer",
     "src",
-    "typings"
+    "typings",
+    "vitest"
   ],
   "repository": "github:styled-components/jest-styled-components",
   "bugs": {
@@ -18,11 +19,12 @@
   "author": "Michele Bertoli",
   "license": "MIT",
   "scripts": {
-    "test": "yarn test:web && yarn test:native && yarn test:preact",
+    "test": "yarn test:web && yarn test:native && yarn test:preact && yarn lint:pkg",
     "test:web": "jest --color",
     "test:web:watch": "jest --watch",
     "test:native": "jest --color --config .jest.native.json",
-    "test:preact": "jest --color --config .jest.preact.json"
+    "test:preact": "jest --color --config .jest.preact.json",
+    "lint:pkg": "publint --pack npm"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -49,6 +51,7 @@
     "preact-render-to-json": "^3.6.6",
     "prettier": "^2.3.2",
     "pretty-format": "^27.5.1",
+    "publint": "^0.3.18",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-is": "^17.0.2",
