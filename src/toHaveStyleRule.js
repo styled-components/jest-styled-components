@@ -82,20 +82,28 @@ const hasClassNames = (classNames, selectors, options) => {
   return classNames.some((className) =>
     staticClassNames.some((staticClassName) =>
       selectors.map(removeSpaceAfterSelector).includes(
-        removeSpaceAfterSelector(normalizeQuotations(getModifiedClassName(className, staticClassName, options.modifier).replace(/['"]/g, '"')))
+        removeSpaceAfterSelector(normalizeQuotations(getModifiedClassName(className, staticClassName, options.modifier)))
       )
     )
   );
 };
 
+const getBaseRules = (ast, options) =>
+  hasAtRule(options) ? getAtRules(ast, options) : ast.stylesheet.rules;
+
 const getRules = (ast, classNames, options) => {
-  const rules = (hasAtRule(options) ? getAtRules(ast, options) : ast.stylesheet.rules).map((rule) => ({
+  const rules = getBaseRules(ast, options).map((rule) => ({
     ...rule,
     selectors: Array.isArray(rule.selectors) ? rule.selectors.map(normalizeQuotations) : rule.selectors,
   }));
 
   return rules.filter((rule) => rule.type === 'rule' && hasClassNames(classNames, rule.selectors, options));
 };
+
+const getRulesBySelector = (ast, selector, options) =>
+  getBaseRules(ast, options).filter(
+    (rule) => rule.type === 'rule' && rule.selectors.some((s) => normalizeQuotations(s) === normalizeQuotations(selector))
+  );
 
 const handleMissingRules = (options) => ({
   pass: false,
@@ -117,14 +125,6 @@ const normalizeOptions = (options) =>
       modifier: Array.isArray(options.modifier) ? options.modifier.join('') : options.modifier,
     })
     : options;
-
-const getRulesBySelector = (ast, selector, options) => {
-  const rules = hasAtRule(options) ? getAtRules(ast, options) : ast.stylesheet.rules;
-
-  return rules.filter(
-    (rule) => rule.type === 'rule' && rule.selectors.some((s) => normalizeQuotations(s) === normalizeQuotations(selector))
-  );
-};
 
 function toHaveStyleRule(component, property, expected, options = {}) {
   const ast = getCSS();
