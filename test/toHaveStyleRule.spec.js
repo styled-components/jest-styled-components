@@ -381,6 +381,23 @@ it('selector modifiers', () => {
   });
 });
 
+it('nested selector with single quotes (#296)', () => {
+  const Button = styled.button`
+    color: black;
+
+    input[type='reset'] {
+      &:hover {
+        color: white;
+      }
+    }
+  `;
+
+  // Test with all renderers to match the reporter's setup (they used @testing-library/react)
+  toHaveStyleRule(<Button />, 'color', 'white', {
+    modifier: "input[type='reset']:hover",
+  });
+});
+
 it('component modifiers', () => {
   const Text = styled.span`
     color: grey;
@@ -501,4 +518,43 @@ it("supports snake case display name prefix", () => {
   Text.styledComponentId = `test-case-${Text.styledComponentId}`;
 
   toHaveStyleRule(<Text />, "color", "blue");
+});
+
+it('Issue #422: chained pseudo-selectors - &:focus-visible:not(:disabled)', () => {
+  const StyledButton = styled('button')`
+    color: white;
+    padding: 40px;
+    background: black;
+
+    &[data-focus-visible-added]:not(:disabled),
+    &:focus-visible:not(:disabled) {
+      background: red;
+      box-shadow: green;
+    }
+  `;
+
+  toHaveStyleRule(<StyledButton />, 'background', 'red', {
+    modifier: '&:focus-visible:not(:disabled)',
+  });
+  toHaveStyleRule(<StyledButton />, 'box-shadow', 'green', {
+    modifier: '&:focus-visible:not(:disabled)',
+  });
+});
+
+it('Issue #422: chained pseudo-selectors - &[data-focus-visible-added]:not(:disabled)', () => {
+  const StyledButton = styled('button')`
+    color: white;
+    padding: 40px;
+    background: black;
+
+    &[data-focus-visible-added]:not(:disabled),
+    &:focus-visible:not(:disabled) {
+      background: red;
+      box-shadow: green;
+    }
+  `;
+
+  toHaveStyleRule(<StyledButton />, 'background', 'red', {
+    modifier: '&[data-focus-visible-added]:not(:disabled)',
+  });
 });
