@@ -4,22 +4,18 @@
 
 ### Patch Changes
 
-- c7b0e4e: **Bug Fixes**
-
-  - Fix native `toHaveStyleRule` crash when element has no `style` prop (#225, #110)
-  - Fix nested at-rules (`@media` inside `@supports` and vice versa) not being found by `toHaveStyleRule` (#245)
-  - Fix `getHTML()` creating an empty `ServerStyleSheet` instead of reading from the global sheet (#401)
-  - Fix selector matching with spaces around CSS combinators (`> ul > li > a` now matches correctly)
-  - Fix invalid CSS causing cryptic parse errors — now shows the offending rule with surrounding context and a caret pointing at the exact error position (#147)
-
-  **Improvements**
-
-  - Add opt-in CSS parse caching via `import 'jest-styled-components/cache'` for faster `toHaveStyleRule` in large test suites (#235)
-  - Normalize whitespace in value comparisons so `red !important`, `sidebar / inline-size`, and `rgb(0, 0, 0)` match their stylis-formatted equivalents (skips quoted strings)
-  - Clearer validation messages: "Property not found" instead of cryptic crash, human-readable options formatting, better negation wording
-  - Add `cache/index.d.ts` for TypeScript users importing the cache entry point
-  - Use `Set` for hash lookups (O(1) vs O(n) per lookup)
-  - Serializer no longer mutates the parsed CSS AST
+- Fix native `toHaveStyleRule` crash when element has no `style` prop (#225, #110)
+- Fix nested at-rules (`@media` inside `@supports` and vice versa) not found by `toHaveStyleRule` (#245)
+- Fix `getHTML()` creating an empty `ServerStyleSheet` instead of reading from the global sheet (#401)
+- Fix selector matching with spaces around CSS combinators (`> ul > li > a`)
+- Fix invalid CSS causing cryptic parse errors — shows the offending rule with context and caret (#147)
+- Fix nested React Native style arrays not flattening correctly
+- Add `@container` and `@layer` at-rule support for `toHaveStyleRule` and the snapshot serializer
+- Add opt-in CSS parse caching via `import 'jest-styled-components/cache'` (#235)
+- Normalize whitespace in value comparisons (`!important`, shorthand separators, commas)
+- Clearer validation messages: "Property not found" vs "Value mismatch"
+- Export `disableCSSCache` from `jest-styled-components/cache`
+- Use `Set` for O(1) hash lookups; serializer no longer mutates the parsed CSS AST
 
 ## 7.3.0
 
