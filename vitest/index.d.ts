@@ -15,7 +15,12 @@ export declare const styleSheetSerializer: NewPlugin & {
 /** Reset the styled-components stylesheet between tests. Called automatically via `beforeEach` when using this entry point. */
 export declare const resetStyleSheet: () => void;
 
-type Value = string | number | RegExp | undefined;
+interface AsymmetricMatcher {
+  $$typeof: Symbol;
+  sample?: string | RegExp | object | Array<any> | Function;
+}
+
+type Value = string | number | RegExp | AsymmetricMatcher | undefined;
 
 interface Options {
   /** Target rules within a specific `@media` at-rule, e.g. `'(max-width: 640px)'`. */

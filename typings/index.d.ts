@@ -1,5 +1,5 @@
-import { NewPlugin } from 'pretty-format'
-import { css } from 'styled-components'
+import type { NewPlugin } from 'pretty-format'
+import type { css } from 'styled-components'
 
 declare global {
   namespace jest {
