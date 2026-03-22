@@ -167,6 +167,16 @@ it('handles element with null style prop', () => {
   ).toThrow(/Property 'color' not found/);
 });
 
+it('handles deeply nested style arrays', () => {
+  const element = {
+    type: 'View',
+    props: { style: [[{ color: 'red' }], [{ fontSize: 16 }]] },
+    children: null,
+  };
+  expect(element).toHaveStyleRule('color', 'red');
+  expect(element).toHaveStyleRule('font-size', 16);
+});
+
 it('style prop is an object', () => {
   const StyledView = styled.TouchableOpacity`
     background-color: papayawhip;

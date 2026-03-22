@@ -1,12 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`message when property not found 1`] = `
-"[31m\\"Property 'background-color' not found in style rules\\"[39m
+"\\"Property 'background-color' not found in style rules\\"
 
 Expected
-  [32m\\"background-color: black\\"[39m
+  \\"background-color: black\\"
 Received:
-  [31m\\"background-color: undefined\\"[39m"
+  \\"background-color: undefined\\""
 `;
 
 exports[`message when rules not found 1`] = `"No style rules found on passed Component"`;
@@ -17,12 +17,12 @@ exports[`message when rules not found using options 1`] = `
 `;
 
 exports[`message when value does not match 1`] = `
-"[31m\\"Value mismatch for property 'background'\\"[39m
+"\\"Value mismatch for property 'background'\\"
 
 Expected
-  [32m\\"background: red\\"[39m
+  \\"background: red\\"
 Received:
-  [31m\\"background: orange\\"[39m"
+  \\"background: orange\\""
 `;
 
 exports[`non existing 1`] = `"No style rules found on passed Component"`;

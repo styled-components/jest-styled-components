@@ -11,6 +11,10 @@ declare global {
     type Value = string | number | RegExp | AsymmetricMatcher | undefined;
 
     interface Options {
+      /** Target rules within a specific `@container` at-rule, e.g. `'(min-width: 400px)'`. */
+      container?: string;
+      /** Target rules within a specific `@layer` at-rule, e.g. `'utilities'`. */
+      layer?: string;
       /** Target rules within a specific `@media` at-rule, e.g. `'(max-width: 640px)'`. Whitespace around colons is normalized automatically. */
       media?: string;
       /** Refine the selector used to match rules. Supports pseudo-selectors (`:hover`), combinators (`> div`), the `&` self-reference (`&&`, `&.active`), parent selectors (`.parent &`), and the styled-components `css` helper for component selectors. */

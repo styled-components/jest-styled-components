@@ -17,7 +17,9 @@ function toHaveStyleRule(component, property, expected) {
     };
   }
 
-  const styles = Array.isArray(style) ? style.filter((x) => x) : style;
+  const styles = Array.isArray(style)
+    ? style.flat(Infinity).filter((x) => x)
+    : style;
   const camelCasedProperty = property.replace(/-(\w)/g, (_, match) =>
     match.toUpperCase()
   );

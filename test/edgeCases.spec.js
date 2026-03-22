@@ -44,7 +44,7 @@ describe('edge cases', () => {
         }
       `;
       const tree = renderer.create(<Pseudo />).toJSON();
-      expect(tree).toHaveStyleRule('content', expect.stringContaining('hello'), {
+      expect(tree).toHaveStyleRule('content', "\"hello 'world' \\\"quoted\\\"\"", {
         modifier: '::before',
       });
     });
@@ -222,6 +222,9 @@ describe('edge cases', () => {
       `;
       const tree = renderer.create(<Card />).toJSON();
       expect(tree).toHaveStyleRule('container-type', 'inline-size');
+      expect(tree).toHaveStyleRule('font-size', '1.5rem', {
+        container: '(min-width: 400px)',
+      });
       expect(tree).toMatchSnapshot();
     });
 
@@ -232,6 +235,7 @@ describe('edge cases', () => {
         }
       `;
       const tree = renderer.create(<Layered />).toJSON();
+      expect(tree).toHaveStyleRule('color', 'red', { layer: 'utilities' });
       expect(tree).toMatchSnapshot();
     });
 
