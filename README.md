@@ -362,6 +362,18 @@ import { resetStyleSheet } from 'jest-styled-components'
 resetStyleSheet()
 ```
 
+### CSS Parse Caching
+
+By default, `toHaveStyleRule` re-parses the stylesheet on every assertion. For test suites with many assertions, this can be slow. Import the cached entry point to parse once and reuse the result when the stylesheet hasn't changed:
+
+```js
+import 'jest-styled-components/cache'
+```
+
+That's it—the cache automatically invalidates when the stylesheet changes (new components render) and when `resetStyleSheet` runs between tests via `beforeEach`. No manual cleanup needed.
+
+With the cached entry point, both `toHaveStyleRule` and the snapshot serializer reuse the parsed stylesheet when possible. The serializer builds a filtered copy of the AST instead of mutating it during serialization.
+
 ## Legacy: Enzyme
 
 [Enzyme](https://github.com/enzymejs/enzyme) is no longer actively maintained. If you still use it, snapshot testing requires [enzyme-to-json](https://www.npmjs.com/package/enzyme-to-json) and `toHaveStyleRule` works with both shallow and mounted wrappers. Consider migrating to `@testing-library/react`.

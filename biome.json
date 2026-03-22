@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["src/**", "native/**", "serializer/**", "vitest/**", "test/**", "!test/native/**"]
+		"includes": ["src/**", "native/**", "serializer/**", "vitest/**", "cache/**", "test/**", "!test/native/**"]
 	},
 	"formatter": {
 		"enabled": true,
