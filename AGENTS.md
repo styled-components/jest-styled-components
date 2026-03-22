@@ -45,7 +45,7 @@ npx jest --updateSnapshot
 
 - **`src/utils.js`** — Shared utilities. Accesses styled-components internals via `__PRIVATE__` to read/reset the global stylesheet. Parses CSS with `@adobe/css-tools`. Key exports: `resetStyleSheet`, `getCSS`, `getHashes`, `matcherTest`, `buildReturnMessage`.
 - **`src/styleSheetSerializer.js`** — Jest snapshot serializer. Walks the component tree to collect class names, extracts matching CSS rules from the stylesheet, replaces hashed class names with sequential placeholders, and prepends styles to the snapshot output. Uses a `WeakSet` cache to prevent re-processing nodes during recursive serialization.
-- **`src/toHaveStyleRule.js`** — Web matcher. Extracts class names from react-test-renderer JSON, Enzyme wrappers, or DOM elements, then queries parsed CSS for matching declarations. Supports `media`, `supports`, and `modifier` options for targeting nested/at-rule styles.
+- **`src/toHaveStyleRule.js`** — Web matcher. Extracts class names from react-test-renderer JSON, Enzyme wrappers, or DOM elements, then queries parsed CSS for matching declarations. Supports `media`, `supports`, `container`, `layer`, and `modifier` options for targeting nested/at-rule styles.
 - **`src/native/toHaveStyleRule.js`** — React Native matcher. Works directly with the `style` prop (no CSS parsing needed), merging style arrays and converting kebab-case properties to camelCase.
 
 ### Test Configurations
@@ -98,7 +98,7 @@ Two regex patterns are used:
 
 ### CSS Parsing
 
-Uses `@adobe/css-tools` as the sole production dependency to parse stylesheet output into an AST, then queries rules by matching selectors against component class names. At-rules (`@media`, `@supports`) are handled by first filtering to matching at-rule blocks, then searching nested rules.
+Uses `@adobe/css-tools` as the sole production dependency to parse stylesheet output into an AST, then queries rules by matching selectors against component class names. At-rules (`@media`, `@supports`, `@container`, `@layer`) are handled by first filtering to matching at-rule blocks, then searching nested rules. `@scope` is not yet supported (blocked by `@adobe/css-tools` parse error).
 
 ## Tooling
 
