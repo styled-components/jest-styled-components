@@ -1,0 +1,80 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`edge cases at-rules @keyframes does not break matcher 1`] = `
+.c0 {
+  animation: eoUyJr 1s linear infinite;
+  color: red;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`edge cases broken/unusual CSS empty styled component 1`] = `
+<div
+  className=""
+/>
+`;
+
+exports[`edge cases cache integrity under stress snapshot after cache stress 1`] = `
+.c0 {
+  background: lime;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`edge cases component patterns null/undefined children in tree 1`] = `
+.c0 {
+  color: red;
+}
+
+<div
+  className="c0"
+>
+  <span>
+    real child
+  </span>
+  0
+</div>
+`;
+
+exports[`edge cases modern CSS features @container queries 1`] = `
+.c0 {
+  container-type: inline-size;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`edge cases modern CSS features @layer 1`] = `
+<div
+  className=""
+/>
+`;
+
+exports[`edge cases modern CSS features @starting-style 1`] = `
+.c0 {
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`edge cases weird CSS values url() with parentheses and special chars 1`] = `
+.c0 {
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E");
+}
+
+<div
+  className="c0"
+/>
+`;

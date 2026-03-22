@@ -151,6 +151,22 @@ it('theming', () => {
   expect(renderer.create(component).toJSON()).toHaveStyleRule('color', 'mediumseagreen');
 });
 
+it('handles element with no style prop', () => {
+  // Simulates elements from react-native-testing-library or Enzyme shallow
+  // rendering where style may be undefined (#225, #110)
+  const elementWithoutStyle = { type: 'View', props: {}, children: null };
+  expect(() =>
+    expect(elementWithoutStyle).toHaveStyleRule('color', 'red')
+  ).toThrow(/Property 'color' not found/);
+});
+
+it('handles element with null style prop', () => {
+  const elementWithNullStyle = { type: 'View', props: { style: null }, children: null };
+  expect(() =>
+    expect(elementWithNullStyle).toHaveStyleRule('color', 'red')
+  ).toThrow(/Property 'color' not found/);
+});
+
 it('style prop is an object', () => {
   const StyledView = styled.TouchableOpacity`
     background-color: papayawhip;

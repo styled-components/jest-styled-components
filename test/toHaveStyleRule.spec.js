@@ -265,6 +265,32 @@ it('at rules', () => {
   });
 });
 
+it('nested at-rules (#245)', () => {
+  const Wrapper = styled.section`
+    color: red;
+    @supports (display: grid) {
+      @media (min-width: 768px) {
+        color: green;
+      }
+    }
+    @media (max-width: 640px) {
+      @supports (display: flex) {
+        color: blue;
+      }
+    }
+  `;
+
+  toHaveStyleRule(<Wrapper />, 'color', 'red');
+  toHaveStyleRule(<Wrapper />, 'color', 'green', {
+    media: '(min-width: 768px)',
+    supports: '(display: grid)',
+  });
+  toHaveStyleRule(<Wrapper />, 'color', 'blue', {
+    media: '(max-width: 640px)',
+    supports: '(display: flex)',
+  });
+});
+
 it('selector modifiers', () => {
   const Link = styled.a`
     color: white;
