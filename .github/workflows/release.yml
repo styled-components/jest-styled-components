@@ -26,19 +26,19 @@ jobs:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Update npm for trusted publishing
+      - name: Update npm
         run: npm install -g npm@latest
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
       - name: Create Release PR or Publish
-        uses: changesets/action@main
+        id: changesets
+        uses: changesets/action@6a0a831ff30acef54f2c6aa1cbbc1096b066edaf # v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          createGithubReleases: true
           publish: pnpm changeset publish
           title: 'chore: version packages'
           commit: 'chore: version packages'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ''
-          NPM_CONFIG_PROVENANCE: true
