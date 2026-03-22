@@ -115,3 +115,23 @@ Uses `@adobe/css-tools` as the sole production dependency to parse stylesheet ou
 - **CI workflow** (`.github/workflows/ci.yml`): `pull_request_target` trigger (uses base branch workflow). `permissions: contents: read`.
 - **Release workflow** (`.github/workflows/release.yml`): Changesets action with provenance-based npm publishing.
 - **CodeQL** (`.github/workflows/codeql-analysis.yml`): Weekly JavaScript analysis.
+
+## Open Source Maintainer Rules
+
+### Issues
+
+- **Never mass-close or mass-comment.** Every response posted to an issue must be individually researched and evidence-backed with a fresh code experiment.
+- **Verify before closing.** Reproduce the reported scenario on the current version and confirm it's resolved before closing. Don't assume a fix covers an issue without testing.
+- **Be kind and appreciative.** Thank reporters for filing. Be respectful even when closing as stale or wontfix.
+- **Preserve original authorship.** When absorbing work from external PRs, credit the original author in the commit or PR description.
+
+### PRs
+
+- **No test plans in PR descriptions** unless explicitly requested.
+- **Credit contributors.** When closing a PR whose fix was absorbed into other work, comment thanking the author and linking to the release that includes their contribution.
+
+### Code
+
+- **Use TDD (red/green)** when fixing bugs — write the failing test first, then fix the code.
+- **Always run tests** before considering work done.
+- **Research before implementing.** Go beyond official docs — review dev blogs, expert content, and source code for the deepest understanding.
