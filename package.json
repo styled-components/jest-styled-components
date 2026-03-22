@@ -17,9 +17,9 @@
   "bugs": {
     "url": "https://github.com/styled-components/jest-styled-components/issues"
   },
-  "author": "Evan Jacobs <ej@quantizor.dev> (https://github.com/quantizor)",
-  "contributors": [
-    "Michele Bertoli"
+  "author": "Michele Bertoli",
+  "maintainers": [
+    "Evan Jacobs <ej@quantizor.dev> (https://github.com/quantizor)"
   ],
   "license": "MIT",
   "scripts": {
