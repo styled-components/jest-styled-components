@@ -1,6 +1,6 @@
 const toHaveStyleRule = require('./toHaveStyleRule');
 const styleSheetSerializer = require('./styleSheetSerializer');
-const { resetStyleSheet } = require('./utils');
+const { resetStyleSheet, enableCSSCache, disableCSSCache } = require('./utils');
 
 if (typeof beforeEach === 'function') {
   beforeEach(resetStyleSheet);
@@ -14,4 +14,6 @@ if (typeof expect !== 'undefined') {
 module.exports = {
   styleSheetSerializer,
   resetStyleSheet,
+  enableCSSCache,
+  disableCSSCache,
 };
