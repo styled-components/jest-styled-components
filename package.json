@@ -7,6 +7,7 @@
   "main": "./src/index.js",
   "types": "./typings/index.d.ts",
   "files": [
+    "cache",
     "native",
     "serializer",
     "src",
@@ -68,7 +69,7 @@
     "styled-components": ">= 5"
   },
   "lint-staged": {
-    "*.js": [
+    "{src,native,serializer,vitest,cache}/**/*.js": [
       "biome check --write --no-errors-on-unmatched --files-ignore-unknown=true"
     ]
   },
