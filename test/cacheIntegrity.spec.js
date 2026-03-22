@@ -52,7 +52,22 @@ describe('cache cross-test integrity', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('test E: snapshot from test D must not leak into this test', () => {
+  it('test E: matcher and serializer share cached AST without corruption', () => {
+    const Box = styled.div`
+      color: green;
+      padding: 8px;
+    `;
+    const tree = renderer.create(<Box />).toJSON();
+    // Matcher consumes the cached AST (creates shallow copies of rules)
+    expect(tree).toHaveStyleRule('color', 'green');
+    expect(tree).toHaveStyleRule('padding', '8px');
+    // Serializer consumes the same cached AST (creates filtered copy)
+    expect(tree).toMatchSnapshot();
+    // Matcher must still work after serializer consumed the AST
+    expect(tree).toHaveStyleRule('color', 'green');
+  });
+
+  it('test F: snapshot from test D must not leak into this test', () => {
     const Badge = styled.span`font-weight: bold;`;
     const tree = renderer.create(<Badge />).toJSON();
     expect(tree).toMatchSnapshot();

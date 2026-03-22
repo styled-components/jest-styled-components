@@ -144,6 +144,8 @@ The third argument is an options object for targeting rules within at-rules, wit
 
 | Option | Type | Description |
 |---|---|---|
+| `container` | `string` | Match within a `@container` at-rule, e.g. `'(min-width: 400px)'` |
+| `layer` | `string` | Match within a `@layer` at-rule, e.g. `'utilities'` |
 | `media` | `string` | Match within a `@media` at-rule, e.g. `'(max-width: 640px)'` |
 | `supports` | `string` | Match within a `@supports` at-rule, e.g. `'(display: grid)'` |
 | `modifier` | `string \| css` | Refine the selector: pseudo-selectors, combinators, `&` references, or the `css` helper for component selectors |
@@ -182,6 +184,41 @@ test('supports query', () => {
   const { container } = render(<Layout />)
   expect(container.firstChild).toHaveStyleRule('display', 'grid', {
     supports: '(display:grid)',
+  })
+})
+```
+
+### container
+
+```js
+const Card = styled.div`
+  container-type: inline-size;
+  @container (min-width: 400px) {
+    font-size: 1.5rem;
+  }
+`
+
+test('container query', () => {
+  const { container } = render(<Card />)
+  expect(container.firstChild).toHaveStyleRule('font-size', '1.5rem', {
+    container: '(min-width: 400px)',
+  })
+})
+```
+
+### layer
+
+```js
+const Themed = styled.div`
+  @layer utilities {
+    color: red;
+  }
+`
+
+test('layer query', () => {
+  const { container } = render(<Themed />)
+  expect(container.firstChild).toHaveStyleRule('color', 'red', {
+    layer: 'utilities',
   })
 })
 ```

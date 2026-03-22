@@ -47,14 +47,26 @@ exports[`edge cases modern CSS features @container queries 1`] = `
   container-type: inline-size;
 }
 
+@container (min-width:400px) {
+  .c0 {
+    font-size: 1.5rem;
+  }
+}
+
 <div
   className="c0"
 />
 `;
 
 exports[`edge cases modern CSS features @layer 1`] = `
+@layer utilities {
+  .c0 {
+    color: red;
+  }
+}
+
 <div
-  className=""
+  className="c0"
 />
 `;
 

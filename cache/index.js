@@ -1,3 +1,5 @@
-const { enableCSSCache } = require('../src/utils');
+const { enableCSSCache, disableCSSCache } = require('../src/utils');
 
 enableCSSCache();
+
+module.exports = { disableCSSCache };

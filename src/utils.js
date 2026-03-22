@@ -2,7 +2,9 @@ const css = require('@adobe/css-tools');
 const { __PRIVATE__ } = require('styled-components');
 
 if (!__PRIVATE__) {
-  throw new Error('Could neither find styled-components secret internals');
+  throw new Error(
+    'Could not find styled-components internals (__PRIVATE__). Ensure styled-components v5+ is installed.'
+  );
 }
 
 const { mainSheet, masterSheet } = __PRIVATE__;
@@ -265,7 +267,7 @@ const matcherTest = (received, expected, isNot) => {
   }
 };
 
-const AT_RULE_TYPES = ['media', 'supports'];
+const AT_RULE_TYPES = ['media', 'supports', 'container', 'layer'];
 
 module.exports = {
   AT_RULE_TYPES,

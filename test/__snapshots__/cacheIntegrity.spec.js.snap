@@ -11,7 +11,18 @@ exports[`cache cross-test integrity test D: snapshot serializer produces correct
 />
 `;
 
-exports[`cache cross-test integrity test E: snapshot from test D must not leak into this test 1`] = `
+exports[`cache cross-test integrity test E: matcher and serializer share cached AST without corruption 1`] = `
+.c0 {
+  color: green;
+  padding: 8px;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`cache cross-test integrity test F: snapshot from test D must not leak into this test 1`] = `
 .c0 {
   font-weight: bold;
 }
