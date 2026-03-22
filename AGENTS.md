@@ -122,7 +122,8 @@ Uses `@adobe/css-tools` as the sole production dependency to parse stylesheet ou
 
 - **Never mass-close or mass-comment.** Every response posted to an issue must be individually researched and evidence-backed with a fresh code experiment.
 - **Verify before closing.** Reproduce the reported scenario on the current version and confirm it's resolved before closing. Don't assume a fix covers an issue without testing.
-- **Be kind and appreciative.** Thank reporters for filing. Be respectful even when closing as stale or wontfix.
+- **Warm and positive tone.** Be honest but welcoming. Thank reporters for taking the time to file.
+- **Own bugs gracefully.** If the issue is an actual bug in the codebase, respectfully apologize (short and sweet) and prepare a well-researched, thoroughly tested candidate fix PR.
 - **Preserve original authorship.** When absorbing work from external PRs, credit the original author in the commit or PR description.
 
 ### PRs
@@ -132,6 +133,7 @@ Uses `@adobe/css-tools` as the sole production dependency to parse stylesheet ou
 
 ### Code
 
+- **Never break downstream snapshots.** Changes to matcher logic or normalization must not alter snapshot output format. If our tests had a certain format, users likely have similar tests.
 - **Use TDD (red/green)** when fixing bugs — write the failing test first, then fix the code.
 - **Always run tests** before considering work done.
 - **Research before implementing.** Go beyond official docs — review dev blogs, expert content, and source code for the deepest understanding.
