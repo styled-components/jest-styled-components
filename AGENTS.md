@@ -100,11 +100,18 @@ Two regex patterns are used:
 
 Uses `@adobe/css-tools` as the sole production dependency to parse stylesheet output into an AST, then queries rules by matching selectors against component class names. At-rules (`@media`, `@supports`) are handled by first filtering to matching at-rule blocks, then searching nested rules.
 
-## Formatting
+## Tooling
 
-- ESLint + Prettier enforced via `lint-staged` on pre-commit (husky v4)
-- Only `.js` files are linted
+- **Biome** for linting and formatting (replaced ESLint + Prettier). Config in `biome.json`.
+- **lint-staged** runs `biome check --write` on pre-commit via husky v4.
+- **publint** validates package.json and published files (`--pack npm` due to yarn pack incompatibility).
+- **@arethetypeswrong/cli** (attw) validates TypeScript type resolution across node10/node16/bundler modes.
+- **knip** detects unused deps, exports, and dead files. Config in `knip.json`.
+- All quality checks run as part of `yarn test` via `lint:pkg` script.
+- **Changesets** for versioning with `@changesets/changelog-github` for PR-linked changelogs.
 
 ## CI
 
-GitHub Actions on push to `main` and PRs: checkout → Node 20 (from `.nvmrc`) → `yarn --pure-lockfile` → `yarn test`.
+- **CI workflow** (`.github/workflows/ci.yml`): `pull_request_target` trigger (uses base branch workflow). `permissions: contents: read`.
+- **Release workflow** (`.github/workflows/release.yml`): Changesets action with provenance-based npm publishing.
+- **CodeQL** (`.github/workflows/codeql-analysis.yml`): Weekly JavaScript analysis.
