@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"ignore": ["test/__snapshots__/**"]
+		"includes": ["src/**", "native/**", "serializer/**", "vitest/**", "test/**", "!test/native/**"]
 	},
 	"formatter": {
 		"enabled": true,
