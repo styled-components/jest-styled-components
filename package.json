@@ -17,7 +17,10 @@
   "bugs": {
     "url": "https://github.com/styled-components/jest-styled-components/issues"
   },
-  "author": "Michele Bertoli",
+  "author": "Evan Jacobs <ej@quantizor.dev> (https://github.com/quantizor)",
+  "contributors": [
+    "Michele Bertoli"
+  ],
   "license": "MIT",
   "scripts": {
     "test": "pnpm test:web && pnpm test:native && pnpm test:preact && pnpm lint:pkg",
