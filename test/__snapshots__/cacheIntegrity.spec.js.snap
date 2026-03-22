@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cache cross-test integrity test D: snapshot serializer produces correct output with cache 1`] = `
+.c0 {
+  background: white;
+  border-radius: 4px;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`cache cross-test integrity test E: snapshot from test D must not leak into this test 1`] = `
+.c0 {
+  font-weight: bold;
+}
+
+<span
+  className="c0"
+/>
+`;
