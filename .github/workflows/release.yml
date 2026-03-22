@@ -17,19 +17,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v4
+
       - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
+          cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: yarn --pure-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Create Release PR or Publish
         uses: changesets/action@v1
         with:
-          publish: yarn changeset publish
+          publish: pnpm changeset publish
           title: 'chore: version packages'
           commit: 'chore: version packages'
         env:
