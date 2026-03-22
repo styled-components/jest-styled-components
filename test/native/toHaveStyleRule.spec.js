@@ -32,7 +32,7 @@ it('message when value does not match', () => {
   }).toThrowErrorMatchingSnapshot();
 });
 
-it('basic', () => {
+it('multiple properties', () => {
   const StyledView = styled.View`
     padding: 4px;
     background-color: papayawhip;

@@ -1,3 +1,5 @@
-const toHaveStyleRule = require('../src/native/toHaveStyleRule')
+const toHaveStyleRule = require('../src/native/toHaveStyleRule');
 
-expect.extend({ toHaveStyleRule })
+if (typeof expect !== 'undefined') {
+  expect.extend({ toHaveStyleRule });
+}
