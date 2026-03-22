@@ -47,3 +47,9 @@ export declare const styleSheetSerializer: NewPlugin & {
 
 /** Reset the styled-components stylesheet between tests. Called automatically via `beforeEach` when available. Call manually in Vitest non-globals mode or custom test setups. */
 export declare const resetStyleSheet: () => void;
+
+/** Enable CSS parse caching for `toHaveStyleRule`. Caches the parsed AST and reuses it when the stylesheet hasn't changed, avoiding redundant parsing across multiple assertions in the same test. Call in your test setup file. */
+export declare const enableCSSCache: () => void;
+
+/** Disable CSS parse caching and clear the cache. */
+export declare const disableCSSCache: () => void;
