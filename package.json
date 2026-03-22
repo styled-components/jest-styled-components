@@ -20,7 +20,7 @@
   "author": "Michele Bertoli",
   "license": "MIT",
   "scripts": {
-    "test": "yarn test:web && yarn test:native && yarn test:preact && yarn lint:pkg",
+    "test": "pnpm test:web && pnpm test:native && pnpm test:preact && pnpm lint:pkg",
     "test:web": "jest --color",
     "test:web:watch": "jest --watch",
     "test:native": "jest --color --config .jest.native.json",
