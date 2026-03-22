@@ -25,7 +25,8 @@
     "test:web:watch": "jest --watch",
     "test:native": "jest --color --config .jest.native.json",
     "test:preact": "jest --color --config .jest.preact.json",
-    "lint:pkg": "publint --pack npm && attw --pack ."
+    "lint:pkg": "publint --pack npm && attw --pack .",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.2",
@@ -33,7 +34,7 @@
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-react": "^7.0.0",
     "@biomejs/biome": "^2.4.8",
-    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/changelog-git": "^0.2.1",
     "@changesets/cli": "^2.30.0",
     "@testing-library/react": "^12.1.2",
     "@types/styled-components": "^5.1.15",
@@ -43,7 +44,7 @@
     "enzyme": "^3.6.0",
     "enzyme-adapter-preact-pure": "^3.3.0",
     "enzyme-to-json": "^3.3.1",
-    "husky-v4": "^4.3.8",
+    "husky": "^9.1.7",
     "jest": "^27.3.1",
     "lint-staged": "^12.1.1",
     "preact": "^10.0.0-beta.2",
@@ -62,11 +63,6 @@
   },
   "peerDependencies": {
     "styled-components": ">= 5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.js": [
