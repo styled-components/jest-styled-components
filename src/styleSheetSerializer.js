@@ -1,5 +1,5 @@
 const css = require('@adobe/css-tools');
-const { getCSS, getHashes } = require('./utils');
+const { AT_RULE_TYPES, getCSSForMatcher, getHashes } = require('./utils');
 
 const cache = new WeakSet();
 const getNodes = (node, nodes = []) => {
@@ -42,11 +42,11 @@ const getClassNames = (nodes) =>
 
 const isStyledClass = (className) => /^\.?(\w+(-|_))?sc-/.test(className);
 
-const filterClassNames = (classNames, hashes) =>
-  classNames.filter((className) => hashes.includes(className));
-const filterUnreferencedClassNames = (classNames, hashes) =>
+const filterClassNames = (classNames, hashSet) =>
+  classNames.filter((className) => hashSet.has(className));
+const filterUnreferencedClassNames = (classNames, hashSet) =>
   classNames.filter(
-    (className) => isStyledClass(className) && !hashes.includes(className)
+    (className) => isStyledClass(className) && !hashSet.has(className)
   );
 
 const includesClassNames = (classNames, selectors) =>
@@ -70,23 +70,23 @@ const filterRules = (classNames) => (rule) =>
 
 const getAtRules = (ast, filter) =>
   ast.stylesheet.rules
-    .filter((rule) => rule.type === 'media' || rule.type === 'supports')
-    .reduce((acc, atRule) => {
-      atRule.rules = atRule.rules.filter(filter);
-
-      return acc.concat(atRule);
-    }, []);
+    .filter((rule) => AT_RULE_TYPES.includes(rule.type))
+    .map((atRule) => ({ ...atRule, rules: atRule.rules.filter(filter) }))
+    .filter((atRule) => atRule.rules.length);
 
 const getFilteredRulesAndStyle = (classNames, config = {}) => {
-  const ast = getCSS();
+  const ast = getCSSForMatcher();
   const filter = filterRules(classNames);
   const rules = ast.stylesheet.rules.filter(filter);
   const atRules = getAtRules(ast, filter);
   const allRules = rules.concat(atRules);
 
-  ast.stylesheet.rules = allRules;
+  const filtered = {
+    ...ast,
+    stylesheet: { ...ast.stylesheet, rules: allRules },
+  };
 
-  return { rules, style: css.stringify(ast, { indent: config.indent }) };
+  return { rules, style: css.stringify(filtered, { indent: config.indent }) };
 };
 
 const getClassNamesFromSelectorsByRules = (classNames, rules, hashes) => {
@@ -123,15 +123,16 @@ const stripUnreferencedClassNames = (result, classNames) =>
     result
   );
 
-const replaceHashes = (result, hashes) =>
-  hashes.reduce(
-    (acc, className) =>
-      acc.replace(
-        new RegExp(`((class|className)="[^"]*?)${className}\\s?([^"]*")`, 'g'),
-        '$1$3'
-      ),
-    result
-  );
+const replaceHashes = (result, hashes) => {
+  let acc = result;
+  for (const className of hashes) {
+    acc = acc.replace(
+      new RegExp(`((class|className)="[^"]*?)${className}\\s?([^"]*")`, 'g'),
+      '$1$3'
+    );
+  }
+  return acc;
+};
 
 const serializerOptionDefaults = {
   addStyles: true,
