@@ -189,9 +189,15 @@ const getCSSForMatcher = () => {
   if (!_cssCache) return getCSS();
   const html = getHTML();
   if (html === _lastSheetOutput) return _cachedAST;
-  _lastSheetOutput = html;
-  _cachedAST = safeParse(getStyle(html));
-  return _cachedAST;
+  try {
+    const ast = safeParse(getStyle(html));
+    _lastSheetOutput = html;
+    _cachedAST = ast;
+    return _cachedAST;
+  } catch (error) {
+    invalidateCSSCache();
+    throw error;
+  }
 };
 
 const getHashes = () => {
@@ -232,8 +238,8 @@ const normalizeValueSpacing = (value) => {
   // Fast path: no quotes means nothing to protect
   if (!value.includes('"') && !value.includes("'"))
     return normalizeUnquoted(value);
-  // Split around quoted segments, only normalize unquoted parts
-  return value.replace(/(["'])(?:(?!\1).)*\1|[^"']+/g, (match) =>
+  // Split around quoted segments (respecting escaped quotes), only normalize unquoted parts
+  return value.replace(/(["'])(?:\\.|(?!\1).)*\1|[^"']+/g, (match) =>
     match[0] === '"' || match[0] === "'" ? match : normalizeUnquoted(match)
   );
 };
