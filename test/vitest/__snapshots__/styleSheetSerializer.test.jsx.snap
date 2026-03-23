@@ -1,0 +1,55 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`styleSheetSerializer (vitest, no globals) > handles multiple components 1`] = `
+.c0 {
+  color: palevioletred;
+  background: white;
+}
+
+.c1 {
+  color: white;
+  background: palevioletred;
+}
+
+<div>
+  <button
+    className="c0"
+  />
+  <button
+    className="c1"
+    primary={true}
+  />
+</div>
+`;
+
+exports[`styleSheetSerializer (vitest, no globals) > inlines styles into snapshots 1`] = `
+.c0 {
+  color: red;
+}
+
+<button
+  className="c0"
+/>
+`;
+
+exports[`styleSheetSerializer (vitest, no globals) > replaces class names with deterministic placeholders 1`] = `
+.c0 {
+  padding: 4em;
+  background: papayawhip;
+}
+
+.c1 {
+  font-size: 1.5em;
+  color: palevioletred;
+}
+
+<section
+  className="c0"
+>
+  <h1
+    className="c1"
+  >
+    Hello
+  </h1>
+</section>
+`;
