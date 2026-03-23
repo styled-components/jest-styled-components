@@ -256,7 +256,7 @@ const matcherTest = (received, expected, isNot) => {
   const normalizedReceived = normalizeValueSpacing(received);
 
   if (expected instanceof RegExp) {
-    return expected.test(normalizedReceived);
+    return new RegExp(expected).test(normalizedReceived);
   }
 
   // Support asymmetric matchers (e.g. expect.stringContaining()) from any framework
