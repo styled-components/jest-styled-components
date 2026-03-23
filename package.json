@@ -1,6 +1,6 @@
 {
   "name": "jest-styled-components",
-  "version": "7.3.1",
+  "version": "7.3.2-prerelease.0",
   "description": "Jest utilities for Styled Components",
   "type": "commonjs",
   "packageManager": "pnpm@10.32.1",
@@ -24,11 +24,12 @@
   ],
   "license": "MIT",
   "scripts": {
-    "test": "pnpm test:web && pnpm test:native && pnpm test:preact && pnpm lint:pkg",
+    "test": "pnpm test:web && pnpm test:native && pnpm test:preact && pnpm test:vitest && pnpm lint:pkg",
     "test:web": "jest --color",
     "test:web:watch": "jest --watch",
     "test:native": "jest --color --config .jest.native.json",
     "test:preact": "jest --color --config .jest.preact.json",
+    "test:vitest": "pnpm --filter vitest-entry test",
     "lint:pkg": "publint --pack npm && attw --pack .",
     "prepare": "husky"
   },
@@ -50,6 +51,7 @@
     "enzyme-to-json": "^3.3.1",
     "husky": "^9.1.7",
     "jest": "^27.3.1",
+    "jest-environment-jsdom": "^27.5.1",
     "lint-staged": "^15.5.2",
     "preact": "^10.0.0-beta.2",
     "preact-render-to-json": "^3.6.6",
@@ -86,7 +88,8 @@
     "testEnvironment": "jsdom",
     "testPathIgnorePatterns": [
       "<rootDir>/test/native",
-      "<rootDir>/test/preact"
+      "<rootDir>/test/preact",
+      "<rootDir>/test/vitest"
     ]
   },
   "engines": {
@@ -99,7 +102,7 @@
     "overrides": {
       "micromatch": ">=4.0.8",
       "braces": ">=3.0.3",
-      "http-proxy-agent": ">=5.0.0",
+      "http-proxy-agent": "^7.0.0",
       "hermes-engine": ">=0.10.0"
     }
   }
