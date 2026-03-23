@@ -1,13 +1,22 @@
-const { expect, beforeEach } = require('vitest');
+import { createRequire } from 'node:module';
+import { beforeEach, expect } from 'vitest';
+
+const require = createRequire(import.meta.url);
 const toHaveStyleRule = require('../src/toHaveStyleRule');
 const styleSheetSerializer = require('../src/styleSheetSerializer');
-const { resetStyleSheet } = require('../src/utils');
+const {
+  resetStyleSheet,
+  enableCSSCache,
+  disableCSSCache,
+} = require('../src/utils');
 
 beforeEach(resetStyleSheet);
 expect.addSnapshotSerializer(styleSheetSerializer);
 expect.extend({ toHaveStyleRule });
 
-module.exports = {
-  styleSheetSerializer,
+export {
+  disableCSSCache,
+  enableCSSCache,
   resetStyleSheet,
+  styleSheetSerializer,
 };
