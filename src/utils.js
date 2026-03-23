@@ -252,19 +252,23 @@ const matcherTest = (received, expected, isNot) => {
     return received !== undefined;
   }
 
-  try {
-    // Normalize whitespace so user-written values match stylis output
-    const normalizedReceived = normalizeValueSpacing(received);
-    const matcher =
-      expected instanceof RegExp
-        ? expect.stringMatching(expected)
-        : normalizeValueSpacing(expected);
+  // Normalize whitespace so user-written values match stylis output
+  const normalizedReceived = normalizeValueSpacing(received);
 
-    expect(normalizedReceived).toEqual(matcher);
-    return true;
-  } catch {
-    return false;
+  if (expected instanceof RegExp) {
+    return expected.test(normalizedReceived);
   }
+
+  // Support asymmetric matchers (e.g. expect.stringContaining()) from any framework
+  if (
+    expected != null &&
+    typeof expected === 'object' &&
+    typeof expected.asymmetricMatch === 'function'
+  ) {
+    return expected.asymmetricMatch(normalizedReceived);
+  }
+
+  return normalizedReceived === normalizeValueSpacing(expected);
 };
 
 const AT_RULE_TYPES = ['media', 'supports', 'container', 'layer'];
