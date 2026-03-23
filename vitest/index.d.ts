@@ -15,6 +15,12 @@ export declare const styleSheetSerializer: NewPlugin & {
 /** Reset the styled-components stylesheet between tests. Called automatically via `beforeEach` when using this entry point. */
 export declare const resetStyleSheet: () => void;
 
+/** Enable caching of parsed CSS. Improves performance when styles don't change between assertions. */
+export declare const enableCSSCache: () => void;
+
+/** Disable and clear the CSS parse cache. */
+export declare const disableCSSCache: () => void;
+
 interface AsymmetricMatcher {
   $$typeof: Symbol;
   sample?: string | RegExp | object | Array<any> | Function;
