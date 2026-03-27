@@ -24,6 +24,9 @@ importers:
       '@babel/core':
         specifier: ^7.0.0
         version: 7.29.0
+      '@babel/plugin-transform-flow-strip-types':
+        specifier: ^7.0.0
+        version: 7.27.1(@babel/core@7.29.0)
       '@babel/preset-env':
         specifier: ^7.16.4
         version: 7.29.2(@babel/core@7.29.0)
@@ -45,15 +48,9 @@ importers:
       '@testing-library/react':
         specifier: ^12.1.2
         version: 12.1.5(@types/react@19.2.14)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      '@types/styled-components':
-        specifier: ^5.1.15
-        version: 5.1.36
       babel-jest:
         specifier: ^27.3.1
         version: 27.5.1(@babel/core@7.29.0)
-      babel-plugin-styled-components:
-        specifier: ^2.0.1
-        version: 2.1.4(@babel/core@7.29.0)(styled-components@6.3.12(react-dom@18.2.0(react@18.2.0))(react@18.2.0))
       enzyme:
         specifier: ^3.6.0
         version: 3.11.0
@@ -93,9 +90,6 @@ importers:
       react-dom:
         specifier: 18.2.0
         version: 18.2.0(react@18.2.0)
-      react-is:
-        specifier: ^18.2.0
-        version: 18.3.1
       react-native:
         specifier: ~0.71
         version: 0.71.19(@babel/core@7.29.0)(@babel/preset-env@7.29.2(@babel/core@7.29.0))(react@18.2.0)
@@ -1395,11 +1389,6 @@ packages:
   '@types/graceful-fs@4.1.9':
     resolution: {integrity: sha512-olP3sd1qOEe5dXTSaFvQG+02VdRXcdytWLAZsAq1PecU8uqQAhkrnbli7DagjtXKW/Bl7YJbUsa8MPcuc8LHEQ==}
 
-  '@types/hoist-non-react-statics@3.3.7':
-    resolution: {integrity: sha512-PQTyIulDkIDro8P+IHbKCsw7U2xxBYflVzW/FgWdCAePD9xGSidgA76/GeJ6lBKoblyhf9pBY763gbrN+1dI8g==}
-    peerDependencies:
-      '@types/react': '*'
-
   '@types/istanbul-lib-coverage@2.0.6':
     resolution: {integrity: sha512-2QF/t/auWm0lsy8XtKVPG19v3sSOQlJe/YHZgfjb/KBBHOGSV+J2q/S671rcq9uTBrLAXmZpqJiaQbMT+zNU1w==}
 
@@ -1428,9 +1417,6 @@ packages:
 
   '@types/stack-utils@2.0.3':
     resolution: {integrity: sha512-9aEbYZ3TbYMznPdcdr3SmIrLXwC/AKZXQeCf9Pgao5CKb8CyHuEX5jzWPTkvregvhRJHcpRO6BFoGW9ycaOkYw==}
-
-  '@types/styled-components@5.1.36':
-    resolution: {integrity: sha512-pGMRNY5G2rNDKEv2DOiFYa7Ft1r0jrhmgBwHhOMzPTgCjO76bCot0/4uEfqj7K0Jf1KdQmDtAuaDk9EAs9foSw==}
 
   '@types/stylis@4.2.7':
     resolution: {integrity: sha512-VgDNokpBoKF+wrdvhAAfS55OMQpL6QRglwTwNC3kIgBrzZxA4WsFj+2eLfEA/uMUDzBcEhYmjSbwQakn/i3ajA==}
@@ -1688,11 +1674,6 @@ packages:
     resolution: {integrity: sha512-M762rNHfSF1EV3SLtnCJXFoQbbIIz0OyRwnCmV0KPC7qosSfCO0QLTSuJX3ayAebubhE6oYBAYPrBA5ljowaZg==}
     peerDependencies:
       '@babel/core': ^7.4.0 || ^8.0.0-0 <8.0.0
-
-  babel-plugin-styled-components@2.1.4:
-    resolution: {integrity: sha512-Xgp9g+A/cG47sUyRwwYxGM4bR/jDRg5N6it/8+HxCnbT5XNKSKDT9xm4oag/osgqjC2It/vH0yXsomOG6k558g==}
-    peerDependencies:
-      styled-components: '>= 2'
 
   babel-plugin-syntax-trailing-function-commas@7.0.0-beta.0:
     resolution: {integrity: sha512-Xj9XuRuz3nTSbaTXWv3itLOcxyF4oPD8douBBmj7U9BBC6nEBYfyOJYQMf/8PJAFotC62UY5dFfIGEPr7WswzQ==}
@@ -2529,9 +2510,6 @@ packages:
 
   highlight.js@10.7.3:
     resolution: {integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==}
-
-  hoist-non-react-statics@3.3.2:
-    resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
   html-element-map@1.4.0:
     resolution: {integrity: sha512-jiTQtpaVnCcT1KDghMcmvbB5Q1AAWyBsGNuJZiHOWwN5GIVZGKqCWj9ddOFxLLz8ELYL2dwv2TaeS4dMdc/Pkw==}
@@ -6454,11 +6432,6 @@ snapshots:
     dependencies:
       '@types/node': 25.5.0
 
-  '@types/hoist-non-react-statics@3.3.7(@types/react@19.2.14)':
-    dependencies:
-      '@types/react': 19.2.14
-      hoist-non-react-statics: 3.3.2
-
   '@types/istanbul-lib-coverage@2.0.6': {}
 
   '@types/istanbul-lib-report@3.0.3':
@@ -6486,12 +6459,6 @@ snapshots:
       csstype: 3.2.3
 
   '@types/stack-utils@2.0.3': {}
-
-  '@types/styled-components@5.1.36':
-    dependencies:
-      '@types/hoist-non-react-statics': 3.3.7(@types/react@19.2.14)
-      '@types/react': 19.2.14
-      csstype: 3.2.3
 
   '@types/stylis@4.2.7': {}
 
@@ -6769,18 +6736,6 @@ snapshots:
       '@babel/core': 7.29.0
       '@babel/helper-define-polyfill-provider': 0.6.8(@babel/core@7.29.0)
     transitivePeerDependencies:
-      - supports-color
-
-  babel-plugin-styled-components@2.1.4(@babel/core@7.29.0)(styled-components@6.3.12(react-dom@18.2.0(react@18.2.0))(react@18.2.0)):
-    dependencies:
-      '@babel/helper-annotate-as-pure': 7.27.3
-      '@babel/helper-module-imports': 7.28.6
-      '@babel/plugin-syntax-jsx': 7.28.6(@babel/core@7.29.0)
-      lodash: 4.17.23
-      picomatch: 2.3.1
-      styled-components: 6.3.12(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-    transitivePeerDependencies:
-      - '@babel/core'
       - supports-color
 
   babel-plugin-syntax-trailing-function-commas@7.0.0-beta.0: {}
@@ -7769,10 +7724,6 @@ snapshots:
       source-map: 0.7.6
 
   highlight.js@10.7.3: {}
-
-  hoist-non-react-statics@3.3.2:
-    dependencies:
-      react-is: 16.13.1
 
   html-element-map@1.4.0:
     dependencies:

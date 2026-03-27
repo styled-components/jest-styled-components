@@ -232,7 +232,6 @@ const collectHashes = () => {
 };
 
 const getHashes = () => collectHashes().all;
-const getKeyframeHashes = () => collectHashes().keyframes;
 
 const buildReturnMessage = (utils, pass, property, received, expected) => () =>
   `${utils.printReceived(
@@ -302,7 +301,6 @@ module.exports = {
   getCSSForMatcher,
   collectHashes,
   getHashes,
-  getKeyframeHashes,
   buildReturnMessage,
   matcherTest,
 };
