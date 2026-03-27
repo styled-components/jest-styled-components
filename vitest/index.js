@@ -14,9 +14,12 @@ beforeEach(resetStyleSheet);
 expect.addSnapshotSerializer(styleSheetSerializer);
 expect.extend({ toHaveStyleRule });
 
+const setStyleRuleOptions = toHaveStyleRule.setOptions;
+
 export {
   disableCSSCache,
   enableCSSCache,
   resetStyleSheet,
+  setStyleRuleOptions,
   styleSheetSerializer,
 };

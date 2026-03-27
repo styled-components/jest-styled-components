@@ -1,8 +1,8 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 import { render } from '@testing-library/react';
-import styled, { createGlobalStyle, css, keyframes } from 'styled-components';
-import '../src';
+import styled, { createGlobalStyle, css, keyframes, StyleSheetManager } from 'styled-components';
+import { setStyleRuleOptions } from '../src';
 import { enableCSSCache, disableCSSCache } from '../src/utils';
 
 describe('edge cases', () => {
@@ -109,6 +109,49 @@ describe('edge cases', () => {
       const tree = renderer.create(<Spinner />).toJSON();
       expect(tree).toHaveStyleRule('color', 'red');
       expect(tree).toMatchSnapshot();
+    });
+
+    it('@keyframes animation value is assertable', () => {
+      const spin = keyframes`
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      `;
+      const Spinner = styled.div`
+        animation: ${spin} 2s ease-in;
+      `;
+      const tree = renderer.create(<Spinner />).toJSON();
+      expect(tree).toHaveStyleRule('animation', /\S+ 2s ease-in/);
+    });
+
+    it('multiple keyframes on one component', () => {
+      const spin = keyframes`
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      `;
+      const fade = keyframes`
+        from { opacity: 0; }
+        to { opacity: 1; }
+      `;
+      const Animated = styled.div`
+        animation: ${spin} 1s, ${fade} 0.5s;
+      `;
+      const tree = renderer.create(<Animated />).toJSON();
+      expect(tree).toHaveStyleRule('animation', /\S+ 1s,\S+ 0\.5s/);
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('animation-name shorthand', () => {
+      const spin = keyframes`
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      `;
+      const Spinner = styled.div`
+        animation-name: ${spin};
+        animation-duration: 2s;
+      `;
+      const tree = renderer.create(<Spinner />).toJSON();
+      expect(tree).toHaveStyleRule('animation-name', /\S+/);
+      expect(tree).toHaveStyleRule('animation-duration', '2s');
     });
 
     it('@media with complex query', () => {
@@ -441,6 +484,169 @@ describe('edge cases', () => {
       expect(document.documentElement).toHaveStyleRule('box-sizing', 'border-box', {
         selector: '*',
       });
+    });
+  });
+
+  describe('object syntax styles', () => {
+    it('basic object syntax', () => {
+      const Box = styled.div({
+        color: 'red',
+        padding: '8px',
+        margin: '16px',
+      });
+      const tree = renderer.create(<Box />).toJSON();
+      expect(tree).toHaveStyleRule('color', 'red');
+      expect(tree).toHaveStyleRule('padding', '8px');
+      expect(tree).toHaveStyleRule('margin', '16px');
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('object syntax with dynamic props', () => {
+      const Button = styled.div(props => ({
+        color: props.primary ? 'white' : 'black',
+        backgroundColor: props.primary ? 'blue' : 'grey',
+      }));
+
+      const primaryTree = renderer.create(<Button primary />).toJSON();
+      expect(primaryTree).toHaveStyleRule('color', 'white');
+      expect(primaryTree).toHaveStyleRule('background-color', 'blue');
+
+      const defaultTree = renderer.create(<Button />).toJSON();
+      expect(defaultTree).toHaveStyleRule('color', 'black');
+      expect(defaultTree).toHaveStyleRule('background-color', 'grey');
+    });
+
+    it('object syntax with nested selectors', () => {
+      const Link = styled.a({
+        color: 'blue',
+        textDecoration: 'none',
+        '&:hover': {
+          color: 'darkblue',
+          textDecoration: 'underline',
+        },
+      });
+      const tree = renderer.create(<Link />).toJSON();
+      expect(tree).toHaveStyleRule('color', 'blue');
+      expect(tree).toHaveStyleRule('text-decoration', 'none');
+      expect(tree).toHaveStyleRule('color', 'darkblue', { modifier: ':hover' });
+      expect(tree).toHaveStyleRule('text-decoration', 'underline', { modifier: ':hover' });
+    });
+  });
+
+  describe('as prop', () => {
+    it('renders as a different element with styles intact', () => {
+      const Button = styled.button`
+        color: red;
+        padding: 8px;
+      `;
+      const tree = renderer.create(<Button as="a" href="/home">Link</Button>).toJSON();
+      expect(tree.type).toBe('a');
+      expect(tree.props.href).toBe('/home');
+      expect(tree).toHaveStyleRule('color', 'red');
+      expect(tree).toHaveStyleRule('padding', '8px');
+      expect(tree).toMatchSnapshot();
+    });
+
+    it('toHaveStyleRule works on component rendered with as', () => {
+      const Heading = styled.h1`
+        font-size: 2rem;
+        font-weight: bold;
+      `;
+      const tree = renderer.create(<Heading as="h3">Sub</Heading>).toJSON();
+      expect(tree.type).toBe('h3');
+      expect(tree).toHaveStyleRule('font-size', '2rem');
+      expect(tree).toHaveStyleRule('font-weight', 'bold');
+    });
+  });
+
+  describe('transient props', () => {
+    it('interpolates transient props into CSS correctly', () => {
+      const Box = styled.div`
+        color: ${props => props.$color || 'black'};
+        font-size: ${props => props.$size || '14px'};
+      `;
+      const tree = renderer.create(<Box $color="red" $size="20px" />).toJSON();
+      expect(tree).toHaveStyleRule('color', 'red');
+      expect(tree).toHaveStyleRule('font-size', '20px');
+    });
+
+    it('transient props do not appear in rendered HTML attributes', () => {
+      const Box = styled.div`
+        color: ${props => props.$color || 'black'};
+        font-size: ${props => props.$size || '14px'};
+      `;
+      const tree = renderer.create(<Box $color="red" $size="20px" />).toJSON();
+      expect(tree.props.$color).toBeUndefined();
+      expect(tree.props.$size).toBeUndefined();
+      expect(tree.props).not.toHaveProperty('$color');
+      expect(tree.props).not.toHaveProperty('$size');
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
+  describe('custom elements', () => {
+    it('styled custom element with class prop', () => {
+      const MyWidget = styled('my-widget')`
+        color: red;
+        padding: 8px;
+        display: block;
+      `;
+      const tree = renderer.create(<MyWidget />).toJSON();
+      expect(tree.type).toBe('my-widget');
+      // SC uses `class` instead of `className` for custom elements
+      expect(tree.props.class || tree.props.className).toBeDefined();
+      expect(tree).toHaveStyleRule('color', 'red');
+      expect(tree).toHaveStyleRule('padding', '8px');
+      expect(tree).toHaveStyleRule('display', 'block');
+      expect(tree).toMatchSnapshot();
+    });
+  });
+
+  describe('StyleSheetManager', () => {
+    it('namespace renders correct snapshot with prefixed selectors', () => {
+      const Box = styled.div`
+        color: blue;
+        margin: 4px;
+      `;
+      const tree = renderer.create(
+        <StyleSheetManager namespace="#app">
+          <Box />
+        </StyleSheetManager>
+      ).toJSON();
+      expect(tree).toMatchSnapshot();
+      expect(tree).toHaveStyleRule('color', 'blue', { namespace: '#app' });
+      expect(tree).toHaveStyleRule('margin', '4px', { namespace: '#app' });
+    });
+
+    it('without namespace, toHaveStyleRule works normally', () => {
+      const Box = styled.div`
+        color: green;
+        padding: 12px;
+      `;
+      const tree = renderer.create(
+        <StyleSheetManager>
+          <Box />
+        </StyleSheetManager>
+      ).toJSON();
+      expect(tree).toHaveStyleRule('color', 'green');
+      expect(tree).toHaveStyleRule('padding', '12px');
+    });
+
+    it('global namespace via setStyleRuleOptions', () => {
+      setStyleRuleOptions({ namespace: '#app' });
+      try {
+        const Box = styled.div`
+          color: purple;
+        `;
+        const tree = renderer.create(
+          <StyleSheetManager namespace="#app">
+            <Box />
+          </StyleSheetManager>
+        ).toJSON();
+        expect(tree).toHaveStyleRule('color', 'purple');
+      } finally {
+        setStyleRuleOptions({ namespace: '' });
+      }
     });
   });
 

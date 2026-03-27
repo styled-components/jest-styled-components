@@ -108,17 +108,18 @@ const getModifiedClassName = (className, staticClassName, modifier = '') => {
 const hasClassNames = (classNames, selectors, options) => {
   const staticClassNames = classNames.filter((x) => isStyledClass(x));
   const normalizedSelectors = selectors.map(normalizeCombinatorSpaces);
+  const ns = options.namespace || '';
 
   return classNames.some((className) =>
-    staticClassNames.some((staticClassName) =>
-      normalizedSelectors.includes(
-        normalizeCombinatorSpaces(
-          normalizeQuotations(
-            getModifiedClassName(className, staticClassName, options.modifier)
-          )
+    staticClassNames.some((staticClassName) => {
+      let expected = normalizeCombinatorSpaces(
+        normalizeQuotations(
+          getModifiedClassName(className, staticClassName, options.modifier)
         )
-      )
-    )
+      );
+      if (ns) expected = `${ns} ${expected}`;
+      return normalizedSelectors.includes(expected);
+    })
   );
 };
 
@@ -176,9 +177,45 @@ const normalizeOptions = (options) =>
       })
     : options;
 
+let _defaultNamespace = '';
+
+/**
+ * Configure global defaults for `toHaveStyleRule`.
+ *
+ * @param {object} options
+ * @param {string} [options.namespace] - A `StyleSheetManager` namespace string
+ *   (e.g. `'#app'`). When set, the matcher automatically prepends this prefix
+ *   to every expected selector so that namespaced rules are matched without
+ *   passing `namespace` on every assertion. Can be overridden per-assertion.
+ */
+function setStyleRuleOptions({ namespace } = {}) {
+  _defaultNamespace = namespace || '';
+}
+
+/**
+ * Jest/Vitest matcher that asserts a styled-component has a specific CSS property value.
+ *
+ * @param {object} component - A rendered component (react-test-renderer JSON, DOM element, or Enzyme wrapper).
+ * @param {string} property - The CSS property name to check (e.g. `'color'`).
+ * @param {string|RegExp|undefined|object} expected - Expected value, RegExp, asymmetric matcher, or `undefined`.
+ * @param {object} [options]
+ * @param {string} [options.media] - Match within a `@media` at-rule.
+ * @param {string} [options.supports] - Match within a `@supports` at-rule.
+ * @param {string} [options.container] - Match within a `@container` at-rule.
+ * @param {string} [options.layer] - Match within a `@layer` at-rule.
+ * @param {string|string[]} [options.modifier] - Refine the selector (pseudo-selectors, combinators, `&`).
+ * @param {string} [options.selector] - Match by raw CSS selector (for `createGlobalStyle`).
+ * @param {string} [options.namespace] - `StyleSheetManager` namespace prefix (e.g. `'#app'`).
+ */
 function toHaveStyleRule(component, property, expected, options = {}) {
   const ast = getCSSForMatcher();
   const normalizedOptions = normalizeOptions(options);
+
+  // Apply global namespace unless overridden per-assertion
+  if (!('namespace' in normalizedOptions) && _defaultNamespace) {
+    normalizedOptions.namespace = _defaultNamespace;
+  }
+
   let rules;
 
   if (normalizedOptions.selector) {
@@ -207,4 +244,5 @@ function toHaveStyleRule(component, property, expected, options = {}) {
   };
 }
 
+toHaveStyleRule.setOptions = setStyleRuleOptions;
 module.exports = toHaveStyleRule;

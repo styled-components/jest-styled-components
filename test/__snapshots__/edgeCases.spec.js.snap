@@ -1,5 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`edge cases StyleSheetManager namespace renders correct snapshot with prefixed selectors 1`] = `
+#app .c0 {
+  color: blue;
+  margin: 4px;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`edge cases as prop renders as a different element with styles intact 1`] = `
+.c0 {
+  color: red;
+  padding: 8px;
+}
+
+<a
+  className="c0"
+  href="/home"
+>
+  Link
+</a>
+`;
+
 exports[`edge cases at-rules @keyframes does not break matcher 1`] = `
 .c0 {
   animation: k0 1s linear infinite;
@@ -13,6 +38,36 @@ exports[`edge cases at-rules @keyframes does not break matcher 1`] = `
 
   to {
     transform: rotate(360deg);
+  }
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`edge cases at-rules multiple keyframes on one component 1`] = `
+.c0 {
+  animation: k0 1s,k1 0.5s;
+}
+
+@keyframes k0 {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes k1 {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }
 
@@ -52,6 +107,18 @@ exports[`edge cases component patterns null/undefined children in tree 1`] = `
 </div>
 `;
 
+exports[`edge cases custom elements styled custom element with class prop 1`] = `
+.c0 {
+  color: red;
+  padding: 8px;
+  display: block;
+}
+
+<my-widget
+  class="c0"
+/>
+`;
+
 exports[`edge cases modern CSS features @container queries 1`] = `
 .c0 {
   container-type: inline-size;
@@ -84,6 +151,29 @@ exports[`edge cases modern CSS features @starting-style 1`] = `
 .c0 {
   opacity: 1;
   transition: opacity 0.3s;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`edge cases object syntax styles basic object syntax 1`] = `
+.c0 {
+  color: red;
+  padding: 8px;
+  margin: 16px;
+}
+
+<div
+  className="c0"
+/>
+`;
+
+exports[`edge cases transient props transient props do not appear in rendered HTML attributes 1`] = `
+.c0 {
+  color: red;
+  font-size: 20px;
 }
 
 <div

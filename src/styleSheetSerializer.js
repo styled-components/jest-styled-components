@@ -1,10 +1,5 @@
 const css = require('@adobe/css-tools');
-const {
-  AT_RULE_TYPES,
-  getCSSForMatcher,
-  getHashes,
-  getKeyframeHashes,
-} = require('./utils');
+const { AT_RULE_TYPES, getCSSForMatcher, collectHashes } = require('./utils');
 
 const cache = new WeakSet();
 const getNodes = (node, nodes = []) => {
@@ -13,7 +8,10 @@ const getNodes = (node, nodes = []) => {
   }
   nodes.push(node);
   if (node.children) {
-    for (const child of Array.from(node.children)) getNodes(child, nodes);
+    const children = Array.isArray(node.children)
+      ? node.children
+      : Array.from(node.children);
+    for (const child of children) getNodes(child, nodes);
   }
   return nodes;
 };
@@ -106,7 +104,7 @@ const getClassNamesFromSelectorsByRules = (classNames, rules, hashes) => {
 
   for (const hash of hashes) {
     for (const selectorList of selectors) {
-      if (selectorList[0].includes(hash)) {
+      if (selectorList.some((selector) => selector.includes(hash))) {
         classNamesIncludingFromSelectors.add(hash);
         break;
       }
@@ -134,8 +132,7 @@ const stripUnreferencedClassNames = (result, classNames) =>
     result
   );
 
-const replaceKeyframeNames = (result, hashes) => {
-  const keyframeHashes = getKeyframeHashes();
+const replaceKeyframeNames = (result, keyframeHashes) => {
   if (!keyframeHashes.size) return result;
 
   let acc = result;
@@ -168,6 +165,15 @@ const serializerOptionDefaults = {
 let serializerOptions = serializerOptionDefaults;
 
 module.exports = {
+  /**
+   * Configure the snapshot serializer's output.
+   *
+   * @param {object} [options]
+   * @param {boolean} [options.addStyles=true] - Whether to prepend CSS rules to
+   *   the snapshot output. Set `false` to snapshot only the rendered markup.
+   * @param {(index: number) => string} [options.classNameFormatter] - Custom
+   *   formatter for deterministic class name placeholders. Defaults to `c0`, `c1`, etc.
+   */
   setStyleSheetSerializerOptions(options = {}) {
     serializerOptions = {
       ...serializerOptionDefaults,
@@ -188,7 +194,7 @@ module.exports = {
     const nodes = getNodes(val);
     nodes.forEach(cache.add, cache);
 
-    const hashes = getHashes();
+    const { all: hashes, keyframes: keyframeHashes } = collectHashes();
 
     let classNames = [...getClassNames(nodes)];
     let unreferencedClassNames = classNames;
@@ -221,7 +227,7 @@ module.exports = {
       style,
       serializerOptions.classNameFormatter
     );
-    result = replaceKeyframeNames(result, hashes);
+    result = replaceKeyframeNames(result, keyframeHashes);
     result = replaceHashes(result, hashes);
     nodes.forEach(cache.delete, cache);
     return result;

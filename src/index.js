@@ -16,4 +16,5 @@ module.exports = {
   resetStyleSheet,
   enableCSSCache,
   disableCSSCache,
+  setStyleRuleOptions: toHaveStyleRule.setOptions,
 };

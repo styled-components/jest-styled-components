@@ -11,6 +11,11 @@ const { mainSheet, masterSheet } = __PRIVATE__;
 
 const sheet = mainSheet || masterSheet;
 
+/**
+ * Reset the styled-components stylesheet between tests. Removes all injected
+ * `<style>` tags, clears generated class names, and invalidates the CSS cache.
+ * Called automatically in `beforeEach` when using the main entry point.
+ */
 const resetStyleSheet = () => {
   if (typeof document !== 'undefined') {
     const scStyles = document.querySelectorAll('style[data-styled-version]');
@@ -179,9 +184,16 @@ const invalidateCSSCache = () => {
   _lastSheetOutput = null;
 };
 
+/**
+ * Enable CSS parse caching. When enabled, the parsed stylesheet AST is reused
+ * across assertions until the raw stylesheet output changes. Automatically
+ * imported via `jest-styled-components/cache`.
+ */
 const enableCSSCache = () => {
   _cssCache = true;
 };
+
+/** Disable CSS parse caching and clear the cached AST. */
 const disableCSSCache = () => {
   _cssCache = false;
   invalidateCSSCache();
@@ -202,29 +214,25 @@ const getCSSForMatcher = () => {
   }
 };
 
-const getHashes = () => {
-  const hashes = new Set();
+const collectHashes = () => {
+  const all = new Set();
+  const keyframes = new Set();
 
   for (const [mainHash, childHashSet] of sheet.names) {
-    hashes.add(mainHash);
+    all.add(mainHash);
+    const isKeyframe = mainHash && mainHash.startsWith('sc-keyframes-');
 
-    for (const childHash of childHashSet) hashes.add(childHash);
-  }
-
-  return hashes;
-};
-
-const getKeyframeHashes = () => {
-  const hashes = new Set();
-
-  for (const [mainHash, childHashSet] of sheet.names) {
-    if (mainHash && mainHash.startsWith('sc-keyframes-')) {
-      for (const childHash of childHashSet) hashes.add(childHash);
+    for (const childHash of childHashSet) {
+      all.add(childHash);
+      if (isKeyframe) keyframes.add(childHash);
     }
   }
 
-  return hashes;
+  return { all, keyframes };
 };
+
+const getHashes = () => collectHashes().all;
+const getKeyframeHashes = () => collectHashes().keyframes;
 
 const buildReturnMessage = (utils, pass, property, received, expected) => () =>
   `${utils.printReceived(
@@ -268,7 +276,7 @@ const matcherTest = (received, expected, isNot) => {
   const normalizedReceived = normalizeValueSpacing(received);
 
   if (expected instanceof RegExp) {
-    return new RegExp(expected).test(normalizedReceived);
+    return expected.test(normalizedReceived);
   }
 
   // Support asymmetric matchers (e.g. expect.stringContaining()) from any framework
@@ -292,6 +300,7 @@ module.exports = {
   disableCSSCache,
   getCSS,
   getCSSForMatcher,
+  collectHashes,
   getHashes,
   getKeyframeHashes,
   buildReturnMessage,

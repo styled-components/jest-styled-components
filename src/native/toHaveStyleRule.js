@@ -1,5 +1,14 @@
 const { matcherTest, buildReturnMessage } = require('../utils');
 
+/**
+ * Jest matcher for React Native styled-components. Asserts that a component's
+ * style prop contains the expected CSS property value. Handles style arrays
+ * and converts kebab-case properties to camelCase.
+ *
+ * @param {object} component - A react-test-renderer JSON node with a `props.style` object or array.
+ * @param {string} property - The CSS property name (kebab-case or camelCase).
+ * @param {string|RegExp|undefined|object} expected - Expected value, RegExp, asymmetric matcher, or `undefined`.
+ */
 function toHaveStyleRule(component, property, expected) {
   const style = component?.props ? component.props.style : undefined;
 

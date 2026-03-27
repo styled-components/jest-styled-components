@@ -149,6 +149,7 @@ The third argument is an options object for targeting rules within at-rules, wit
 | `media` | `string` | Match within a `@media` at-rule, e.g. `'(max-width: 640px)'` |
 | `supports` | `string` | Match within a `@supports` at-rule, e.g. `'(display: grid)'` |
 | `modifier` | `string \| css` | Refine the selector: pseudo-selectors, combinators, `&` references, or the `css` helper for component selectors |
+| `namespace` | `string` | Match rules prefixed by a `StyleSheetManager` namespace, e.g. `'#app'` |
 | `selector` | `string` | Match by raw CSS selector instead of component class. Useful for `createGlobalStyle` |
 
 ### media and modifier
@@ -222,6 +223,39 @@ test('layer query', () => {
   })
 })
 ```
+
+### namespace (StyleSheetManager)
+
+When using `StyleSheetManager` with a `namespace` prop, all CSS selectors are prefixed with the namespace. Pass `namespace` so the matcher knows to expect the prefix:
+
+```js
+import { StyleSheetManager } from 'styled-components'
+
+const Box = styled.div`
+  color: blue;
+`
+
+test('namespaced styles', () => {
+  const { container } = render(
+    <StyleSheetManager namespace="#app">
+      <Box />
+    </StyleSheetManager>
+  )
+  expect(container.firstChild).toHaveStyleRule('color', 'blue', {
+    namespace: '#app',
+  })
+})
+```
+
+To avoid passing `namespace` on every assertion, set it globally in your setup file:
+
+```js
+import { setStyleRuleOptions } from 'jest-styled-components'
+
+setStyleRuleOptions({ namespace: '#app' })
+```
+
+This applies to all subsequent `toHaveStyleRule` calls. Individual assertions can still override with their own `namespace` option.
 
 ### modifier with component selectors
 
