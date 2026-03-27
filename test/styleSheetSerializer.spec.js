@@ -417,9 +417,9 @@ it('responds to indent configuration', () => {
     color: blue;
   `;
 
-  const mounted = renderer.create(<Link>Styled, exciting Link</Link>);
+  const tree = renderer.create(<Link>Styled, exciting Link</Link>).toJSON();
 
-  expect(serialize(mounted)).toMatchInlineSnapshot(`
+  expect(serialize(tree)).toMatchInlineSnapshot(`
     ".styledComponent0 {
       color: blue;
     }
@@ -431,7 +431,7 @@ it('responds to indent configuration', () => {
     </a>"
   `);
 
-  expect(serialize(mounted, 0)).toMatchInlineSnapshot(`
+  expect(serialize(tree, 0)).toMatchInlineSnapshot(`
     ".styledComponent0 {
     color: blue;
     }

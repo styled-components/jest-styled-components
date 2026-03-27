@@ -1,5 +1,10 @@
 const css = require('@adobe/css-tools');
-const { AT_RULE_TYPES, getCSSForMatcher, getHashes } = require('./utils');
+const {
+  AT_RULE_TYPES,
+  getCSSForMatcher,
+  getHashes,
+  getKeyframeHashes,
+} = require('./utils');
 
 const cache = new WeakSet();
 const getNodes = (node, nodes = []) => {
@@ -74,12 +79,18 @@ const getAtRules = (ast, filter) =>
     .map((atRule) => ({ ...atRule, rules: atRule.rules.filter(filter) }))
     .filter((atRule) => atRule.rules.length);
 
-const getFilteredRulesAndStyle = (classNames, config = {}) => {
+const getKeyframesRules = (ast, hashes) =>
+  ast.stylesheet.rules.filter(
+    (rule) => rule.type === 'keyframes' && hashes.has(rule.name)
+  );
+
+const getFilteredRulesAndStyle = (classNames, config = {}, hashes) => {
   const ast = getCSSForMatcher();
   const filter = filterRules(classNames);
   const rules = ast.stylesheet.rules.filter(filter);
   const atRules = getAtRules(ast, filter);
-  const allRules = rules.concat(atRules);
+  const keyframesRules = hashes ? getKeyframesRules(ast, hashes) : [];
+  const allRules = rules.concat(atRules).concat(keyframesRules);
 
   const filtered = {
     ...ast,
@@ -122,6 +133,22 @@ const stripUnreferencedClassNames = (result, classNames) =>
     (acc, className) => acc.replace(new RegExp(`${className}\\s?`, 'g'), ''),
     result
   );
+
+const replaceKeyframeNames = (result, hashes) => {
+  const keyframeHashes = getKeyframeHashes();
+  if (!keyframeHashes.size) return result;
+
+  let acc = result;
+  let index = 0;
+  for (const hash of keyframeHashes) {
+    if (acc.includes(hash)) {
+      acc = acc.replace(new RegExp(`\\b${hash}\\b`, 'g'), `k${index}`);
+      index++;
+    }
+  }
+
+  return acc;
+};
 
 const replaceHashes = (result, hashes) => {
   let acc = result;
@@ -172,7 +199,11 @@ module.exports = {
       hashes
     );
 
-    const { rules, style } = getFilteredRulesAndStyle(classNames, config);
+    const { rules, style } = getFilteredRulesAndStyle(
+      classNames,
+      config,
+      hashes
+    );
     const classNamesToReplace = getClassNamesFromSelectorsByRules(
       classNames,
       rules,
@@ -190,6 +221,7 @@ module.exports = {
       style,
       serializerOptions.classNameFormatter
     );
+    result = replaceKeyframeNames(result, hashes);
     result = replaceHashes(result, hashes);
     nodes.forEach(cache.delete, cache);
     return result;

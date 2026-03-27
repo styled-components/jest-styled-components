@@ -2,20 +2,20 @@
 
 exports[`allows to disable css snapshotting: mount 1`] = `
 <div>
-  <styleSheetSerializerspec__A>
+  <styled.div>
     <div
       className="c0"
     >
       Styled, exciting div
     </div>
-  </styleSheetSerializerspec__A>
-  <styleSheetSerializerspec__B>
+  </styled.div>
+  <styled.div>
     <div
       className="c1"
     >
       Styled, exciting div
     </div>
-  </styleSheetSerializerspec__B>
+  </styled.div>
 </div>
 `;
 
@@ -51,12 +51,12 @@ exports[`allows to disable css snapshotting: react-testing-library 1`] = `
 
 exports[`allows to disable css snapshotting: shallow 1`] = `
 <div>
-  <styleSheetSerializerspec__A>
+  <styled.div>
     Styled, exciting div
-  </styleSheetSerializerspec__A>
-  <styleSheetSerializerspec__B>
+  </styled.div>
+  <styled.div>
     Styled, exciting div
-  </styleSheetSerializerspec__B>
+  </styled.div>
 </div>
 `;
 
@@ -70,20 +70,20 @@ exports[`allows to set a css classNameFormatter: mount 1`] = `
 }
 
 <div>
-  <styleSheetSerializerspec__A>
+  <styled.div>
     <div
       className="styledComponent0"
     >
       Styled, exciting div
     </div>
-  </styleSheetSerializerspec__A>
-  <styleSheetSerializerspec__B>
+  </styled.div>
+  <styled.div>
     <div
       className="styledComponent1"
     >
       Styled, exciting div
     </div>
-  </styleSheetSerializerspec__B>
+  </styled.div>
 </div>
 `;
 
@@ -135,12 +135,12 @@ exports[`allows to set a css classNameFormatter: react-testing-library 1`] = `
 
 exports[`allows to set a css classNameFormatter: shallow 1`] = `
 <div>
-  <styleSheetSerializerspec__A>
+  <styled.div>
     Styled, exciting div
-  </styleSheetSerializerspec__A>
-  <styleSheetSerializerspec__B>
+  </styled.div>
+  <styled.div>
     Styled, exciting div
-  </styleSheetSerializerspec__B>
+  </styled.div>
 </div>
 `;
 
@@ -157,7 +157,7 @@ exports[`any component: mount 1`] = `
     </a>
   </Link>
   <br />
-  <styleSheetSerializerspec__StyledLink>
+  <Styled(Link)>
     <Link
       className="c0"
     >
@@ -167,7 +167,7 @@ exports[`any component: mount 1`] = `
         Styled, exciting Link
       </a>
     </Link>
-  </styleSheetSerializerspec__StyledLink>
+  </Styled(Link)>
 </div>
 `;
 
@@ -215,9 +215,9 @@ exports[`any component: shallow 1`] = `
     Unstyled, boring Link
   </Link>
   <br />
-  <styleSheetSerializerspec__StyledLink>
+  <Styled(Link)>
     Styled, exciting Link
-  </styleSheetSerializerspec__StyledLink>
+  </Styled(Link)>
 </div>
 `;
 
@@ -226,11 +226,11 @@ exports[`attaching additional props: mount 1`] = `
   color: red;
 }
 
-<styleSheetSerializerspec__Div>
+<styled.div>
   <div
     className="c0 div"
   />
-</styleSheetSerializerspec__Div>
+</styled.div>
 `;
 
 exports[`attaching additional props: react-test-renderer 1`] = `
@@ -275,19 +275,19 @@ exports[`basic: mount 1`] = `
   color: palevioletred;
 }
 
-<styleSheetSerializerspec__Wrapper>
+<styled.section>
   <section
     className="c0"
   >
-    <styleSheetSerializerspec__Title>
+    <styled.h1>
       <h1
         className="c1"
       >
         Hello World, this is my first styled component!
       </h1>
-    </styleSheetSerializerspec__Title>
+    </styled.h1>
   </section>
-</styleSheetSerializerspec__Wrapper>
+</styled.section>
 `;
 
 exports[`basic: react-test-renderer 1`] = `
@@ -345,9 +345,9 @@ exports[`basic: shallow 1`] = `
 <section
   className="c0"
 >
-  <styleSheetSerializerspec__Title>
+  <styled.h1>
     Hello World, this is my first styled component!
-  </styleSheetSerializerspec__Title>
+  </styled.h1>
 </section>
 `;
 
@@ -360,19 +360,19 @@ exports[`child styled component class names preserved (#405): mount 1`] = `
   padding: 10px;
 }
 
-<styleSheetSerializerspec__Outer>
+<styled.div>
   <div
     className="c0"
   >
-    <styleSheetSerializerspec__Inner>
+    <styled.span>
       <span
         className="c1"
       >
         child
       </span>
-    </styleSheetSerializerspec__Inner>
+    </styled.span>
   </div>
-</styleSheetSerializerspec__Outer>
+</styled.div>
 `;
 
 exports[`child styled component class names preserved (#405): react-test-renderer 1`] = `
@@ -423,9 +423,9 @@ exports[`child styled component class names preserved (#405): shallow 1`] = `
 <div
   className="c0"
 >
-  <styleSheetSerializerspec__Inner>
+  <styled.span>
     child
-  </styleSheetSerializerspec__Inner>
+  </styled.span>
 </div>
 `;
 
@@ -442,11 +442,11 @@ exports[`dot notation components (#395): mount 1`] = `
   background: white;
 }
 
-<styleSheetSerializerspec__Table>
+<styled.table>
   <table
     className="c0"
   >
-    <styleSheetSerializerspec__Head>
+    <styled.thead>
       <thead
         className="c1"
       >
@@ -456,8 +456,8 @@ exports[`dot notation components (#395): mount 1`] = `
           </td>
         </tr>
       </thead>
-    </styleSheetSerializerspec__Head>
-    <styleSheetSerializerspec__Body>
+    </styled.thead>
+    <styled.tbody>
       <tbody
         className="c2"
       >
@@ -467,9 +467,9 @@ exports[`dot notation components (#395): mount 1`] = `
           </td>
         </tr>
       </tbody>
-    </styleSheetSerializerspec__Body>
+    </styled.tbody>
   </table>
-</styleSheetSerializerspec__Table>
+</styled.table>
 `;
 
 exports[`dot notation components (#395): react-test-renderer 1`] = `
@@ -554,20 +554,20 @@ exports[`dot notation components (#395): shallow 1`] = `
 <table
   className="c0"
 >
-  <styleSheetSerializerspec__Head>
+  <styled.thead>
     <tr>
       <td>
         Header
       </td>
     </tr>
-  </styleSheetSerializerspec__Head>
-  <styleSheetSerializerspec__Body>
+  </styled.thead>
+  <styled.tbody>
     <tr>
       <td>
         Body
       </td>
     </tr>
-  </styleSheetSerializerspec__Body>
+  </styled.tbody>
 </table>
 `;
 
@@ -581,23 +581,23 @@ exports[`duplicated components: mount 1`] = `
 }
 
 <div>
-  <styleSheetSerializerspec__A>
+  <styled.div>
     <div
       className="c0"
     />
-  </styleSheetSerializerspec__A>
+  </styled.div>
    
-  <styleSheetSerializerspec__A>
+  <styled.div>
     <div
       className="c0"
     />
-  </styleSheetSerializerspec__A>
+  </styled.div>
    
-  <styleSheetSerializerspec__B>
+  <styled.div>
     <div
       className="c1"
     />
-  </styleSheetSerializerspec__B>
+  </styled.div>
 </div>
 `;
 
@@ -651,20 +651,20 @@ exports[`duplicated components: react-testing-library 1`] = `
 
 exports[`duplicated components: shallow 1`] = `
 <div>
-  <styleSheetSerializerspec__A />
+  <styled.div />
    
-  <styleSheetSerializerspec__A />
+  <styled.div />
    
-  <styleSheetSerializerspec__B />
+  <styled.div />
 </div>
 `;
 
 exports[`empty style: mount 1`] = `
-<styleSheetSerializerspec__Component>
+<styled.div>
   <div
     className=""
   />
-</styleSheetSerializerspec__Component>
+</styled.div>
 `;
 
 exports[`empty style: react-test-renderer 1`] = `
@@ -690,11 +690,11 @@ exports[`included class name: mount 1`] = `
   color: red;
 }
 
-<styleSheetSerializerspec__Div>
+<styled.div>
   <div
     className="c0 i"
   />
-</styleSheetSerializerspec__Div>
+</styled.div>
 `;
 
 exports[`included class name: react-test-renderer 1`] = `
@@ -807,37 +807,37 @@ exports[`referring to other components: mount 1`] = `
   background-color: red;
 }
 
-<styleSheetSerializerspec__Container>
+<styled.div>
   <div
     className="c0 c1"
   >
-    <styleSheetSerializerspec__Link
+    <styled.a
       href="#"
     >
       <a
         className="c2 c3"
         href="#"
       >
-        <styleSheetSerializerspec__Icon>
+        <styled.svg>
           <svg
             className="c4"
           />
-        </styleSheetSerializerspec__Icon>
-        <styleSheetSerializerspec__Label>
+        </styled.svg>
+        <styled.span>
           <span
             className="c5"
           >
             Hovering my parent changes my style!
           </span>
-        </styleSheetSerializerspec__Label>
-        <styleSheetSerializerspec__TextWithConditionalFormatting>
+        </styled.span>
+        <styled.span>
           <span
             className="c6"
           >
             I should be green
           </span>
-        </styleSheetSerializerspec__TextWithConditionalFormatting>
-        <styleSheetSerializerspec__TextWithConditionalFormatting
+        </styled.span>
+        <styled.span
           error={true}
         >
           <span
@@ -846,11 +846,11 @@ exports[`referring to other components: mount 1`] = `
           >
             I should be red
           </span>
-        </styleSheetSerializerspec__TextWithConditionalFormatting>
+        </styled.span>
       </a>
-    </styleSheetSerializerspec__Link>
+    </styled.a>
   </div>
-</styleSheetSerializerspec__Container>
+</styled.div>
 `;
 
 exports[`referring to other components: react-test-renderer 1`] = `
@@ -1011,13 +1011,13 @@ exports[`referring to other unreferenced components: mount 1`] = `
 }
 
 <div>
-  <styleSheetSerializerspec__ReferencedLink>
+  <Styled(styled.a)>
     <a
       className="c0 c1"
     >
       Styled, exciting Link
     </a>
-  </styleSheetSerializerspec__ReferencedLink>
+  </Styled(styled.a)>
 </div>
 `;
 
@@ -1061,9 +1061,9 @@ exports[`referring to other unreferenced components: react-testing-library 1`] =
 
 exports[`referring to other unreferenced components: shallow 1`] = `
 <div>
-  <styleSheetSerializerspec__ReferencedLink>
+  <Styled(styled.a)>
     Styled, exciting Link
-  </styleSheetSerializerspec__ReferencedLink>
+  </Styled(styled.a)>
 </div>
 `;
 
@@ -1118,19 +1118,19 @@ exports[`strips unused styles: mount 1`] = `
   text-align: right;
 }
 
-<styleSheetSerializerspec__FancyText>
+<styled.div>
   <div
     className="c0"
   >
-    <styleSheetSerializerspec__BlueText>
+    <styled.div>
       <div
         className="c1 c2"
       >
         A container that has styles for an unused child
       </div>
-    </styleSheetSerializerspec__BlueText>
+    </styled.div>
   </div>
-</styleSheetSerializerspec__FancyText>
+</styled.div>
 `;
 
 exports[`strips unused styles: react-test-renderer 1`] = `
@@ -1199,7 +1199,7 @@ html.test .c0 {
   display: none;
 }
 
-@media (max-width:600px) {
+@media (max-width: 600px) {
   .c0 {
     background: tomato;
   }
@@ -1209,7 +1209,7 @@ html.test .c0 {
   }
 }
 
-<styleSheetSerializerspec__Example>
+<styled.div>
   <div
     className="c0"
   >
@@ -1217,7 +1217,7 @@ html.test .c0 {
       Hello World!
     </p>
   </div>
-</styleSheetSerializerspec__Example>
+</styled.div>
 `;
 
 exports[`supported css: react-test-renderer 1`] = `
@@ -1238,7 +1238,7 @@ html.test .c0 {
   display: none;
 }
 
-@media (max-width:600px) {
+@media (max-width: 600px) {
   .c0 {
     background: tomato;
   }
@@ -1275,7 +1275,7 @@ html.test .c0 {
   display: none;
 }
 
-@media (max-width:600px) {
+@media (max-width: 600px) {
   .c0 {
     background: tomato;
   }
@@ -1312,7 +1312,7 @@ html.test .c0 {
   display: none;
 }
 
-@media (max-width:600px) {
+@media (max-width: 600px) {
   .c0 {
     background: tomato;
   }
@@ -1351,7 +1351,7 @@ exports[`theming: mount 1`] = `
 }
 
 <div>
-  <styleSheetSerializerspec__Button
+  <styled.button
     theme={
       Object {
         "main": "palevioletred",
@@ -1363,7 +1363,7 @@ exports[`theming: mount 1`] = `
     >
       Normal
     </button>
-  </styleSheetSerializerspec__Button>
+  </styled.button>
   <Component
     theme={
       Object {
@@ -1371,7 +1371,7 @@ exports[`theming: mount 1`] = `
       }
     }
   >
-    <styleSheetSerializerspec__Button
+    <styled.button
       theme={
         Object {
           "main": "palevioletred",
@@ -1383,7 +1383,7 @@ exports[`theming: mount 1`] = `
       >
         Themed
       </button>
-    </styleSheetSerializerspec__Button>
+    </styled.button>
   </Component>
 </div>
 `;
@@ -1456,7 +1456,7 @@ exports[`theming: react-testing-library 1`] = `
 
 exports[`theming: shallow 1`] = `
 <div>
-  <styleSheetSerializerspec__Button
+  <styled.button
     theme={
       Object {
         "main": "palevioletred",
@@ -1464,7 +1464,7 @@ exports[`theming: shallow 1`] = `
     }
   >
     Normal
-  </styleSheetSerializerspec__Button>
+  </styled.button>
   <Component
     theme={
       Object {
@@ -1472,7 +1472,7 @@ exports[`theming: shallow 1`] = `
       }
     }
   >
-    <styleSheetSerializerspec__Button
+    <styled.button
       theme={
         Object {
           "main": "palevioletred",
@@ -1480,7 +1480,7 @@ exports[`theming: shallow 1`] = `
       }
     >
       Themed
-    </styleSheetSerializerspec__Button>
+    </styled.button>
   </Component>
 </div>
 `;
@@ -1490,11 +1490,11 @@ exports[`trailing white spaces: mount 1`] = `
   color: red;
 }
 
-<styleSheetSerializerspec__Div>
+<styled.div>
   <div
     className="c0 div  "
   />
-</styleSheetSerializerspec__Div>
+</styled.div>
 `;
 
 exports[`trailing white spaces: react-test-renderer 1`] = `

@@ -214,6 +214,18 @@ const getHashes = () => {
   return hashes;
 };
 
+const getKeyframeHashes = () => {
+  const hashes = new Set();
+
+  for (const [mainHash, childHashSet] of sheet.names) {
+    if (mainHash && mainHash.startsWith('sc-keyframes-')) {
+      for (const childHash of childHashSet) hashes.add(childHash);
+    }
+  }
+
+  return hashes;
+};
+
 const buildReturnMessage = (utils, pass, property, received, expected) => () =>
   `${utils.printReceived(
     received === undefined && !pass
@@ -281,6 +293,7 @@ module.exports = {
   getCSS,
   getCSSForMatcher,
   getHashes,
+  getKeyframeHashes,
   buildReturnMessage,
   matcherTest,
 };

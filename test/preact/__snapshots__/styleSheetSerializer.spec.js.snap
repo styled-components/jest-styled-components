@@ -6,15 +6,15 @@ exports[`basic: mount 1`] = `
   background: papayawhip;
 }
 
-<styleSheetSerializerspec__Wrapper>
+<styled.section>
   <section
     className="c0"
   >
-    <styleSheetSerializerspec__Title>
+    <styled.h1>
       Hello World, this is my first styled component!
-    </styleSheetSerializerspec__Title>
+    </styled.h1>
   </section>
-</styleSheetSerializerspec__Wrapper>
+</styled.section>
 `;
 
 exports[`basic: shallow 1`] = `
@@ -26,8 +26,8 @@ exports[`basic: shallow 1`] = `
 <section
   className="c0"
 >
-  <styleSheetSerializerspec__Title>
+  <styled.h1>
     Hello World, this is my first styled component!
-  </styleSheetSerializerspec__Title>
+  </styled.h1>
 </section>
 `;

@@ -2,8 +2,18 @@
 
 exports[`edge cases at-rules @keyframes does not break matcher 1`] = `
 .c0 {
-  animation: eoUyJr 1s linear infinite;
+  animation: k0 1s linear infinite;
   color: red;
+}
+
+@keyframes k0 {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 <div
@@ -47,7 +57,7 @@ exports[`edge cases modern CSS features @container queries 1`] = `
   container-type: inline-size;
 }
 
-@container (min-width:400px) {
+@container (min-width: 400px) {
   .c0 {
     font-size: 1.5rem;
   }

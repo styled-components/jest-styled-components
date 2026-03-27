@@ -54,7 +54,7 @@ it('message when property not found', () => {
 
   expect(() =>
     expect(renderer.create(<Button />).toJSON()).toHaveStyleRule('background-color', 'black')
-  ).toThrowErrorMatchingSnapshot();
+  ).toThrow(/Property 'background-color' not found in style rules/);
 });
 
 it('message when value does not match', () => {
@@ -64,7 +64,7 @@ it('message when value does not match', () => {
 
   expect(() => {
     expect(renderer.create(<Wrapper />).toJSON()).toHaveStyleRule('background', 'red');
-  }).toThrowErrorMatchingSnapshot();
+  }).toThrow(/Value mismatch for property 'background'/);
 });
 
 it('non existing', () => {

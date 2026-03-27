@@ -1,0 +1,10 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": { "node": "current" },
+      "loose": true
+    }],
+    "@babel/preset-react"
+  ],
+  "plugins": ["@babel/plugin-transform-flow-strip-types"]
+}
