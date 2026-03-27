@@ -1,5 +1,16 @@
 # Changelog
 
+## 7.4.0
+
+### Minor Changes
+
+- 972060f: Stabilize keyframe names in snapshots by replacing hashed `@keyframes` identifiers with deterministic placeholders (`k0`, `k1`, etc.), matching the existing `c0`/`c1` behavior for class names
+- 74fee2e: Add `namespace` option to `toHaveStyleRule` for matching rules generated with `StyleSheetManager namespace`. Can be set per-assertion or globally via `setStyleRuleOptions({ namespace: '#app' })`.
+
+### Patch Changes
+
+- a9cb0aa: Fix Vitest compatibility: convert vitest entrypoint to ESM and remove test framework dependency from matcherTest
+
 ## 7.3.1
 
 ### Patch Changes
