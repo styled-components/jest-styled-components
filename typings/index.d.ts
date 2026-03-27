@@ -19,6 +19,8 @@ declare global {
       media?: string;
       /** Refine the selector used to match rules. Supports pseudo-selectors (`:hover`), combinators (`> div`), the `&` self-reference (`&&`, `&.active`), parent selectors (`.parent &`), and the styled-components `css` helper for component selectors. */
       modifier?: string | ReturnType<typeof css>;
+      /** Match rules prefixed by a `StyleSheetManager` namespace, e.g. `'#app'`. */
+      namespace?: string;
       /** Match rules by CSS selector string instead of by component class name. Useful for testing `createGlobalStyle` styles, e.g. `{ selector: 'body' }`. When set, the component argument to `toHaveStyleRule` is ignored. */
       selector?: string;
       /** Target rules within a specific `@supports` at-rule, e.g. `'(display: grid)'`. */
@@ -57,3 +59,11 @@ export declare const enableCSSCache: () => void;
 
 /** Disable CSS parse caching and clear the cache. */
 export declare const disableCSSCache: () => void;
+
+export interface StyleRuleOptions {
+  /** A `StyleSheetManager` namespace string (e.g. `'#app'`). When set, the matcher automatically prepends this prefix to every expected selector. */
+  namespace?: string;
+}
+
+/** Configure global defaults for `toHaveStyleRule`. Settings apply to all subsequent assertions unless overridden per-call. */
+export declare const setStyleRuleOptions: (options?: StyleRuleOptions) => void;
