@@ -5,26 +5,32 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What This Is
 
 jest-styled-components is a Jest testing utility library for styled-components (v5+). It provides two main features:
-1. A **snapshot serializer** that inlines CSS rules into snapshots and replaces hashed class names with deterministic placeholders (c0, c1, etc.)
+1. A **snapshot serializer** that inlines CSS rules into snapshots and replaces hashed class names with deterministic placeholders (`c0`, `c1` for classes; `k0`, `k1` for keyframes)
 2. A **`toHaveStyleRule` matcher** for asserting specific CSS property values on rendered components
 
 ## Commands
 
 ```bash
-# Run all tests (web + native + preact)
-yarn test
+# Run all tests (web + native + preact + vitest + lint)
+pnpm test
 
 # Run only web tests
-yarn test:web
+pnpm test:web
 
 # Run web tests in watch mode
-yarn test:web:watch
+pnpm test:web:watch
 
 # Run only React Native tests
-yarn test:native
+pnpm test:native
 
 # Run only Preact tests
-yarn test:preact
+pnpm test:preact
+
+# Run only Vitest integration tests
+pnpm test:vitest
+
+# Run package linting (publint + attw)
+pnpm lint:pkg
 
 # Run a single test file
 npx jest test/toHaveStyleRule.spec.js
@@ -37,23 +43,26 @@ npx jest --updateSnapshot
 
 ### Entry Points
 
-- `src/index.js` — Main entry. Importing this registers the snapshot serializer and `toHaveStyleRule` matcher globally, and sets up `beforeEach` to reset the stylesheet between tests.
+- `src/index.js` — Main entry. Importing this registers the snapshot serializer and `toHaveStyleRule` matcher globally, and sets up `beforeEach` to reset the stylesheet between tests. Exports `setStyleRuleOptions` for global matcher configuration.
+- `vitest/index.js` — Vitest entry (ESM). Same registration as main entry but imports `beforeEach`/`expect` from vitest explicitly. Uses `createRequire` to load CJS source modules.
 - `native/index.js` — React Native entry. Only registers the native `toHaveStyleRule` matcher (no serializer needed).
 - `serializer/index.js` — Standalone serializer export for use with libraries like jest-specific-snapshot.
+- `cache/index.js` — Enables CSS parse caching for `toHaveStyleRule` performance.
 
 ### Core Modules
 
-- **`src/utils.js`** — Shared utilities. Accesses styled-components internals via `__PRIVATE__` to read/reset the global stylesheet. Parses CSS with `@adobe/css-tools`. Key exports: `resetStyleSheet`, `getCSS`, `getHashes`, `matcherTest`, `buildReturnMessage`.
+- **`src/utils.js`** — Shared utilities. Accesses styled-components internals via `__PRIVATE__` to read/reset the global stylesheet. Parses CSS with `@adobe/css-tools`. Key exports: `resetStyleSheet`, `getCSS`, `collectHashes` (single-pass all+keyframe hash collection), `matcherTest`, `buildReturnMessage`.
 - **`src/styleSheetSerializer.js`** — Jest snapshot serializer. Walks the component tree to collect class names, extracts matching CSS rules from the stylesheet, replaces hashed class names with sequential placeholders, and prepends styles to the snapshot output. Uses a `WeakSet` cache to prevent re-processing nodes during recursive serialization.
-- **`src/toHaveStyleRule.js`** — Web matcher. Extracts class names from react-test-renderer JSON, Enzyme wrappers, or DOM elements, then queries parsed CSS for matching declarations. Supports `media`, `supports`, `container`, `layer`, and `modifier` options for targeting nested/at-rule styles.
+- **`src/toHaveStyleRule.js`** — Web matcher. Extracts class names from react-test-renderer JSON, Enzyme wrappers, or DOM elements, then queries parsed CSS for matching declarations. Supports `media`, `supports`, `container`, `layer`, `modifier`, and `namespace` options. Exposes `setStyleRuleOptions()` for global defaults (e.g. `StyleSheetManager` namespace).
 - **`src/native/toHaveStyleRule.js`** — React Native matcher. Works directly with the `style` prop (no CSS parsing needed), merging style arrays and converting kebab-case properties to camelCase.
 
 ### Test Configurations
 
-Three separate Jest configs target different renderers:
-- Default (`package.json` "jest" field) — Web tests using jsdom, Enzyme, and react-test-renderer. Ignores `test/native/` and `test/preact/`.
+Four test configurations target different renderers:
+- Default (`package.json` "jest" field) — Web tests using jsdom, Enzyme, and react-test-renderer. Ignores `test/native/`, `test/preact/`, `test/vitest/`.
 - `.jest.native.json` — React Native tests using react-native preset, node environment.
 - `.jest.preact.json` — Preact tests with `moduleNameMapper` aliasing `react` → `preact/compat`.
+- `test/vitest/` — Vitest workspace with its own `package.json` and `vitest.config.js`. Tests the ESM vitest entry point.
 
 ### Renderer Detection (Duck Typing)
 
@@ -65,7 +74,7 @@ The matcher and serializer detect the rendering context without explicit imports
 
 ### No Build Step
 
-Source JS is published directly — no transpilation, bundling, or minification. Babel is dev-only for tests. The `"files"` field limits what's published: `native/`, `serializer/`, `src/`, `typings/`.
+Source JS is published directly — no transpilation, bundling, or minification. Babel is dev-only for tests. The `"files"` field limits what's published: `cache/`, `native/`, `serializer/`, `src/`, `typings/`, `vitest/`.
 
 ## Key Implementation Details
 
@@ -107,7 +116,7 @@ Uses `@adobe/css-tools` as the sole production dependency to parse stylesheet ou
 - **publint** validates package.json and published files (`--pack npm` due to yarn pack incompatibility).
 - **@arethetypeswrong/cli** (attw) validates TypeScript type resolution across node10/node16/bundler modes.
 - **knip** detects unused deps, exports, and dead files. Config in `knip.json`.
-- All quality checks run as part of `yarn test` via `lint:pkg` script.
+- All quality checks run as part of `pnpm test` via `lint:pkg` script.
 - **Changesets** for versioning with `@changesets/changelog-github` for PR-linked changelogs.
 
 ## CI
