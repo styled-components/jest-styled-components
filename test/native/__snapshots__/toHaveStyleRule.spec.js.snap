@@ -1,19 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`message when property not found 1`] = `
-"[31m\\"Property 'color' not found in style rules\\"[39m
+"[31m"Property 'color' not found in style rules"[39m
 
 Expected
-  [32m\\"color: black\\"[39m
+  [32m"color: black"[39m
 Received:
-  [31m\\"color: undefined\\"[39m"
+  [31m"color: undefined"[39m"
 `;
 
 exports[`message when value does not match 1`] = `
-"[31m\\"Value mismatch for property 'background-color'\\"[39m
+"[31m"Value mismatch for property 'background-color'"[39m
 
 Expected
-  [32m\\"background-color: red\\"[39m
+  [32m"background-color: red"[39m
 Received:
-  [31m\\"background-color: orange\\"[39m"
+  [31m"background-color: orange"[39m"
 `;

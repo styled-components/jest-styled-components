@@ -789,7 +789,7 @@ exports[`referring to other components: mount 1`] = `
 }
 
 .c5::before {
-  content: '◀';
+  content: "◀";
   margin: 0 10px;
 }
 
@@ -879,7 +879,7 @@ exports[`referring to other components: react-test-renderer 1`] = `
 }
 
 .c5::before {
-  content: '◀';
+  content: "◀";
   margin: 0 10px;
 }
 
@@ -953,7 +953,7 @@ exports[`referring to other components: react-testing-library 1`] = `
 }
 
 .c5::before {
-  content: '◀';
+  content: "◀";
   margin: 0 10px;
 }
 
@@ -1353,7 +1353,7 @@ exports[`theming: mount 1`] = `
 <div>
   <styled.button
     theme={
-      Object {
+      {
         "main": "palevioletred",
       }
     }
@@ -1366,14 +1366,14 @@ exports[`theming: mount 1`] = `
   </styled.button>
   <Component
     theme={
-      Object {
+      {
         "main": "mediumseagreen",
       }
     }
   >
     <styled.button
       theme={
-        Object {
+        {
           "main": "palevioletred",
         }
       }
@@ -1458,7 +1458,7 @@ exports[`theming: shallow 1`] = `
 <div>
   <styled.button
     theme={
-      Object {
+      {
         "main": "palevioletred",
       }
     }
@@ -1467,14 +1467,14 @@ exports[`theming: shallow 1`] = `
   </styled.button>
   <Component
     theme={
-      Object {
+      {
         "main": "mediumseagreen",
       }
     }
   >
     <styled.button
       theme={
-        Object {
+        {
           "main": "palevioletred",
         }
       }

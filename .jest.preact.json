@@ -5,5 +5,8 @@
   "setupFilesAfterEnv": ["<rootDir>/test/preact/setup.js"],
   "snapshotSerializers": ["enzyme-to-json/serializer"],
   "testEnvironment": "jsdom",
-  "testRegex": "test/preact/.*\\.spec\\.js$"
+  "testRegex": "test/preact/.*\\.spec\\.js$",
+  "transformIgnorePatterns": [
+    "/node_modules/(?!(.pnpm/.*/)?(preact)/)"
+  ]
 }

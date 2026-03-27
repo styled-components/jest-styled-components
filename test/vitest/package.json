@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run --reporter=dot"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^6.0.1",
