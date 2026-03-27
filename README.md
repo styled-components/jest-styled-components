@@ -1,16 +1,116 @@
 [![NPM version](https://img.shields.io/npm/v/jest-styled-components.svg)](https://www.npmjs.com/package/jest-styled-components)
 [![CI](https://github.com/styled-components/jest-styled-components/actions/workflows/ci.yml/badge.svg)](https://github.com/styled-components/jest-styled-components/actions/workflows/ci.yml)
-[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 
-# Jest Styled Components
+# jest-styled-components
 
-A set of utilities for testing [Styled Components](https://github.com/styled-components/styled-components) (v5+) with [Jest](https://github.com/facebook/jest). Provides a snapshot serializer that inlines CSS into snapshots and a `toHaveStyleRule` matcher for asserting style rules.
+Testing utilities for [styled-components](https://github.com/styled-components/styled-components) (v5+). Works with Jest, Vitest, and Bun.
 
-## Quick Start
+styled-components is largely maintained by one person. Please help fund the project for consistent long-term support and updates: [Open Collective](https://opencollective.com/styled-components)
+
+---
+
+**The problem:** styled-components snapshots contain opaque hashed class names and no CSS rules. When styles change, diffs show meaningless class name changes.
+
+**The solution:** This library inlines actual CSS rules into snapshots with deterministic class placeholders (`c0`, `c1`, `k0`, `k1`) and provides a `toHaveStyleRule` matcher for asserting specific style values.
+
+```diff
+- Snapshot
++ Received
+
+ .c0 {
+-  color: green;
++  color: blue;
+ }
+
+ <button
+   class="c0"
+ />
+```
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Setup](#setup)
+- [Quick Example](#quick-example)
+- [Snapshot Testing](#snapshot-testing)
+- [toHaveStyleRule](#tohavestylerule)
+- [React Native](#react-native)
+- [Advanced Usage](#advanced-usage)
+- [Version Compatibility](#version-compatibility)
+- [Troubleshooting](#troubleshooting)
+- [Legacy: Enzyme](#legacy-enzyme)
+
+## Installation
 
 ```sh
 npm install --save-dev jest-styled-components
 ```
+```sh
+pnpm add -D jest-styled-components
+```
+```sh
+yarn add -D jest-styled-components
+```
+```sh
+bun add -D jest-styled-components
+```
+
+## Setup
+
+Import once in a setup file to register the snapshot serializer and `toHaveStyleRule` matcher globally.
+
+### Jest
+
+```js
+// setupTests.js
+import 'jest-styled-components'
+```
+
+```js
+// jest.config.js
+module.exports = {
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+}
+```
+
+Note: Jest 27+ defaults to the `node` environment. styled-components requires a DOM, so `testEnvironment: 'jsdom'` is required. You may also need to install `jest-environment-jsdom` separately for Jest 28+.
+
+### Vitest
+
+```js
+// setupTests.ts
+import 'jest-styled-components/vitest'
+```
+
+```ts
+// vitest.config.ts
+import { defineConfig } from 'vitest/config'
+
+export default defineConfig({
+  test: {
+    setupFiles: ['./setupTests.ts'],
+  },
+})
+```
+
+The Vitest entry point imports `expect` and `beforeEach` from Vitest explicitly. TypeScript types are included.
+
+### Bun
+
+```js
+// setupTests.ts
+import 'jest-styled-components'
+```
+
+Bun provides the `expect` and `beforeEach` globals that the library hooks into. Configure `preload` in your `bunfig.toml`:
+
+```toml
+[test]
+preload = ["./setupTests.ts"]
+```
+
+## Quick Example
 
 ```js
 import React from 'react'
@@ -29,77 +129,20 @@ test('it works', () => {
 })
 ```
 
-To avoid importing in every test file, use the [global setup](#global-setup) method.
-
-## Table of Contents
-
-- [Snapshot Testing](#snapshot-testing)
-- [toHaveStyleRule](#tohavestylerule)
-- [Vitest](#vitest)
-- [React Native](#react-native)
-- [Global Setup](#global-setup)
-- [Serializer](#serializer)
-- [Legacy: Enzyme](#legacy-enzyme)
-
 ## Snapshot Testing
 
-Without this package, styled-components snapshots contain opaque hashed class names and no CSS rules. Changes to styles only show up as class name diffs, which is uninformative.
-
-After importing `jest-styled-components`, snapshots include the actual CSS rules and use deterministic class name placeholders (`c0`, `c1`, etc.), producing clear diffs 💖:
-
-```diff
-- Snapshot
-+ Received
-
- .c0 {
--  color: green;
-+  color: blue;
- }
-
- <button
-   class="c0"
- />
-```
-
-### @testing-library/react
-
-```js
-import { render } from '@testing-library/react'
-
-test('it works', () => {
-  const { container } = render(<Button />)
-  expect(container.firstChild).toMatchSnapshot()
-})
-```
-
-Snapshots from DOM elements use `class` instead of `className`.
-
-### react-test-renderer
-
-```js
-import renderer from 'react-test-renderer'
-
-test('it works', () => {
-  const tree = renderer.create(<Button />).toJSON()
-  expect(tree).toMatchSnapshot()
-})
-```
+The serializer replaces hashed class names with sequential placeholders (`c0`, `c1` for classes, `k0`, `k1` for keyframes) and prepends the matching CSS rules to the snapshot output. This works with `@testing-library/react`, `react-test-renderer`, and Enzyme.
 
 ### Theming
 
-Pass the theme directly as a prop or wrap with `ThemeProvider`:
+Wrap with `ThemeProvider` as you would in your app:
 
 ```js
 import { ThemeProvider } from 'styled-components'
 
 const theme = { main: 'mediumseagreen' }
 
-test('with theme prop', () => {
-  const { container } = render(<Button theme={theme} />)
-  expect(container.firstChild).toHaveStyleRule('color', 'mediumseagreen')
-})
-
-test('with ThemeProvider', () => {
+test('themed component', () => {
   const { container } = render(
     <ThemeProvider theme={theme}>
       <Button />
@@ -111,7 +154,11 @@ test('with ThemeProvider', () => {
 
 ## toHaveStyleRule
 
-Asserts that a CSS property has the expected value. The second argument accepts a string, RegExp, Jest asymmetric matcher, or `undefined`. When used with `.not`, the second argument is optional.
+```
+expect(element).toHaveStyleRule(property, value?, options?)
+```
+
+Asserts that a CSS property has the expected value on a styled component. The `value` argument accepts a string, RegExp, asymmetric matcher (e.g. `expect.stringContaining()`), or `undefined` to assert the property is not set. When used with `.not`, `value` is optional.
 
 ```js
 const Button = styled.button`
@@ -140,7 +187,7 @@ test('prop-dependent styles', () => {
 
 ### Options
 
-The third argument is an options object for targeting rules within at-rules, with modifiers, or by raw CSS selector.
+The third argument targets rules within at-rules, with selector modifiers, or by raw CSS selector.
 
 | Option | Type | Description |
 |---|---|---|
@@ -259,9 +306,11 @@ This applies to all subsequent `toHaveStyleRule` calls. Individual assertions ca
 
 ### modifier with component selectors
 
-When a rule is nested within another styled-component, use the `css` helper to target it:
+When a rule targets another styled-component, use the `css` helper:
 
 ```js
+import { css } from 'styled-components'
+
 const Button = styled.button`
   color: red;
 `
@@ -271,8 +320,6 @@ const ButtonList = styled.div`
     flex: 1 0 auto;
   }
 `
-
-import { css } from 'styled-components'
 
 test('nested component selector', () => {
   const { container } = render(<ButtonList><Button /></ButtonList>)
@@ -321,44 +368,20 @@ test('global styles', () => {
 })
 ```
 
-When `selector` is set, the component argument to `toHaveStyleRule` is ignored -- any rendered element will work as the receiver.
+When `selector` is set, the component argument is ignored---any rendered element will work as the receiver.
 
-### Note on element selection
+### Element selection
 
-The matcher checks styles on the root element it receives. To assert on nested elements, query for them first:
+The matcher checks styles on the element it receives. To assert on nested elements, query for them first:
 
 ```js
 const { getByTestId } = render(<MyComponent />)
 expect(getByTestId('inner-button')).toHaveStyleRule('color', 'blue')
 ```
 
-## Vitest
-
-Import the Vitest-specific entry point in your setup file:
-
-```js
-import 'jest-styled-components/vitest'
-```
-
-This registers the serializer, matcher, and stylesheet reset using Vitest's `expect` and `beforeEach`. TypeScript types are included at `jest-styled-components/vitest`.
-
-Configure in `vitest.config.ts`:
-
-```js
-export default defineConfig({
-  test: {
-    setupFiles: ['./src/setupTests.ts'],
-  },
-})
-```
-
-## Bun
-
-Works with Bun's test runner out of the box. Import `jest-styled-components` in your test setup as usual -- Bun provides the `expect` and `beforeEach` globals that the library hooks into.
-
 ## React Native
 
-For React Native, import the native entry point instead:
+Import the native entry point instead:
 
 ```js
 import 'jest-styled-components/native'
@@ -382,25 +405,9 @@ test('native styles', () => {
 })
 ```
 
-## Global Setup
+## Advanced Usage
 
-To avoid importing in every test file, create a setup file:
-
-```js
-// src/setupTests.js
-import 'jest-styled-components'
-```
-
-Then add it to your Jest config:
-
-```js
-// jest.config.js
-module.exports = {
-  setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
-}
-```
-
-## Serializer
+### Standalone Serializer
 
 The serializer can be imported separately for use with libraries like [jest-specific-snapshot](https://github.com/igor-dv/jest-specific-snapshot):
 
@@ -422,6 +429,16 @@ setStyleSheetSerializerOptions({
 })
 ```
 
+### CSS Parse Caching
+
+By default, `toHaveStyleRule` re-parses the stylesheet on every assertion. For test suites with many assertions, import the cached entry point to parse once and reuse the result when the stylesheet hasn't changed:
+
+```js
+import 'jest-styled-components/cache'
+```
+
+The cache automatically invalidates when the stylesheet changes and when `resetStyleSheet` runs between tests. No manual cleanup needed.
+
 ### resetStyleSheet
 
 The main entry point calls `resetStyleSheet()` in a `beforeEach` hook automatically. If you use the standalone serializer or a custom test setup where `beforeEach` is not globally available, call it manually:
@@ -429,52 +446,66 @@ The main entry point calls `resetStyleSheet()` in a `beforeEach` hook automatica
 ```js
 import { resetStyleSheet } from 'jest-styled-components'
 
-// In your test setup or beforeEach
 resetStyleSheet()
 ```
 
-### CSS Parse Caching
+## Version Compatibility
 
-By default, `toHaveStyleRule` re-parses the stylesheet on every assertion. For test suites with many assertions, this can be slow. Import the cached entry point to parse once and reuse the result when the stylesheet hasn't changed:
+| jest-styled-components | styled-components | Test Runner |
+|---|---|---|
+| 7.2+ | 5.x, 6.x | Jest 27+, Vitest 1+, Bun |
+| 7.0--7.1 | 5.x | Jest 27+ |
+| 6.x | 4.x--5.x | Jest 24--26 |
+
+## Troubleshooting
+
+### "No style rules found on passed Component"
+
+The most common issue. Check these causes in order:
+
+1. **Wrong element.** The matcher needs the actual DOM element or react-test-renderer JSON node, not a wrapper. With `@testing-library/react`, use `container.firstChild`. With Enzyme, use `mount()` (not `shallow()` for most cases).
+2. **Multiple styled-components instances.** Common in monorepos. Run `npm ls styled-components` (or `pnpm why styled-components`) to check. See the [styled-components FAQ](https://www.styled-components.com/docs/faqs#why-am-i-getting-a-warning-about-several-instances-of-module-on-the-page) for resolution.
+3. **Version mismatch.** Ensure your jest-styled-components version supports your styled-components version (see [Version Compatibility](#version-compatibility)).
+
+### TypeScript: `toHaveStyleRule` not recognized
+
+The package ships type declarations that augment Jest's `Matchers` interface. If TypeScript doesn't pick them up:
+
+**Jest:** Ensure your `tsconfig.json` includes the package in `types`, or that your setup file import (`import 'jest-styled-components'`) is within the TypeScript project's `include` paths.
+
+**Vitest:** Import from `jest-styled-components/vitest` (not the base entry point). This augments Vitest's `Assertion` interface.
+
+### Styles missing from snapshots
+
+If snapshots show hashed class names instead of CSS rules, the serializer isn't registered. Verify:
+
+1. You're importing `jest-styled-components` (or `jest-styled-components/vitest` for Vitest) in your setup file.
+2. The setup file is referenced in your test runner config (`setupFilesAfterEnv` for Jest, `setupFiles` for Vitest).
+3. You don't have multiple instances of styled-components loaded (see above).
+
+### Testing `createGlobalStyle`
+
+Global styles don't attach to a specific component. Use the `selector` option to match by CSS selector:
 
 ```js
-import 'jest-styled-components/cache'
+render(<GlobalStyle />)
+expect(document.documentElement).toHaveStyleRule('background', 'white', {
+  selector: 'body',
+})
 ```
 
-That's it—the cache automatically invalidates when the stylesheet changes (new components render) and when `resetStyleSheet` runs between tests via `beforeEach`. No manual cleanup needed.
+### Jest environment errors (`document is not defined`)
 
-With the cached entry point, both `toHaveStyleRule` and the snapshot serializer reuse the parsed stylesheet when possible. The serializer builds a filtered copy of the AST instead of mutating it during serialization.
+Jest 27+ defaults to the `node` test environment. Add `testEnvironment: 'jsdom'` to your Jest config. For Jest 28+, install `jest-environment-jsdom` as a separate dependency.
 
 ## Legacy: Enzyme
 
 [Enzyme](https://github.com/enzymejs/enzyme) is no longer actively maintained. If you still use it, snapshot testing requires [enzyme-to-json](https://www.npmjs.com/package/enzyme-to-json) and `toHaveStyleRule` works with both shallow and mounted wrappers. Consider migrating to `@testing-library/react`.
 
-## Working with Multiple Packages
-
-If styles are not appearing in snapshots, you may have multiple instances of `styled-components` loaded (common in monorepos). See the styled-components FAQ: [Why am I getting a warning about several instances of module on the page?](https://www.styled-components.com/docs/faqs#why-am-i-getting-a-warning-about-several-instances-of-module-on-the-page)
-
 ## Contributing
 
 [Open an issue](https://github.com/styled-components/jest-styled-components/issues/new) to discuss before submitting a PR.
 
-## Contributors
-
-This project exists thanks to all the people who contribute.
-
-<a href="https://github.com/styled-components/jest-styled-components/graphs/contributors"><img src="https://opencollective.com/styled-components/contributors.svg?width=890" /></a>
-
-## Backers
-
-Thank you to all our backers! [[Become a backer](https://opencollective.com/styled-components#backer)]
-
-<a href="https://opencollective.com/styled-components#backers" target="_blank"><img src="https://opencollective.com/styled-components/backers.svg?width=890"></a>
-
-## Sponsors
-
-Support this project by becoming a sponsor. [[Become a sponsor](https://opencollective.com/styled-components#sponsor)]
-
-<a href="https://opencollective.com/styled-components#sponsors" target="_blank"><img src="https://opencollective.com/styled-components/sponsors.svg?width=890"></a>
-
 ## License
 
-Licensed under the MIT License.
+Licensed under the [MIT License](LICENSE).
