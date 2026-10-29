@@ -1,16 +1,28 @@
 const css = require('@adobe/css-tools');
-require('./useBrowserBuild');
-const { __PRIVATE__ } = require('styled-components');
 
-if (!__PRIVATE__) {
-  throw new Error(
-    'Could not find styled-components internals (__PRIVATE__). Ensure styled-components v5+ is installed.'
-  );
-}
+const styledSheet = (styledComponents) => {
+  const privateApi =
+    styledComponents &&
+    (styledComponents.__PRIVATE__ || styledComponents.default?.__PRIVATE__);
 
-const { mainSheet, masterSheet } = __PRIVATE__;
+  if (!privateApi) {
+    throw new Error(
+      'Could not find styled-components internals (__PRIVATE__). Ensure styled-components v5+ is installed.'
+    );
+  }
 
-const sheet = mainSheet || masterSheet;
+  const { mainSheet, masterSheet } = privateApi;
+  return mainSheet || masterSheet;
+};
+
+// Vitest resolves `styled-components` through Vite. Callers that have that
+// module pass it here so the matcher reads the same sheet the test rendered.
+let sheet = styledSheet(require('styled-components'));
+
+const bindStyleSheet = (styledComponents) => {
+  sheet = styledSheet(styledComponents);
+  invalidateCSSCache();
+};
 
 /**
  * Reset the styled-components stylesheet between tests. Removes all injected
@@ -295,6 +307,7 @@ const AT_RULE_TYPES = ['media', 'supports', 'container', 'layer'];
 
 module.exports = {
   AT_RULE_TYPES,
+  bindStyleSheet,
   resetStyleSheet,
   enableCSSCache,
   disableCSSCache,

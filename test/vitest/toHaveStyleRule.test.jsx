@@ -1,4 +1,3 @@
-import { createRequire } from 'node:module';
 import React from 'react';
 import renderer from 'react-test-renderer';
 import styled, {
@@ -41,7 +40,11 @@ describe('toHaveStyleRule (vitest, no globals)', () => {
       background: papayawhip;
     `;
 
-    toHaveStyleRule(<Wrapper />, 'background', expect.stringContaining('whip'));
+    toHaveStyleRule(
+      <Wrapper />,
+      'background',
+      expect.stringContaining('whip')
+    );
   });
 
   it('complex string', () => {
@@ -99,14 +102,6 @@ describe('toHaveStyleRule (vitest, no globals)', () => {
     toHaveStyleRule(<Button />, 'color', 'green', {
       media: '(max-width: 640px)',
     });
-  });
-
-  it('createGlobalStyle uses the browser build', () => {
-    const requireFromHere = createRequire(import.meta.url);
-    const browser = requireFromHere(
-      'styled-components/dist/styled-components.browser.cjs.js'
-    );
-    expect(createGlobalStyle).toBe(browser.createGlobalStyle);
   });
 
   it('createGlobalStyle', () => {

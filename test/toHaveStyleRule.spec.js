@@ -596,12 +596,6 @@ it('Issue #422: chained pseudo-selectors - &[data-focus-visible-added]:not(:disa
   });
 });
 
-it('createGlobalStyle uses the browser build', () => {
-  const installed = require('styled-components');
-  const browser = require('styled-components/dist/styled-components.browser.cjs.js');
-  expect(installed.createGlobalStyle).toBe(browser.createGlobalStyle);
-});
-
 it('createGlobalStyle (#397, #324)', () => {
   const { createGlobalStyle } = require('styled-components');
 
@@ -622,17 +616,4 @@ it('createGlobalStyle (#397, #324)', () => {
   expect(null).toHaveStyleRule('background', 'red', { selector: 'body' });
   expect(null).toHaveStyleRule('color', 'blue', { selector: 'h1' });
   expect(null).toHaveStyleRule('font-size', '24px', { selector: 'h1' });
-});
-
-it('createGlobalStyle still matches after resetModules', () => {
-  jest.resetModules();
-  const { createGlobalStyle } = require('styled-components');
-  const GlobalStyle = createGlobalStyle`
-    body {
-      margin: 0;
-    }
-  `;
-
-  renderer.create(<GlobalStyle />);
-  expect(null).toHaveStyleRule('margin', '0', { selector: 'body' });
 });

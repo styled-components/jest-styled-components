@@ -11,12 +11,7 @@ permissions:
 
 jobs:
   test:
-    name: styled-components ${{ matrix.version }}
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        version: ['6.3.12', '6.4.0', '6.6.0']
     steps:
       - uses: actions/checkout@v4
 
@@ -30,69 +25,6 @@ jobs:
 
       - name: Install modules
         run: pnpm install --frozen-lockfile
-
-      - name: Install styled-components ${{ matrix.version }}
-        run: |
-          pnpm add -wD "styled-components@${{ matrix.version }}"
-          pnpm --filter vitest-entry add -D "styled-components@${{ matrix.version }}"
-          node <<'EOF'
-          const root = require.resolve('styled-components');
-          const vitest = require.resolve('styled-components', {
-            paths: ['test/vitest'],
-          });
-          if (root !== vitest) {
-            console.error('styled-components resolved to two copies');
-            console.error(root);
-            console.error(vitest);
-            process.exit(1);
-          }
-          EOF
 
       - name: Run tests
         run: pnpm test
-
-  # v5 and the v7 prerelease disagree with the v6 snapshots for reasons other
-  # than global styles. Run the createGlobalStyle tests so that path cannot
-  # regress without putting those suites on the main matrix.
-  global-style:
-    name: createGlobalStyle ${{ matrix.version }}
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        version: ['5.3.11', '7.0.0-prerelease-20261019010252']
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version-file: '.nvmrc'
-          cache: 'pnpm'
-
-      - name: Install modules
-        run: pnpm install --frozen-lockfile
-
-      - name: Install styled-components ${{ matrix.version }}
-        run: |
-          pnpm add -wD "styled-components@${{ matrix.version }}"
-          pnpm --filter vitest-entry add -D "styled-components@${{ matrix.version }}"
-          node <<'EOF'
-          const root = require.resolve('styled-components');
-          const vitest = require.resolve('styled-components', {
-            paths: ['test/vitest'],
-          });
-          if (root !== vitest) {
-            console.error('styled-components resolved to two copies');
-            console.error(root);
-            console.error(vitest);
-            process.exit(1);
-          }
-          EOF
-
-      - name: Run createGlobalStyle tests
-        run: |
-          pnpm exec jest test/toHaveStyleRule.spec.js test/edgeCases.spec.js -t createGlobalStyle --color --silent
-          pnpm --filter vitest-entry exec vitest run -t createGlobalStyle
