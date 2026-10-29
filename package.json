@@ -60,7 +60,7 @@
     "react-dom": "18.2.0",
     "react-native": "~0.71",
     "react-test-renderer": "18.2.0",
-    "styled-components": "^6.0.9"
+    "styled-components": "^6.6.0"
   },
   "dependencies": {
     "@adobe/css-tools": "^4.4.0"

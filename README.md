@@ -370,6 +370,8 @@ test('global styles', () => {
 
 When `selector` is set, the component argument is ignored---any rendered element will work as the receiver.
 
+Jest loads the Node build of styled-components. That build does not inject `createGlobalStyle` rules during a client render on v5, or on v6.4.0 and later. Importing this package from the setup file loads the browser build first, which is what makes the assertion above pass. Put that import in `setupFilesAfterEnv` (Jest) or `setupFiles` (Vitest) so it runs before any test file imports `styled-components`.
+
 ### Element selection
 
 The matcher checks styles on the element it receives. To assert on nested elements, query for them first:
@@ -485,7 +487,7 @@ If snapshots show hashed class names instead of CSS rules, the serializer isn't 
 
 ### Testing `createGlobalStyle`
 
-Global styles don't attach to a specific component. Use the `selector` option to match by CSS selector:
+Global styles don't attach to a specific component. Use the `selector` option to match by CSS selector. The setup import has to run before the test file imports `styled-components`, so the browser build is the one that renders the global style:
 
 ```js
 render(<GlobalStyle />)

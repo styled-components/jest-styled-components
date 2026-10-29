@@ -1,4 +1,5 @@
 const css = require('@adobe/css-tools');
+require('./useBrowserBuild');
 const { __PRIVATE__ } = require('styled-components');
 
 if (!__PRIVATE__) {
