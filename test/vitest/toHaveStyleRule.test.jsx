@@ -1,7 +1,11 @@
-import { describe, it, expect } from 'vitest';
 import React from 'react';
 import renderer from 'react-test-renderer';
-import styled, { css, ThemeProvider } from 'styled-components';
+import styled, {
+  createGlobalStyle,
+  css,
+  ThemeProvider,
+} from 'styled-components';
+import { describe, expect, it } from 'vitest';
 import 'jest-styled-components/vitest';
 
 const toHaveStyleRule = (component, property, value, options) => {
@@ -98,6 +102,16 @@ describe('toHaveStyleRule (vitest, no globals)', () => {
     toHaveStyleRule(<Button />, 'color', 'green', {
       media: '(max-width: 640px)',
     });
+  });
+
+  it('createGlobalStyle', () => {
+    const GlobalStyle = createGlobalStyle`
+      body {
+        margin: 0;
+      }
+    `;
+    renderer.create(<GlobalStyle />);
+    expect(null).toHaveStyleRule('margin', '0', { selector: 'body' });
   });
 
   it('theming', () => {

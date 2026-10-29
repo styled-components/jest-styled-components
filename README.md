@@ -71,8 +71,16 @@ import 'jest-styled-components'
 module.exports = {
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+  moduleNameMapper: {
+    '^styled-components$':
+      '<rootDir>/node_modules/styled-components/dist/styled-components.browser.cjs.js',
+  },
 }
 ```
+
+Jest loads the Node server build of `styled-components`. That build does not inject `createGlobalStyle` rules during a client render on v5, or from 6.4.0 on. From 6.4.0, the browser effect is compiled out, and injecting during render with no cleanup leaked rules in jsdom. The mapper loads the browser build, which does inject those rules under jsdom. Resolution happens before any import, so a test file can import `styled-components` and this package in either order.
+
+The browser build throws when code renders in a Node environment with no `document`, including `renderToString` and `ServerStyleSheet.interleaveWithNodeStream`. Leave the mapper off for a project whose tests take that path.
 
 Note: Jest 27+ defaults to the `node` environment. styled-components requires a DOM, so `testEnvironment: 'jsdom'` is required. You may also need to install `jest-environment-jsdom` separately for Jest 28+.
 
@@ -85,14 +93,29 @@ import 'jest-styled-components/vitest'
 
 ```ts
 // vitest.config.ts
+import { createRequire } from 'node:module'
 import { defineConfig } from 'vitest/config'
 
+const require = createRequire(import.meta.url)
+
 export default defineConfig({
+  resolve: {
+    alias: [
+      {
+        find: /^styled-components$/,
+        replacement: require.resolve(
+          'styled-components/dist/styled-components.browser.cjs.js'
+        ),
+      },
+    ],
+  },
   test: {
     setupFiles: ['./setupTests.ts'],
   },
 })
 ```
+
+The Vitest entry imports `styled-components` through Vite and points the matcher at that module, so the alias and the test share one sheet. The same alias still shares one sheet when `server.deps.inline` includes `styled-components`. The Node-environment limit above applies here too.
 
 The Vitest entry point imports `expect` and `beforeEach` from Vitest explicitly. TypeScript types are included.
 
@@ -370,6 +393,8 @@ test('global styles', () => {
 
 When `selector` is set, the component argument is ignored---any rendered element will work as the receiver.
 
+On styled-components v5, and on 6.4.0 and later, this assertion needs the browser build from the Jest `moduleNameMapper` or the Vitest `resolve.alias` in the setup section. The Node build does not inject these rules.
+
 ### Element selection
 
 The matcher checks styles on the element it receives. To assert on nested elements, query for them first:
@@ -485,7 +510,7 @@ If snapshots show hashed class names instead of CSS rules, the serializer isn't 
 
 ### Testing `createGlobalStyle`
 
-Global styles don't attach to a specific component. Use the `selector` option to match by CSS selector:
+Global styles don't attach to a specific component. Use the `selector` option to match by CSS selector. On styled-components v5, and on 6.4.0 and later, map the package to its browser build as shown in the Jest and Vitest setup:
 
 ```js
 render(<GlobalStyle />)
