@@ -7,7 +7,13 @@ if (typeof beforeEach === 'function') {
 }
 
 if (typeof expect !== 'undefined') {
-  expect.addSnapshotSerializer(styleSheetSerializer);
+  try {
+    expect.addSnapshotSerializer(styleSheetSerializer);
+  } catch (error) {
+    // Bun through 1.4.4 exposes this method but throws "Not implemented". Remove when those releases are out of support.
+    if (typeof Bun === 'undefined') throw error;
+  }
+
   expect.extend({ toHaveStyleRule });
 }
 
