@@ -113,7 +113,7 @@ Uses `@adobe/css-tools` as the sole production dependency to parse stylesheet ou
 
 - **Biome** for linting and formatting (replaced ESLint + Prettier). Config in `biome.json`.
 - **lint-staged** runs `biome check --write` on pre-commit via husky v4.
-- **pnpm** is pinned in `package.json` `packageManager`. Its settings, including `overrides`, live in `pnpm-workspace.yaml`.
+- **pnpm** is pinned in `package.json` `packageManager`. Its settings, including `overrides`, live in `pnpm-workspace.yaml`. On CI the global store sits under another `node_modules/`, so a `transformIgnorePatterns` lookahead must judge only the last `node_modules/` segment.
 - **publint** validates package.json and published files.
 - **@arethetypeswrong/cli** (attw) validates TypeScript type resolution across node10/node16/bundler modes.
 - **knip** detects unused deps, exports, and dead files. Config in `knip.json`.

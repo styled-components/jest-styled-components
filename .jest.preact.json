@@ -7,6 +7,6 @@
   "testEnvironment": "jsdom",
   "testRegex": "test/preact/.*\\.spec\\.js$",
   "transformIgnorePatterns": [
-    "/node_modules/(?!(.pnpm/.*/)?(preact)/)"
+    "/node_modules/(?!preact/)(?!.*node_modules/)"
   ]
 }
