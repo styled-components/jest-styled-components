@@ -9,4 +9,16 @@ overrides:
   http-proxy-agent: ^7.0.0
   micromatch: '>=4.0.8'
 
+# Packages in a global store resolve from their store path, so an undeclared require only works through the NODE_PATH that pnpm sets
+packageExtensions:
+  '@cfaester/enzyme-adapter-react-18':
+    dependencies:
+      prop-types: ^15.8.1
+  styled-components:
+    peerDependencies:
+      react-native: '>=0.68.0'
+    peerDependenciesMeta:
+      react-native:
+        optional: true
+
 virtualStoreType: global
