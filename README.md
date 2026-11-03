@@ -110,6 +110,10 @@ Bun provides the `expect` and `beforeEach` globals that the library hooks into. 
 preload = ["./setupTests.ts"]
 ```
 
+Bun releases through 1.4.4 don't implement the snapshot serializer API, so `toHaveStyleRule` works and snapshots keep hashed class names with no CSS. Upgrade to a later release to get inlined CSS in snapshots.
+
+`toHaveStyleRule` can't find `createGlobalStyle` rules under Bun on styled-components 6.6.0.
+
 ## Quick Example
 
 ```js
