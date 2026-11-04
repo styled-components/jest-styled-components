@@ -1,5 +1,12 @@
 # Changelog
 
+## 7.4.1
+
+### Patch Changes
+
+- afca71e: Fix a crash on load under Bun. Stable Bun releases through 1.4.4 expose `expect.addSnapshotSerializer` but throw "Not implemented" when it is called, so importing this package stopped every test. `toHaveStyleRule` now works on those releases, and snapshots keep hashed class names until Bun ships the API
+- 42af42f: Document an opt-in browser build setup for asserting `createGlobalStyle` rules on styled-components v5, 6.0 through 6.2, and 6.4.0 and later, and point the Vitest matcher at the module the Vitest entry imports. A failed `toHaveStyleRule` assertion that uses `selector` now links to that setup
+
 ## 7.4.0
 
 ### Minor Changes
