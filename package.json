@@ -24,8 +24,9 @@
   ],
   "license": "MIT",
   "scripts": {
-    "test": "pnpm test:web && pnpm test:native && pnpm test:preact && pnpm test:vitest && pnpm lint:pkg",
+    "test": "pnpm test:web && pnpm test:web:server-build && pnpm test:native && pnpm test:preact && pnpm test:vitest && pnpm lint:pkg",
     "test:web": "jest --color --silent",
+    "test:web:server-build": "jest --color --silent --moduleNameMapper='{}' --testNamePattern='^(?!.*createGlobalStyle)'",
     "test:web:watch": "jest --watch",
     "test:native": "jest --color --silent --config .jest.native.json",
     "test:preact": "jest --color --silent --config .jest.preact.json",
@@ -60,7 +61,7 @@
     "react-dom": "18.2.0",
     "react-native": "~0.71",
     "react-test-renderer": "18.2.0",
-    "styled-components": "^6.0.9"
+    "styled-components": "^6.6.0"
   },
   "dependencies": {
     "@adobe/css-tools": "^4.4.0"
@@ -74,6 +75,9 @@
     ]
   },
   "jest": {
+    "moduleNameMapper": {
+      "^styled-components$": "<rootDir>/node_modules/styled-components/dist/styled-components.browser.cjs.js"
+    },
     "setupFiles": [
       "<rootDir>/test/__mocks__/requestAnimationFrame.js"
     ],
