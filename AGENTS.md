@@ -150,3 +150,13 @@ Uses `@adobe/css-tools` as the sole production dependency to parse stylesheet ou
 - **Use TDD (red/green)** when fixing bugs — write the failing test first, then fix the code.
 - **Always run tests** before considering work done.
 - **Research before implementing.** Go beyond official docs — review dev blogs, expert content, and source code for the deepest understanding.
+
+## Cursor Cloud specific instructions
+
+Agent shells set `NO_COLOR=1`, `FORCE_COLOR=0`, and `TERM=dumb`. The React Native error-message snapshots in `test/native/toHaveStyleRule.spec.js` include ANSI color, so plain `pnpm test` fails in that shell even though CI passes. Run the documented suite with color enabled:
+
+```bash
+env -u NO_COLOR FORCE_COLOR=1 TERM=xterm-256color pnpm test
+```
+
+Node is the version in `.nvmrc` (`v24`). pnpm is the `packageManager` version (`12.14.0`). There is no dev server.
