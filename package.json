@@ -3,7 +3,7 @@
   "version": "7.4.0",
   "description": "Jest utilities for Styled Components",
   "type": "commonjs",
-  "packageManager": "pnpm@10.32.1",
+  "packageManager": "pnpm@12.14.0",
   "main": "./src/index.js",
   "types": "./typings/index.d.ts",
   "files": [
@@ -30,7 +30,7 @@
     "test:native": "jest --color --silent --config .jest.native.json",
     "test:preact": "jest --color --silent --config .jest.preact.json",
     "test:vitest": "pnpm --filter vitest-entry test",
-    "lint:pkg": "publint --pack npm && attw --pack . --quiet",
+    "lint:pkg": "publint && attw --pack . --quiet",
     "prepare": "husky"
   },
   "devDependencies": {
@@ -92,16 +92,5 @@
   },
   "engines": {
     "node": ">= 12"
-  },
-  "overrides": {
-    "cheerio": "1.0.0-rc.12"
-  },
-  "pnpm": {
-    "overrides": {
-      "micromatch": ">=4.0.8",
-      "braces": ">=3.0.3",
-      "http-proxy-agent": "^7.0.0",
-      "hermes-engine": ">=0.10.0"
-    }
   }
 }

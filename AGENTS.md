@@ -33,10 +33,10 @@ pnpm test:vitest
 pnpm lint:pkg
 
 # Run a single test file
-npx jest test/toHaveStyleRule.spec.js
+pnpm exec jest test/toHaveStyleRule.spec.js
 
 # Update snapshots
-npx jest --updateSnapshot
+pnpm exec jest --updateSnapshot
 ```
 
 ## Architecture
@@ -113,7 +113,8 @@ Uses `@adobe/css-tools` as the sole production dependency to parse stylesheet ou
 
 - **Biome** for linting and formatting (replaced ESLint + Prettier). Config in `biome.json`.
 - **lint-staged** runs `biome check --write` on pre-commit via husky v4.
-- **publint** validates package.json and published files (`--pack npm` due to yarn pack incompatibility).
+- **pnpm** is pinned in `package.json` `packageManager`. Its settings, including `overrides`, live in `pnpm-workspace.yaml`. On CI the global store sits under another `node_modules/`, so a `transformIgnorePatterns` lookahead must judge only the last `node_modules/` segment. Packages resolve from their store path: declare a package's undeclared require under `packageExtensions`, and point a Jest `moduleNameMapper` target at `<rootDir>/node_modules/`.
+- **publint** validates package.json and published files.
 - **@arethetypeswrong/cli** (attw) validates TypeScript type resolution across node10/node16/bundler modes.
 - **knip** detects unused deps, exports, and dead files. Config in `knip.json`.
 - All quality checks run as part of `pnpm test` via `lint:pkg` script.

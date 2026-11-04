@@ -3,6 +3,6 @@
   "testEnvironment": "node",
   "testRegex": "test/native/.*\\.spec\\.js$",
   "transformIgnorePatterns": [
-    "/node_modules/(?!(.pnpm/.*/)?(react-native|@react-native|styled-components)/)"
+    "/node_modules/(?!(react-native|@react-native|styled-components)/)(?!.*node_modules/)"
   ]
 }
