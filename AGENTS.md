@@ -159,4 +159,4 @@ Agent shells set `NO_COLOR=1`, `FORCE_COLOR=0`, and `TERM=dumb`. The React Nativ
 env -u NO_COLOR FORCE_COLOR=1 TERM=xterm-256color pnpm test
 ```
 
-Node is the version in `.nvmrc` (`v24`). pnpm is the `packageManager` version (`12.14.0`). There is no dev server.
+pnpm is the `packageManager` version (`12.14.0`). Install uses the Node version in `.nvmrc` (`v24`). The `node` binary on the agent PATH can be the runtime's Node 22; the suite passes on both. There is no dev server.
