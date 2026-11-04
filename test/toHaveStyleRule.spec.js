@@ -33,6 +33,17 @@ it('message when rules not found', () => {
   ).toThrowErrorMatchingSnapshot();
 });
 
+it('message when no rule matches a selector points to the browser build setup', () => {
+  expect(() =>
+    expect(null).toHaveStyleRule('margin', '0', { selector: 'body' })
+  ).toThrowErrorMatchingInlineSnapshot(`
+"No style rules found on passed Component using options:
+{"selector":"body"}
+
+If this rule comes from createGlobalStyle, your styled-components version may need its browser build: https://github.com/styled-components/jest-styled-components#browser-build-for-createglobalstyle"
+`);
+});
+
 it('message when rules not found using options', () => {
   const Button = styled.button`
     color: red;
