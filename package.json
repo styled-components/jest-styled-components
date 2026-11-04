@@ -1,6 +1,6 @@
 {
   "name": "jest-styled-components",
-  "version": "7.4.0",
+  "version": "7.4.1",
   "description": "Jest utilities for Styled Components",
   "type": "commonjs",
   "packageManager": "pnpm@12.14.0",
