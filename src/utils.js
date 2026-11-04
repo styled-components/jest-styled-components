@@ -1,15 +1,20 @@
 const css = require('@adobe/css-tools');
-const { __PRIVATE__ } = require('styled-components');
 
-if (!__PRIVATE__) {
-  throw new Error(
-    'Could not find styled-components internals (__PRIVATE__). Ensure styled-components v5+ is installed.'
-  );
-}
+let sheet;
 
-const { mainSheet, masterSheet } = __PRIVATE__;
+// A native require can't see a Vite alias, so the Vitest entry rebinds to the module it imported.
+const bindStyleSheet = (styledComponents) => {
+  const privateApi = styledComponents.__PRIVATE__;
 
-const sheet = mainSheet || masterSheet;
+  if (!privateApi) {
+    throw new Error(
+      'Could not find styled-components internals (__PRIVATE__). Ensure styled-components v5+ is installed.'
+    );
+  }
+
+  sheet = privateApi.mainSheet || privateApi.masterSheet;
+  invalidateCSSCache();
+};
 
 /**
  * Reset the styled-components stylesheet between tests. Removes all injected
@@ -292,8 +297,11 @@ const matcherTest = (received, expected, isNot) => {
 
 const AT_RULE_TYPES = ['media', 'supports', 'container', 'layer'];
 
+bindStyleSheet(require('styled-components'));
+
 module.exports = {
   AT_RULE_TYPES,
+  bindStyleSheet,
   resetStyleSheet,
   enableCSSCache,
   disableCSSCache,
