@@ -114,6 +114,70 @@ Bun releases through 1.4.4 don't implement the snapshot serializer API, so `toHa
 
 `toHaveStyleRule` can't find `createGlobalStyle` rules under Bun on styled-components 6.6.0.
 
+### Browser build for `createGlobalStyle`
+
+Add this setup only if your tests assert `createGlobalStyle` rules and you use styled-components v5, 6.0 through 6.2, or 6.4.0 and later. Jest and Vitest load the Node server build of `styled-components`, which does not inject these rules during a client render on those versions. The browser build does.
+
+The setup has costs:
+
+- **Server rendering.** The browser build throws when code renders in a Node environment with no `document`, including `renderToString` and `ServerStyleSheet.interleaveWithNodeStream`. Run those tests in a separate Jest or Vitest project without this setup.
+- **Snapshots.** A global style that targets a component adds its rule to that component's snapshot and renumbers its class placeholders. Review and update those snapshots once.
+
+**Jest**
+
+```js
+// jest.config.js
+module.exports = {
+  testEnvironment: 'jsdom',
+  setupFilesAfterEnv: ['<rootDir>/setupTests.js'],
+  moduleNameMapper: {
+    '^styled-components$': require.resolve(
+      'styled-components/dist/styled-components.browser.cjs.js'
+    ),
+  },
+}
+```
+
+Resolution happens before any import, so a test file can import `styled-components` and this package in either order.
+
+**Vitest**
+
+```ts
+// vitest.config.ts
+import { createRequire } from 'node:module'
+import { defineConfig } from 'vitest/config'
+
+const require = createRequire(import.meta.url)
+
+export default defineConfig({
+  resolve: {
+    alias: [
+      {
+        find: /^styled-components$/,
+        replacement: require.resolve(
+          'styled-components/dist/styled-components.browser.cjs.js'
+        ),
+      },
+    ],
+  },
+  test: {
+    environment: 'jsdom',
+    server: {
+      deps: {
+        inline: ['jest-styled-components'],
+      },
+    },
+    setupFiles: ['./setupTests.ts'],
+  },
+})
+```
+
+Install `jsdom` as a dev dependency. `server.deps.inline` makes Vite process the Vitest entry, so the entry follows the alias and the matcher reads the same sheet as the test. Use the alias, this setting, and the `jest-styled-components/vitest` import together. With the alias alone, or with the main `jest-styled-components` import, the matcher reads the server build's separate sheet: `toHaveStyleRule` reports that no rules were found, and snapshots keep hashed class names with no CSS.
+
+The alias reaches only modules that Vite processes, which has a further cost under Vitest:
+
+- **Component libraries.** A library in `node_modules` that uses styled-components stays on the Node build, so `toHaveStyleRule` finds no rules on its components. Add an ES module library to `server.deps.inline`. A CommonJS library can't follow the alias, so a project that asserts on its components can't use this setup.
+
 ## Quick Example
 
 ```js
@@ -374,6 +438,8 @@ test('global styles', () => {
 
 When `selector` is set, the component argument is ignored---any rendered element will work as the receiver.
 
+Depending on your styled-components version, this assertion needs the [browser build](#browser-build-for-createglobalstyle).
+
 ### Element selection
 
 The matcher checks styles on the element it receives. To assert on nested elements, query for them first:
@@ -421,6 +487,8 @@ import { addSerializer } from 'jest-specific-snapshot'
 
 addSerializer(styleSheetSerializer)
 ```
+
+With the Vitest alias from the [browser build setup](#browser-build-for-createglobalstyle), import `jest-styled-components/vitest` as well. This export can't follow the alias by itself, so snapshots keep hashed class names with no CSS.
 
 ### Serializer Options
 
@@ -470,6 +538,7 @@ The most common issue. Check these causes in order:
 1. **Wrong element.** The matcher needs the actual DOM element or react-test-renderer JSON node, not a wrapper. With `@testing-library/react`, use `container.firstChild`. With Enzyme, use `mount()` (not `shallow()` for most cases).
 2. **Multiple styled-components instances.** Common in monorepos. Run `npm ls styled-components` (or `pnpm why styled-components`) to check. See the [styled-components FAQ](https://www.styled-components.com/docs/faqs#why-am-i-getting-a-warning-about-several-instances-of-module-on-the-page) for resolution.
 3. **Version mismatch.** Ensure your jest-styled-components version supports your styled-components version (see [Version Compatibility](#version-compatibility)).
+4. **Browser build setup.** A `createGlobalStyle` rule can need the browser build. Under Vitest, an incomplete setup hides every rule, and components from a library in `node_modules` need extra handling. See [Browser build for `createGlobalStyle`](#browser-build-for-createglobalstyle).
 
 ### TypeScript: `toHaveStyleRule` not recognized
 
@@ -485,11 +554,11 @@ If snapshots show hashed class names instead of CSS rules, the serializer isn't 
 
 1. You're importing `jest-styled-components` (or `jest-styled-components/vitest` for Vitest) in your setup file.
 2. The setup file is referenced in your test runner config (`setupFilesAfterEnv` for Jest, `setupFiles` for Vitest).
-3. You don't have multiple instances of styled-components loaded (see above).
+3. You don't have multiple instances of styled-components loaded (see above). An incomplete Vitest [browser build setup](#browser-build-for-createglobalstyle) causes this too.
 
 ### Testing `createGlobalStyle`
 
-Global styles don't attach to a specific component. Use the `selector` option to match by CSS selector:
+Global styles don't attach to a specific component. Use the `selector` option to match by CSS selector. Depending on your styled-components version, this needs the [browser build](#browser-build-for-createglobalstyle):
 
 ```js
 render(<GlobalStyle />)
