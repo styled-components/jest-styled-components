@@ -147,6 +147,9 @@ const getRulesBySelector = (ast, selector, options) => {
   );
 };
 
+const BROWSER_BUILD_HINT =
+  '\n\nIf this rule comes from createGlobalStyle, your styled-components version may need its browser build: https://github.com/styled-components/jest-styled-components#browser-build-for-createglobalstyle';
+
 const handleMissingRules = (options) => ({
   pass: false,
   message: () =>
@@ -154,7 +157,7 @@ const handleMissingRules = (options) => ({
       Object.keys(options).length
         ? ` using options:\n${JSON.stringify(options)}`
         : ''
-    }`,
+    }${options.selector ? BROWSER_BUILD_HINT : ''}`,
 });
 
 const getDeclaration = (rule, property) =>
